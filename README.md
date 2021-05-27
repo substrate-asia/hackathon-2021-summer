@@ -36,10 +36,6 @@
 
 5. 7月9日上午，在本 repo 给出初选名单, 选出 12 支团队进入 Demo Day。
 
-## 参赛项目类别
-
-[详情看这里](./docs/categories.md)
-
 ## 提交到本 github 重要日期
 
 - 团队在报名那一周 git clone 这个代码库并创建团队目录，在 readme 里列出黑客松期间内打算完成的代码功能点 (不多于 1,000 字)。并提交 PR 到本代码库。
@@ -102,6 +98,9 @@
 * email: hackathon.asia@parity.io
 
 ## 其他
+
+- [参赛项目](./docs/categories.md)
+- [技术资源](./docs/technical-resources.md)
 
 ### 合法合规性
 
