@@ -6,20 +6,20 @@
 
 ## 项目整体简介
 
-**项目背景**
+> **项目背景**
 
 TODO
 
-**LOGO:**
+> **LOGO:**
 
 ![Logo Light][logo1]
 ![Logo Dark][logo2]
 
 ## 黑客松期间计划完成的事项
 
-| 进度 | 编号 | 模块名称 | 内容说明 |
-| :---: | :---: | ------ | ------ |
-| 0% | 1 | TODO | TODO |
+| 状态 | 编号 | 模块 | 名称 | 内容说明 |
+| :---: | :---: | ---- | ------ | ------ |
+| [ ] | 1 | TODO | TODO | TODO |
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
 
@@ -31,8 +31,8 @@ TODO
 
 - 唐博皞(队长、产品设计、区块链开发、UE开发)。Github: [btspoony](https://github.com/btspoony)
 - 尹楠(区块链开发、测试)。Github: [ww8912188](https://github.com/ww8912188)
-- 黄康宁(UE开发、技术支持)。
-- 刘超(UE开发、技术支持)。
+- 黄康宁(UE开发、技术支持)。Github: [PandaNotPig](https://github.com/PandaNotPig)
+- 刘超(UE开发、技术支持)。Github: [neskynight](https://github.com/neskynight)
 
 [logo1]: docs/assets/logo_en_small.png "logo_small"
-[logo2]: docs/assets/logo_en_white.png "logo_dark"
+[logo2]: docs/assets/logo_en_white_small.png "logo_dark"
