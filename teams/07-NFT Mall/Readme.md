@@ -34,8 +34,8 @@ LOGO:正在制作
 可选：放一段不长于 5 分钟 的产品 DEMO 展示视频, 命名为 团队目录/docs/demo.mp4。
 
 队员信息
-参赛人员姓名  github	
-feiying	     nfttoken
+参赛人员姓名	
+feiying	     
 hfxx	       
 cooper
 越泽
