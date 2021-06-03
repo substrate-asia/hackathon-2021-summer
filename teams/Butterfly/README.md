@@ -10,6 +10,8 @@
 的电影IP数字化平台，希望打造出一个基于影视相关生态的区块链项目。
 
 LOGO
+
+
 ![PubComents_chain_icon](https://user-images.githubusercontent.com/23429926/120581633-a6b4e980-c41a-11eb-933e-f1d5ed2068c0.png)
 
 ## 黑客松期间计划完成的事项
