@@ -33,11 +33,5 @@ LOGO:正在制作
 把相关代码放在 src 目录里，并在本栏列出在黑客松期间打完成的开发工作/功能点。我们将对这些目录/档案作重点技术评审。
 可选：放一段不长于 5 分钟 的产品 DEMO 展示视频, 命名为 团队目录/docs/demo.mp4。
 
-队员信息
-参赛人员姓名
-feiying	     
-hfxx	       
-cooper
-越泽
-Danny	
-海中蛟龙
+团队人员信息
+feiying	     hfxx	       cooper   越泽   Danny	海中蛟龙
