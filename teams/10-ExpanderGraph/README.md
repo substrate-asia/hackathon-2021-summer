@@ -21,7 +21,7 @@
 
 **区块链端**
 
-- （初步，未确定）
+（初步，未确定）
 - 区块，交易，个人账户信息检索
 - 导出csv文件
 - 实时更新
@@ -29,7 +29,7 @@
 
 **客户端**
 
-- （初步，未确定）
+（初步，未确定）
 - 实时数据流
 - 个人账户信息汇总
 - 筛选选项，地址标签
@@ -42,7 +42,7 @@
 
 ## 队员信息
 
-|---名字----|-----GitHub------|
-| Jin-Long  |  JinlongHuang  |
-|   马耀    |    yahtoo       |
-|  Russell  |   ruoguluo     |
+名字：Github
+Jin-Long：JinlongHuang
+马耀：yahtoo
+Russell：ruoguluo
