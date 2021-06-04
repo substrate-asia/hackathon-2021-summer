@@ -92,7 +92,7 @@
 - **6月11日 19:00 - 20:15**: Substrate 3.0 frame v2 介绍 (Kaichao) + OH (Kaichao)
 - **6月18日 19:00 - 20:15**: orml 介绍 (Jimmy) + OH (Jimmy)
 - **6月25日 19:00 - 20:15**: 待定
-- **7月2日 19:00 - 20:15**: workshop (Junius?) + OH (Junius)
+- **7月2日 19:00 - 20:15**: workshop (Junius) + OH (Junius)
 - **7月9日 19:00 - 20:15**: NFT在艺术圈的发展 (Qinwen) + OH (Maggie)
 
 回看录播：https://space.bilibili.com/67358318
