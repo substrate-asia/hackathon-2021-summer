@@ -35,7 +35,8 @@
 - 20210705 前完成开发工作
 
 # 团队成员
-- Founder：Gordon(https://github.com/CHCP)
+- Founder：Gordon (https://github.com/CHCP)
+- Frontend Developer: Chutian Yang (https://github.com/yct21)
 
 # 演示网址
 - https://zhishi.io
