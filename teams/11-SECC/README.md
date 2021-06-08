@@ -58,15 +58,15 @@
 
 ## 队员信息
 
-产品：肖慧
+产品：Sean
 
 前端：
-龙春雨 吴迪
+Rain Luffy
 
 后端：
-Zorro https://github.com/zorro215
+Zorro Eric dsghmw action Robin
 
-UI： 龙春雨
+UI： Rain
 
-测试： 王海蓉
+测试： Lotus
 
