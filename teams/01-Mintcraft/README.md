@@ -19,9 +19,9 @@ TODO
 
 | 开发 | 测试 | 优先级 | 类型 | 名称 | 内容说明 |
 | :----: | :----: | :---: | ---- | ------ | ------------ |
-| 0% | 0% | P0 | ink! | erc20 | FT合约基础traits |
-| 0% | 0% | P0 | ink! | erc721 | NFT合约基础traits之一 |
-| 0% | 0% | P0 | ink! | erc1155 | NFT合约基础traits之一 |
+| 0% | 0% | P0 | ink! | trait-erc20 | FT合约基础traits |
+| 0% | 0% | P0 | ink! | trait-erc721 | NFT合约基础traits之一 |
+| 0% | 0% | P0 | ink! | trait-erc1155 | NFT合约基础traits之一 |
 | 0% | 0% | P0 | ink! | aura | 灵气，主资源币ERC20合约 |
 | 0% | 0% | P1 | ink! | chi | 气，养成资源ERC20合约 |
 | 0% | 0% | P1 | ink! | samsara | 轮回，角色诞生存亡的控制合约 |
@@ -29,9 +29,14 @@ TODO
 | 0% | 0% | P2 | ink! | land | 地块，具有唯一的空间坐标(ERC721实现) |
 | 0% | 0% | P0 | ink! | entity | 实体，多类型、可培养(ERC1155实现) |
 | 0% | 0% | P1 | ink! | cultivate | 培养合约，NFT链上数据养成合约 |
-| 0% | 0% | P0 | ink! | dungeons | 地下城控制合约 |
+| 0% | 0% | P1 | ink! | dungeons | 地下城控制合约 |
 | 0% | 0% | P0 | backend | uploader | NFT资源上传并生成 metadata uri的API |
 | 0% | 0% | P0 | backend | metadata | metadata NFT资源数据查询API |
+| 0% | 0% | P0 | ue4-plugin | engine-wallet | UE4下可用的Substrate钱包 |
+| 0% | 0% | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出插件 |
+| 0% | 0% | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的插件 |
+| 0% | 0% | P0 | ue4-plugin | runtime-entity-loader | 运行中载入 NFT 资源的插件 |
+| 0% | 0% | P1 | ue4-demo | mini-game | 载入角色信息和 NFT 资源，通过地下城控制合约开启副本，并进行游戏的 demo |
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
 
