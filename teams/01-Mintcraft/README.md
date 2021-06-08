@@ -23,6 +23,7 @@ TODO
 | 0% | 0% | P0 | ink! | erc721 | NFT合约基础traits之一 |
 | 0% | 0% | P0 | ink! | erc1155 | NFT合约基础traits之一 |
 | 0% | 0% | P0 | ink! | aura | 灵气，主资源币ERC20合约 |
+| 0% | 0% | P1 | ink! | chi | 气，养成资源ERC20合约 |
 | 0% | 0% | P1 | ink! | samsara | 轮回，角色诞生存亡的控制合约 |
 | 0% | 0% | P1 | ink! | actor | 角色，具有存活属性(ERC721实现) |
 | 0% | 0% | P2 | ink! | land | 地块，具有唯一的空间坐标(ERC721实现) |
