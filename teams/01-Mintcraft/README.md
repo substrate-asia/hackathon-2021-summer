@@ -33,8 +33,8 @@ TODO
 | 0% | 0% | P0 | backend | uploader | NFT资源上传并生成 metadata uri的API |
 | 0% | 0% | P0 | backend | metadata | metadata NFT资源数据查询API |
 | 0% | 0% | P0 | ue4-plugin | engine-wallet | UE4下可用的Substrate钱包 |
-| 0% | 0% | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出插件 |
-| 0% | 0% | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的插件 |
+| 0% | 0% | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出功能 |
+| 0% | 0% | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的功能 |
 | 0% | 0% | P0 | ue4-plugin | runtime-entity-loader | 运行中载入 NFT 资源的插件 |
 | 0% | 0% | P1 | ue4-demo | mini-game | 载入角色信息和 NFT 资源，通过地下城控制合约开启副本，并进行游戏的 demo |
 
