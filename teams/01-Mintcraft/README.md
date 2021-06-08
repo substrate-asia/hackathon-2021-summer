@@ -18,17 +18,19 @@ TODO
 ## 黑客松期间计划完成的事项
 
 | 开发 | 测试 | 优先级 | 类型 | 名称 | 内容说明 |
-| :----: | :----: | :---: | ---- | ------ | ------ |
-| [ ] | [ ] | P0 | ink! | erc20 | FT合约基础traits |
-| [ ] | [ ] | P0 | ink! | erc721 | NFT合约基础traits之一 |
-| [ ] | [ ] | P0 | ink! | erc1155 | NFT合约基础traits之一 |
-| [ ] | [ ] | P0 | ink! | aura | 灵气，主资源币ERC20合约 |
-| [ ] | [ ] | P1 | ink! | samsara | 轮回，角色诞生存亡的控制合约 |
-| [ ] | [ ] | P1 | ink! | actor | 角色，具有存活属性(NFT实现之一) |
-| [ ] | [ ] | P2 | ink! | land | 地块，具有唯一的空间坐标(NFT实现之一) |
-| [ ] | [ ] | P0 | ink! | entity | 实体，多类型、可培养(NFT实现之一) |
-| [ ] | [ ] | P1 | ink! | cultivate | 培养合约，NFT链上数据养成合约 |
-| [ ] | [ ] | P0 | ink! | dungeons | 地下城控制合约 |
+| :----: | :----: | :---: | ---- | ------ | ------------ |
+| 0% | 0% | P0 | ink! | erc20 | FT合约基础traits |
+| 0% | 0% | P0 | ink! | erc721 | NFT合约基础traits之一 |
+| 0% | 0% | P0 | ink! | erc1155 | NFT合约基础traits之一 |
+| 0% | 0% | P0 | ink! | aura | 灵气，主资源币ERC20合约 |
+| 0% | 0% | P1 | ink! | samsara | 轮回，角色诞生存亡的控制合约 |
+| 0% | 0% | P1 | ink! | actor | 角色，具有存活属性(ERC721实现) |
+| 0% | 0% | P2 | ink! | land | 地块，具有唯一的空间坐标(ERC721实现) |
+| 0% | 0% | P0 | ink! | entity | 实体，多类型、可培养(ERC1155实现) |
+| 0% | 0% | P1 | ink! | cultivate | 培养合约，NFT链上数据养成合约 |
+| 0% | 0% | P0 | ink! | dungeons | 地下城控制合约 |
+| 0% | 0% | P0 | backend | uploader | NFT资源上传并生成 metadata uri的API |
+| 0% | 0% | P0 | backend | metadata | metadata NFT资源数据查询API |
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
 
@@ -36,7 +38,7 @@ TODO
 > - 把相关代码放在 `src` 目录里，并在本栏列出在黑客松期间打完成的开发工作/功能点。我们将对这些目录/档案作重点技术评审。
 > - 可选：放一段不长于 **5 分钟** 的产品 DEMO 展示视频, 命名为 `团队目录/docs/demo.mp4`。
 
-TODO
+- [ ] TODO List
 
 ## 队员信息
 
