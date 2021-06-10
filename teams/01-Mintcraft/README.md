@@ -17,9 +17,10 @@ TODO
 
 ## 黑客松期间计划完成的事项
 
+> 部分 traits 如 erc20 等，直接使用 [patract/metis](https://github.com/patractlabs/metis) 的依赖
+
 | 开发 | 测试 | 优先级 | 类型 | 名称 | 内容说明 |
 | :----: | :----: | :---: | ---- | ------ | ------------ |
-| 0% | 0% | P0 | ink! | trait-erc20 | FT合约基础traits |
 | 0% | 0% | P0 | ink! | trait-erc721 | NFT合约基础traits之一 |
 | 0% | 0% | P0 | ink! | trait-erc1155 | NFT合约基础traits之一 |
 | 0% | 0% | P0 | ink! | aura | 灵气，主资源币ERC20合约 |
@@ -36,15 +37,49 @@ TODO
 | 0% | 0% | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出功能 |
 | 0% | 0% | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的功能 |
 | 0% | 0% | P0 | ue4-plugin | runtime-entity-loader | 运行中载入 NFT 资源的插件 |
-| 0% | 0% | P1 | ue4-demo | mini-game | 载入角色信息和 NFT 资源，通过地下城控制合约开启副本，并进行游戏的 demo |
+| 0% | 0% | P1 | ue4-asset | asset-actor-demo | demo 用模型 - 角色 |
+| 0% | 0% | P1 | ue4-asset | asset-equipment-sword | demo 用模型 - 剑 |
+| 0% | 0% | P1 | ue4-demo | demo-mini-game | 载入角色信息和 NFT 资源，通过地下城控制合约开启副本，并进行游戏的 demo |
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
 
-> - 7月5日前，在本栏列出黑客松期间最终完成的功能点。
-> - 把相关代码放在 `src` 目录里，并在本栏列出在黑客松期间打完成的开发工作/功能点。我们将对这些目录/档案作重点技术评审。
-> - 可选：放一段不长于 **5 分钟** 的产品 DEMO 展示视频, 命名为 `团队目录/docs/demo.mp4`。
+> 7月5日前，在黑客松期间最终完成的功能点。
 
-- [ ] TODO List
+ink!合约
+
+- [ ] trait-erc721
+- [ ] trait-erc1155
+- [ ] aura
+- [ ] chi
+- [ ] samsara
+- [ ] actor
+- [ ] land
+- [ ] entity
+- [ ] cultivate
+- [ ] dungeons
+
+后端API
+
+- [ ] uploader
+- [ ] metadata
+
+ue4插件
+
+- [ ] engine-wallet
+- [ ] editor-entity-builder
+- [ ] editor-entity-publisher
+- [ ] runtime-entity-loader
+
+游戏 Demo
+
+- [ ] asset-actor-demo
+- [ ] asset-equipment-sword
+- [ ] mini-game
+
+> 产品最终 Demo 视频
+> 可选：放一段不长于 **5 分钟** 的产品 DEMO 展示视频, 命名为 `团队目录/docs/demo.mp4`。
+
+TODO
 
 ## 队员信息
 
