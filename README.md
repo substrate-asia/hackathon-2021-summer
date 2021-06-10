@@ -89,7 +89,7 @@
 6次线上 Workshop & office hours 逢周五：19:00 - 20:15，45 分钟 workshop + 30 分钟 office hours (OH)
 
 - **6月4日 19:00 - 20:15**: 黑客松开场/规则/注意 (Yaoqi + Jimmy) + OH (Jimmy)
-- **6月11日 19:00 - 20:15**: Substrate 3.0 frame v2 介绍 (Kaichao) + OH (Kaichao)
+- **6月10日 19:00 - 20:15**: Substrate 3.0 frame v2 介绍 (Kaichao) + OH (Kaichao)
 - **6月18日 19:00 - 20:15**: orml 介绍 (Jimmy) + OH (Jimmy)
 - **6月25日 19:00 - 20:15**: 待定
 - **7月2日 19:00 - 20:15**: workshop (Junius) + OH (Junius)
