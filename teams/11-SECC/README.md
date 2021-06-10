@@ -14,6 +14,7 @@
 
   ![Ownership labs](./secc.svg)
 - 系统架构
+  ![Ownership labs](./SECCJG2.png)
 
   ![Ownership labs](./SECCJG.png)
 ## 黑客松期间计划完成的事项
