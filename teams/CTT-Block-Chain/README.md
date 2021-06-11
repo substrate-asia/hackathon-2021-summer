@@ -19,11 +19,16 @@ CTT链的目的是通过体验消费者体验商品的竞争来达成商品价�
  ![image](https://user-images.githubusercontent.com/63439285/121539599-67008a00-ca38-11eb-8f4d-51b23742e9b4.png)
  
 
-6、项目最终组建的分布式商业联盟结构图
+7、项目最终组建的分布式商业联盟结构图
 
 ![image](https://user-images.githubusercontent.com/63439285/121539662-72ec4c00-ca38-11eb-8493-7577aa55f824.png)
 
 
-7、黑客送期间项目工作任务
+8、黑客送期间项目工作任务
 
 ![image](https://user-images.githubusercontent.com/63439285/121544086-05dab580-ca3c-11eb-91bf-0cd5730cc658.png)
+
+9、团队成员
+CTT-block-chain（leo xiao）
+kerwin 
+xiaoyan feng
