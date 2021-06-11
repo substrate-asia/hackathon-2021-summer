@@ -61,16 +61,16 @@
 
 - api
 
-| 完成进度  | 模块 | 功能说明 | 备注说明 
+| 完成进度 | 模块 | 功能说明 | 测试覆盖 
 | --- | --- | --- | ---
-| 10% | Person | 人物CRUD | 人物
-| 10% | Era | 人物CRUD | 纪元
-| 10% | Place | 人物CRUD | 人物
-| 10% | Event | 人物CRUD | 人物
-| 10% | Story | 人物CRUD | 人物
-| 10% | Story | 用户鉴权 | 人物
-| 10% | Story | 数据演进过程记录及版本控制 | 人物
-| 10% | Story | CORS跨源资源共享 | 人物
+| 10% | Person | 人物CRUD | 0%
+| 10% | Era | 人物CRUD | 0%
+| 10% | Place | 人物CRUD | 0%
+| 10% | Event | 人物CRUD | 0%
+| 10% | Story | 人物CRUD | 0%
+| 10% | Story | 用户鉴权 | 0%
+| 10% | Story | 数据演进过程记录及版本控制 | 0%
+| 10% | Story | CORS跨源资源共享 | 0%
 
 - 数据库
   - [ ] 数据库存储
@@ -101,15 +101,12 @@
 
 Github Organization [Scifanchain](https://github.com/scifanchain) 
 
-- unity（欧雪冰），队长，产品策划与设计，《银河书-意谛》[^1]作者，官网、应用层、前端开发。著有《诗意的边缘——PHP顶级框架Zend Framework开发实战》（电子工业出版社，2012年）。github账号: [unityoxb](https://githubs.com/unityoxb)
+- unity（欧雪冰），队长，产品策划与设计，《银河书-意谛》<sup id="a1">[[1]](#f1)</sup>作者，官网、应用层、前端开发。著有《诗意的边缘——PHP顶级框架Zend Framework开发实战》（电子工业出版社，2012年）。github账号: [unityoxb](https://githubs.com/unityoxb)
 - 柴杰，中国科学技术大学微电子学院研究生，rust中文开源期刊编辑部成员，一年Rust语言经验，非常认同Web3.0的愿景。负责项目的Substrate开发。
 - Stvenyin，
 - April（李星），白皮书撰写，创意文案，组织推广。
 - 杜禹彤，来自未来的贡献者。
 - 翟劲儒，平行宇宙实习生。
-
-[^1]:专门为赛凡链创作的银河纪元蓝本，约50万字，全方位构建出了赛凡链的初始宇宙模型和创作框架，为协同创作奠定了基础。
-
 
 ## 开发路线图
 
@@ -119,3 +116,5 @@ Github Organization [Scifanchain](https://github.com/scifanchain)
 | 2001年7月5日 | 完成Substrate功能，上传代码 | 实现存证、版本管理和基础治理 |
 | 2001年7月12日 | 数据加载 | 注重户体验 |
 | 2001年7月15日 | 制作演示视频 | 简要、明晰 |
+
+<span id="f1">1. [^](#a1)</span> 专门为赛凡链创作的银河纪元蓝本，约50万字，全方位构建出了赛凡链的初始宇宙模型和创作框架，为协同创作奠定了基础。
