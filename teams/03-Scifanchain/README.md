@@ -6,15 +6,16 @@
 
 相关网站：
 
-- 项目官网：https://scifanchain.io
-- 文档：https://docs.scifanchain.io
-- 博客：https://blog.scifanchain.io
-- api: https://api.scifanchain.io
+- 项目官网：https://scifanchain.com
+- Dapp：https://scifanchain.io
+- 文档：https://docs.scifanchain.com
+- 博客：https://blog.scifanchain.com
+- api接口文档: https://api.scifanchain.com
 
 
 ## 项目简介
 
-凡链以Substrate为基础框架，提供一个去中心化、开放包容、安全智能的科幻创作应用链，为创作者和产业从业者提供存证、共识、驱动引擎和交易、激励、治理模式，创生并推动独具创意、面向未来的科幻创意产业繁荣发展。
+赛凡链以Substrate为基础框架，提供一个去中心化、开放包容、安全智能的科幻创作应用链，为创作者和产业从业者提供存证、共识、驱动引擎和交易、激励、治理模式，创生并推动独具创意、面向未来的科幻创意产业繁荣发展。
 
 ### 背景 
 
