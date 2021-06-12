@@ -103,10 +103,12 @@
 Github Organization [Scifanchain](https://github.com/scifanchain) 
 
 - unity（欧雪冰），队长，产品策划与设计，《银河书-意谛》<sup id="a1">[[1]](#f1)</sup>作者，官网、应用层、前端开发。著有《诗意的边缘——PHP顶级框架Zend Framework开发实战》（电子工业出版社，2012年）。github账号: [unityoxb](https://githubs.com/unityoxb)
-- 柴杰，中国科学技术大学微电子学院研究生，rust中文开源期刊编辑部成员，一年Rust语言经验，非常认同Web3.0的愿景。负责项目的Substrate开发。
-- Stvenyin，
-- April（李星），白皮书撰写，创意文案，组织推广。
-- 杜禹彤，来自未来的贡献者。
+- 柴杰，中国科学技术大学微电子学院研究生，rust中文开源期刊编辑部成员，一年Rust语言经验，非常认同Web3.0的愿景。Substrate层开发。github账号:[
+chaijie2018](https://githubs.com/
+chaijie2018)
+- Stvenyin，拥有丰富的开发经验，深耕区块链技术多年，Substrate层开发。github账号:[stvenyin](https://githubs.com/stvenyin)
+- April（李星），白皮书撰写，创意文案，组织推广。github账号:[April593](https://githubs.com/April593)
+- 杜禹彤，来自未来的贡献者。github账号:[TinyDuyt](https://githubs.com/TinyDuyt)
 - 翟劲儒，平行宇宙实习生。
 
 ## 开发路线图
