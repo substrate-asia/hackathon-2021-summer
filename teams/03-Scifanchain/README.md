@@ -47,6 +47,11 @@
 
 ## 黑客松期间计划完成的事项
 
+**整体架构图和黑客松期间功能的流程图**
+
+<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/scifanchain_struct.png" alt="logo"/>
+<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/scifanchain_flow.png" alt="logo"/>
+
 **区块链端**
 
 - `pallet-nft`
