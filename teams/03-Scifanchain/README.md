@@ -49,8 +49,8 @@
 
 **整体架构图和黑客松期间功能的流程图**
 
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/scifanchain_struct.png" alt="struct" style="width:1000px"/>
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/scifanchain_flow.png" alt="flow" style="1000px"/>
+<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/sfc_struct.png" alt="struct"/>
+<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/sfc_flow.png" alt="flow"/>
 
 **区块链端**
 
