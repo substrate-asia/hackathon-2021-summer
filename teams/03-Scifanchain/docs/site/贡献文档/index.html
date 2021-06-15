@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>贡献文档 - 赛凡链文档</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/purebasic.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">赛凡链文档</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">首页</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../%E6%88%90%E4%B8%BA%E5%88%9B%E4%BD%9C%E8%80%85/" class="nav-link">成为创作者</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../%E6%88%90%E4%B8%BA%E9%AA%8C%E8%AF%81%E4%BA%BA/" class="nav-link">成为验证人</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../%E5%8F%91%E5%B1%95%E8%B7%AF%E7%BA%BF%E5%9B%BE/" class="nav-link">发展路线图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../%E7%99%BD%E7%9A%AE%E4%B9%A6/" class="nav-link">白皮书</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">贡献文档</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../%E7%99%BD%E7%9A%AE%E4%B9%A6/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">在贡献文档前需要做的准备工作</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">编辑文档</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="_1">在贡献文档前需要做的准备工作</h2>
+<p>我们基于Markdown来编写文档，使用Mkdocs来管理和生成静态站点，采用githup的Pages服务部署。欢迎所有的社区成员为文档贡献内容，以帮助新成员们得到好的指导。</p>
+<h3 id="python">安装Python</h3>
+<p>Scifanchain的文档使用Mkdocs程序构建，这是一个优秀的Python工具，要使用它需要安装Python。不，您并不需掌握Python语言，只是需要在您的电脑上安装它即可以。</p>
+<p>在Linux或Mac Os系统中，Python通常已经被预安装好了，您可以在终端通过以下命令验证一下版本：</p>
+<pre><code>python --version
+</code></pre>
+<p>建议使用Python3版本。我们暂时还没有验证在Python2的版本下Mkdocs是否可以正常使用。</p>
+<p><a href="https://docs.python.org/zh-cn/3/using/windows.html#installation-steps">在Windows上安装 Python</a></p>
+<h3 id="mkdocs">安装Mkdocs</h3>
+<p>安装好Python3以后，就可以打开终端，使用以下命令安装Mkdocs：</p>
+<pre><code>pip3 install mkdocs
+</code></pre>
+<p>更详细的教程，请参考：<a href="https://markdown-docs-zh.readthedocs.io/">pmkdocs的安装和使用</a></p>
+<h3 id="git">安装git</h3>
+<p>我们使用git来进行协作。用户为文档贡献内容，只需要掌握git pull命令从github仓库中获取最新内容。Mkdocs提供了一键发布到github的功能，所以不需要commit和push。</p>
+<h3 id="markdown">学习一些简单的Markdown语法</h3>
+<p>Markdown是一种轻量级标记语言，排版语法简洁，让人们更多地关注内容本身而非排版。它使用易读易写的纯文本格式编写文档，可与HTML混编，可导出 HTML、PDF 以及本身的 .md 格式的文件。因简洁、高效、易读、易写，Markdown被大量使用。</p>
+<p><a href="https://markdown.com.cn/">Markdown教程</a></p>
+<h2 id="_2">编辑文档</h2>
+<p>Scifanchain在github上代码开源，本文档在 https://github.com/scifanchain/web/docs 目录下，该目录下还有一个docs目录和一个site目录，其中docs目录下存放着的，就是本文档的内容，它们是以.md为扩展名的Markdown格式文本。</p>
+<h3 id="a-github">a) 在github拥有提交代码权限</h3>
+<p>如果您在github上加入Scifanchain组织成员，那么您应该拥有修改提交代码的权限，可以直接git clone该目录，然后用以下命令切换到gh-pages分支，以git方式提交：</p>
+<pre><code>git checkout gh-pages
+</code></pre>
+<p><strong><em>特别需要注意的是：</em></strong> 我们在github的Pages中，部署的是 https://github.com/scifanchain/web/ 的gh-pages分支，所以您提交代码时务必要切换到gh-pages分支。</p>
+<h3 id="b-forkclone">b) Fork并clone文档代码</h3>
+<p>如果您没有github上的代码提交权限，可以用提交PR的方式申请合并内容。首先，您需要fork web仓库，使用以下命令，将web仓库的代码clone到本地。fork之后的仓库地址应该像以下这样：</p>
+<pre><code>git@github.com:your_github_username/web.git
+</code></pre>
+<p>如图所示：</p>
+<p><img alt="fork仓库" src="../img/fork_github.jpeg" /></p>
+<p>在本地编写完内容后，在项目\scifanchain\docs&gt;目录下，执行以下命令发布到github：</p>
+<pre><code>mkdocs gh-deploy
+</code></pre>
+<p>接下来，打开https://docs.scifanchain.com，就可以看到您新编辑的文档了。</p>
+<p>祝开心顺利！</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2021 <a href="http://docs.scifanchain.com">赛凡链</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
