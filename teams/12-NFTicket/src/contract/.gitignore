@@ -1,0 +1,9 @@
+.cache
+artifacts
+.history
+node_modules
+contracts/target
+contracts/target/*
+contracts/template/target/*
+contracts/stub/target/*
+.idea
