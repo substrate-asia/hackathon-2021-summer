@@ -601,6 +601,7 @@ dependencies = [
  "ink_primitives",
  "ink_storage",
  "parity-scale-codec",
+ "primitives",
  "scale-info",
  "stub",
  "template",
@@ -731,6 +732,20 @@ name = "ppv-lite86"
 version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac74c624d6b2d21f425f752262f42188365d7b8ff1aff74c82e45136510a4857"
+
+[[package]]
+name = "primitives"
+version = "0.1.0"
+dependencies = [
+ "ink_env",
+ "ink_lang",
+ "ink_metadata",
+ "ink_prelude",
+ "ink_primitives",
+ "ink_storage",
+ "parity-scale-codec",
+ "scale-info",
+]
 
 [[package]]
 name = "proc-macro-crate"
@@ -1049,6 +1064,7 @@ dependencies = [
  "ink_primitives",
  "ink_storage",
  "parity-scale-codec",
+ "primitives",
  "scale-info",
 ]
 
@@ -1098,6 +1114,7 @@ dependencies = [
  "ink_primitives",
  "ink_storage",
  "parity-scale-codec",
+ "primitives",
  "scale-info",
 ]
 

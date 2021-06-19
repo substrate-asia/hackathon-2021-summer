@@ -30,6 +30,9 @@ mod template {
         },
         Clear,
     };
+    use primitives::TickeResult;
+
+    pub type Result<T> = core::result::Result<T, Error>;
     /// a simple template contract.
     #[ink(storage)]
     pub struct Tempalate {
@@ -98,6 +101,15 @@ mod template {
                 switch:Default::default(),
                 owner:caller
             }
+        }
+        //购买ticker
+        pub fn buy_ticket(&mut self) -> Result<TickeResult>{
+            // todo buy ticket
+            let result:TickeResult = TickeResult{
+                price:100u128,
+                maker:AccountId::from([0x01;32]),
+            };
+            Ok(result)
         }
 
         #[ink(message)]

@@ -17,42 +17,46 @@ use ink_lang as ink;
 // #[ink::contract(env = ink_log::CustomEnvironment)]
 #[ink::contract]
 mod meeting {
-    use ink_storage::{collections::{HashMap as StorageHashMap, hashmap::Keys}, lazy::Lazy};
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_env::call::FromAccountId;
-    use stub::TemplateStub;
     use ink_prelude::vec::Vec;
+    use ink_storage::{
+        collections::{hashmap::Keys, HashMap as StorageHashMap},
+        lazy::Lazy,
+    };
+    use stub::TemplateStub;
 
+    pub type Result<T> = core::result::Result<T, Error>;
     /// A simple ERC-20 contract.
     #[ink(storage)]
     pub struct Meeting {
         //合约模板hash和address映射.
-        template_hash_address_map:StorageHashMap<Hash,AccountId>,
+        template_hash_address_map: StorageHashMap<Hash, AccountId>,
         //所有者
-        owner:AccountId,
-        
-        fee_rate:(u128,u128),
-        /// 收取费用的人
-        fee_taker:AccountId,
-    }
+        owner: AccountId,
 
+        fee_rate: (u128, u128),
+        /// 收取费用的人
+        fee_taker: AccountId,
+    }
 
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum Error {
         /// Returned if not enough balance to fulfill a request is available.
         NotOwner,
+        CallBuyTickerError,
     }
 
     impl Meeting {
         /// Creates a new ERC-20 contract with the specified initial supply.
         #[ink(constructor)]
-        pub fn new(fee_taker:AccountId) -> Self {
+        pub fn new(fee_taker: AccountId) -> Self {
             let caller = Self::env().caller();
             let instance = Self {
-                template_hash_address_map:Default::default(),
-                owner:caller,
-                fee_rate:(10,100),
+                template_hash_address_map: Default::default(),
+                owner: caller,
+                fee_rate: (10, 100),
                 fee_taker,
             };
             instance
@@ -60,7 +64,7 @@ mod meeting {
 
         /// 更新费率
         #[ink(message)]
-        pub fn update_fee_rate(&mut self,fee_rate:(u128,u128))->bool{
+        pub fn update_fee_rate(&mut self, fee_rate: (u128, u128)) -> bool {
             self.ensure_owner();
             self.fee_rate = fee_rate;
             true
@@ -68,52 +72,60 @@ mod meeting {
 
         //查询当前费率
         #[ink(message)]
-        pub fn get_fee_rate(&self)->(u128,u128){
+        pub fn get_fee_rate(&self) -> (u128, u128) {
             self.fee_rate
         }
 
         /// 开始收费门票.
-        #[ink(message,payable)]
-        pub fn buy_ticket(&mut self,ticker:Hash,template_hash:Hash)->bool{
+        #[ink(message, payable)]
+        pub fn buy_ticket(&mut self, ticker: Hash, template_hash: Hash,maker:AccountId) -> Result<bool> {
             ink_env::debug_message("received payment");
-            let income:Balance = self.env().transferred_balance();
+            let income: Balance = self.env().transferred_balance();
             //做前置检查.判断大于0
-            assert!(income>0,"income is negtive");
+            assert!(income > 0, "income is negtive");
             // 购买票,如果成功则返回需要的资金.
             //根据template_id查询template合约地址.
-            let template_address = self.template_hash_address_map.get(&template_hash);
-            //开始扣除资金.
-            
-            // ink_log::info!(target: "received payment: {}", income);
-            // 计算需要的手续费
-            let income_per:Balance = income.saturating_mul(Balance::from(self.fee_rate.0));
-            let fee = income_per.checked_div(Balance::from(self.fee_rate.1)).unwrap();
-            // let fee = self.fee_rate.0.saturating_mul(income.into()).saturating_div(self.fee_rate.1);
-            // 把资金按照百分比给资金转给资金账户
-            self.env().transfer(self.fee_taker,fee);
-            /// 将剩余的金额转账给会议举办者.
-            
-            true
+            let template_address: &AccountId =
+                self.template_hash_address_map.get(&template_hash).unwrap();
+            let mut template: TemplateStub = FromAccountId::from_account_id(*template_address);
+            let ticket_price_result = template.buy_ticket(ticker);
+            let result= match ticket_price_result {
+                Ok(ticker_result) => {
+                    //开始扣除资金.
+                    assert!(income >= ticker_result.price,"not enough money!");
+                    // 计算需要的手续费
+                    let fee: Balance = ticker_result.price.checked_mul(Balance::from(self.fee_rate.0)).unwrap().checked_div(Balance::from(self.fee_rate.1)).unwrap();
+                    // 把资金按照百分比给资金转给资金账户
+                    self.env().transfer(self.fee_taker, fee);
+                    //将买票的收入转账给发布活动的账户.
+                    let contract_fee = ticker_result.price.checked_sub(fee).unwrap();
+                    // self.env().transfer(ticker_result.maker, contract_fee);
+                    self.env().transfer(maker, contract_fee);
+                    Ok(true)
+                }
+                Err(_) => Err(Error::CallBuyTickerError),
+                // Err(_) => panic!("call buy ticker error!"),
+            };
+            return result;
         }
-        
 
         /// 添加合约的id和hash值
         #[ink(message)]
-        pub fn add_template_hash(&mut self,hash:Hash,account_id:AccountId)->bool{
-            let value = self.template_hash_address_map.insert(hash,account_id);
+        pub fn add_template_hash(&mut self, hash: Hash, template_address: AccountId) -> bool {
+            let value = self.template_hash_address_map.insert(hash, template_address);
             if let None = value {
                 //如果该key不存在,返回true
                 true
-            }else{
+            } else {
                 false
             }
         }
 
         /// 查询所有模板的hash值队列
         #[ink(message)]
-        pub fn get_all_template_hash(&self)->Vec<Hash> {
-            let mut result:Vec<Hash> = Vec::new();
-            for k in self.template_hash_address_map.keys(){
+        pub fn get_all_template_hash(&self) -> Vec<Hash> {
+            let mut result: Vec<Hash> = Vec::new();
+            for k in self.template_hash_address_map.keys() {
                 result.push(*k);
             }
             result
@@ -122,30 +134,30 @@ mod meeting {
         }
 
         #[ink(message)]
-        pub fn get_template_address(&self,hash:Hash)->AccountId {
+        pub fn get_template_address(&self, hash: Hash) -> AccountId {
             self.template_hash_address_map.get(&hash).unwrap().clone()
         }
 
         #[ink(message)]
-        pub fn get_template_id_by_hash(&self,hash:Hash) -> u32 {
+        pub fn get_template_id_by_hash(&self, hash: Hash) -> u32 {
             ink_env::debug_message("-------------1");
-            let address:AccountId = self.template_hash_address_map.get(&hash).unwrap().clone();
-            let template:TemplateStub = FromAccountId::from_account_id(address);
+            let address: AccountId = self.template_hash_address_map.get(&hash).unwrap().clone();
+            let template: TemplateStub = FromAccountId::from_account_id(address);
             ink_env::debug_message("-------------2");
             template.get_id()
         }
 
         #[ink(message)]
-        pub fn get_template_id(&self,account_id:AccountId) -> u32 {
+        pub fn get_template_id(&self, account_id: AccountId) -> u32 {
             ink_env::debug_message("-------------1");
-            let template:TemplateStub = FromAccountId::from_account_id(account_id);
+            let template: TemplateStub = FromAccountId::from_account_id(account_id);
             ink_env::debug_message("-------------2");
             template.get_id()
         }
 
         /// Panic if `owner` is not an owner,
         fn ensure_owner(&self) {
-            assert_eq!(self.owner,self.env().caller(),"not owner");
+            assert_eq!(self.owner, self.env().caller(), "not owner");
         }
     }
 }
