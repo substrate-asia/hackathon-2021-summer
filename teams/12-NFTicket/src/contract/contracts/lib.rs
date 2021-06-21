@@ -25,9 +25,10 @@ mod meeting {
         collections::{hashmap::Keys, HashMap as StorageHashMap},
         lazy::Lazy,
     };
+    use primitives::Meeting_Error;
     use stub::TemplateStub;
 
-    pub type Result<T> = core::result::Result<T, Error>;
+    pub type Result<T> = core::result::Result<T, Meeting_Error>;
     /// A simple ERC-20 contract.
     #[ink(storage)]
     pub struct Meeting {
@@ -41,13 +42,6 @@ mod meeting {
         fee_taker: AccountId,
     }
 
-    #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-    pub enum Error {
-        /// Returned if not enough balance to fulfill a request is available.
-        NotOwner,
-        CallBuyTickerError,
-    }
 
     impl Meeting {
         /// Creates a new ERC-20 contract with the specified initial supply.
@@ -101,14 +95,17 @@ mod meeting {
                     // 计算需要的手续费
                     let fee: Balance = ticker_result.price.checked_mul(Balance::from(self.fee_rate.0)).unwrap().checked_div(Balance::from(self.fee_rate.1)).unwrap();
                     // 把资金按照百分比给资金转给资金账户
-                    self.env().transfer(self.fee_taker, fee);
+                    let trans=self.env().transfer(self.fee_taker, fee);
+                    if let Err(_) = trans{
+                        return Err(Meeting_Error::TransferError);
+                    }
                     //将买票的收入转账给发布活动的账户.
                     let contract_fee = ticker_result.price.checked_sub(fee).unwrap();
                     // self.env().transfer(ticker_result.maker, contract_fee);
                     self.env().transfer(maker, contract_fee);
                     Ok(true)
                 }
-                Err(_) => Err(Error::CallBuyTickerError),
+                Err(_) => Err(Meeting_Error::CallBuyTickerError),
                 // Err(_) => panic!("call buy ticker error!"),
             };
             return result;
