@@ -1,0 +1,66 @@
+.routes-list{
+    display: flex;
+    height: 45px;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-top: 1px solid #ddd;
+    z-index: 1000;
+}
+
+.tab-item{
+    color: #999;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.tab-item-middle{
+    color: #999;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.tab-item-icon-middle{
+    margin: 2px;
+    color: #999;
+    font-size: 14px;
+    position: fixed;
+    bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-active{
+    color: #cc0000;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.tab-item-icon{
+    width: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.tab-item-name{
+    font-size: 8px;
+    margin-top: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+a { text-decoration: none; }
