@@ -20,6 +20,7 @@ mod meeting {
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_env::call::FromAccountId;
     use ink_prelude::vec::Vec;
+    use ink_prelude::format;
     use ink_storage::{
         collections::{hashmap::Keys, HashMap as StorageHashMap},
         lazy::Lazy,
@@ -79,16 +80,20 @@ mod meeting {
         /// 开始收费门票.
         #[ink(message, payable)]
         pub fn buy_ticket(&mut self, ticker: Hash, template_hash: Hash,maker:AccountId) -> Result<bool> {
-            ink_env::debug_message("received payment");
             let income: Balance = self.env().transferred_balance();
+            ink_env::debug_message(&format!("-------------------------received payment {:?}",income));
             //做前置检查.判断大于0
             assert!(income > 0, "income is negtive");
             // 购买票,如果成功则返回需要的资金.
             //根据template_id查询template合约地址.
+            ink_env::debug_message(&format!("-------------------------template_hash is {:?}",template_hash));
             let template_address: &AccountId =
                 self.template_hash_address_map.get(&template_hash).unwrap();
+            ink_env::debug_message(&format!("-------------------------template_address {:?}",*template_address));
             let mut template: TemplateStub = FromAccountId::from_account_id(*template_address);
+            ink_env::debug_message(&format!("-------------------------template {:?}",template));
             let ticket_price_result = template.buy_ticket(ticker);
+            ink_env::debug_message(&format!("-------------------------ticket_price_result {:?}",ticket_price_result));
             let result= match ticket_price_result {
                 Ok(ticker_result) => {
                     //开始扣除资金.

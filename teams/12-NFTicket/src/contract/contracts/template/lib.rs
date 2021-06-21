@@ -102,8 +102,10 @@ mod template {
                 owner:caller
             }
         }
+
+        #[ink(message)]
         //购买ticker
-        pub fn buy_ticket(&mut self) -> Result<TickeResult>{
+        pub fn buy_ticket(&mut self,ticker: Hash) -> Result<TickeResult>{
             // todo buy ticket
             let result:TickeResult = TickeResult{
                 price:100u128,
