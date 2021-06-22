@@ -16,7 +16,8 @@
 use ink_lang as ink;
 // #[ink::contract(env = ink_log::CustomEnvironment)]
 #[ink::contract]
-mod meeting {
+mod nfticket {
+    use ink_env::AccountId;
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_env::call::FromAccountId;
     use ink_prelude::vec::Vec;
@@ -31,19 +32,19 @@ mod meeting {
     pub type Result<T> = core::result::Result<T, Meeting_Error>;
     /// A simple ERC-20 contract.
     #[ink(storage)]
-    pub struct Meeting {
+    pub struct NftTicket {
         //合约模板hash和address映射.
         template_hash_address_map: StorageHashMap<Hash, AccountId>,
         //所有者
         owner: AccountId,
-
+        //费率
         fee_rate: (u128, u128),
         /// 收取费用的人
         fee_taker: AccountId,
     }
 
 
-    impl Meeting {
+    impl NftTicket {
         /// Creates a new ERC-20 contract with the specified initial supply.
         #[ink(constructor)]
         pub fn new(fee_taker: AccountId) -> Self {
@@ -69,6 +70,15 @@ mod meeting {
         #[ink(message)]
         pub fn get_fee_rate(&self) -> (u128, u128) {
             self.fee_rate
+        }
+
+        /// Owner转移相关方法，可以更换主合约的控制人
+        ///验证操作人是否 owner;
+        #[ink(message)]
+        pub fn owner_transfer(&mut self, new_owner: AccountId)->bool{
+            self.ensure_owner();
+            self.owner = new_owner;
+            return true;
         }
 
         /// 开始收费门票.
