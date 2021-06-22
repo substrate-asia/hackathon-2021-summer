@@ -17,7 +17,10 @@ mod nfticket {
         traits::{PackedLayout, SpreadLayout},
     };
     
-    // 模板状态 Active 正常使用；Pause 暂停使用；Expired 已过期
+    // 模板状态
+    // Active 正常使用
+    // Pause 暂停使用，不能创建活动，前端可以展示，但是提示暂时不可用
+    // Expired 已过期，不能创建活动，前端选择的时候不展示；
     #[derive(
         Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
     )]
@@ -26,9 +29,9 @@ mod nfticket {
         derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
     )]
     enum TempalateStatus{
-        Active,     // 正常使用
-        Pause,      // 暂停使用
-        Expired,    // 已过期
+        Active,
+        Pause,
+        Expired,
     }
     impl Default for TempalateStatus {
         fn default() -> TempalateStatus {
@@ -36,7 +39,7 @@ mod nfticket {
         }
     }
 
-     // 模板数据结构
+     // 模板数据
     #[derive(
         Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
     )]
@@ -45,17 +48,15 @@ mod nfticket {
         derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
     )]
     struct Template{
-        owner: AccountId,   // 模板的控制人
-        name: Vec<u8>,      // 模板名称
-        desc: Vec<u8>,      // 模板描述
-        uri: Vec<u8>,       // 模板介绍网址
-        ratio: u128,        // 模板将获得的分成比例，百万分之N，
-        status: TempalateStatus,         // 模板状态，1：正常；2：暂停使用；3：过期；
+        name: Vec<u8>,      // 模板名称，用于前端展示
+        desc: Vec<u8>,      // 模板描述，用于前端展示
+        uri: Vec<u8>,       // 模板介绍网址，用于前端展示
+        ratio: u32,         // 模板获得服务费的比例，分母为百万，即百万分之之N，
+        status: TempalateStatus,         // 模板状态
     }
     impl Default for Template {
         fn default() -> Template {
             Template {
-                owner: Default:default(),
                 name: Vec::default(),
                 desc: Vec::default(),
                 uri: Vec::default(),
@@ -65,7 +66,9 @@ mod nfticket {
         }
     }
 
-    // 活动状态 Active: 正常可用的，Pause: 暂停使用
+    // 活动状态
+    //  Active: 可以正常报名参加；
+    //  Pause: 暂停报名参加，逻辑上不控制（由活动合约自己控制），只是考虑列表展示
     #[derive(
         Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
     )]
@@ -92,7 +95,7 @@ mod nfticket {
         derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
     )]
     struct Meeting{
-        template: AccountId,   // 模板账号
+        template: AccountId,   // 活动模板的地址
         name: Vec<u8>,      // 活动名称
         desc: Vec<u8>,      // 活动介绍
         poster: Vec<u8>,    // 活动海报地址
@@ -208,7 +211,7 @@ mod nfticket {
         owner: AccountId,       // 系统管理员账号
         templates: StorageMap<AccountId, Template>,   // 模板列表，使用模板合约address 作为 key
         meetings: StorageMap<AccountId, Meeting>,   // 会议列表，使用会议合约address 作为 key
-        min_ticket_price: Balance,  // 创建门票的时候，一张门票最少需要付多少钱
+        min_ticket_fee: Balance,  // 最低服务费数量
         balance: Balance,   // 系统收入账户余额
         teplate_balances: StorageMap<AccountId, Balance>, // 模板账户余额
 
@@ -239,15 +242,15 @@ mod nfticket {
         1. 验证操作人是否 owner;
         */
         #[ink(message)]
-        pub fn owner_transfer(mut &self, new_owner: AccountId){
+        pub fn transfer_owner(mut &self, new_owner: AccountId){
 
         }
 
         /**
-        修改最小门票付款限额
+        修改最小单张门票服务费
         1. 验证操作人是否 owner;
         */
-        pub fn set_min_ticket_price(mut &self, min_ticket_price:Balance){
+        pub fn set_min_ticket_fee(mut &self, min_ticket_fee: Balance){
 
         }
 
@@ -255,11 +258,11 @@ mod nfticket {
          添加模板
          1. 验证操作人是否 系统owner ;
          2. 验证 address 是否有重复;
-         3. 调用模板合约的 get_controler 确认主控合约地址是将当前合约
-         4. 添加模板
+         3. 调用模板合约的 get_controller 确认主控合约地址是将当前合约
+         4. 添加模板数据
          5. 触发事件 template_added(AccountId, AccountId,)
          */
-        pub fn add_template(template_address:AccountId, owner: AccountId, name:Vec<u8>, desc:Vec<u8>, uri: Vec<u8>, ratio: u128){
+        pub fn add_template(&mut self, template:AccountId, name:Vec<u8>, desc:Vec<u8>, uri: Vec<u8>, ratio: u128){
 
         }
         /**
@@ -268,73 +271,90 @@ mod nfticket {
         2. 验证模板是否有效
         3. 触发事件 tempalte_status_changed
         */
-        pub fn set_template_status(template_address: AccountId, status: TemplateStatus){
+        pub fn set_template_status(&mut self, template: AccountId, status: TemplateStatus){
 
         }
         /**
         修改模板信息
-        1. 验证操作人是否系统 owner or 模板的 owner
+        1. 验证操作人是否系统 owner or 模板的 owner（需要通过 活动模板合约获取）
         2. 验证模板是否有效
         3. 触发事件 template_modified
         */
-        pub fn modify_template(template_address:AccountId, name: Vec<u8>, desc: Vec<u8>, uri: Vec<u8>, ratio: u128 ){
+        pub fn modify_template(&mut self, template:AccountId, name: Vec<u8>, desc: Vec<u8>, uri: Vec<u8>, ratio: u128 ){
 
         }
 
         /**
-        转移模板的 owner
-        1. 仅 template 的 owner 可以调用
-        2. 触发时间 template_transfered
-        */
-        pub fn transfer_template(template_address:AccountId, new_owner:AccountId)
-        
-        /**
         返回模板列表，可能需要考虑一套完整的方案，智能合约也许不能返回 hashMap
         */
-        pub fn get_templates()
+        pub fn get_templates(&self)-> Vec<Template>{
+
+        }
 
         /** 
         添加会议活动，仅限已登记并且处于激活状态的模板合约调用
         1. 通过调用合约地址，确认是哪个模板
         3. 确认活动地址是否重复，
-        4. 确认活动参数信息
+        4. 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
         5. 创建相应的 NFT 集合（调用 runtime 接口）
         6. 添加活动信息
         7. 触发事件 meeting_added
         */
-        pub fn add_meeting(meeting_address:AccountId, /* meeting的各项参数 */){
+        pub fn add_meeting(&mut self, meeting:AccountId, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64)->bool{
 
         }
         /**
         修改活动状态，（仅限已登记的活动合约调用）
         1. 通过调用合约地址，确认是哪个活动
         2. 更新状态
+        3. 触发 meeting_status_changed 事件
+        4. 如果状态和先前状态一致，仍然返回 true ，只是不触发事件
         */
-        pub fn set_meeting_status(status: MeetingStatus){
+        pub fn set_meeting_status(&mut self, status: MeetingStatus)->bool{
 
         }
         /**
-        修改活动信息（仅限已登记的活动合约调用，修改该活动的信息）
-        1. 通过调用合约地址，确认是哪个活动
-        2. 确认活动信息内容
-        3. 更新活动信息内容
-        4. 不触发事件，由 活动合约 去触发，因为有一部分的修改，不会调用主合约(问题：是否会造成监控事件复杂？)
+        修改活动信息（ 仅 活动的 owner 可以调用 ）
+        1. 通过调用合约地址，确认活动
+        2. 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
+        3. 更新信息；
+        4. 触发 meeting_modified 事件
+        5. 更新成功，返回 true
         */
-        pub fn modify_meeting(/* meeting的各项参数 */){
+        pub fn modify_meeting(&mut self, meeting:AccountId, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64)->bool{
+
+        }
+        
+        /**
+        更新活动状态（ 仅 活动的 owner 可以调用 ）
+        1. 需要确定活动是否存在
+        2. 如果状态相同未更改，不报错，但是不触发事件
+        3. 触发 meeting_status_changed
+        */
+        pub fn set_meeting_status(&mut self, meeting:AccountId, status: MeetingStatus) -> bool {
 
         }
 
         /**
-        返回活动列表，与获取模板一样，
+        返回活动列表
         */
-        pub fn get_meetings()
+        pub fn get_meetings(&self) -> Vec<Meeting>{
+
+        }
+
+        /**
+        返回指定会议的基本信息
+        */
+        pub fn get_meeting(&self, meeting: AccountId)->Metting{
+
+        }
 
         /**
         系统管理员提取手续费收入到指定账户
         1. 必须 owner 调用
         2. 触发 withdraw 时间
         */
-        pub fn withdraw(to: AccountId, amount: Balance){
+        pub fn withdraw(&mut self, to: AccountId, amount: Balance){
 
         }
 
@@ -343,32 +363,23 @@ mod nfticket {
         1. 指定模板必须有效
         2. 调用者必须是模板的 owner
         */
-        pub fn template_withdraw(template: Account, to:AccountId, amount:Balance){
+        pub fn template_withdraw(&mut self, template: AccountId, to:AccountId, amount: Balance){
 
         }
 
         /**
         返回系统账号收入的余额
         */
-        pub fn get_balance()->Balance{
+        pub fn get_balance(&self)->Balance{
 
         }
 
         /**
         返回模板收入账号的余额
         */
-        pub fn get_temlate_balance()->Balance{
+        pub fn get_temlate_balance(&self, template: AccountId)->Balance{
 
         }
-
-        /**
-        收取购票手续费
-        受活动合约调用，当活动合约售出门票的时候，按百分比将一定比例的收入转到控制合约；
-        1. 通过调用合约地址确认是哪个活动的收入；
-        2. 通过活动列表，确认是哪个活动模板的活动
-        3. 按照 ratio 的比例，将一部分收入记到相应模板下
-        3. 触发事件 ticket_fee_received
-        */
 
         /**
         创建门票

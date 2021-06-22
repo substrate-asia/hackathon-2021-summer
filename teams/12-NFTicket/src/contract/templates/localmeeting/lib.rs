@@ -12,12 +12,18 @@ mod localmeeting {
     #[ink(storage)]
     pub struct Localmeeting {
         controller: AccountId,   // 主合约地址
+        owner: AccountId,   // 所有者
+        fee_ratio: u64,     // 按票价提取多少比例作为服务费，不过服务费不能低于 min_ticket_fee
     }
 
     impl Localmeeting {
         #[ink(constructor)]
         pub fn new(controller: AccountId) -> Self {
-            Self { controller: controller }
+            let caller = Self::env().caller();
+            Self {
+                controller: controller,
+                owner: caller,
+            }
         }
 
         /// 返回主控合约地址
@@ -29,11 +35,41 @@ mod localmeeting {
 TODO
         /**
         创建会议活动
-        1. 部署活动合约：根据活动参数对活动合约进行初始化（活动信息有效性验证，放到活动合约内）
-        2. 部署活动合约的时候，需要将主合约传给活动合约
-        3. 通过活动参数，调用主控合约，添加活动；
+        1. 部署一个活动合约，传入主合约地址等参数，获得合约地址
+        2. 调用主合约的 add_meeting 接口，添加活动；
+        3. 返回活动合约地址
         */
-        pub fn create_meeting(template_address:AccountId, owner: AccountId, name:Vec<u8>, desc:Vec<u8>, uri: Vec<u8>){
+        pub fn create_meeting(&mut self, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64) -> AccountId{
+
+        }
+        /**
+        Owner转移相关方法，可以活动模板的控制人
+        1. 验证操作人是否 owner;
+        */
+        #[ink(message)]
+        pub fn transfer_owner(mut &self, new_owner: AccountId){
+
+        }
+
+        /**
+        返回控制人账号
+        */
+        pub fn get_owner(&self) -> AccountId {
+
+        }
+
+        /**
+        设置服务费比例
+        1. 必须是 owner 才可以修改
+        */
+        pub fn set_fee_ratio(&mut self, fee_ratio: u64){
+
+        }
+
+        /**
+        返回服务费比例
+        */
+        pub fn get_fee_rate(&self)->u64{
 
         }
 */

@@ -106,29 +106,28 @@ mod meeting {
 
         // 这个是关于活动控制部分，不属于活动跟本身的信息
         controller: AccountId,   // 主合约地址
+        template: AccountId,   // 主合约地址
         owner: AccountId,   // 活动管理员
-        min_ticket_price: Balance,  // 最低票价设定，定价的时候，单张票价不允许低于此价格
-        ratio: u8,  // 按票价提取多少比例作为服务费，不过服务费不能低于 min_ticket_price
+        max_zone_id: u8,    // 最大的zone_id
 
-        // 活动基础信息
-        //      思考问题：这部分与主合约的相同，两边是否选一遍保存，只保存一份就可以？
-
-        name: Vec<u8>, // 活动名称
-        desc: Vec<u8>, // 活动描述
-        uri: Vec<u8>,  // 活动网址 
-        poster: Vec<u8>, // 活动海报地址
-        start_time: u64,       // 活动开始时间
-        end_time: u64,         // 活动结束时间
-        start_sale_time: u64,       // 开始售卖时间
-        end_sale_time: u64,         // 开始售卖时间
-        status: MeetingStatus,  // 会议状态
+        // 活动基础信息 
+        //      这部分信息的修改，通过主合约来修改
+        // name: Vec<u8>, // 活动名称
+        // desc: Vec<u8>, // 活动描述
+        // uri: Vec<u8>,  // 活动网址 
+        // poster: Vec<u8>, // 活动海报地址
+        // start_time: u64,       // 活动开始时间
+        // end_time: u64,         // 活动结束时间
+        // start_sale_time: u64,       // 开始售卖时间
+        // end_sale_time: u64,         // 开始售卖时间
+        // status: MeetingStatus,  // 会议状态
 
         // 活动配置参数
         local_address: Vec<u8>, // 获取举办地址
         zones: StorageMap<u8, Zone>,    // 活动场地的分区配置，key 为分区的序号
         price_type: PriceType,  // 收费方式
         price: Balance,         // 收费方式=Uniform 时候生效
-        prices: StorageMap<u8, Balance> //收费明细，收费方式=Partition时候看，生效；
+        prices: StorageMap<u8, Balance> //收费明细，收费方式=Partition时候看，生效；带个是 zone_id
         seats: StorageMap<(u8,u8,u8), SeatStatus>,    // 活动场地的不可用的座位，是由元组组成的key，元组元素为 分区序号，排号，座号。这样可以快速检测座位是否被禁用
         inspectors: StorageMap<AccountId, bool>, // 检票员
 
@@ -141,22 +140,25 @@ mod meeting {
     impl Meeting {
 
         #[ink(constructor)]
-        pub fn new() -> Self {
-            Self {  }
+        pub fn new( controller: AccountId, template: AccountId) -> Self {
+            let caller = Self::env().caller();
+            Self {
+                controller: controller,
+                template: template,
+                owner: caller,
+                zone_id: Default:default(),
+                local_address: Default:default(),
+                zones: Default:default(),
+                price_type: Default:default(),
+                price: Default:default(),
+                seats: Default:default(),
+                inspectors: Default:default(),
+            }
         }
 
 /**
 TODO:
-        /**
-        更新活动信息，包括：活动基础信息、活动配置参数
-        1. 可以讨论：是否需要拆分成多个方法，设置不同的参数？
-        2. 至于 owner 可以调用修改，如果活动处于 active 状态 或者 活动已经有售卖门票，暂时不允许修改；
-        3. 如果涉及到基础信息部分的更新，需要调用主合约更新；
-        4. 修改成功后，触发事件 meeting_modified
-        */
-        pub fn modify_meeting(){
 
-        }
 
         /**
         转移 owner
@@ -166,14 +168,59 @@ TODO:
 
         }
 
-        /**
-        更新活动状态
-        1. 仅 owner 可以调用；
-        2. 需要调用 主合约 更新状态
-        3. 触发 meeting_status_changed
-        */
-        pub fn set_meeting_status(status: MeetingStatus){
+        pub fn get_owner(&self)-> AccountId{
 
+        }
+
+        /**
+        更新活动信息，包括：活动基础信息、活动配置参数
+        1. 只有 owner 可以调用修改，如果活动处于 active 状态 或者 活动已经有售卖门票，暂时不允许修改；
+        2. 如果涉及到基础信息部分的更新，需要调用主合约更新；
+        3. 修改成功后，触发事件 meeting_modified
+        */
+        pub fn modify_meeting(&mut self, local_address:Vec<u8>, price_type: PriceType,){
+
+        }
+
+
+        /*** zone 是否可以批量设置？ ***/
+        /**
+        添加区域
+        1. 需要 owner 设置
+        2. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
+        3. 返回的是 zone 的ID
+        */
+        pub fn add_zone(&mut self, name: Vec<u8>, rows: u8, cols: u8, price:Balance)-> u8{
+
+        }
+        /**
+        修改区域
+        1. 需要 owner 设置
+        2. zone_id 必须存在
+        3. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
+        4. 返回的是 zone_id，zong_id 会自增
+        */
+        pub fn add_zone(&mut self, zone_id:u8, name: Vec<u8>, rows: u8, cols: u8, price:Balance)-> u8{
+
+        }
+        /**
+        删除区域
+        1. 需要 owner 设置
+        2. zone_id 必须存在
+        3. 删除操作不会修改 zone_id 序号
+        */
+        pub fn remove_zone(&mut self, zone_id:u8)-> bool{
+
+        }
+
+        /**
+         设置作为不可用的作为
+         1. 所有提交的作为都标记为不可用
+         2. 所有未包含的作为都需要设置为可用
+         3. 如果已经售出的，不允许修改
+        */
+        pub fn set_disabled_seats( seats: Vec<(u8,u8,u8)> )->bool{
+            
         }
 
         /**
