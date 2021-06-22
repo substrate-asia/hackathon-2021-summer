@@ -119,8 +119,13 @@ mod meeting {
         pub fn new(template:AccountId,meeting:AccountId,price:Balance,zone_id:u8)->Self{
             // 此处的生成hash的方法极度不合理.需要将template+meeting+price一起生成encode后得到进行hash运算.
             let name:[u8;1] = [zone_id];
+            let mut t=scale::Encode::encode(&template);
+            let mut m=scale::Encode::encode(&template);
+            t.append(&mut m);
+            let hash = scale::Encode::encode(&t);
+            
             let mut hash_output = <<Blake2x256 as HashOutput>::Type as Default>::default();
-            <Blake2x256 as CryptoHash>::hash(&name, &mut hash_output);
+            <Blake2x256 as CryptoHash>::hash(&hash, &mut hash_output);
             Self{
                 template,
                 meeting,

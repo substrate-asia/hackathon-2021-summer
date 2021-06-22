@@ -17,7 +17,6 @@ use ink_lang as ink;
 // #[ink::contract(env = ink_log::CustomEnvironment)]
 #[ink::contract]
 mod nfticket {
-    use ink_env::AccountId;
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_env::call::FromAccountId;
     use ink_prelude::vec::Vec;
