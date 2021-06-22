@@ -114,25 +114,24 @@ class Home extends Component {
       const obj = data[index--];
       return (
         <div key={rowID} className='card-content'
-        style={{ height:'250px',padding: '15px 15px',
-        margin:'15px 15px',
-        backgroundImage:`url('./images/bg/back.jpg')`,
-        borderRadius:'25px' }}>
-          <div style={{display:'flex',width:'50px'}}>
-            <img style={{ height: '64px', marginRight: '15px',borderRadius:'30px' }} src={obj.img} alt="" />
-            <div style={{
-                lineHeight: '10px',
-                color: '#888',
-                fontSize: 18,
-                display:'flex',
-                justifyContent:'center',
-                alignItems:'center'
-              }}>Title</div>
+        style={{backgroundImage:"url('./images/bg/back.jpg')"}}>
+          <div className="top-container">
+            <div className='top-name' style={{borderRadius:'50px',width:'50px',height:'50px',
+            backgroundColor:"#ffffff",
+            display:'flex'}}>
+              <span className="top-text">A</span>
+            </div>
+            <div className='top-time-group'>
+              <div className='top-time-1'>12</div>
+              <div className='top-time-2'>Nav</div>
+            </div>
           </div>
-          <div style={{ display: 'flex', padding: '15px 0' }}>
-            <div style={{ lineHeight: 1 }}>
-              <div style={{ marginBottom: '8px', fontWeight: 'bold' }}>{obj.des}</div>
-              <div><span style={{ fontSize: '30px', color: '#FF6E27' }}>{rowID}</span></div>
+          <div className='bottom-container'>
+            <div>
+              <div style={{ marginBottom: '8px',textShadow:'#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Description</div>
+              <div style={{ marginBottom: '8px',fontSize:'24px',fontWeight:'bold',textShadow:'#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>Event Name</div>
+              <div style={{display:'flex'}}><div><img style={{margin:'0px 5px 5px 0px',width:'15px',height:'15px'}} src='./images/location.png'></img></div><span style={{textShadow:'#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0'}}>Location details</span></div>
+              <div style={{display:'flex'}}><div><img style={{margin:'0px 5px 5px 0px',width:'15px',height:'15px'}} src='./images/time.png'></img></div><span style={{textShadow:'#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0'}}>Start time</span></div>
             </div>
           </div>
         </div>
