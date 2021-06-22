@@ -1,0 +1,69 @@
+.am-search {
+    border-bottom: 1px solid #ddd;
+}
+.sub-title {
+    color: #888;
+    font-size: 14px;
+    padding: 30px 0 18px 0;
+}
+.content{
+    width: 100%;
+    height: 100%;
+}
+.search-content .search-bar{
+    width: 100%;
+}
+
+.account-info{
+    margin: 3px;
+    display: flex;
+    align-content: space-between;
+}
+
+.account-info-left{
+    margin: 2px;
+    float: left;
+    width: 50%;
+}
+
+.account-info-right{
+    float: right;
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.right-text{
+    width: auto;
+    font-size: 10px;
+    margin: 10px;
+    padding: 2px 8px 2px 8px;
+    border: 1px solid #a1a1a1;
+    border-radius: 25px;
+}
+
+.icon-text{
+    font-weight: bold;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-icon{
+    margin: 5px;
+}
+
+.card-content{
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+}
+
+.card-context{
+    height: 280px;
+    margin: 15px;
+    border: 2px solid;
+    border-radius: 35px;
+}
