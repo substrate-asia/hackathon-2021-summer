@@ -383,12 +383,12 @@ mod nfticket {
 
         /**
         创建门票
-        1. 调用本合约，必须付费，并且必须大于等于 min_ticket_price
+        1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
         2. 仅能通过活动合约调用；
         3. 通过调用的活动合约地址，知道是哪个活动，知道是哪个模板生成的，给相应的模板记分成收入；
         4. 调用 runtime 的 NFT 创建接口，创建门票 NFT，并将门票NFT发放给 buyer
         5. 返回创建的 class_id 和 NFT_ID的元组
-        6. 触发时间： ticket_created
+        6. 触发事件： ticket_created
         */
         #[ink(message, payable)]
         pub fn create_ticket(&mut self, buyer: AccountId, ext_data: Vec<u8>)->（u128, u128){
