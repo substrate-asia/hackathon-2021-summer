@@ -18,7 +18,7 @@ use ink_lang as ink;
 
 #[ink::contract]
 mod meeting {
-    use ink_env::{AccountId, Clear, hash::{Blake2x256, CryptoHash, HashOutput}};
+    use ink_env::{Clear, hash::{Blake2x256, CryptoHash, HashOutput}};
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_prelude::vec::Vec;
     use ink_storage::{Lazy, collections::HashMap, traits::{PackedLayout, SpreadLayout}};

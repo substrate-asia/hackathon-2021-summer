@@ -161,9 +161,9 @@ mod nfticket {
 
         #[ink(message)]
         pub fn get_template_id(&self, account_id: AccountId) -> u32 {
-            ink_env::debug_message("-------------1");
+            ink_env::debug_message("-------------333");
             let template: TemplateStub = FromAccountId::from_account_id(account_id);
-            ink_env::debug_println("-------------333{}",account_id);
+            ink_env::debug_message("-------------444");
             template.get_id()
         }
 
