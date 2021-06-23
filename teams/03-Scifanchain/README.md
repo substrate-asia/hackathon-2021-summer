@@ -70,13 +70,19 @@
 
 - api
 
+位于scr/api文件目录下，运行于Python虚拟环境。在项目根目录下，运行以下命令安装：
+```
+python3 -m venv .venv
+soruce .venb/bin/activate
+pip install -r requirements.txt
+```
 | 完成进度 | 模块 | 功能说明 | 测试覆盖 
 | --- | --- | --- | ---
-| 30% | Story | 人物、地点和事件等各类故事元素的CRUD | 0%
-| 20% | Era | 星旋宇宙纪元系统 | 0%
-| 10% | Auth | 用户鉴权系统 | 0%
-| 15% | History | 数据演进过程记录及版本控制 | 0%
-| 10% | CORS | 跨源资源共享 | 0%
+| :clock130: 60% | Story | 人物、地点和事件等各类故事元素的CRUD | 0%
+| :clock130: 20% | Era | 星旋宇宙纪元系统 | 0%
+| :heavy_check_mark: 100% | OAuth2 | 配合JWF实现前后端用户鉴权系统 | 0%
+| :heavy_check_mark: 100% | Alembic数据迁移管理 | 数据演进过程记录及版本控制 | 0%
+| :heavy_check_mark: 100% | CORSMiddleware | 跨域资源共享，作用域可控调用 | 0%
 
 **客户端**
 
