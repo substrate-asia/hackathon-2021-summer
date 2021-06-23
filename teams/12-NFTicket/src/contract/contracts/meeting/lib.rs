@@ -18,10 +18,7 @@ use ink_lang as ink;
 
 #[ink::contract]
 mod meeting {
-    use ink_env::{
-        hash::{Blake2x256, CryptoHash, HashOutput},
-        Clear,
-    };
+    use ink_env::{AccountId, Clear, hash::{Blake2x256, CryptoHash, HashOutput}};
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_prelude::vec::Vec;
     use ink_storage::{Lazy, collections::HashMap, traits::{PackedLayout, SpreadLayout}};
@@ -54,6 +51,7 @@ mod meeting {
         class_id: u64,         // 关联的 NFT 集合ID
         status: MeetingStatus, // 会议状态
         zone_id: u32,          //会议区域划分
+        ticket_id:u32,
         ticket_map:HashMap<u32,Ticket>, //ticker存放map
     }
 
@@ -72,6 +70,7 @@ mod meeting {
                 class_id: Default::default(),
                 status: MeetingStatus::Active,
                 zone_id: Default::default(),
+                ticket_id:Default::default(),
                 ticket_map:Default::default(),
             }
         }
@@ -116,13 +115,16 @@ mod meeting {
     }
 
     impl Ticket{
-        pub fn new(template:AccountId,meeting:AccountId,price:Balance,zone_id:u8)->Self{
+        pub fn new(template:AccountId,meeting:AccountId,price:Balance,zone_id:u8,ticket_id:u32)->Self{
             // 此处的生成hash的方法极度不合理.需要将template+meeting+price一起生成encode后得到进行hash运算.
-            let name:[u8;1] = [zone_id];
-            let mut t=scale::Encode::encode(&template);
-            let mut m=scale::Encode::encode(&template);
-            t.append(&mut m);
-            let hash = scale::Encode::encode(&t);
+            let mut template_code=scale::Encode::encode(&template);
+            let mut meeting_code=scale::Encode::encode(&meeting);
+            template_code.append(&mut meeting_code);
+            let mut as_byte = ticket_id.to_be_bytes().to_vec();
+            template_code.append(&mut as_byte);
+            // let random_hash:[u8] = ink_env::random(template_code).unwrap().0;
+            // template_code.append(random_hash);
+            let hash = scale::Encode::encode(&template_code);
             
             let mut hash_output = <<Blake2x256 as HashOutput>::Type as Default>::default();
             <Blake2x256 as CryptoHash>::hash(&hash, &mut hash_output);
@@ -192,13 +194,16 @@ mod meeting {
                 class_id: Default::default(),
                 status: MeetingStatus::Active,
                 zone_id: Default::default(),
+                ticket_id:Default::default(),
                 ticket_map: Default::default(),
             } 
         }
 
-        #[ink(message)]
-        //购买ticker
-        pub fn buy_ticket(&mut self, ticker_id: u32,) -> Result<TickeResult> {
+
+        /// 购买ticker,需要支付一定数量的币.
+        /// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
+        #[ink(message,payable)]
+        pub fn buy_ticket(&mut self, meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
             // todo buy ticket
             let result: TickeResult = TickeResult {
                 price: 100u128,
