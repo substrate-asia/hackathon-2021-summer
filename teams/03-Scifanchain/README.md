@@ -68,37 +68,31 @@
 
 **服务端**
 
-- api
+- 应用层API接口
 
-位于scr/api文件目录下，运行于Python虚拟环境。在项目根目录下，运行以下命令安装：
-```
-python3 -m venv .venv
-soruce .venb/bin/activate
-pip install -r requirements.txt
-```
-| 完成进度 | 模块 | 功能说明 | 测试覆盖 
+为Client客户端提供数据和应用逻辑。位于scr/api文件目录下，运行于Python虚拟环境。
+
+站点：https://api.scifanchian.com
+
+| 完成进度 | 模块 | 功能说明 | 备注
 | --- | --- | --- | ---
 | :clock130: 60% | Story | 人物、地点和事件等各类故事元素的CRUD | 0%
 | :clock130: 20% | Era | 星旋宇宙纪元系统 | 0%
 | :heavy_check_mark: 100% | OAuth2 | 配合JWF实现前后端用户鉴权系统 | 0%
 | :heavy_check_mark: 100% | Alembic数据迁移管理 | 数据演进过程记录及版本控制 | 0%
 | :heavy_check_mark: 100% | CORSMiddleware | 跨域资源共享，作用域可控调用 | 0%
+| :heavy_check_mark: 100% | Docs | 用户文档中心  | 访问：https://docs.scifanchain.com
+| :heavy_check_mark: 100% | Blog | 团队博客 | 访问：https://blog.scifanchain.com
 
 **客户端**
 
-- web端
-  - [ ] 赛凡链官网
-  - [ ] 团队博客
-  - [ ] 用户文档中心 
-  - [ ] 应用层API接口
-  - [ ] OAuth2用户鉴权，JWT Bearer令牌发放
+站点：https://scifanchain.com
 
-- Dapp (react)
-  - [ ] 用户注册/登录相关功能
-  - [ ] 文本创作流程
-  - [ ] 文本借用/引用流程
-  - [ ] 用户钱包
-  - [ ] 交易查询
+- [ ] 用户注册/登录相关功能
+- [ ] 文本创作流程
+- [ ] 文本借用/引用流程
+- [ ] 用户钱包
+- [ ] 交易查询
 
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
