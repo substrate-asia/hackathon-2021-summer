@@ -1,6 +1,6 @@
 ## 基本资料
 
-项目名称：Hypergraph
+项目名称：Metagraph
 
 项目立项日期 ：2021年5月
 
@@ -32,9 +32,18 @@
 
 名字：Github
 
-Jin-Long：JinlongHuang
+马耀: yahtoo
 
-马耀：yahtoo
+HDX: hdexpander
 
-Russell：ruoguluo
+Russell: ruoguluo
+
+Jihui Zheng: zjhmale
+
+张潇予: moliqingcha000
+
+Specter: Jackieyewang
+
+林海: linhai
+
 
