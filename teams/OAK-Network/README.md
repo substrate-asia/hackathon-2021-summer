@@ -21,7 +21,7 @@ logo-small.png![image](https://user-images.githubusercontent.com/2616844/1107538
 **区块链端**
 
 - `pallet-quadratic-funding`
-  - [ ] 创建 (`fn create_project(origin, name: Vec<u8>, logo: Vec<u8>, description: Vec<u8>, website: Vec<u8>)`)
+  - [ ] 创建项目 (`fn create_project(origin, name: Vec<u8>, logo: Vec<u8>, description: Vec<u8>, website: Vec<u8>)`)
   - [ ] 向模块账号资助金额 (`fn fund(origin, fund_balance: BalanceOf<T>)`)
   - [ ] 计划一轮活动 (`fn schedule_round(origin, start: T::BlockNumber, end: T::BlockNumber, matching_fund: BalanceOf<T>, project_indexes: Vec<ProjectIndex>)`)
   - [ ] 取消一轮活动 (`cancel_round(origin, round_index: RoundIndex)`)
