@@ -196,7 +196,7 @@ mod meeting {
                 zone_id: Default::default(),
                 ticket_id:Default::default(),
                 ticket_map: Default::default(),
-            } 
+            }
         }
 
 
@@ -204,6 +204,10 @@ mod meeting {
         /// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
         #[ink(message,payable)]
         pub fn buy_ticket(&mut self, meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
+            let ticket_price = self.get_ticket_price(zone_id,seat_id);
+            let income: Balance = self.env().transferred_balance();
+            ///保证用户传送的金额必须大于票价
+
             // todo buy ticket
             let result: TickeResult = TickeResult {
                 price: 100u128,
@@ -211,6 +215,16 @@ mod meeting {
             };
             Ok(result)
         }
+
+        /// 得到某个区域的票价
+        fn get_ticket_price(&self,zone_id:u32,seat_id:Option<(u32,u32)>)->Option<Balance>{
+            //TODO 确保这个位置是有效的.
+            //TODO 获取这个位置的票价
+            return Some(20000000000u128.into());
+        }
+
+        //确保这个位置是否已经售出
+        
 
         #[ink(message)]
         pub fn get_id(&self) -> u32 {
