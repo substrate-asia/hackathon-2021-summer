@@ -21,6 +21,7 @@ mod meeting {
     use ink_env::{Clear, hash::{Blake2x256, CryptoHash, HashOutput}};
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_prelude::vec::Vec;
+    use ink_prelude::format;
     use ink_storage::{Lazy, collections::HashMap, traits::{PackedLayout, SpreadLayout}};
     use primitives::TickeResult;
 
@@ -39,6 +40,7 @@ mod meeting {
     /// a simple template contract.
     #[ink(storage)]
     pub struct Meeting {
+        nfticket_addr:AccountId,//主合约地址
         template: AccountId,   // 模板账号
         name: Vec<u8>,         // 活动名称
         desc: Vec<u8>,         // 活动介绍
@@ -58,6 +60,7 @@ mod meeting {
     impl Default for Meeting {
         fn default() -> Self {
             Meeting {
+                nfticket_addr:Default::default(),
                 template: Default::default(),
                 name: Default::default(),
                 desc: Default::default(),
@@ -107,33 +110,32 @@ mod meeting {
         derive(::scale_info::TypeInfo, ::ink_storage::traits::StorageLayout)
     )]
     pub struct Ticket {
-        template: AccountId,    //模板地址
         meeting:AccountId,      //活动地址
         hash: Vec<u8>,          //hash值
         price: Balance,         //价格
-        zone_id:u8              //区域.
+        zone_id:u32,              //区域.
+        seat_id:Option<(u32,u32)>
     }
 
     impl Ticket{
-        pub fn new(template:AccountId,meeting:AccountId,price:Balance,zone_id:u8,ticket_id:u32)->Self{
+        pub fn new(meeting:AccountId,price:Balance,zone_id:u32,seat_id:Option<(u32,u32)>,ticket_id:u32)->Self{
             // 此处的生成hash的方法极度不合理.需要将template+meeting+price一起生成encode后得到进行hash运算.
-            let mut template_code=scale::Encode::encode(&template);
+            // let mut template_code=scale::Encode::encode(&template);
             let mut meeting_code=scale::Encode::encode(&meeting);
-            template_code.append(&mut meeting_code);
-            let mut as_byte = ticket_id.to_be_bytes().to_vec();
-            template_code.append(&mut as_byte);
+            let mut ticket_id_byte = ticket_id.to_be_bytes().to_vec();
+            meeting_code.append(&mut ticket_id_byte);
             // let random_hash:[u8] = ink_env::random(template_code).unwrap().0;
             // template_code.append(random_hash);
-            let hash = scale::Encode::encode(&template_code);
+            let hash = scale::Encode::encode(&meeting_code);
             
             let mut hash_output = <<Blake2x256 as HashOutput>::Type as Default>::default();
             <Blake2x256 as CryptoHash>::hash(&hash, &mut hash_output);
             Self{
-                template,
                 meeting,
                 hash:hash_output.into(),
                 price,
                 zone_id,
+                seat_id,
             }
         }
     }
@@ -178,10 +180,11 @@ mod meeting {
     impl Meeting {
         /// Creates a new ERC-20 contract with the specified initial supply.
         #[ink(constructor)]
-        pub fn new(template_address:AccountId,name: Vec<u8>, desc: Vec<u8>,) -> Self {
+        pub fn new(nfticket_addr:AccountId,template_address:AccountId,name: Vec<u8>, desc: Vec<u8>,) -> Self {
             let mut hash_output = <<Blake2x256 as HashOutput>::Type as Default>::default();
             <Blake2x256 as CryptoHash>::hash(&name, &mut hash_output);
             Meeting{
+                nfticket_addr,
                 template:template_address,
                 name,
                 desc,
@@ -205,10 +208,17 @@ mod meeting {
         #[ink(message,payable)]
         pub fn buy_ticket(&mut self, meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
             let ticket_price = self.get_ticket_price(zone_id,seat_id).unwrap();
+            ink_env::debug_message(&format!("-------------------------ticket_price {:?}",ticket_price));
             let income: Balance = self.env().transferred_balance();
+            ink_env::debug_message(&format!("-------------------------income {:?}",income));
             ///保证用户传送的金额必须大于票价
             assert!(income >=ticket_price,"not enough money!");
-            // todo buy ticket
+            // 生成ticke
+            let ticket_id =self.ticket_id;
+            self.ticket_id.checked_add(1);
+            let ticket = Ticket::new(meeting_addr, ticket_price, zone_id, seat_id,ticket_id);
+            // TODO 标记这个座位已经售出
+            // 把剩余转账给主合约,并记录这个主合约
             let result: TickeResult = TickeResult {
                 price: 100u128,
                 maker: AccountId::from([0x01; 32]),
@@ -223,7 +233,11 @@ mod meeting {
             return Some(20000000000u128.into());
         }
 
-        //确保这个位置是否已经售出
+        /// 得到某个区域的票价
+        fn make_seat_sealed(& mut self,zone_id:u32,seat_id:Option<(u32,u32)>)->Option<bool>{
+            //TODO 标记这个位置已经卖出
+            return Some(true);
+        }
         
 
         #[ink(message)]
