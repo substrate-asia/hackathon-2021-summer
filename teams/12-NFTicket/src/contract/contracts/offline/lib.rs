@@ -41,6 +41,7 @@ mod meeting {
     #[ink(storage)]
     pub struct Meeting {
         nfticket_addr:AccountId,//主合约地址
+                                //支付主合约的手续费率
         template: AccountId,   // 模板账号
         name: Vec<u8>,         // 活动名称
         desc: Vec<u8>,         // 活动介绍
