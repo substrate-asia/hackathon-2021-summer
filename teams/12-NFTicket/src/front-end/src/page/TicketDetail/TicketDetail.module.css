@@ -1,0 +1,70 @@
+.detail{
+    width: 100%;
+    height: 100%;
+    margin:0 auto;
+    text-align: center;
+}
+.detailImg{
+    width: 260px;
+    height: 260px;
+}
+.detailView{
+    padding-top: 32px;
+    padding-bottom: 10px;
+    margin-top: 32px;
+    margin-left: 32px;
+    margin-right: 32px;
+    border:1px solid #000;
+    border-radius:30px
+}
+.removeMargin{
+    margin: 0;
+    
+}
+.eventName{
+    width: 100%;
+    margin-left: 40px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    text-align: start;
+}
+.ticketDesc{
+    margin-left: 40px;
+    margin-bottom: 14px;
+}
+.labelText{
+    font-size: 13px;
+    color: #979797;
+    margin-bottom: 8px;
+}
+.descText{
+    margin-top: 8px;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+.ewmImg{
+    width: 90px;
+    height: 90px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.leftArrow{
+    width: 17px;
+    height: 29px;
+}
+.rightArrow{
+    width: 17px;
+    height: 29px;
+    
+}
+.showEwm{
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+}
+.dottedLine{
+    height:1px; 
+    width:100%; 
+    border-bottom:1px dashed #000;
+}

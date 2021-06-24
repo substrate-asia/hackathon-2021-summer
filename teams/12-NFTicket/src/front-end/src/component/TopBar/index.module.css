@@ -1,0 +1,56 @@
+.content{
+    width: 100%;
+    height: 96px;
+}
+
+.searchBar{
+    width: 100%;
+}
+.accountInfo{
+    height: 25px;
+    width: 100%;
+    margin: 3px;
+    display: flex;
+    align-content: space-between;
+}
+
+.accountInfoLeft{
+    margin: 2px;
+    display:flex;
+    justify-content: flex-start;
+   
+   
+}
+.accountInfoRight{
+    margin: 2px;
+}
+
+.rightText{
+    width: auto;
+    font-size: 10px;
+    margin: 10px;
+    padding: 2px 8px 2px 8px;
+    border: 1px solid #a1a1a1;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.searchIcon{
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+.iconText{
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 8px;
+    display:flex;
+    margin-left: 5px;
+    justify-content: space-between;
+}
+.iconImg{
+   width: 50px;
+   height: 37px;
+   margin-left: 8px;
+}

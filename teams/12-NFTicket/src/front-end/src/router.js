@@ -8,6 +8,7 @@ import Create from './page/create/create';
 import Search from './page/search/search';
 import Mine from './page/mine/mine';
 import TestModule from './page/testmodule/testmodule';
+import TicketDetail from './page/TicketDetail/TicketDetail';
 import './router.css';
 
 class Routes extends Component{
@@ -22,6 +23,7 @@ class Routes extends Component{
                     <Route exact path='/Search' component={Search}></Route>
                     <Route exact path='/Mine' component={Mine}></Route>
                     <Route exact path='/TestModule' component={TestModule}></Route>
+                    <Route path='/Sort/ticketDetail' component={TicketDetail}></Route>
                 </div>
             </div>
         )
