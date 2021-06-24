@@ -1,9 +1,10 @@
-import React,{Component} from 'react';
-import { ListView,Card,SearchBar, Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import React, { Component } from 'react';
+import { ListView, Card, SearchBar, Button, WhiteSpace, WingBlank } from 'antd-mobile';
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
 import './home.css';
+import TopBar from '../../component/TopBar';
 
 
 const data = [
@@ -44,27 +45,27 @@ class Home extends Component {
     this.state = {
       dataSource,
       isLoading: true,
-      dataList:[{
-        flag:"A",
-        createMonth:"12",
-        desc:"Description",
-        enentName:"Event Name",
-        location:"Location details",
-        startTime:"Start time"
-      },{
-        flag:"A",
-        createMonth:"12",
-        desc:"Description",
-        enentName:"Event Name",
-        location:"Location details",
-        startTime:"Start time"
-      },{
-        flag:"A",
-        createMonth:"12",
-        desc:"Description",
-        enentName:"Event Name",
-        location:"Location details",
-        startTime:"Start time"
+      dataList: [{
+        flag: "A",
+        createMonth: "12",
+        desc: "Description",
+        enentName: "Event Name",
+        location: "Location details",
+        startTime: "Start time"
+      }, {
+        flag: "A",
+        createMonth: "12",
+        desc: "Description",
+        enentName: "Event Name",
+        location: "Location details",
+        startTime: "Start time"
+      }, {
+        flag: "A",
+        createMonth: "12",
+        desc: "Description",
+        enentName: "Event Name",
+        location: "Location details",
+        startTime: "Start time"
       }]
     };
   };
@@ -114,11 +115,13 @@ class Home extends Component {
       const obj = data[index--];
       return (
         <div key={rowID} className='card-content'
-        style={{backgroundImage:"url('./images/bg/back.jpg')"}}>
+          style={{ backgroundImage: "url('./images/bg/back.jpg')" }}>
           <div className="top-container">
-            <div className='top-name' style={{borderRadius:'50px',width:'50px',height:'50px',
-            backgroundColor:"#ffffff",
-            display:'flex'}}>
+            <div className='top-name' style={{
+              borderRadius: '50px', width: '50px', height: '50px',
+              backgroundColor: "#ffffff",
+              display: 'flex'
+            }}>
               <span className="top-text">A</span>
             </div>
             <div className='top-time-group'>
@@ -128,54 +131,56 @@ class Home extends Component {
           </div>
           <div className='bottom-container'>
             <div>
-              <div style={{ marginBottom: '8px',textShadow:'#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Description</div>
-              <div style={{ marginBottom: '8px',fontSize:'24px',fontWeight:'bold',textShadow:'#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>Event Name</div>
-              <div style={{display:'flex'}}><div><img style={{margin:'0px 5px 5px 0px',width:'15px',height:'15px'}} src='./images/location.png'></img></div><span style={{textShadow:'#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0'}}>Location details</span></div>
-              <div style={{display:'flex'}}><div><img style={{margin:'0px 5px 5px 0px',width:'15px',height:'15px'}} src='./images/time.png'></img></div><span style={{textShadow:'#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0'}}>Start time</span></div>
+              <div style={{ marginBottom: '8px', textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Description</div>
+              <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>Event Name</div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Location details</span></div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/time.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Start time</span></div>
             </div>
           </div>
         </div>
       );
     };
-    const height = parseInt(document.body.clientHeight)-1000;
-    return (<div className="content">
-        <SearchBar className="search-bar" placeholder="Search" maxLength={8} />
-        <WhiteSpace />
-        <div className="account-info" style={{width:'100%',height:'25px'}}>
-            <div className="account-info-left" style={{display:'flex'}}>
-              <img className='icon-img' src='./images/icon.png'/>
-              <div className='icon-text'>
-                <span>NFTicket</span>
-              </div>
-              <img className='search-icon' src='./images/search.png'/>
+    const height = parseInt(document.body.clientHeight) - 1000;
+    return (
+      <div className="content">
+        <TopBar></TopBar>
+        {/* <SearchBar className="search-bar" placeholder="Search" maxLength={8} />
+        <WhiteSpace /> */}
+        {/* <div className="account-info" style={{ width: '100%', height: '25px' }}> */}
+          {/* <div className="account-info-left" style={{ display: 'flex' }}>
+            <img className='icon-img' src='./images/icon.png' />
+            <div className='icon-text'>
+              <span>NFTicket</span>
             </div>
-            <div className='account-info-right'>
-              <div className='right-text'>
-                <span>0x4234...1e45</span>
-              </div>
+            <img className='search-icon' src='./images/search.png' />
+          </div> */}
+          {/* <div className='account-info-right'>
+            <div className='right-text'>
+              <span>0x4234...1e45</span>
             </div>
-        </div>
+          </div> */}
+        {/* </div> */}
         <div>
-          <ListView
+        <ListView
           ref={el => this.lv = el}
-          dataSource={this.state.dataSource}
-          renderHeader={() => {}}
-          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-            {this.state.isLoading ? 'Loading...' : 'Loaded'}
-          </div>)}
-          renderRow={row}
-          renderSeparator={separator}
-          className=""
-          pageSize={4}
-          useBodyScroll
-          onScroll={() => { console.log('scroll'); }}
-          scrollRenderAheadDistance={500}
-          onEndReached={this.onEndReached}
-          onEndReachedThreshold={10}
-          style={{height:''+756+'px',overflow:'auto'}}
+            dataSource={this.state.dataSource}
+            renderHeader={() => { }}
+            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+              {this.state.isLoading ? 'Loading...' : 'Loaded'}
+            </div>)}
+            renderRow={row}
+            renderSeparator={separator}
+            className=""
+            pageSize={4}
+            useBodyScroll
+            onScroll={() => { console.log('scroll'); }}
+            scrollRenderAheadDistance={500}
+            onEndReached={this.onEndReached}
+            onEndReachedThreshold={10}
+          style={{ height: '' + 756 + 'px', overflow: 'auto' }}
         />
         </div>
-    </div>);
+      </div>);
   }
 }
 
