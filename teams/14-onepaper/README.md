@@ -18,21 +18,21 @@ ONE PAPER 通过区块链形式，将文件、期刊、论文进行传播和共�
 **区块链端**
 
 - `pallet-nft`
-  - [✓] NFT 创建及数据结构定义 (`fn create_nft()`)
-  - [✓] NFT 转帐函数 (`fn transfer()`)
-  - [✓] NFT 销毁函数 (`fn burn_token()`)
+  - [ ] NFT 创建及数据结构定义 (`fn create_nft()`)
+  - [ ] NFT 转帐函数 (`fn transfer()`)
+  - [ ] NFT 销毁函数 (`fn burn_token()`)
 
 **客户端**
 
 - web 端
-  - [✓] 用户注册页面
-  - [✓] NFT 产品创建流程
-  - [✓] NFT 产品购买流程
+  - [ ] 用户注册页面
+  - [ ] NFT 产品创建流程
+  - [ ] NFT 产品购买流程
 
 - hybrid (react-native)
-  - [✓] 用户注册页面
-  - [✓] NFT 产品创建流程
-  - [✓] NFT 产品购买流程
+  - [ ] 用户注册页面
+  - [ ] NFT 产品创建流程
+  - [ ] NFT 产品购买流程
 
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
