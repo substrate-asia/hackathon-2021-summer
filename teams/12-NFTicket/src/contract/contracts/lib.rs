@@ -21,6 +21,7 @@ mod nfticket {
     use ink_env::call::FromAccountId;
     use ink_prelude::vec::Vec;
     use ink_prelude::format;
+    use ink_env::debug_print;
     use ink_storage::{
         collections::{hashmap::Keys, HashMap as StorageHashMap},
         lazy::Lazy,
@@ -160,9 +161,9 @@ mod nfticket {
 
         #[ink(message)]
         pub fn get_template_id(&self, account_id: AccountId) -> u32 {
-            ink_env::debug_message("-------------1");
+            ink_env::debug_message("-------------333");
             let template: TemplateStub = FromAccountId::from_account_id(account_id);
-            ink_env::debug_message("-------------2");
+            ink_env::debug_message("-------------444");
             template.get_id()
         }
 

@@ -70,8 +70,12 @@ class Home extends Component {
     };
   };
 
+  componentDidMount() {
+    console.log("DisMount-屏幕高度-"+parseInt(document.documentElement.clientHeight));
+  }
+
   componentWillMount() {
-    console.log(parseInt(document.body.clientHeight));
+    console.log("WillMount-屏幕高度-"+parseInt(document.documentElement.clientHeight));
     setTimeout(() => {
       this.rData = genData();
       this.setState({
@@ -87,7 +91,7 @@ class Home extends Component {
     if (this.state.isLoading && !this.state.hasMore) {
       return;
     }
-    console.log('reach end', document.body.clientHeight);
+    console.log('reach end', document.documentElement.clientHeight);
     this.setState({ isLoading: true });
     setTimeout(() => {
       this.rData = { ...this.rData, ...genData(++pageIndex) };
@@ -140,6 +144,7 @@ class Home extends Component {
         </div>
       );
     };
+
     const height = parseInt(document.body.clientHeight) - 1000;
     return (
       <div className="content">
@@ -151,6 +156,26 @@ class Home extends Component {
             <img className='icon-img' src='./images/icon.png' />
             <div className='icon-text'>
               <span>NFTicket</span>
+    //搜索框高度
+    const searchbarHeight = 25;
+    //空白区域高度
+    const whitespaceHeight = 9;
+    //账户信息高度
+    const accountInfoHeight = 25;
+    //底部Tab高度
+    const tabbarHeight = 46;
+    //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
+    const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-2*tabbarHeight+26;
+    return (<div className="content">
+        <SearchBar className="search-bar" placeholder="Search" maxLength={8} />
+        <WhiteSpace />
+        <div className="account-info" style={{width:'100%',height:'25px'}}>
+            <div className="account-info-left" style={{display:'flex'}}>
+              <img className='icon-img' src='./images/icon.png'/>
+              <div className='icon-text'>
+                <span>NFTicket</span>
+              </div>
+              <img className='search-icon' src='./images/search.png'/>
             </div>
             <img className='search-icon' src='./images/search.png' />
           </div> */}
@@ -163,21 +188,21 @@ class Home extends Component {
         <div>
         <ListView
           ref={el => this.lv = el}
-            dataSource={this.state.dataSource}
-            renderHeader={() => { }}
-            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-              {this.state.isLoading ? 'Loading...' : 'Loaded'}
-            </div>)}
-            renderRow={row}
-            renderSeparator={separator}
-            className=""
-            pageSize={4}
-            useBodyScroll
-            onScroll={() => { console.log('scroll'); }}
-            scrollRenderAheadDistance={500}
-            onEndReached={this.onEndReached}
-            onEndReachedThreshold={10}
-          style={{ height: '' + 756 + 'px', overflow: 'auto' }}
+          dataSource={this.state.dataSource}
+          renderHeader={() => {console.log("card-height="+window.innerHeight +"///"+document.documentElement.clientHeight)}}
+          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+            {this.state.isLoading ? 'Loading...' : 'Loaded'}
+          </div>)}
+          renderRow={row}
+          renderSeparator={separator}
+          className=""
+          pageSize={4}
+          useBodyScroll
+          onScroll={() => { console.log('scroll'); }}
+          scrollRenderAheadDistance={500}
+          onEndReached={this.onEndReached}
+          onEndReachedThreshold={10}
+          style={{height:''+height+'px',overflow:'auto'}}
         />
         </div>
       </div>);
