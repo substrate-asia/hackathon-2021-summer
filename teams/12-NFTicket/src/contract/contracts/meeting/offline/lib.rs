@@ -207,7 +207,7 @@ mod meeting {
             let ticket_price = self.get_ticket_price(zone_id,seat_id);
             let income: Balance = self.env().transferred_balance();
             ///保证用户传送的金额必须大于票价
-
+            assert!(income >=ticket_price,"not enough money!");
             // todo buy ticket
             let result: TickeResult = TickeResult {
                 price: 100u128,
