@@ -204,7 +204,7 @@ mod meeting {
         /// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
         #[ink(message,payable)]
         pub fn buy_ticket(&mut self, meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
-            let ticket_price = self.get_ticket_price(zone_id,seat_id);
+            let ticket_price = self.get_ticket_price(zone_id,seat_id).unwrap();
             let income: Balance = self.env().transferred_balance();
             ///保证用户传送的金额必须大于票价
             assert!(income >=ticket_price,"not enough money!");

@@ -591,21 +591,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "meeting"
-version = "0.1.0"
-dependencies = [
- "ink_env",
- "ink_lang",
- "ink_metadata",
- "ink_prelude",
- "ink_primitives",
- "ink_storage",
- "parity-scale-codec",
- "primitives",
- "scale-info",
-]
-
-[[package]]
 name = "memchr"
 version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -636,7 +621,7 @@ dependencies = [
  "ink_prelude",
  "ink_primitives",
  "ink_storage",
- "meeting",
+ "offline",
  "parity-scale-codec",
  "primitives",
  "scale-info",
@@ -661,6 +646,21 @@ checksum = "05499f3756671c15885fee9034446956fff3f243d6077b91e5767df161f766b3"
 dependencies = [
  "hermit-abi",
  "libc",
+]
+
+[[package]]
+name = "offline"
+version = "0.1.0"
+dependencies = [
+ "ink_env",
+ "ink_lang",
+ "ink_metadata",
+ "ink_prelude",
+ "ink_primitives",
+ "ink_storage",
+ "parity-scale-codec",
+ "primitives",
+ "scale-info",
 ]
 
 [[package]]
