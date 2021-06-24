@@ -144,8 +144,16 @@ class Home extends Component {
         </div>
       );
     };
-
-    const height = parseInt(document.body.clientHeight) - 1000;
+    //搜索框高度
+    const searchbarHeight = 25;
+    //空白区域高度
+    const whitespaceHeight = 9;
+    //账户信息高度
+    const accountInfoHeight = 42;
+    //底部Tab高度
+    const tabbarHeight = 46;
+    //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
+    const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-2*tabbarHeight+26;
     return (
       <div className="content">
         <TopBar></TopBar>

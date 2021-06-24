@@ -107,10 +107,22 @@ export default class sort extends Component {
       );
     };
 
+    //搜索框高度
+    const searchbarHeight = 25;
+    //空白区域高度
+    const whitespaceHeight = 9;
+    //账户信息高度
+    const accountInfoHeight = 42;
+    //标题高度
+    const titleHeight = 72;
+    //底部Tab高度
+    const tabbarHeight = 46;
+    //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
+    const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-titleHeight-2*tabbarHeight+26;
 
     return (
       <div className={styles.tabs}>
-        <Tabs tabs={tabs}
+        <Tabs tabs={tabs} className='tabs-group'
           initialPage={0}
           onChange={(tab, index) => { console.log('onChange', index, tab); }}
           onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
@@ -132,7 +144,7 @@ export default class sort extends Component {
         scrollRenderAheadDistance={500}
         onEndReached={this.onEndReached}
         onEndReachedThreshold={8}
-        style={{overflow: 'auto' ,width:'100%'}}/>
+        style={{overflow: 'auto' ,width:'100%',height:''+height+'px'}}/>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '150px', backgroundColor: '#fff' }}>
             Content of second tab

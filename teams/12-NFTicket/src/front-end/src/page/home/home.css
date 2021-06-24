@@ -124,6 +124,9 @@
 .am-list-body::before{
     display: none!important;
 }
+.am-list-body::after{
+    display: none!important;
+}
 .am-list-body{
     background-color: rgb(255, 255, 255);
 }
