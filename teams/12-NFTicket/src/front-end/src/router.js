@@ -9,6 +9,7 @@ import Search from './page/search/search';
 import Mine from './page/mine/mine';
 import TestModule from './page/testmodule/testmodule';
 import TicketDetail from './page/TicketDetail/TicketDetail';
+import ActivityDetail from './page/ActivityDetail/ActivityDetail';
 import './router.css';
 
 class Routes extends Component{
@@ -24,6 +25,8 @@ class Routes extends Component{
                     <Route exact path='/Mine' component={Mine}></Route>
                     <Route exact path='/TestModule' component={TestModule}></Route>
                     <Route path='/Sort/ticketDetail' component={TicketDetail}></Route>
+                    {/** 活动详情页面 */}
+                    <Route path='/Home/activityDetail' component={ActivityDetail}></Route>
                 </div>
             </div>
         )

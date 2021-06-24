@@ -1,0 +1,11 @@
+.activityDetail{
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.activityBg{
+    width: 320px;
+    height: 320px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}

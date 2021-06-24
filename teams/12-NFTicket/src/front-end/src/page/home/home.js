@@ -102,7 +102,7 @@ class Home extends Component {
     }, 1000);
   }
 
-  render() {
+  render=() => {
     const separator = (sectionID, rowID) => (
       <div
         key={`${sectionID}-${rowID}`}
@@ -119,7 +119,7 @@ class Home extends Component {
       const obj = data[index--];
       return (
         <div key={rowID} className='card-content'
-          style={{ backgroundImage: "url('./images/bg/back.jpg')" }}>
+          style={{ backgroundImage: "url('./images/bg/back.jpg')" }} onClick={() => this.props.history.push('/Home/activityDetail')}>
           <div className="top-container">
             <div className='top-name' style={{
               borderRadius: '50px', width: '50px', height: '50px',
