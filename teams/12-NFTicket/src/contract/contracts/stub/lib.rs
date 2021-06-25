@@ -25,7 +25,7 @@ mod stub {
 
         /// 购买票,并返回票价
         #[ink(message)]
-        pub fn buy_ticket(&mut self,_ticker:Hash) -> Result<primitives::TickeResult> {
+        pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
             unimplemented!()
         }
 

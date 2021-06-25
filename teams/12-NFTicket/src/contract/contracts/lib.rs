@@ -94,51 +94,51 @@ mod nfticket {
         6. 触发事件： ticket_created
         */
         #[ink(message, payable)]
-        pub fn create_ticket(&mut self, _ticket:Ticket)->bool{
+        pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
             let main_fee:Balance=self.env().transferred_balance();
             assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
             true
         }
 
         /// 开始收费门票.
-        #[ink(message, payable)]
-        pub fn buy_ticket(&mut self, ticker: Hash, template_hash: Hash,maker:AccountId) -> Result<bool> {
-            let income: Balance = self.env().transferred_balance();
-            ink_env::debug_message(&format!("-------------------------received payment {:?}",income));
-            //做前置检查.判断大于0
-            assert!(income > 0, "income is negtive");
-            // 购买票,如果成功则返回需要的资金.
-            //根据template_id查询template合约地址.
-            ink_env::debug_message(&format!("-------------------------template_hash is {:?}",template_hash));
-            let template_address: &AccountId =
-                self.template_hash_address_map.get(&template_hash).unwrap();
-            ink_env::debug_message(&format!("-------------------------template_address {:?}",*template_address));
-            let mut template: MainStub = FromAccountId::from_account_id(*template_address);
-            ink_env::debug_message(&format!("-------------------------template {:?}",template));
-            let ticket_price_result = template.buy_ticket(ticker);
-            ink_env::debug_message(&format!("-------------------------ticket_price_result {:?}",ticket_price_result));
-            let result= match ticket_price_result {
-                Ok(ticker_result) => {
-                    //开始扣除资金.
-                    assert!(income >= ticker_result.price,"not enough money!");
-                    // 计算需要的手续费
-                    let fee: Balance = ticker_result.price.checked_mul(Balance::from(self.fee_rate.0)).unwrap().checked_div(Balance::from(self.fee_rate.1)).unwrap();
-                    // 把资金按照百分比给资金转给资金账户
-                    let trans=self.env().transfer(self.fee_taker, fee);
-                    if let Err(_) = trans{
-                        return Err(MeetingError::TransferError);
-                    }
-                    //将买票的收入转账给发布活动的账户.
-                    let contract_fee = ticker_result.price.checked_sub(fee).unwrap();
-                    // self.env().transfer(ticker_result.maker, contract_fee);
-                    self.env().transfer(maker, contract_fee);
-                    Ok(true)
-                }
-                Err(_) => Err(MeetingError::CallBuyTickerError),
-                // Err(_) => panic!("call buy ticker error!"),
-            };
-            return result;
-        }
+        // #[ink(message, payable)]
+        // pub fn buy_ticket(&mut self, ticker: Hash, template_hash: Hash,maker:AccountId) -> Result<bool> {
+        //     let income: Balance = self.env().transferred_balance();
+        //     ink_env::debug_message(&format!("-------------------------received payment {:?}",income));
+        //     //做前置检查.判断大于0
+        //     assert!(income > 0, "income is negtive");
+        //     // 购买票,如果成功则返回需要的资金.
+        //     //根据template_id查询template合约地址.
+        //     ink_env::debug_message(&format!("-------------------------template_hash is {:?}",template_hash));
+        //     let template_address: &AccountId =
+        //         self.template_hash_address_map.get(&template_hash).unwrap();
+        //     ink_env::debug_message(&format!("-------------------------template_address {:?}",*template_address));
+        //     let mut template: MainStub = FromAccountId::from_account_id(*template_address);
+        //     ink_env::debug_message(&format!("-------------------------template {:?}",template));
+        //     let ticket_price_result = template.buy_ticket(ticker);
+        //     ink_env::debug_message(&format!("-------------------------ticket_price_result {:?}",ticket_price_result));
+        //     let result= match ticket_price_result {
+        //         Ok(ticker_result) => {
+        //             //开始扣除资金.
+        //             assert!(income >= ticker_result.price,"not enough money!");
+        //             // 计算需要的手续费
+        //             let fee: Balance = ticker_result.price.checked_mul(Balance::from(self.fee_rate.0)).unwrap().checked_div(Balance::from(self.fee_rate.1)).unwrap();
+        //             // 把资金按照百分比给资金转给资金账户
+        //             let trans=self.env().transfer(self.fee_taker, fee);
+        //             if let Err(_) = trans{
+        //                 return Err(MeetingError::TransferError);
+        //             }
+        //             //将买票的收入转账给发布活动的账户.
+        //             let contract_fee = ticker_result.price.checked_sub(fee).unwrap();
+        //             // self.env().transfer(ticker_result.maker, contract_fee);
+        //             self.env().transfer(maker, contract_fee);
+        //             Ok(true)
+        //         }
+        //         Err(_) => Err(MeetingError::CallBuyTickerError),
+        //         // Err(_) => panic!("call buy ticker error!"),
+        //     };
+        //     return result;
+        // }
 
         /// 添加合约的id和hash值
         #[ink(message)]

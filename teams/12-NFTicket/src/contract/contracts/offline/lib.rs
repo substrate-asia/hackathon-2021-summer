@@ -43,7 +43,7 @@ mod meeting {
     pub struct Meeting {
         nfticket_addr:AccountId,//主合约地址
         nfticket_main_fee:u32,  //支付主合约的手续费率,需要除以1万
-        template: AccountId,   // 模板账号
+        template_addr: AccountId,   // 模板账号
         name: Vec<u8>,         // 活动名称
         desc: Vec<u8>,         // 活动介绍
         poster: Vec<u8>,       // 活动海报地址
@@ -166,7 +166,7 @@ mod meeting {
             Meeting{
                 nfticket_addr,
                 nfticket_main_fee,
-                template:template_address,
+                template_addr:template_address,
                 name,
                 desc,
                 poster: Default::default(),
@@ -187,7 +187,8 @@ mod meeting {
         /// 购买ticker,需要支付一定数量的币.
         /// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
         #[ink(message,payable)]
-        pub fn buy_ticket(&mut self,template_addr:AccountId, meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
+        pub fn buy_ticket(&mut self,meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
+            ink_env::debug_message("=========================entrance!!!");
             let ticket_price:Balance = self.get_ticket_price(zone_id,seat_id).unwrap();
             ink_env::debug_message(&format!("-------------------------ticket_price {:?}",ticket_price));
             let income: Balance = self.env().transferred_balance();
@@ -197,13 +198,14 @@ mod meeting {
             // 生成ticke
             let ticket_id =self.ticket_id;
             self.ticket_id.checked_add(1).expect("checked plus 1 error!");
-            let ticket = Ticket::new(template_addr,meeting_addr, ticket_price, zone_id, seat_id,ticket_id);
+            let ticket = Ticket::new(self.template_addr,meeting_addr, ticket_price, zone_id, seat_id,ticket_id);
             // 标记这个座位已经售出
             self.make_seat_sealed(zone_id,seat_id);
             // 把剩余转账给主合约,并记录这个主合约
             // 计算应该支付给主合约多少资金.如果用户给的钱大于门票价应该怎么处理?
             let nfticket_fee = ticket_price.checked_mul(self.nfticket_main_fee.into()).unwrap().checked_div(PERCENT.into()).unwrap();
             let mut main_contract: MainStub = FromAccountId::from_account_id(self.nfticket_addr);
+            main_contract.buy_ticket(ticket.clone());
             let result: TickeResult = TickeResult {
                 price: 100u128,
                 maker: AccountId::from([0x01; 32]),
@@ -213,6 +215,7 @@ mod meeting {
 
         /// 得到某个区域的票价
         fn get_ticket_price(&self,zone_id:u32,seat_id:Option<(u32,u32)>)->Option<Balance>{
+            ink_env::debug_message("=========================get_ticket_price entrance!!!");
             //TODO 确保这个位置是有效的.
             //TODO 获取这个位置的票价
             return Some(20000000000u128.into());
