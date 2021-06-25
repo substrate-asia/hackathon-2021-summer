@@ -14,6 +14,7 @@ ink_prelude = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink"
 primitives = { version = "0.1.0", path = "../primitives", default-features = false}
 scale = { package = "parity-scale-codec", version = "2.1", default-features = false, features = ["derive"] }
 scale-info = { version = "0.6", default-features = false, features = ["derive"], optional = true }
+stub = { version = "0.1.0", path = "../stub", default-features = false, features = ["ink-as-dependency"] }
 
 [lib]
 name = "offline"
@@ -34,5 +35,6 @@ std = [
     "scale/std",
     "scale-info",
     "scale-info/std",
+    "stub/std",
 ]
 ink-as-dependency = []

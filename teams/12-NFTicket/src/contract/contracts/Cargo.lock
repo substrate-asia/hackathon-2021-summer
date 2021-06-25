@@ -661,6 +661,7 @@ dependencies = [
  "parity-scale-codec",
  "primitives",
  "scale-info",
+ "stub",
 ]
 
 [[package]]

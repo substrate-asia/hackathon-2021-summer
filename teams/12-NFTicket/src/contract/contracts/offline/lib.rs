@@ -18,13 +18,14 @@ use ink_lang as ink;
 
 #[ink::contract]
 mod meeting {
-    use ink_env::{Clear, hash::{Blake2x256, CryptoHash, HashOutput}};
+    use ink_env::{Clear, call::FromAccountId, hash::{Blake2x256, CryptoHash, HashOutput}};
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_prelude::vec::Vec;
     use ink_prelude::format;
     use ink_storage::{Lazy, collections::HashMap, traits::{PackedLayout, SpreadLayout}};
-    use primitives::TickeResult;
-
+    use primitives::{TickeResult, Ticket};
+    use stub::MainStub;
+    static PERCENT:u32 = 1000u32;
     /// The ERC-20 error types.
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
@@ -36,12 +37,12 @@ mod meeting {
     }
 
     pub type Result<T> = core::result::Result<T, Error>;
-
+    
     /// a simple template contract.
     #[ink(storage)]
     pub struct Meeting {
         nfticket_addr:AccountId,//主合约地址
-                                //支付主合约的手续费率
+        nfticket_main_fee:u32,  //支付主合约的手续费率,需要除以1万
         template: AccountId,   // 模板账号
         name: Vec<u8>,         // 活动名称
         desc: Vec<u8>,         // 活动介绍
@@ -58,27 +59,28 @@ mod meeting {
         ticket_map:HashMap<u32,Ticket>, //ticker存放map
     }
 
-    impl Default for Meeting {
-        fn default() -> Self {
-            Meeting {
-                nfticket_addr:Default::default(),
-                template: Default::default(),
-                name: Default::default(),
-                desc: Default::default(),
-                poster: Default::default(),
-                uri: Default::default(),
-                start_time: Default::default(),
-                end_time: Default::default(),
-                start_sale_time: Default::default(),
-                end_sale_time: Default::default(),
-                class_id: Default::default(),
-                status: MeetingStatus::Active,
-                zone_id: Default::default(),
-                ticket_id:Default::default(),
-                ticket_map:Default::default(),
-            }
-        }
-    }
+    // impl Default for Meeting {
+    //     fn default() -> Self {
+    //         Meeting {
+    //             nfticket_addr:Default::default(),
+    //             nfticket_main_fee:Default::default(),
+    //             template: Default::default(),
+    //             name: Default::default(),
+    //             desc: Default::default(),
+    //             poster: Default::default(),
+    //             uri: Default::default(),
+    //             start_time: Default::default(),
+    //             end_time: Default::default(),
+    //             start_sale_time: Default::default(),
+    //             end_sale_time: Default::default(),
+    //             class_id: Default::default(),
+    //             status: MeetingStatus::Active,
+    //             zone_id: Default::default(),
+    //             ticket_id:Default::default(),
+    //             ticket_map:Default::default(),
+    //         }
+    //     }
+    // }
 
     #[derive(
         Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
@@ -103,43 +105,20 @@ mod meeting {
         }
     }
 
-    #[derive(
-        Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
-    )]
-    #[cfg_attr(
-        feature = "std",
-        derive(::scale_info::TypeInfo, ::ink_storage::traits::StorageLayout)
-    )]
-    pub struct Ticket {
-        meeting:AccountId,      //活动地址
-        hash: Vec<u8>,          //hash值
-        price: Balance,         //价格
-        zone_id:u32,              //区域.
-        seat_id:Option<(u32,u32)>
-    }
-
-    impl Ticket{
-        pub fn new(meeting:AccountId,price:Balance,zone_id:u32,seat_id:Option<(u32,u32)>,ticket_id:u32)->Self{
-            // 此处的生成hash的方法极度不合理.需要将template+meeting+price一起生成encode后得到进行hash运算.
-            // let mut template_code=scale::Encode::encode(&template);
-            let mut meeting_code=scale::Encode::encode(&meeting);
-            let mut ticket_id_byte = ticket_id.to_be_bytes().to_vec();
-            meeting_code.append(&mut ticket_id_byte);
-            // let random_hash:[u8] = ink_env::random(template_code).unwrap().0;
-            // template_code.append(random_hash);
-            let hash = scale::Encode::encode(&meeting_code);
-            
-            let mut hash_output = <<Blake2x256 as HashOutput>::Type as Default>::default();
-            <Blake2x256 as CryptoHash>::hash(&hash, &mut hash_output);
-            Self{
-                meeting,
-                hash:hash_output.into(),
-                price,
-                zone_id,
-                seat_id,
-            }
-        }
-    }
+    // #[derive(
+    //     Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
+    // )]
+    // #[cfg_attr(
+    //     feature = "std",
+    //     derive(::scale_info::TypeInfo, ::ink_storage::traits::StorageLayout)
+    // )]
+    // pub struct Ticket {
+    //     meeting:AccountId,      //活动地址
+    //     hash: Vec<u8>,          //hash值
+    //     price: Balance,         //价格
+    //     zone_id:u32,              //区域.
+    //     seat_id:Option<(u32,u32)>
+    // }
 
     #[derive(
         Debug, Copy, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
@@ -181,11 +160,12 @@ mod meeting {
     impl Meeting {
         /// Creates a new ERC-20 contract with the specified initial supply.
         #[ink(constructor)]
-        pub fn new(nfticket_addr:AccountId,template_address:AccountId,name: Vec<u8>, desc: Vec<u8>,) -> Self {
+        pub fn new(nfticket_addr:AccountId,nfticket_main_fee:u32,template_address:AccountId,name: Vec<u8>, desc: Vec<u8>,) -> Self {
             let mut hash_output = <<Blake2x256 as HashOutput>::Type as Default>::default();
             <Blake2x256 as CryptoHash>::hash(&name, &mut hash_output);
             Meeting{
                 nfticket_addr,
+                nfticket_main_fee,
                 template:template_address,
                 name,
                 desc,
@@ -207,8 +187,8 @@ mod meeting {
         /// 购买ticker,需要支付一定数量的币.
         /// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
         #[ink(message,payable)]
-        pub fn buy_ticket(&mut self, meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
-            let ticket_price = self.get_ticket_price(zone_id,seat_id).unwrap();
+        pub fn buy_ticket(&mut self,template_addr:AccountId, meeting_addr: AccountId,zone_id:u32,seat_id:Option<(u32,u32)>) -> Result<TickeResult> {
+            let ticket_price:Balance = self.get_ticket_price(zone_id,seat_id).unwrap();
             ink_env::debug_message(&format!("-------------------------ticket_price {:?}",ticket_price));
             let income: Balance = self.env().transferred_balance();
             ink_env::debug_message(&format!("-------------------------income {:?}",income));
@@ -216,10 +196,14 @@ mod meeting {
             assert!(income >=ticket_price,"not enough money!");
             // 生成ticke
             let ticket_id =self.ticket_id;
-            self.ticket_id.checked_add(1);
-            let ticket = Ticket::new(meeting_addr, ticket_price, zone_id, seat_id,ticket_id);
-            // TODO 标记这个座位已经售出
+            self.ticket_id.checked_add(1).expect("checked plus 1 error!");
+            let ticket = Ticket::new(template_addr,meeting_addr, ticket_price, zone_id, seat_id,ticket_id);
+            // 标记这个座位已经售出
+            self.make_seat_sealed(zone_id,seat_id);
             // 把剩余转账给主合约,并记录这个主合约
+            // 计算应该支付给主合约多少资金.如果用户给的钱大于门票价应该怎么处理?
+            let nfticket_fee = ticket_price.checked_mul(self.nfticket_main_fee.into()).unwrap().checked_div(PERCENT.into()).unwrap();
+            let mut main_contract: MainStub = FromAccountId::from_account_id(self.nfticket_addr);
             let result: TickeResult = TickeResult {
                 price: 100u128,
                 maker: AccountId::from([0x01; 32]),
@@ -234,7 +218,7 @@ mod meeting {
             return Some(20000000000u128.into());
         }
 
-        /// 得到某个区域的票价
+        /// 标记这个位置已经卖出.
         fn make_seat_sealed(& mut self,zone_id:u32,seat_id:Option<(u32,u32)>)->Option<bool>{
             //TODO 标记这个位置已经卖出
             return Some(true);

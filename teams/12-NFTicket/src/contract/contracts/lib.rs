@@ -26,10 +26,12 @@ mod nfticket {
         collections::{hashmap::Keys, HashMap as StorageHashMap},
         lazy::Lazy,
     };
-    use primitives::Meeting_Error;
-    use stub::TemplateStub;
+    use primitives::MeetingError;
+    use primitives::Ticket;
+    use stub::MainStub;
 
-    pub type Result<T> = core::result::Result<T, Meeting_Error>;
+    pub type Result<T> = core::result::Result<T, MeetingError>;
+    const min_ticket_fee:u128 = 100u128;
     /// A simple ERC-20 contract.
     #[ink(storage)]
     pub struct NftTicket {
@@ -81,6 +83,23 @@ mod nfticket {
             return true;
         }
 
+
+        /**
+        创建门票
+        1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
+        2. 仅能通过活动合约调用；
+        3. 通过调用的活动合约地址，知道是哪个活动，知道是哪个模板生成的，给相应的模板记分成收入；
+        4. 调用 runtime 的 NFT 创建接口，创建门票 NFT，并将门票NFT发放给 buyer
+        5. 返回创建的 class_id 和 NFT_ID的元组
+        6. 触发事件： ticket_created
+        */
+        #[ink(message, payable)]
+        pub fn create_ticket(&mut self, _ticket:Ticket)->bool{
+            let main_fee:Balance=self.env().transferred_balance();
+            assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
+            true
+        }
+
         /// 开始收费门票.
         #[ink(message, payable)]
         pub fn buy_ticket(&mut self, ticker: Hash, template_hash: Hash,maker:AccountId) -> Result<bool> {
@@ -94,7 +113,7 @@ mod nfticket {
             let template_address: &AccountId =
                 self.template_hash_address_map.get(&template_hash).unwrap();
             ink_env::debug_message(&format!("-------------------------template_address {:?}",*template_address));
-            let mut template: TemplateStub = FromAccountId::from_account_id(*template_address);
+            let mut template: MainStub = FromAccountId::from_account_id(*template_address);
             ink_env::debug_message(&format!("-------------------------template {:?}",template));
             let ticket_price_result = template.buy_ticket(ticker);
             ink_env::debug_message(&format!("-------------------------ticket_price_result {:?}",ticket_price_result));
@@ -107,7 +126,7 @@ mod nfticket {
                     // 把资金按照百分比给资金转给资金账户
                     let trans=self.env().transfer(self.fee_taker, fee);
                     if let Err(_) = trans{
-                        return Err(Meeting_Error::TransferError);
+                        return Err(MeetingError::TransferError);
                     }
                     //将买票的收入转账给发布活动的账户.
                     let contract_fee = ticker_result.price.checked_sub(fee).unwrap();
@@ -115,7 +134,7 @@ mod nfticket {
                     self.env().transfer(maker, contract_fee);
                     Ok(true)
                 }
-                Err(_) => Err(Meeting_Error::CallBuyTickerError),
+                Err(_) => Err(MeetingError::CallBuyTickerError),
                 // Err(_) => panic!("call buy ticker error!"),
             };
             return result;
@@ -154,7 +173,7 @@ mod nfticket {
         pub fn get_template_id_by_hash(&self, hash: Hash) -> u32 {
             ink_env::debug_message("-------------1");
             let address: AccountId = self.template_hash_address_map.get(&hash).unwrap().clone();
-            let template: TemplateStub = FromAccountId::from_account_id(address);
+            let template: MainStub = FromAccountId::from_account_id(address);
             ink_env::debug_message("-------------2");
             template.get_id()
         }
@@ -162,7 +181,7 @@ mod nfticket {
         #[ink(message)]
         pub fn get_template_id(&self, account_id: AccountId) -> u32 {
             ink_env::debug_message("-------------333");
-            let template: TemplateStub = FromAccountId::from_account_id(account_id);
+            let template: MainStub = FromAccountId::from_account_id(account_id);
             ink_env::debug_message("-------------444");
             template.get_id()
         }
