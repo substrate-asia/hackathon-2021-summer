@@ -226,11 +226,11 @@ mod erc1155 {
         // to 0xf23a6e61.
         //
         // Note that this is Ethereum specific, I don't know how it translates in Ink! land.
-        pub const MAGIC_VALUE_RECEIVED: [u8; 4] = [242, 58, 110, 97];
+        pub const MAGIC_VALUE_RECEIVED: [u8; 4] = [0xf2, 0x3a, 0x6e, 0x61];
         // It is calculated with
         // `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`, and corresponds
         // to 0xbc197c81
-        pub const MAGIC_VALUE_BATCH_RECEIVED: [u8; 4] = [188, 25, 124, 129];
+        pub const MAGIC_VALUE_BATCH_RECEIVED: [u8; 4] = [0xbc, 0x19, 0x7c, 0x81];
     }
 
     /// The interface for an ERC-1155 Token Receiver contract.
@@ -261,7 +261,7 @@ mod erc1155 {
         /// @@param _data      Additional data with no specified format
         /// @@return           `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))` (i.e. 0xf23a6e61)
         #[ink(message)]
-        fn on_erc_1155_received(
+        fn on_received(
             &mut self,
             operator: AccountId,
             from: AccountId,
@@ -288,7 +288,7 @@ mod erc1155 {
         /// @param _data      Additional data with no specified format
         /// @return           `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))` (i.e. 0xbc197c81)
         #[ink(message)]
-        fn on_erc_1155_batch_received(
+        fn on_batch_received(
             &mut self,
             operator: AccountId,
             from: AccountId,
