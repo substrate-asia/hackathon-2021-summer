@@ -71,11 +71,9 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    console.log("DisMount-屏幕高度-"+parseInt(document.documentElement.clientHeight));
   }
 
   componentWillMount() {
-    console.log("WillMount-屏幕高度-"+parseInt(document.documentElement.clientHeight));
     setTimeout(() => {
       this.rData = genData();
       this.setState({

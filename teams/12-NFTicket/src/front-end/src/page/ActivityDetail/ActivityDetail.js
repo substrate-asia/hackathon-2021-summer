@@ -6,7 +6,7 @@ import share from '../../images/icon_share.png'
 import address from '../../images/icon_address.png'
 import time from '../../images/icon_time.png'
 import price from '../../images/icon_price.png'
-import BScroll from 'better-scroll'
+// import BScroll from 'better-scroll'
 import { Button } from 'antd-mobile';
 
 
@@ -14,7 +14,7 @@ export default class ActivityDetail extends Component {
 
     componentDidMount() {
         const wrapper = document.querySelector('.wrapper')
-        const scroll = new BScroll(wrapper, { click: true, scrollY: true })
+        // const scroll = new BScroll(wrapper, { click: true, scrollY: true })
 
     }
 

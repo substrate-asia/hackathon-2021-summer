@@ -18,7 +18,7 @@ class Routes extends Component{
             <div className="wrapper">
                 <div className='routes-list' style={{height:'100%'}}>
                     <Route exact path='/Home' component={Home}></Route>
-                    <Route exact path='/' component={App}></Route>
+                    <Route exact path='/' component={Home}></Route>
                     <Route exact path='/Sort' component={Sort}></Route>
                     <Route exact path='/Create' component={Create}></Route>
                     <Route exact path='/Search' component={Search}></Route>

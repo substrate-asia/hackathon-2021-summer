@@ -6,7 +6,7 @@ class BottomTab extends Component{
     constructor(){
         super();
         this.state={
-            current:0,
+            current:1,
         }
     }
 
