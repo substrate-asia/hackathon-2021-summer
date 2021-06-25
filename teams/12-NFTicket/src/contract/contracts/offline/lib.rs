@@ -179,7 +179,7 @@ mod meeting {
                 status: MeetingStatus::Active,
                 zone_id: Default::default(),
                 ticket_id:Default::default(),
-                ticket_map: Default::default(),
+                ticket_map:Default::default(),
             }
         }
 
@@ -235,25 +235,27 @@ mod meeting {
 
     }
 
-    // #[cfg(test)]
-    // mod tests {
-    //     use crate::stub::TemplateStub;
+    #[cfg(test)]
+    mod tests {
 
-    //     use super::*;
-    //     use ink_lang as ink;
-    //     use ink_env::{AccountId, call::FromAccountId};
+        use super::*;
+        use ink_lang as ink;
+        use ink_env::{AccountId, call::FromAccountId};
 
-    //     #[ink::test]
-    //     fn it_works() {
-    //         let account_id:AccountId = Default::default();
+        #[ink::test]
+        fn it_works() {
+            // nfticket_addr:AccountId,nfticket_main_fee:u32,template_address:AccountId,name: Vec<u8>, desc: Vec<u8>,
+            let account_id:AccountId = Default::default();
+            let mut meeting:Meeting =  Meeting::new(account_id,200,account_id,vec![1],vec![1]);
+            meeting.buy_ticket(account_id, 1, Some((1,2)));
 
-    //         // let template:TemplateStub = FromAccountId::from_account_id(account_id);
-    //         // let id =template.get_id();
-    //         // println!("id is :{}",id);
+            // let template:TemplateStub = FromAccountId::from_account_id(account_id);
+            // let id =template.get_id();
+            // println!("id is :{}",id);
 
-    //         // let template = Tempalate::new(vec![132,31],vec![132,31],12,(10,100));
-    //         // // Can call using universal call syntax using the trait.
-    //         // assert_eq!(<Tempalate as TemplateStub>::get_id(&template), 12);
-    //     }
-    // }
+            // let template = Tempalate::new(vec![132,31],vec![132,31],12,(10,100));
+            // // Can call using universal call syntax using the trait.
+            // assert_eq!(<Tempalate as TemplateStub>::get_id(&template), 12);
+        }
+    }
 }
