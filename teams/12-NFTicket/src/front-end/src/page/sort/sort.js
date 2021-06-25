@@ -53,6 +53,7 @@ export default class sort extends Component {
     this.state = {
       dataSource,
       isLoading: true,
+      current:1,
     };
   }
    
@@ -124,10 +125,19 @@ export default class sort extends Component {
 
     return (
       <div className={styles.tabs}>
-        <Tabs tabBarTextStyle={{height:'44px',fontSize:'14px',lineHeight:'14px'}} tabs={tabs}
+      
+          {/* padding: 0px 6px 0px 6px;
+          border: 1px solid #2f7ef5;
+          border-radius: 23px; */}
+         
+        <Tabs tabBarTextStyle={{height:'44px',fontSize:'14px',lineHeight:'14px',fontWeight:'bold'}} tabs={tabs}
           initialPage={0}
-          onChange={(tab, index) => { console.log('onChange', index, tab); }}
-          onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+          tabBarUnderlineStyle={{padding:'4px',height:'34px',marginBottom:'4px',border:'1px solid #2f7ef5',zIndex:-1,
+          borderRadius:'25px',backgroundColor:'#2f7ef5'}}
+          tabBarActiveTextColor='#ffffff'
+          tabBarInactiveTextColor='#2f7ef5'
+          onChange={(tab, index) => {this.state.current=index;console.log('onChange', index, tab);}}
+          onTabClick={(tab, index) => { this.state.current=index;console.log('onTabClick', index, tab); }}
         >
           <div style={{   display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' , marginBottom: '60px' }}>
             <ListView
