@@ -14,7 +14,7 @@ export default class ActivityDetail extends Component {
 
     componentDidMount() {
         const wrapper = document.querySelector('.wrapper')
-        const scroll = new BScroll(wrapper, { scrollX: false, className: true, scrollY: true })
+        const scroll = new BScroll(wrapper, { click: true, scrollY: true })
 
     }
 

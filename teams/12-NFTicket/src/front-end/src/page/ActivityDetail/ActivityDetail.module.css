@@ -111,7 +111,7 @@
 .wrapper{
     width: 100%;
     white-space: nowrap; 
-    overflow: hidden;
+    overflow: scroll;
 }
 .buyTicket{
     margin: 40px;
