@@ -19,42 +19,44 @@ TODO
 
 > 部分 traits 如 erc20 等，直接使用 [patract/metis](https://github.com/patractlabs/metis) 的依赖
 
-| 开发 | 测试 | 优先级 | 类型 | 名称 | 内容说明 |
-| :----: | :----: | :---: | ---- | ------ | ------------ |
-| 0% | 0% | P0 | ink! | trait-erc721 | NFT合约基础traits之一 |
-| 0% | 0% | P0 | ink! | trait-erc1155 | NFT合约基础traits之一 |
-| 0% | 0% | P0 | ink! | aura | 灵气，主资源币ERC20合约 |
-| 0% | 0% | P1 | ink! | chi | 气，养成资源ERC20合约 |
-| 0% | 0% | P1 | ink! | samsara | 轮回，角色诞生存亡的控制合约 |
-| 0% | 0% | P1 | ink! | actor | 角色，具有存活属性(ERC721实现) |
-| 0% | 0% | P2 | ink! | land | 地块，具有唯一的空间坐标(ERC721实现) |
-| 0% | 0% | P0 | ink! | entity | 实体，多类型、可培养(ERC1155实现) |
-| 0% | 0% | P1 | ink! | cultivate | 培养合约，NFT链上数据养成合约 |
-| 0% | 0% | P1 | ink! | dungeons | 地下城控制合约 |
-| 0% | 0% | P0 | backend | uploader | NFT资源上传并生成 metadata uri的API |
-| 0% | 0% | P0 | backend | metadata | metadata NFT资源数据查询API |
-| 0% | 0% | P0 | ue4-plugin | engine-wallet | UE4下可用的Substrate钱包 |
-| 0% | 0% | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出功能 |
-| 0% | 0% | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的功能 |
-| 0% | 0% | P0 | ue4-plugin | runtime-entity-loader | 运行中载入 NFT 资源的插件 |
-| 0% | 0% | P1 | ue4-asset | asset-actor-demo | demo 用模型 - 角色 |
-| 0% | 0% | P1 | ue4-asset | asset-equipment-sword | demo 用模型 - 剑 |
-| 0% | 0% | P1 | ue4-demo | demo-mini-game | 载入角色信息和 NFT 资源，通过地下城控制合约开启副本，并进行游戏的 demo |
+| 优先级 | 类型 | 名称 | 内容说明 |
+| :---: | ---- | ------ | ------------ |
+| P0 | ink! | trait-erc721 | NFT合约基础traits之一 |
+| P0 | ink! | trait-erc1155 | NFT合约基础traits之一 |
+| P0 | ink! | aura | 灵气，主资源币ERC20合约 |
+| P1 | ink! | chi | 气，养成资源ERC20合约 |
+| P1 | ink! | samsara | 轮回，角色诞生存亡的控制合约 |
+| P1 | ink! | actor | 角色，具有存活属性(ERC721实现) |
+| P2 | ink! | land | 地块，具有唯一的空间坐标(ERC721实现) |
+| P0 | ink! | entity | 实体，多类型、可培养(ERC1155实现) |
+| P1 | ink! | cultivate | 培养合约，NFT链上数据养成合约 |
+| P1 | ink! | dungeons | 地下城控制合约 |
+| P0 | backend | uploader | NFT资源上传并生成 metadata uri的API |
+| P0 | backend | metadata | metadata NFT资源数据查询API |
+| P0 | backend | tx-builder | 交易构造器 |
+| P0 | backend | tx-sender | 交易发送器 |
+| P0 | ue4-plugin | engine-signer | UE4下可用的签名机 |
+| P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出功能 |
+| P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的功能 |
+| P0 | ue4-plugin | runtime-entity-loader | 运行中载入 NFT 资源的插件 |
+| P1 | ue4-asset | asset-actor-demo | demo 用模型 - 角色 |
+| P2 | ue4-asset | asset-equipment-sword | demo 用模型 - 剑 |
+| P2 | ue4-demo | demo-mini-game | 载入角色信息和 NFT 资源，通过地下城控制合约开启副本，并进行游戏的 demo |
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
 
-> 7月5日前，在黑客松期间最终完成的功能点。
+> 7月5日前，在黑客松期间完成的功能点。
 
 ink!合约
 
-- [ ] trait-erc721
-- [ ] trait-erc1155
-- [ ] aura
+- [x] trait-erc721
+- [x] trait-erc1155
+- [x] aura
+- [x] entity
 - [ ] chi
 - [ ] samsara
 - [ ] actor
 - [ ] land
-- [ ] entity
 - [ ] cultivate
 - [ ] dungeons
 
@@ -62,6 +64,8 @@ ink!合约
 
 - [ ] uploader
 - [ ] metadata
+- [ ] tx-builder
+- [ ] tx-sender
 
 ue4插件
 
