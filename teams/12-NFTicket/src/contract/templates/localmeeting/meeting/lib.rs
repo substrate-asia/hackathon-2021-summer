@@ -110,11 +110,11 @@ mod meeting {
         owner: AccountId,   // 活动管理员
         max_zone_id: u8,    // 最大的zone_id
 
-        // 活动基础信息 
+        // 活动基础信息
         //      这部分信息的修改，通过主合约来修改
         // name: Vec<u8>, // 活动名称
         // desc: Vec<u8>, // 活动描述
-        // uri: Vec<u8>,  // 活动网址 
+        // uri: Vec<u8>,  // 活动网址
         // poster: Vec<u8>, // 活动海报地址
         // start_time: u64,       // 活动开始时间
         // end_time: u64,         // 活动结束时间
@@ -134,7 +134,7 @@ mod meeting {
         // 用户参与后会产生的数据
         tickets: StorageMap<(u128,u128),(u8,u8,u8)>,     // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
-        check_records: StorageMap<(u128, u128), Vec<check_record> >, // 检票记录： 
+        check_records: StorageMap<(u128, u128), Vec<check_record> >, // 检票记录：
     }
 
     impl Meeting {
@@ -155,6 +155,163 @@ mod meeting {
                 inspectors: Default:default(),
             }
         }
+
+				/**
+        转移 owner
+        1. 必须 owner 才可以调用
+        */
+        pub fn transfer_owner(mut &self, new_owner:AccountId){
+					self.owner=new_owner;
+        }
+
+        pub fn get_owner(&self)-> AccountId{
+					self.owner
+        }
+
+
+				 /**
+        更新活动信息，包括：活动基础信息、活动配置参数
+        1. 只有 owner 可以调用修改，如果活动处于 active 状态 或者 活动已经有售卖门票，暂时不允许修改；
+        2. 如果涉及到基础信息部分的更新，需要调用主合约更新；
+        3. 修改成功后，触发事件 meeting_modified
+        */
+        pub fn modify_meeting(&mut self, local_address:Vec<u8>, price_type: PriceType,){
+					// todo
+        }
+
+        /**
+        添加区域
+        1. 需要 owner 设置
+        2. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
+        3. 返回的是 zone 的ID
+        */
+        pub fn add_zone(&mut self, name: Vec<u8>, rows: u8, cols: u8, price:Balance)-> u8{
+						let new_zone = Zone {
+							name,
+							rows,
+							cols,
+						};
+						let zone_id = self.max_zone_id;
+						self.max_zone_id += 1;
+						self.zones.insert(zone_id,new_zone);
+
+						if let PriceType::Partition = self.price_type {
+							self.prices.insert(zone_id,price);
+						}
+
+						zone_id
+        }
+
+        /**
+        修改区域
+        1. 需要 owner 设置
+        2. zone_id 必须存在
+        3. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
+        4. 返回的是 zone_id，zong_id 会自增
+        */
+        pub fn update_zone(&mut self, zone_id:u8, name: Vec<u8>, rows: u8, cols: u8, price:Balance)-> u8{
+						let mut zone = self.zones.get(zone_id).expect("zone does not exists ");
+						zone.name = name;
+						zone.rows = rows;
+						zone.cols = cols;
+						self.zones.insert(zone_id,zone)
+
+						if let PriceType::Partition = self.price_type {
+							self.prices.insert(zone_id,price);
+						}
+
+						zone_id
+        }
+        /**
+        删除区域
+        1. 需要 owner 设置
+        2. zone_id 必须存在
+        3. 删除操作不会修改 zone_id 序号
+        */
+        pub fn remove_zone(&mut self, zone_id:u8)-> bool{
+					let mut zone = self.zones.get(zone_id).expect("zone does not exists ");
+					self.zones.remove(zone_id);
+					self.prices.remove(zone_id);
+					true
+        }
+
+
+				/**
+         设置座位不可用的座位
+         1. 所有提交的座位都标记为不可用
+         2. 所有未包含的座位都需要设置为可用
+         3. 如果已经售出的，不允许修改
+        */
+        pub fn set_disabled_seats(&mut self, seats: Vec<(u8,u8,u8)> )->bool{
+						for seat in &seats{
+							// todo 如果已经售出的，不允许修改 ?
+							 self.seats.insert(*seat.clone(),SeatStatus::Disabled);
+						}
+        }
+
+
+				/**
+        购买门票
+        1. 需要检查作为是否可用（1）是否被禁用；（2）是否已经卖出去了；
+        2. 需要确认转过来的钱是否大于等于票价（如果大于需要退回一部分）
+        3. 调用主合约创建 NFT 门票，需要支付服务费：服务费按票价比例(ratio)，但是不得低于 min_ticket_price
+        4. 更新 seats、tickets
+        5. 返回
+        */
+        pub fn buy_ticket(zone_id:u8, row: u8, col: u8) -> (u128,u128) {
+					// todo 与 online meeting 一致
+        }
+
+        /**
+        添加验票员
+        1. 只能由 owner 调用
+        2. 需要检查是否已经存在了
+        3. 触发时间 inspector_added
+        */
+        pub fn add_inspector(mut &self, inspector: AccountId){
+					// todo 与 online meeting 一致
+        }
+
+        /**
+        移除验票员
+        1. 只能由 owner 调用
+        2. 需要检查是否存在
+        3. 触发事件 inspector_removed
+        */
+        pub fn remove_inspector(mut &self, inspector: AccountId){
+					// todo 与 online meeting 一致
+        }
+
+        /**
+        检票
+        1. 只能由 owner 或者 inspector 调用
+        2. 检查 NFT门票 是否有效；
+        3. 检查时间戳和当前区块时间戳间隔是否在 N 分钟以内
+        4. 获取 NFT门票当前的拥有账号
+        5. 检测 NFT门票的class_ID、nft_id, 和 timestamp 的 hash值与 提供的hash是否匹配
+        6. 添加检票记录 check_records ，返回 true
+        7. 触发事件 ticket_checked
+        */
+        pub fn check_ticket(mut &self, ticket: (u128, u128), timestamp: u128, hash: Vec<u8> ) -> bool {
+					// todo 与 online meeting 一致
+        }
+
+        /**
+        返回所有的门票检票记录
+        */
+        pub fn get_check_records(&self, ticket: (u128, u128) ){
+					// todo 与 online meeting 一致
+        }
+
+        /**
+        提取门票收入
+        1. 只能由 owner 调用
+        2.
+        */
+        pub fn withdraw(mut &self, to:AccountId, amount:Balance){
+					// todo 与 online meeting 一致
+        }
+
 
 /**
 TODO:
@@ -220,15 +377,15 @@ TODO:
          3. 如果已经售出的，不允许修改
         */
         pub fn set_disabled_seats( seats: Vec<(u8,u8,u8)> )->bool{
-            
+
         }
 
         /**
         购买门票
         1. 需要检查作为是否可用（1）是否被禁用；（2）是否已经卖出去了；
         2. 需要确认转过来的钱是否大于等于票价（如果大于需要退回一部分）
-        3. 调用主合约创建 NFT 门票，需要支付服务费：服务费按票价比例(ratio)，但是不得低于 min_ticket_price 
-        4. 更新 seats、tickets 
+        3. 调用主合约创建 NFT 门票，需要支付服务费：服务费按票价比例(ratio)，但是不得低于 min_ticket_price
+        4. 更新 seats、tickets
         5. 返回
         */
         pub fn buy_ticket(zone_id:u8, row: u8, col: u8) -> (u128,u128) {
@@ -279,7 +436,7 @@ TODO:
         /**
         提取门票收入
         1. 只能由 owner 调用
-        2. 
+        2.
         */
         pub fn withdraw(mut &self, to:AccountId, amount:Balance){
 

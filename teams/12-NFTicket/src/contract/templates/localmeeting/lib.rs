@@ -31,6 +31,55 @@ mod localmeeting {
         pub fn get_controller(&self) {
             self.controller
         }
+
+
+				/**
+        创建会议活动
+        1. 部署一个活动合约，传入主合约地址等参数，获得合约地址
+        2. 调用主合约的 add_meeting 接口，添加活动；
+        3. 返回活动合约地址
+        */
+        pub fn create_meeting(&mut self,
+					name: Vec<u8>,
+					desc: Vec<u8>,
+					poster: Vec<u8>,
+					uri: Vec<u8>,
+					start_time: u64,
+					end_time: u64,
+					start_sale_time: u64,
+					end_sale_time: u64) -> AccountId{
+					//todo
+        }
+        /**
+        Owner转移相关方法，可以活动模板的控制人
+        1. 验证操作人是否 owner;
+        */
+        #[ink(message)]
+        pub fn transfer_owner(mut &self, new_owner: AccountId){
+					self.owner = new_owner;
+        }
+
+				 /**
+        返回控制人账号
+        */
+        pub fn get_owner(&self) -> AccountId {
+					self.owner
+        }
+
+        /**
+        设置服务费比例
+        1. 必须是 owner 才可以修改
+        */
+        pub fn set_fee_ratio(&mut self, fee_ratio: u64){
+					self.fee_ratio=fee_ratio;
+        }
+
+        /**
+        返回服务费比例
+        */
+        pub fn get_fee_rate(&self)->u64{
+					self.fee_ratio;
+        }
 /**
 TODO
         /**
