@@ -23,17 +23,6 @@ mod stub {
             unimplemented!()
         }
 
-        /// 购买票,并返回票价
-        #[ink(message)]
-        pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
-            unimplemented!()
-        }
-
-        #[ink(message)]
-        pub fn get_id(&self) -> u32 {
-            unimplemented!()
-        }
-
         /**
         创建门票
         1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
@@ -44,7 +33,12 @@ mod stub {
         6. 触发事件： ticket_created
         */
         #[ink(message, payable)]
-        pub fn create_ticket(&mut self, _ticket:Ticket)->bool{
+        pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
+            unimplemented!()
+        }
+
+        #[ink(message)]
+        pub fn get_id(&self) -> u32 {
             unimplemented!()
         }
     }

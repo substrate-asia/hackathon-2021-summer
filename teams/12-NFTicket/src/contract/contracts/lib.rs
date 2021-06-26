@@ -95,8 +95,9 @@ mod nfticket {
         */
         #[ink(message, payable)]
         pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
+            ink_env::debug_message("-------------------------buy_ticket开始调用");
             let main_fee:Balance=self.env().transferred_balance();
-            assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
+            // assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
             true
         }
 
