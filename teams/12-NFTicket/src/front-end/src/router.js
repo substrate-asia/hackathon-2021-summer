@@ -10,6 +10,7 @@ import Mine from './page/mine/mine';
 import TestModule from './page/testmodule/testmodule';
 import TicketDetail from './page/TicketDetail/TicketDetail';
 import ActivityDetail from './page/ActivityDetail/ActivityDetail';
+import CreateEvent from './page/CreateEvent/CreateEvent';
 import './router.css';
 
 class Routes extends Component{
@@ -20,13 +21,15 @@ class Routes extends Component{
                     <Route exact path='/Home' component={Home}></Route>
                     <Route exact path='/' component={Home}></Route>
                     <Route exact path='/Sort' component={Sort}></Route>
-                    <Route exact path='/Create' component={Create}></Route>
+                    <Route exact path='/Create' component={CreateEvent}></Route>
                     <Route exact path='/Search' component={Search}></Route>
                     <Route exact path='/Mine' component={Mine}></Route>
                     <Route exact path='/TestModule' component={TestModule}></Route>
                     <Route path='/Sort/ticketDetail' component={TicketDetail}></Route>
                     {/** 活动详情页面 */}
                     <Route path='/Home/activityDetail' component={ActivityDetail}></Route>
+                    {/** 创建Event页面 */}
+                    {/* <Route path='/Home/createEvent' component={CreateEvent}></Route> */}
                 </div>
             </div>
         )

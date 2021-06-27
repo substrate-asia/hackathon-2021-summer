@@ -1,0 +1,32 @@
+.container{
+    width: 100%;
+}
+.contant{
+    width: 100%;
+    display: inline-block;
+    margin: 20px;
+}
+.flexcontent{
+    width: 100%;
+}
+.title{
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.name1{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 8px;
+}
+.inputout{
+    width: 80%;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.name2{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 8px;
+    margin-bottom: 20px;
+}
