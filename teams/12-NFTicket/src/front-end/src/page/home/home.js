@@ -3,6 +3,12 @@ import { ListView, Card, SearchBar, Button, WhiteSpace, WingBlank } from 'antd-m
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
+
+//action
+import { setTokenAction,setUsernameAction,setBottomstatusAction } from '../../store/action/App';
+
 import './home.css';
 import TopBar from '../../component/TopBar';
 
@@ -71,6 +77,14 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    const tokendata = "mytoken";
+    //actions
+    this.props.actions.setToken(tokendata);
+
+
+    //actions  显示底部状态栏
+    this.props.actions.setBottomstatus(false);
+
   }
 
   componentWillMount() {
@@ -81,6 +95,7 @@ class Home extends Component {
         isLoading: false,
       });
     }, 600);
+
   }
 
   onEndReached = (event) => {
@@ -155,42 +170,6 @@ class Home extends Component {
     return (
       <div className="content">
         <TopBar></TopBar>
-        {/* <SearchBar className="search-bar" placeholder="Search" maxLength={8} />
-        <WhiteSpace /> */}
-        {/* <div className="account-info" style={{ width: '100%', height: '25px' }}> */}
-          {/* <div className="account-info-left" style={{ display: 'flex' }}>
-            <img className='icon-img' src='./images/icon.png' />
-            <div className='icon-text'>
-              <span>NFTicket</span>
-    //搜索框高度
-    const searchbarHeight = 25;
-    //空白区域高度
-    const whitespaceHeight = 9;
-    //账户信息高度
-    const accountInfoHeight = 25;
-    //底部Tab高度
-    const tabbarHeight = 46;
-    //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
-    const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-2*tabbarHeight+26;
-    return (<div className="content">
-        <SearchBar className="search-bar" placeholder="Search" maxLength={8} />
-        <WhiteSpace />
-        <div className="account-info" style={{width:'100%',height:'25px'}}>
-            <div className="account-info-left" style={{display:'flex'}}>
-              <img className='icon-img' src='./images/icon.png'/>
-              <div className='icon-text'>
-                <span>NFTicket</span>
-              </div>
-              <img className='search-icon' src='./images/search.png'/>
-            </div>
-            <img className='search-icon' src='./images/search.png' />
-          </div> */}
-          {/* <div className='account-info-right'>
-            <div className='right-text'>
-              <span>0x4234...1e45</span>
-            </div>
-          </div> */}
-        {/* </div> */}
         <div>
         <ListView
           ref={el => this.lv = el}
@@ -215,4 +194,26 @@ class Home extends Component {
   }
 }
 
-export default Home;
+//获取最新的store里的状态，通过this.props获取
+const mapStateToProps = (state)=>{
+  console.log("homehomehomehomehomehome");
+  console.log(state.app);
+  return {
+      app:state.app
+  }
+}
+//更新状态提交到store
+const mapDispatchToProps = (dispatch)=>{
+  return {
+      actions:bindActionCreators({
+        setToken:setTokenAction,
+        setUsername:setUsernameAction,
+        setBottomstatus:setBottomstatusAction
+      },dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

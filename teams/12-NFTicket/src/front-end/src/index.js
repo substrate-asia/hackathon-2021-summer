@@ -1,22 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router} from 'react-router-dom';
+// import {BrowserRouter as Router} from 'react-router-dom';
+// import Routes from './router';
+// import Bottomtab from './component/BottomTab/BottomTab';
 import './index.css';
 //import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import Routes from './router';
-import Bottomtab from './component/BottomTab/BottomTab';
+import App from './App';
 //import * as serviceWorker from './serviceWorker';
+
+// import Store from './store/Index';
 
 ReactDOM.render(
   <div>
-    <Router>
-
-      <Routes></Routes>
-      <Bottomtab></Bottomtab>
-
-    </Router>
+    <App />
   </div>,
   document.getElementById('root')
 );

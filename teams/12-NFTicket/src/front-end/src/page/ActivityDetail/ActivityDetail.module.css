@@ -1,13 +1,24 @@
+.wrapper{
+    width: 100%;
+    /* padding: 0 10px; */
+    /* display: inline-block; */
+    white-space: nowrap; 
+    overflow: scroll;
+}
+
 .activityDetail{
     width: 100%;
     text-align: center;
     margin: 0 auto;
 }
 .activityBg{
-    width: 320px;
-    height: 320px;
-    margin-top: 25px;
-    margin-bottom: 30px;
+    max-width: 100%;
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+}
+.activityBg img{
+    width: 100%;
 }
 .shareName{
     display: flex;
@@ -108,11 +119,7 @@
     word-wrap: break-word;
     white-space: normal;
 }
-.wrapper{
-    width: 100%;
-    white-space: nowrap; 
-    overflow: scroll;
-}
+
 .buyTicket{
     margin: 40px;
     border-radius:30px;

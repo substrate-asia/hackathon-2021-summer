@@ -1,3 +1,7 @@
+.hidebottom{
+    display: none;
+}
+
 .routes-list{
     display: flex;
     height: 45px;

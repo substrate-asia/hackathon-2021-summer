@@ -1,7 +1,8 @@
 
 import React,{Button,Component} from 'react';
 import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-
+import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
 
 class Create extends Component{
   constructor(props) {
@@ -95,51 +96,29 @@ class Create extends Component{
         <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
         <br/>
         <a onClick={this.scrollMore}>Scroll 100px more from the current position!</a>
-        <a onClick={this.scrollToTop}>To the top!</a>
-        <br/>
-        <a onClick={this.scrollToBottom}>To the bottom!</a>
-        <br/>
-        <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
-        <br/>
-        <a onClick={this.scrollMore}>Scroll 100px more from the current position!</a>
-        <a onClick={this.scrollToTop}>To the top!</a>
-        <br/>
-        <a onClick={this.scrollToBottom}>To the bottom!</a>
-        <br/>
-        <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
-        <br/>
-        <a onClick={this.scrollMore}>Scroll 100px more from the current position!</a>
-        <a onClick={this.scrollToTop}>To the top!</a>
-        <br/>
-        <a onClick={this.scrollToBottom}>To the bottom!</a>
-        <br/>
-        <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
-        <br/>
-        <a onClick={this.scrollMore}>Scroll 100px more from the current position!</a>
-        <a onClick={this.scrollToTop}>To the top!</a>
-        <br/>
-        <a onClick={this.scrollToBottom}>To the bottom!</a>
-        <br/>
-        <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
-        <br/>
-        <a onClick={this.scrollMore}>Scroll 100px more from the current position!</a>
-        <a onClick={this.scrollToTop}>To the top!</a>
-        <br/>
-        <a onClick={this.scrollToBottom}>To the bottom!</a>
-        <br/>
-        <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
-        <br/>
-        <a onClick={this.scrollMore}>Scroll 100px more from the current position!</a>
-        <a onClick={this.scrollToTop}>To the top!</a>
-        <br/>
-        <a onClick={this.scrollToBottom}>To the bottom!</a>
-        <br/>
-        <a onClick={this.scrollTo}>Scroll to 100px from the top</a>
-        <br/>
-        <a onClick={this.scrollMore}>Scroll 100px more from the current position!</a>
       </div>
     );
   }
 }
 
-export default Create;
+const mapStateToProps = (state)=>{
+  console.log("createcreatecreatecreatecreate")
+  console.log(state.app);
+  return {
+      config:state.app
+  }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+  
+  return {
+      actions:bindActionCreators({
+
+      },dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Create);
