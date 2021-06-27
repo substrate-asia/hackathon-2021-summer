@@ -21,11 +21,8 @@ mod nfticket {
     use ink_env::call::FromAccountId;
     use ink_prelude::vec::Vec;
     use ink_prelude::format;
-    use ink_env::debug_print;
-    use ink_storage::{
-        collections::{hashmap::Keys, HashMap as StorageHashMap},
-        lazy::Lazy,
-    };
+    use ink_env::{AccountId, debug_print};
+    use ink_storage::{collections::{HashMap as StorageHashMap, Stash, hashmap::Keys}, lazy::Lazy};
     use primitives::MeetingError;
     use primitives::Ticket;
     use stub::MainStub;
@@ -41,8 +38,10 @@ mod nfticket {
         owner: AccountId,
         //费率
         fee_rate: (u128, u128),
-        /// 收取费用的人
+        // 收取费用的人
         fee_taker: AccountId,
+        // 会议收集
+        meeting_coll:Stash<AccountId>,
     }
 
 
@@ -56,6 +55,7 @@ mod nfticket {
                 owner: caller,
                 fee_rate: (10, 100),
                 fee_taker,
+                meeting_coll:Default::default(),
             };
             instance
         }
@@ -83,20 +83,32 @@ mod nfticket {
             return true;
         }
 
+        /// 添加会议地址
+        #[ink(message)]
+        pub fn add_meeting(&mut self,meeting_addr:AccountId)->bool{
+            self.meeting_coll.put(meeting_addr);
+            true
+        }
 
-        /**
-        创建门票
-        1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
-        2. 仅能通过活动合约调用；
-        3. 通过调用的活动合约地址，知道是哪个活动，知道是哪个模板生成的，给相应的模板记分成收入；
-        4. 调用 runtime 的 NFT 创建接口，创建门票 NFT，并将门票NFT发放给 buyer
-        5. 返回创建的 class_id 和 NFT_ID的元组
-        6. 触发事件： ticket_created
-        */
+
+        ///
+        /// 购买门票
+        /// 3. 通过调用的活动合约地址，知道是哪个活动，知道是哪个模板生成的，给相应的模板记分成收入；
+        /// 4. 调用 runtime 的 NFT 创建接口，创建门票 NFT，并将门票NFT发放给 buyer
+        /// 5. 返回创建的 class_id 和 NFT_ID的元组
+        /// 6. 触发事件： ticket_created
         #[ink(message, payable)]
         pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
             ink_env::debug_message("-------------------------buy_ticket开始调用");
+            // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee暂缓
             let main_fee:Balance=self.env().transferred_balance();
+            //2. 仅能通过活动合约调用；
+            let caller = self.env().caller();
+            //查询调用者是否是来自合约.
+            if let Some(_)=self.meeting_coll.get(&caller){
+                
+            }
+
             // assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
             true
         }

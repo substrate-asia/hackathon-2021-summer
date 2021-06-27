@@ -239,10 +239,25 @@ mod meeting {
                 .checked_div(PERCENT.into())
                 .unwrap();
             ink_env::debug_message(&format!("-------------------------调用远程接口参数:主合约地址为:{:?}",meeting_addr));
-            // let mut main_contract: MainStub = FromAccountId::from_account_id(self.nfticket_addr);
+            self.env().transfer(*self.nfticket_addr,nfticket_fee);
+            let mut main_contract: MainStub = FromAccountId::from_account_id(self.nfticket_addr);
+            main_contract.buy_ticket(ticket.clone());
             // <&mut MainStub>::call_mut(&mut *self.nfticket_addr);
             // let mut main_contract: MainStub = FromAccountId::from_account_id(meeting_addr);
-            // main_contract.buy_ticket(ticket.clone());
+            
+
+            //裸调用
+            // let result = build_call::<<Self as ::ink_lang::ContractEnv>::Env>()
+            // .callee(t.callee)
+            // .gas_limit(t.gas_limit)
+            // .transferred_value(t.transferred_value)
+            // .exec_input(
+            //     ExecutionInput::new(t.selector.into()).push_arg(CallInput(&t.input)),
+            // )
+            // .returns::<()>()
+            // .fire()
+            // .map_err(|_| Error::TransactionFailed);
+
             let result: TickeResult = TickeResult {
                 price: 100u128,
                 maker: AccountId::from([0x01; 32]),
