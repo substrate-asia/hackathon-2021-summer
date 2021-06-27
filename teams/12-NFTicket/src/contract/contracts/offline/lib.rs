@@ -242,7 +242,7 @@ mod meeting {
             // let mut main_contract: MainStub = FromAccountId::from_account_id(self.nfticket_addr);
             <&mut MainStub>::call_mut(&mut *self.nfticket_addr);
             // let mut main_contract: MainStub = FromAccountId::from_account_id(meeting_addr);
-            main_contract.buy_ticket(ticket.clone());
+            // main_contract.buy_ticket(ticket.clone());
             let result: TickeResult = TickeResult {
                 price: 100u128,
                 maker: AccountId::from([0x01; 32]),
