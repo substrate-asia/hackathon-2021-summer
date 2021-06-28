@@ -4,6 +4,12 @@ import styles from './sort.module.css'
 import { Tabs, WhiteSpace, Badge,ListView } from 'antd-mobile';
 import TicketItem from '../../component/TicketItem'
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from "redux";
+
+//action
+import { setTokenAction,setUsernameAction,setBottomstatusAction } from '../../store/action/App';
+
 const tabs = [
   { title: <Badge >Unchecked</Badge> },
   { title: <Badge >Checked</Badge> },
@@ -42,7 +48,7 @@ function genData(pIndex = 0) {
   return dataBlob;
 }
 
-export default class sort extends Component {
+class sort extends Component {
 
   constructor(props){
     super(props);
@@ -58,6 +64,10 @@ export default class sort extends Component {
   }
    
   componentDidMount(){
+    //actions  显示底部状态栏
+    this.props.actions.setBottomstatus(false);
+  }
+  componentWillMount() {
     setTimeout(() => {
       this.rData = genData();
       this.setState({
@@ -65,6 +75,7 @@ export default class sort extends Component {
         isLoading: false,
       });
     }, 600);
+
   }
   onEndReached = (event) => {
     // load new data
@@ -126,9 +137,7 @@ export default class sort extends Component {
     return (
       <div className={styles.tabs}>
       
-          {/* padding: 0px 6px 0px 6px;
-          border: 1px solid #2f7ef5;
-          border-radius: 23px; */}
+      
          
         <Tabs tabBarTextStyle={{height:'44px',fontSize:'14px',lineHeight:'14px',fontWeight:'bold'}} tabs={tabs}
           initialPage={0}
@@ -180,3 +189,26 @@ export default class sort extends Component {
     )
   }
 }
+//获取最新的store里的状态，通过this.props获取
+const mapStateToProps = (state)=>{
+  console.log("homehomehomehomehomehome");
+  console.log(state.app);
+  return {
+      app:state.app
+  }
+}
+//更新状态提交到store
+const mapDispatchToProps = (dispatch)=>{
+  return {
+      actions:bindActionCreators({
+        setToken:setTokenAction,
+        setUsername:setUsernameAction,
+        setBottomstatus:setBottomstatusAction
+      },dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(sort);
