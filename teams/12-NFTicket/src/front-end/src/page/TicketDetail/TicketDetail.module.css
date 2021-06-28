@@ -14,22 +14,13 @@
 
 .detailImg{
     max-width: 100%;
-    /* height: 260px; */
     margin: 5px;
     padding: 5px;
 }
 .detailImg img{
     width: 100%;
-    /* height: 260px; */
 }
 .detailView{
-    /* padding-top: 32px;
-    padding-bottom: 10px;
-    margin-top: 32px;
-    margin-left: 32px;
-    margin-right: 32px;
-    border:1px solid #000;
-    border-radius:30px;     */
     width: 100%;
     white-space: nowrap; 
     overflow: scroll;
@@ -94,7 +85,6 @@
     align-items: center;
 }
 .dottedLineLeft{
-    
     width: 25px;
     height: 50px;
     border-left: 1px solid #ffffff;
@@ -108,7 +98,6 @@
 }
 
 .dottedLineRight{
-    
     width: 25px;
     height: 50px;
     border-right: 1px solid #ffffff;

@@ -11,6 +11,7 @@ import TestModule from './page/testmodule/testmodule';
 import TicketDetail from './page/TicketDetail/TicketDetail';
 import ActivityDetail from './page/ActivityDetail/ActivityDetail';
 import CreateEvent from './page/CreateEvent/CreateEvent';
+import Payment from './page/Payment/Payment';
 import './router.css';
 
 class Routes extends Component{
@@ -30,6 +31,8 @@ class Routes extends Component{
                     <Route path='/Home/activityDetail' component={ActivityDetail}></Route>
                     {/** 创建Event页面 */}
                     {/* <Route path='/Home/createEvent' component={CreateEvent}></Route> */}
+                    {/** 购买页面*/}
+                    <Route path='/Home/Payment' component={Payment}></Route>
                 </div>
             </div>
         )

@@ -86,7 +86,7 @@ class ActivityDetail extends Component {
                             </span>
                         </div>
                         {/** 购买按钮 */}
-                        <Button type="primary" className={styles.buyTicket}>Buy Ticket</Button>
+                        <Button type="primary" className={styles.buyTicket} onClick={() => this.props.history.push('/Home/Payment')}>Buy Ticket</Button>
                     </div>
                 </Flex>
 
