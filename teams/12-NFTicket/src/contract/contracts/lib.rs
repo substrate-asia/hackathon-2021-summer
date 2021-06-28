@@ -21,9 +21,11 @@ mod nfticket {
     use ink_env::call::FromAccountId;
     use ink_prelude::vec::Vec;
     use ink_prelude::format;
-    use ink_env::{AccountId, debug_print};
-    use ink_storage::{collections::{HashMap as StorageHashMap, Stash, hashmap::Keys}, lazy::Lazy};
+    use ink_storage::collections::stash;
+    use ink_storage::{collections::{HashMap as StorageHashMap, Stash as StrorageStash, hashmap::Keys}, lazy::Lazy};
     use primitives::MeetingError;
+    use primitives::Template;
+    use primitives::TemplateStatus;
     use primitives::Ticket;
     use stub::MainStub;
 
@@ -40,10 +42,28 @@ mod nfticket {
         fee_rate: (u128, u128),
         // 收取费用的人
         fee_taker: AccountId,
-        // 会议收集
-        meeting_coll:Stash<AccountId>,
+        // 会议集合
+        meeting_coll:StorageHashMap<AccountId,bool>,
+        //模板集合
+        template_map:StorageHashMap<AccountId,Template>,
     }
 
+    /// 模板创建事件
+    #[ink(event)]
+    pub struct TemplateAdded {
+        #[ink(topic)]
+        template_addr: AccountId,       //模板地址
+        #[ink(topic)]
+        creator: AccountId,             //创建人
+    }
+    /// 模板创建事件
+    #[ink(event)]
+    pub struct TemplateModified {
+        #[ink(topic)]
+        template_addr: AccountId,       //模板地址
+        #[ink(topic)]
+        creator: AccountId,             //创建人
+    }
 
     impl NftTicket {
         /// Creates a new ERC-20 contract with the specified initial supply.
@@ -56,6 +76,7 @@ mod nfticket {
                 fee_rate: (10, 100),
                 fee_taker,
                 meeting_coll:Default::default(),
+                template_map:Default::default(),
             };
             instance
         }
@@ -83,11 +104,95 @@ mod nfticket {
             return true;
         }
 
-        /// 添加会议地址
+        /**
+         添加模板
+         1. 验证操作人是否 系统owner ;
+         2. 验证 address 是否有重复;
+         3. 调用模板合约的 get_controller 确认主控合约地址是将当前合约
+         4. 添加模板数据
+         5. 触发事件 template_added(AccountId, AccountId,)
+         */
+        #[ink(message)]
+        pub fn add_template(&mut self, template_addr:AccountId, name:Vec<u8>, desc:Vec<u8>, uri: Vec<u8>, ratio: u128)->bool{
+            self.ensure_owner();
+            let caller = Self::env().caller();
+            //验证 address 是否有重复;
+            if self.template_map.contains_key(&template_addr){
+                ink_env::debug_println!("template had been added:{:?}",template_addr);
+            }else{
+                let my_template = Template{
+                    template_addr,
+                    name,
+                    desc,
+                    uri,
+                    ratio,
+                    status:primitives::TemplateStatus::Active
+                };
+                self.template_map.insert(template_addr, my_template);
+            }
+            Self::env().emit_event(TemplateAdded{
+                template_addr: template_addr,
+                creator: caller,
+            });
+            true
+        }
+        // /**
+        // 修改模板状态
+        // 1. 验证操作人是否 owner ;
+        // 2. 验证模板是否有效
+        // 3. 触发事件 tempalte_status_changed
+        // */
+        #[ink(message)]
+        pub fn set_template_status(&mut self, template_addr: AccountId, status: TemplateStatus)->bool{
+            self.template_map.get_mut(&template_addr).map(|t|{
+                t.status = status;
+            });
+            true
+        }
+        /**
+        修改模板信息
+        1. 验证操作人是否系统 owner or 模板的 owner（需要通过 活动模板合约获取）
+        2. 验证模板是否有效
+        3. 触发事件 template_modified
+        */
+        #[ink(message)]
+        pub fn modify_template(&mut self, template_addr:AccountId, name: Vec<u8>, desc: Vec<u8>, uri: Vec<u8>, ratio: u128 )->bool{
+            self.ensure_owner();
+            let caller = Self::env().caller();
+            let my_template = Template{
+                template_addr,
+                name,
+                desc,
+                uri,
+                ratio,
+                status:primitives::TemplateStatus::Active
+            };
+            self.template_map.insert(template_addr, my_template);
+            Self::env().emit_event(TemplateModified{
+                template_addr: template_addr,
+                creator: caller,
+            });
+            true
+        }
+
+        /// 返回模板列表，可能需要考虑一套完整的方案，智能合约也许不能返回 hashMap
+        #[ink(message)]
+        pub fn get_all_templates(&self)-> Vec<Template>{
+            self.template_map.values().map(|v|v.clone()).collect()
+        }
+
+        /// 添加活动地址
         #[ink(message)]
         pub fn add_meeting(&mut self,meeting_addr:AccountId)->bool{
-            self.meeting_coll.put(meeting_addr);
+            self.meeting_coll.insert(meeting_addr, true);
             true
+        }
+
+        /// 返回活动列表
+        #[ink(message)]
+        pub fn get_all_meeting(&self)->Vec<AccountId>{
+            let result:Vec<AccountId> = self.meeting_coll.iter().map(|(k,_)|k.clone()).collect();
+            return result;
         }
 
 

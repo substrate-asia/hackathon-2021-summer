@@ -240,7 +240,7 @@ mod meeting {
                 .unwrap();
             ink_env::debug_message(&format!("-------------------------调用远程接口参数:主合约地址为:{:?}",meeting_addr));
             self.env().transfer(*self.nfticket_addr,nfticket_fee);
-            let mut main_contract: MainStub = FromAccountId::from_account_id(self.nfticket_addr);
+            let mut main_contract: MainStub = FromAccountId::from_account_id(*self.nfticket_addr);
             main_contract.buy_ticket(ticket.clone());
             // <&mut MainStub>::call_mut(&mut *self.nfticket_addr);
             // let mut main_contract: MainStub = FromAccountId::from_account_id(meeting_addr);

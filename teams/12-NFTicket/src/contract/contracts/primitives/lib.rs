@@ -35,6 +35,24 @@ pub struct Ticket {
     seat_id:Option<(u32,u32)>
 }
 
+/// 模板状态
+#[derive(Debug,Clone, PartialEq, Eq, scale::Encode, scale::Decode,SpreadLayout, PackedLayout)]
+#[cfg_attr(feature = "std", derive(scale_info::TypeInfo,ink_storage::traits::StorageLayout))]
+pub enum TemplateStatus{
+    Active,
+    Stop,
+}
+#[derive(
+    Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
+)]
+#[cfg_attr(
+    feature = "std",
+    derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
+)]
+pub struct Template {
+    pub template_addr:AccountId,pub  name:Vec<u8>,pub  desc:Vec<u8>,pub  uri: Vec<u8>,pub  ratio: u128,pub status:TemplateStatus
+}
+
 impl Ticket{
     pub fn new(template_addr:AccountId,meeting:AccountId,price:u128,zone_id:u32,seat_id:Option<(u32,u32)>,ticket_id:u32)->Self{
         // 此处的生成hash的方法极度不合理.需要将template+meeting+price一起生成encode后得到进行hash运算.
