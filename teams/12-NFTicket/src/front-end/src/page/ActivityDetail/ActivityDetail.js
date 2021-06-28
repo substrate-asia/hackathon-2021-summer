@@ -29,7 +29,7 @@ class ActivityDetail extends Component {
     
     render() {
         //搜索框高度
-        const searchbarHeight = 25;
+        const searchbarHeight = 45;
         //空白区域高度
         const whitespaceHeight = 9;
         //账户信息高度
@@ -42,51 +42,74 @@ class ActivityDetail extends Component {
                 <TopBar></TopBar>
                 <Flex>
                     <div className={styles.wrapper} style={{height:''+height+'px'}}>
-                        {/** 活动图片 */}
+                        <div className={styles.wrapperContent}>
+                            {/** 活动图片 */}
 
-                        <div className={styles.activityBg}>
-                            <img src={bg} alt=""></img>
-                        </div>
-                        {/** 活动名称 */}
-                        <div className={styles.shareName}>
-                            <span className={styles.detailName}>Event Name</span>
-                            <img src={share} className={styles.shareIcon}></img>
-                        </div>
-                        {/** 地址 */}
-                        <div className={styles.addressView}>
-                            <img src={address} className={styles.addressIcon}></img>
-                            <span className={styles.addressText}>Location detail</span>
-                        </div>
-                        {/** 日期*/}
-                        <div className={styles.addressView}>
-                            <img src={time} className={styles.timeIcon}></img>
-                            <span className={styles.timeText}>Date + start time</span>
-                        </div>
-                        {/** 金额*/}
-                        <div className={styles.priceView}>
-                            <img src={price} className={styles.timeIcon}></img>
-                            <span className={styles.priceText}>180-360</span>
-                            <span className={styles.priceUnitText}>NMT</span>
-                        </div>
-                        {/** 活动的主办单位信息 */}
-                        <span className={styles.actionName}>Sponsor</span>
-                        <div className={styles.actionView}>
-                            <div className={styles.fillet}>
-                                <span className={styles.topText}>A</span>
+                            <div className={styles.activityBg}>
+                                <img src={bg} alt=""></img>
                             </div>
-                            <span className={styles.actionAuth}> Adorine</span>
+                            {/** 活动名称 */}
+                            <div className={styles.shareName}>
+                                <span className={styles.detailName}>Event Name</span>
+                                <img src={share} className={styles.shareIcon}></img>
+                            </div>
+                            {/** 地址 */}
+                            <div className={styles.addressView}>
+                                <img src={address} className={styles.addressIcon}></img>
+                                <span className={styles.addressText}>Location detail</span>
+                            </div>
+                            {/** 日期*/}
+                            <div className={styles.addressView}>
+                                <img src={time} className={styles.timeIcon}></img>
+                                <span className={styles.timeText}>Date + start time</span>
+                            </div>
+                            {/** 金额*/}
+                            <div className={styles.priceView}>
+                                <img src={price} className={styles.timeIcon}></img>
+                                <span className={styles.priceText}>180-360</span>
+                                <span className={styles.priceUnitText}>NMT</span>
+                            </div>
+                            {/** 活动的主办单位信息 */}
+                            <span className={styles.actionName}>Sponsor</span>
+                            <div className={styles.actionView}>
+                                <div className={styles.fillet}>
+                                    <span className={styles.topText}>A</span>
+                                </div>
+                                <span className={styles.actionAuth}> Adorine</span>
 
+                            </div>
+                            {/** 活动的描述信息 */}
+                            <span className={styles.actionName}>Discription</span>
+                            <div className={styles.descContent}>
+                                <span className={styles.descInfo}>
+                                Taylor Alison Swift (born December 13, 1989) is an 
+                                American singer-songwriter. Her narrative lyricism, 
+                                which often takes inspiration from her personal life 
+                                and experiences, has received widespread critical 
+                                praise and media coverage.
+
+                                <div className={styles.contentline}></div>
+                                Born in West Reading, Pennsylvania, Swift relocated 
+                                to Nashville, Tennessee in 2004, to pursue a career 
+                                in country music. She broke into the country music 
+                                scene with her eponymous debut studio album in 
+                                2006, which included the singles "Teardrops on My 
+                                Guitar" and "Our Song". Swift rose to mainstream 
+                                prominence with her second studio album, Fearless 
+                                (2008), a country pop record with crossover appeal. 
+                                Aided by the top-five singles "Love Story" and "You 
+                                Belong with Me", Fearless was certified Diamond by 
+                                the Recording Industry Association of America 
+                                (RIAA). Swift's third studio album, Speak Now (2010), 
+                                blended country-pop with elements of rock and 
+                                featured the top-ten singles "Mine" and "Back to 
+                                December".
+
+                                </span>
+                            </div>
+                            {/** 购买按钮 */}
+                            <Button type="primary" className={styles.buyTicket} onClick={() => this.props.history.push('/Home/Payment')}>Buy Ticket</Button>
                         </div>
-                        {/** 活动的描述信息 */}
-                        <span className={styles.actionName}>Discription</span>
-                        <div clclassName={styles.descContent}>
-                            <span className={styles.descInfo}>
-                                33242342423423432423354345345345345334
-                                534543
-                            </span>
-                        </div>
-                        {/** 购买按钮 */}
-                        <Button type="primary" className={styles.buyTicket} onClick={() => this.props.history.push('/Home/Payment')}>Buy Ticket</Button>
                     </div>
                 </Flex>
 
