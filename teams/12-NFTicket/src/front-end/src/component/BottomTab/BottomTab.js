@@ -29,25 +29,25 @@ class BottomTab extends Component{
                         {/* <div className="tab-item-name">活动</div> */}
                     </Link>
                     <Link className="tab-item" onClick={()=>{this.setState({current:2})}} to="/Search"
-                    activeStyle={{backgroundImage:'./1.png'}}>
+                    activestyle={{backgroundImage:'./1.png'}}>
                         <div className="tab-item-icon"><img src={this.state.current===2?"./images/2_active.png":"./images/2.png"} 
                             alt="" width="25px" height="25px" /></div>
                         {/* <div className="tab-item-name">搜索</div> */}
                     </Link>
                     <Link className="tab-item" onClick={()=>{this.setState({current:3})}} to="/Create"
-                    activeStyle={{fontWeight:'bold',color:'red'}}>
+                    activestyle={{fontWeight:'bold',color:'red'}}>
                         <div className="tab-item-icon-middle"><img src={this.state.current===3?"./images/3_active.png":"./images/3.png"} 
                             alt="" width="39px" height="39px" /></div>
                         <div className="tab-item-name"></div>
                     </Link>
                     <Link className="tab-item" onClick={()=>{this.setState({current:4})}} to="/Sort"
-                    activeStyle={{fontWeight:'bold',color:'red'}}>
+                    activestyle={{fontWeight:'bold',color:'red'}}>
                         <div className="tab-item-icon"><img src={this.state.current===4?"./images/4_active.png":"./images/4.png"} 
                             alt="" width="25px" height="25px" /></div>
                         {/* <div className="tab-item-name">票据</div> */}
                     </Link>
                     <Link className="tab-item" onClick={()=>{this.setState({current:5})}} to="/Mine"
-                    activeStyle={{fontWeight:'bold',color:'red'}}>
+                    activestyle={{fontWeight:'bold',color:'red'}}>
                         <div className="tab-item-icon"><img src={this.state.current===5?"./images/5_active.png":"./images/5.png"} 
                             alt="" width="25px" height="25px" /></div>
                         {/* <div className="tab-item-name">我的</div> */}
