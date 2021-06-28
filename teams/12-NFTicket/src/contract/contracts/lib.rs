@@ -19,18 +19,21 @@ use ink_lang as ink;
 mod nfticket {
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_env::call::FromAccountId;
-    use ink_prelude::vec::Vec;
     use ink_prelude::format;
+    use ink_prelude::vec::Vec;
     use ink_storage::collections::stash;
-    use ink_storage::{collections::{HashMap as StorageHashMap, Stash as StrorageStash, hashmap::Keys}, lazy::Lazy};
-    use primitives::MeetingError;
-    use primitives::Template;
+    use ink_storage::{
+        collections::{hashmap::Keys, HashMap as StorageHashMap, Stash as StrorageStash},
+        lazy::Lazy,
+    };
+    use primitives::{MeetingStatus, Template};
     use primitives::TemplateStatus;
     use primitives::Ticket;
+    use primitives::{Meeting, MeetingError};
     use stub::MainStub;
 
     pub type Result<T> = core::result::Result<T, MeetingError>;
-    const min_ticket_fee:u128 = 100u128;
+    const min_ticket_fee: u128 = 100u128;
     /// A simple ERC-20 contract.
     #[ink(storage)]
     pub struct NftTicket {
@@ -43,26 +46,44 @@ mod nfticket {
         // 收取费用的人
         fee_taker: AccountId,
         // 会议集合
-        meeting_coll:StorageHashMap<AccountId,bool>,
+        meeting_map: StorageHashMap<AccountId, Meeting>,
         //模板集合
-        template_map:StorageHashMap<AccountId,Template>,
+        template_map: StorageHashMap<AccountId, Template>,
     }
 
     /// 模板创建事件
     #[ink(event)]
     pub struct TemplateAdded {
         #[ink(topic)]
-        template_addr: AccountId,       //模板地址
+        template_addr: AccountId, //模板地址
         #[ink(topic)]
-        creator: AccountId,             //创建人
+        creator: AccountId, //创建人
     }
     /// 模板创建事件
     #[ink(event)]
     pub struct TemplateModified {
         #[ink(topic)]
-        template_addr: AccountId,       //模板地址
+        template_addr: AccountId, //模板地址
         #[ink(topic)]
-        creator: AccountId,             //创建人
+        creator: AccountId, //创建人
+    }
+
+    /// 活动创建事件
+    #[ink(event)]
+    pub struct MeetingAdded {
+        #[ink(topic)]
+        meeting_addr: AccountId, //模板地址
+        #[ink(topic)]
+        creator: AccountId, //创建人
+    }
+
+    /// 活动创建事件
+    #[ink(event)]
+    pub struct MeetingModified {
+        #[ink(topic)]
+        meeting_addr: AccountId, //模板地址
+        #[ink(topic)]
+        creator: AccountId, //创建人
     }
 
     impl NftTicket {
@@ -75,8 +96,8 @@ mod nfticket {
                 owner: caller,
                 fee_rate: (10, 100),
                 fee_taker,
-                meeting_coll:Default::default(),
-                template_map:Default::default(),
+                meeting_map: Default::default(),
+                template_map: Default::default(),
             };
             instance
         }
@@ -98,39 +119,46 @@ mod nfticket {
         /// Owner转移相关方法，可以更换主合约的控制人
         ///验证操作人是否 owner;
         #[ink(message)]
-        pub fn owner_transfer(&mut self, new_owner: AccountId)->bool{
+        pub fn owner_transfer(&mut self, new_owner: AccountId) -> bool {
             self.ensure_owner();
             self.owner = new_owner;
             return true;
         }
 
         /**
-         添加模板
-         1. 验证操作人是否 系统owner ;
-         2. 验证 address 是否有重复;
-         3. 调用模板合约的 get_controller 确认主控合约地址是将当前合约
-         4. 添加模板数据
-         5. 触发事件 template_added(AccountId, AccountId,)
-         */
+        添加模板
+        1. 验证操作人是否 系统owner ;
+        2. 验证 address 是否有重复;
+        3. 调用模板合约的 get_controller 确认主控合约地址是将当前合约
+        4. 添加模板数据
+        5. 触发事件 template_added(AccountId, AccountId,)
+        */
         #[ink(message)]
-        pub fn add_template(&mut self, template_addr:AccountId, name:Vec<u8>, desc:Vec<u8>, uri: Vec<u8>, ratio: u128)->bool{
+        pub fn add_template(
+            &mut self,
+            template_addr: AccountId,
+            name: Vec<u8>,
+            desc: Vec<u8>,
+            uri: Vec<u8>,
+            ratio: u128,
+        ) -> bool {
             self.ensure_owner();
             let caller = Self::env().caller();
             //验证 address 是否有重复;
-            if self.template_map.contains_key(&template_addr){
-                ink_env::debug_println!("template had been added:{:?}",template_addr);
-            }else{
-                let my_template = Template{
+            if self.template_map.contains_key(&template_addr) {
+                ink_env::debug_println!("template had been added:{:?}", template_addr);
+            } else {
+                let my_template = Template {
                     template_addr,
                     name,
                     desc,
                     uri,
                     ratio,
-                    status:primitives::TemplateStatus::Active
+                    status: primitives::TemplateStatus::Active,
                 };
                 self.template_map.insert(template_addr, my_template);
             }
-            Self::env().emit_event(TemplateAdded{
+            Self::env().emit_event(TemplateAdded {
                 template_addr: template_addr,
                 creator: caller,
             });
@@ -143,8 +171,12 @@ mod nfticket {
         // 3. 触发事件 tempalte_status_changed
         // */
         #[ink(message)]
-        pub fn set_template_status(&mut self, template_addr: AccountId, status: TemplateStatus)->bool{
-            self.template_map.get_mut(&template_addr).map(|t|{
+        pub fn set_template_status(
+            &mut self,
+            template_addr: AccountId,
+            status: TemplateStatus,
+        ) -> bool {
+            self.template_map.get_mut(&template_addr).map(|t| {
                 t.status = status;
             });
             true
@@ -156,19 +188,26 @@ mod nfticket {
         3. 触发事件 template_modified
         */
         #[ink(message)]
-        pub fn modify_template(&mut self, template_addr:AccountId, name: Vec<u8>, desc: Vec<u8>, uri: Vec<u8>, ratio: u128 )->bool{
+        pub fn modify_template(
+            &mut self,
+            template_addr: AccountId,
+            name: Vec<u8>,
+            desc: Vec<u8>,
+            uri: Vec<u8>,
+            ratio: u128,
+        ) -> bool {
             self.ensure_owner();
             let caller = Self::env().caller();
-            let my_template = Template{
+            let my_template = Template {
                 template_addr,
                 name,
                 desc,
                 uri,
                 ratio,
-                status:primitives::TemplateStatus::Active
+                status: primitives::TemplateStatus::Active,
             };
             self.template_map.insert(template_addr, my_template);
-            Self::env().emit_event(TemplateModified{
+            Self::env().emit_event(TemplateModified {
                 template_addr: template_addr,
                 creator: caller,
             });
@@ -177,24 +216,107 @@ mod nfticket {
 
         /// 返回模板列表，可能需要考虑一套完整的方案，智能合约也许不能返回 hashMap
         #[ink(message)]
-        pub fn get_all_templates(&self)-> Vec<Template>{
-            self.template_map.values().map(|v|v.clone()).collect()
+        pub fn get_all_templates(&self) -> Vec<Template> {
+            self.template_map.values().map(|v| v.clone()).collect()
         }
 
-        /// 添加活动地址
+        /**
+        添加会议活动，仅限已登记并且处于激活状态的模板合约调用
+        1. 通过调用合约地址，确认是哪个模板
+        3. 确认活动地址是否重复，
+        4. 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
+        5. 创建相应的 NFT 集合（调用 runtime 接口）
+        6. 添加活动信息
+        7. 触发事件 meeting_added
+        */
         #[ink(message)]
-        pub fn add_meeting(&mut self,meeting_addr:AccountId)->bool{
-            self.meeting_coll.insert(meeting_addr, true);
+        pub fn add_meeting(
+            &mut self,
+            meeting_addr: AccountId,
+            name: Vec<u8>,
+            desc: Vec<u8>,
+            poster: Vec<u8>,
+            uri: Vec<u8>,
+            start_time: u64,
+            end_time: u64,
+            start_sale_time: u64,
+            end_sale_time: u64,
+        ) -> bool {
+            let caller = Self::env().caller();
+            /// 判断是否重复
+            if self.meeting_map.contains_key(&meeting_addr) {
+                ink_env::debug_println!("template had been added:{:?}", meeting_addr);
+            } else {
+                //TODO前置验证 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
+                let meeting = Meeting {
+                    meeting_addr,
+                    name,
+                    desc,
+                    poster,
+                    uri,
+                    start_time,
+                    end_time,
+                    start_sale_time,
+                    end_sale_time,
+                    status:primitives::MeetingStatus::Active,
+                };
+                self.meeting_map.insert(meeting_addr, meeting);
+                /// TODO 创建相应的 NFT 集合（调用 runtime 接口）
+                Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller});
+            }
             true
         }
 
         /// 返回活动列表
         #[ink(message)]
-        pub fn get_all_meeting(&self)->Vec<AccountId>{
-            let result:Vec<AccountId> = self.meeting_coll.iter().map(|(k,_)|k.clone()).collect();
-            return result;
+        pub fn get_all_meeting(&self) -> Vec<Meeting> {
+            self.meeting_map.values().map(|v|v.clone()).collect()
         }
 
+        /**
+        修改活动状态，（仅限已登记的活动合约调用）
+        1. 通过调用合约地址，确认是哪个活动
+        2. 更新状态
+        3. 触发 meeting_status_changed 事件
+        4. 如果状态和先前状态一致，仍然返回 true ，只是不触发事件
+        */
+        pub fn set_meeting_status(&mut self,meeting_addr:AccountId, status: MeetingStatus)->bool{
+            self.meeting_map.get_mut(&meeting_addr).map(|t| {
+                t.status = status;
+            });
+            true
+        }
+
+        /**
+        修改活动信息（ 仅 活动的 owner 可以调用 ）
+        1. 通过调用合约地址，确认活动
+        2. 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
+        3. 更新信息；
+        4. 触发 meeting_modified 事件
+        5. 更新成功，返回 true
+        */
+        pub fn modify_meeting(&mut self, meeting_addr:AccountId, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64)->bool{
+            self.ensure_owner();
+            let caller = Self::env().caller();
+            let my_meeting = Meeting {
+                meeting_addr,
+                name,
+                desc,
+                poster,
+                uri,
+                start_time,
+                end_time,
+                start_sale_time,
+                end_sale_time,
+                status:primitives::MeetingStatus::Active,
+            };
+            self.meeting_map.insert(meeting_addr, my_meeting);
+            Self::env().emit_event(MeetingModified {
+                meeting_addr: meeting_addr,
+                creator: caller,
+            });
+            true
+        }
 
         ///
         /// 购买门票
@@ -203,16 +325,14 @@ mod nfticket {
         /// 5. 返回创建的 class_id 和 NFT_ID的元组
         /// 6. 触发事件： ticket_created
         #[ink(message, payable)]
-        pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
+        pub fn buy_ticket(&mut self, _ticket: Ticket) -> bool {
             ink_env::debug_message("-------------------------buy_ticket开始调用");
             // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee暂缓
-            let main_fee:Balance=self.env().transferred_balance();
+            let main_fee: Balance = self.env().transferred_balance();
             //2. 仅能通过活动合约调用；
             let caller = self.env().caller();
             //查询调用者是否是来自合约.
-            if let Some(_)=self.meeting_coll.get(&caller){
-                
-            }
+            if let Some(_) = self.meeting_map.get(&caller) {}
 
             // assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
             true
@@ -261,7 +381,9 @@ mod nfticket {
         /// 添加合约的id和hash值
         #[ink(message)]
         pub fn add_template_hash(&mut self, hash: Hash, template_address: AccountId) -> bool {
-            let value = self.template_hash_address_map.insert(hash, template_address);
+            let value = self
+                .template_hash_address_map
+                .insert(hash, template_address);
             if let None = value {
                 //如果该key不存在,返回true
                 true
