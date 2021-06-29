@@ -1,5 +1,6 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
+pub use self::meeting::Meeting;
 use ink_lang as ink;
 
 /**
@@ -9,7 +10,8 @@ use ink_lang as ink;
  3. 所有合约的操作都是通过活动合约实现；
 */
 #[ink::contract]
-mod meeting {
+pub mod meeting {
+    use ink_prelude::vec::Vec;
     use ink_storage::{
         collections::HashMap as StorageMap,
         traits::{PackedLayout, SpreadLayout},
@@ -24,14 +26,14 @@ mod meeting {
         feature = "std",
         derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
     )]
-    struct check_record{
+    struct CheckRecord{
         inspectors: AccountId, // 检票人
         timestamp: u128, // 检票时间戳
         block: u128, // 检票记录区块
     }
-    impl Default for check_record {
-        fn default() -> check_record {
-            check_record {
+    impl Default for CheckRecord {
+        fn default() -> CheckRecord {
+            CheckRecord {
                 inspector: Default::default(),
                 timestamp: Default::default(),
                 block: Default::default(),
@@ -68,7 +70,7 @@ mod meeting {
         // 用户参与后会产生的数据
         tickets: StorageMap<(u128,u128),(u8,u8,u8)>,     // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
-        check_records: StorageMap<(u128, u128), Vec<check_record> >, // 检票记录： 
+        check_records: StorageMap<(u128, u128), Vec<CheckRecord> >, // 检票记录： 
     }
 
     impl Meeting {
@@ -80,30 +82,34 @@ mod meeting {
                 controller: controller,
                 template: template,
                 owner: caller,
-                zone_id: Default:default(),
-                local_address: Default:default(),
-                zones: Default:default(),
-                price_type: Default:default(),
-                price: Default:default(),
-                seats: Default:default(),
-                inspectors: Default:default(),
+                price: 0,
+                max_tickets: 0,
+                inspectors: ink_storage::collections::StorageMap::new(),
+                tickets: ink_storage::collections::StorageMap::new(),
+                check_records: ink_storage::collections::StorageMap::new(),
             }
         }
-
-/**
-TODO:
-
 
         /**
         转移 owner
         1. 必须 owner 才可以调用
         */
-        pub fn transfer_owner(mut &self, new_owner:AccountId){
-
+        #[ink(message)]
+        pub fn transfer_owner(&mut self, new_owner:AccountId){
+            let caller = Self::env().caller();
+            if caller == self.owner {
+                self.owner = new_owner
+            }
         }
 
+        #[ink(message)]
         pub fn get_owner(&self)-> AccountId{
+            self.owner
+        }
 
+        #[ink(message)]
+        pub fn get_self(&self)-> AccountId{
+            Self::env().account_id()
         }
 
         /**
@@ -112,6 +118,7 @@ TODO:
         2. 如果涉及到基础信息部分的更新，需要调用主合约更新；
         3. 修改成功后，触发事件 meeting_modified
         */
+        #[ink(message)]
         pub fn modify_meeting(&mut self, max_tickets: u64, price: Balance ){
 
         }
@@ -124,8 +131,9 @@ TODO:
         4. 更新 tickets 
         5. 返回
         */
+        #[ink(message)]
         pub fn buy_ticket() -> (u128,u128) {
-
+            (0,0)
         }
 
         /**
@@ -134,7 +142,8 @@ TODO:
         2. 需要检查是否已经存在了
         3. 触发时间 inspector_added
         */
-        pub fn add_inspector(mut &self, inspector: AccountId){
+        #[ink(message)]
+        pub fn add_inspector(&mut self, inspector: AccountId){
 
         }
 
@@ -144,7 +153,8 @@ TODO:
         2. 需要检查是否存在
         3. 触发事件 inspector_removed
         */
-        pub fn remove_inspector(mut &self, inspector: AccountId){
+        #[ink(message)]
+        pub fn remove_inspector(&mut self, inspector: AccountId){
 
         }
 
@@ -158,13 +168,15 @@ TODO:
         6. 添加检票记录 check_records ，返回 true
         7. 触发事件 ticket_checked
         */
-        pub fn check_ticket(mut &self, ticket: (u128, u128), timestamp: u128, hash: Vec<u8> ) -> bool {
+        #[ink(message)]
+        pub fn check_ticket(&mut self, ticket: (u128, u128), timestamp: u128, hash: Vec<u8> ) -> bool {
 
         }
 
         /**
         返回所有的门票检票记录
         */
+        #[ink(message)]
         pub fn get_check_records(&self, ticket: (u128, u128) ){
 
         }
@@ -174,9 +186,9 @@ TODO:
         1. 只能由 owner 调用
         2. 
         */
-        pub fn withdraw(mut &self, to:AccountId, amount:Balance){
+        #[ink(message)]
+        pub fn withdraw(&mut self, to:AccountId, amount:Balance){
 
         }
-*/
     }
 }
