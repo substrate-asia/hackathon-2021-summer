@@ -148,6 +148,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "contract-types"
+version = "0.1.0"
+source = "git+https://github.com/NFTT-studio/nftmart-node.git?branch=dev#a3010a5de41651a8ba52aab8aa678d5b19a31ca2"
+dependencies = [
+ "parity-scale-codec",
+]
+
+[[package]]
 name = "cpufeatures"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -621,12 +629,28 @@ dependencies = [
  "ink_prelude",
  "ink_primitives",
  "ink_storage",
+ "nftmart-contract",
  "offline",
  "parity-scale-codec",
  "primitives",
  "scale-info",
  "stub",
  "template",
+]
+
+[[package]]
+name = "nftmart-contract"
+version = "0.1.0"
+dependencies = [
+ "contract-types",
+ "ink_env",
+ "ink_lang",
+ "ink_metadata",
+ "ink_prelude",
+ "ink_primitives",
+ "ink_storage",
+ "parity-scale-codec",
+ "scale-info",
 ]
 
 [[package]]

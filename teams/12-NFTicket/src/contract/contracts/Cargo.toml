@@ -15,6 +15,7 @@ stub = { version = "0.1.0", path = "stub", default-features = false, features = 
 template = { version = "0.1.0", path = "template", default-features = false, features = ["ink-as-dependency"] }
 primitives = { version = "0.1.0", path = "primitives", default-features = false}
 offline = { version = "0.1.0", path = "offline", default-features = false}
+nftmart-contract = { version = "0.1.0", path = "nftmart-contract", default-features = false}
 scale = { package = "parity-scale-codec", version = "2.1", default-features = false, features = ["derive"] }
 scale-info = { version = "0.6", default-features = false, features = ["derive"], optional = true }
 # ink_log = { git = "https://github.com/patractlabs/ink-log", branch = "master", default-features = false, features = ["ink-log-chain-extensions"] }
@@ -40,6 +41,7 @@ std = [
     "template/std",
     "primitives/std",
     "offline/std",
+    "nftmart-contract/std",
     # "ink_log/std",
 ]
 ink-as-dependency = []
@@ -49,6 +51,7 @@ members = [
     "stub",
     "template",
     "offline",
+    "nftmart-contract",
     # "primitives",
 ]
 [profile.release]

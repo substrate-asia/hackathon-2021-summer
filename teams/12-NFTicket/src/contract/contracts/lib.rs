@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #![cfg_attr(not(feature = "std"), no_std)]
+
 use ink_lang as ink;
-// #[ink::contract(env = ink_log::CustomEnvironment)]
-#[ink::contract]
+pub use nftmart_contract::*;
+#[ink::contract(env = CustomEnvironment)]
 mod nfticket {
     #[cfg(not(feature = "ink-as-dependency"))]
+    use super::*;
     use ink_env::call::FromAccountId;
     use ink_prelude::format;
     use ink_prelude::vec::Vec;
@@ -32,7 +34,6 @@ mod nfticket {
     use primitives::{Meeting, MeetingError};
     use stub::MainStub;
 
-    pub type Result<T> = core::result::Result<T, MeetingError>;
     const min_ticket_fee: u128 = 100u128;
     /// A simple ERC-20 contract.
     #[ink(storage)]
@@ -84,6 +85,13 @@ mod nfticket {
         meeting_addr: AccountId, //模板地址
         #[ink(topic)]
         creator: AccountId, //创建人
+    }
+
+    #[ink(event)]
+    pub struct CreateClassFromContract {
+        #[ink(topic)]
+        owner: AccountId,
+        class_id: ClassId,
     }
 
     impl NftTicket {
@@ -146,7 +154,7 @@ mod nfticket {
             let caller = Self::env().caller();
             //验证 address 是否有重复;
             if self.template_map.contains_key(&template_addr) {
-                ink_env::debug_println!("template had been added:{:?}", template_addr);
+                ink_env::debug_message(&format!("-------------------------income {:?}", template_addr));
             } else {
                 let my_template = Template {
                     template_addr,
@@ -243,11 +251,11 @@ mod nfticket {
             end_sale_time: u64,
         ) -> bool {
             let caller = Self::env().caller();
-            /// 判断是否重复
+            // 判断是否重复
             if self.meeting_map.contains_key(&meeting_addr) {
-                ink_env::debug_println!("template had been added:{:?}", meeting_addr);
+                ink_env::debug_message(&format!("-------------------------income {:?}", meeting_addr));
             } else {
-                //TODO前置验证 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
+                // TODO前置验证 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
                 let meeting = Meeting {
                     meeting_addr,
                     name,
@@ -261,10 +269,31 @@ mod nfticket {
                     status:primitives::MeetingStatus::Active,
                 };
                 self.meeting_map.insert(meeting_addr, meeting);
-                /// TODO 创建相应的 NFT 集合（调用 runtime 接口）
+                // TODO 创建相应的 NFT 集合（调用 runtime 接口）
                 Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller});
             }
             true
+        }
+
+        // 创建NFT类别
+        #[ink(message)]
+        pub fn create_class(
+            &mut self,
+            metadata: Metadata,
+            name: Chars,
+            description: Chars,
+            properties: u8,
+        ) -> Result<(), NFTMartErr> {
+            let (owner, class_id) = self.env().extension().create_class(metadata, name, description, properties)?;
+            self.env().emit_event(CreateClassFromContract { owner, class_id });
+            Ok(())
+        }
+
+        #[ink(message)]
+        pub fn tokens(&self, class_id: ClassId, token_id: TokenId) -> (Metadata, Quantity, BlockNumber) {
+            let info: Option<ContractTokenInfo<_, _, _, _, _>> = self.env().extension().tokens(class_id, token_id);
+            let info = info.unwrap_or_default();
+            (info.metadata, info.quantity, info.data.create_block)
         }
 
         /// 返回活动列表
