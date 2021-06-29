@@ -289,6 +289,13 @@ mod nfticket {
             Ok(())
         }
 
+        #[ink(message)]
+        pub fn tokens(&self, class_id: ClassId, token_id: TokenId) -> (Metadata, Quantity, BlockNumber) {
+            let info: Option<ContractTokenInfo<_, _, _, _, _>> = self.env().extension().tokens(class_id, token_id);
+            let info = info.unwrap_or_default();
+            (info.metadata, info.quantity, info.data.create_block)
+        }
+
         /// 返回活动列表
         #[ink(message)]
         pub fn get_all_meeting(&self) -> Vec<Meeting> {
