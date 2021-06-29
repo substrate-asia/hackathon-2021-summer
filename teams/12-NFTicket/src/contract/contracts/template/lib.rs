@@ -1,172 +1,94 @@
-// Copyright 2018-2021 Parity Technologies (UK) Ltd.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #![cfg_attr(not(feature = "std"), no_std)]
-pub use self::template::Tempalate;
+pub use self::template::Onlinemeeting;
 use ink_lang as ink;
 
 #[ink::contract]
 mod template {
-    #[cfg(not(feature = "ink-as-dependency"))]
-    use ink_lang as ink;
+    use meeting::Meeting;
     use ink_prelude::vec::Vec;
-    use ink_storage::{collections::HashMap as StorageHashMap, lazy::Lazy};
-    use ink_env::{
-        hash::{
-            Blake2x256,
-            CryptoHash,
-            HashOutput,
-        },
-        Clear,
-    };
-    use primitives::TickeResult;
+    use ink_storage::Lazy;
 
-    pub type Result<T> = core::result::Result<T, Error>;
-    /// a simple template contract.
     #[ink(storage)]
-    pub struct Tempalate {
-        /// 模板名称
-        name: Vec<u8>,
-        /// 模板说明
-        desc: Vec<u8>,
-        //模板hash
-        id: u32,
-        //收费比例
-        fee:(u32,u32),
-        hash_code:Hash,
-        ///主合约地址
-        main_address:Hash,
-        /// 合约开关
-        switch:bool,
-        owner:AccountId,
+    pub struct Onlinemeeting {
+        controller: AccountId,   // 主合约地址
+        owner: AccountId,   // 所有者
+        fee_ratio: u64,     // 按票价提取多少比例作为服务费，不过服务费不能低于 min_ticket_fee
+        meeting_seq:u32,
     }
 
-    /// Event emitted when a token transfer occurs.
-    #[ink(event)]
-    pub struct Transfer {
-        #[ink(topic)]
-        from: Option<AccountId>,
-        #[ink(topic)]
-        to: Option<AccountId>,
-        value: Balance,
-    }
-
-    /// Event emitted when an approval occurs that `spender` is allowed to withdraw
-    /// up to the amount of `value` tokens from `owner`.
-    #[ink(event)]
-    pub struct Approval {
-        #[ink(topic)]
-        owner: AccountId,
-        #[ink(topic)]
-        spender: AccountId,
-        value: Balance,
-    }
-
-    /// The ERC-20 error types.
-    #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
-    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-    pub enum Error {
-        /// Returned if not enough balance to fulfill a request is available.
-        InsufficientBalance,
-        /// Returned if not enough allowance to fulfill a request is available.
-        InsufficientAllowance,
-    }
-
-    impl Tempalate {
-        /// Creates a new ERC-20 contract with the specified initial supply.
+    impl Onlinemeeting {
         #[ink(constructor)]
-        pub fn new(name: Vec<u8>, desc: Vec<u8>,id:u32,fee:(u32,u32)) -> Self {
-            let mut hash_output =
-                    <<Blake2x256 as HashOutput>::Type as Default>::default();
-            <Blake2x256 as CryptoHash>::hash(&name, &mut hash_output);
+        pub fn new(controller: AccountId) -> Self {
             let caller = Self::env().caller();
             Self {
-                name,
-                desc,
-                id,
-                fee,
-                hash_code:hash_output.into(),
-                main_address:Default::default(),
-                switch:Default::default(),
-                owner:caller
+                controller: controller,
+                owner: caller,
+                fee_ratio: 0,
+                meeting_seq: 0,
             }
         }
 
+        /// 返回主控合约地址
         #[ink(message)]
-        //购买ticker
-        pub fn buy_ticket(&mut self,ticker: Hash) -> Result<TickeResult>{
-            // todo buy ticket
-            let result:TickeResult = TickeResult{
-                price:100u128,
-                maker:AccountId::from([0x01;32]),
-            };
-            Ok(result)
+        pub fn get_controller(&self) -> AccountId {
+            self.controller
         }
 
+        /**
+        创建会议活动
+        1. 部署一个活动合约，传入主合约地址等参数，获得合约地址
+        2. 调用主合约的 add_meeting 接口，添加活动；
+        3. 返回活动合约地址
+        */
+        pub fn create_meeting(&mut self, 
+            name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, 
+            start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,
+            code_hash: Hash, controller: AccountId ) -> AccountId{
+                // 调用主合约 add_meeting
+                let caller = Self::env().caller();
+                let total_balance = Self::env().balance();
+                let salt = self.meeting_seq.to_le_bytes();
+                self.meeting_seq.checked_add(1);
+                let new_meeting = Meeting::new(caller, controller)
+                                .endowment(total_balance/4)
+                                .code_hash(code_hash)
+                                .salt_bytes(salt)
+                                .instantiate()
+                                .expect("fail");
+                new_meeting.get_self()
+        }
+        /**
+        Owner转移相关方法，可以活动模板的控制人
+        1. 验证操作人是否 owner;
+        */
         #[ink(message)]
-        pub fn get_name(&self) -> Vec<u8> {
-            let result = self.name.clone();
-            result
+        pub fn transfer_owner(&mut self, new_owner: AccountId){
+            let caller = Self::env().caller();
+            if caller == self.owner {
+                self.owner = new_owner
+            }
         }
 
-        #[ink(message)]
-        pub fn get_desc(&self) -> Vec<u8> {
-            let result = self.desc.clone();
-            result
-        }
-
-        #[ink(message)]
-        pub fn get_id(&self) -> u32 {
-            self.id
-        }
-
-        #[ink(message)]
-        pub fn get_fee(&self) -> (u32,u32) {
-            self.fee
-        }
-
-        #[ink(message)]
-        pub fn get_hash_code(&self) -> Hash {
-            self.hash_code
-        }
-
-        #[ink(message)]
+        /**
+        返回控制人账号
+        */
         pub fn get_owner(&self) -> AccountId {
             self.owner
         }
+
+        /**
+        设置服务费比例
+        1. 必须是 owner 才可以修改
+        */
+        pub fn set_fee_ratio(&mut self, fee_ratio: u64){
+            self.fee_ratio = fee_ratio
+        }
+
+        /**
+        返回服务费比例
+        */
+        pub fn get_fee_rate(&self)->u64{
+            self.fee_ratio
+        }
     }
-
-    // #[cfg(test)]
-    // mod tests {
-    //     use crate::stub::TemplateStub;
-
-    //     use super::*;
-    //     use ink_lang as ink;
-    //     use ink_env::{AccountId, call::FromAccountId};
-
-    //     #[ink::test]
-    //     fn it_works() {
-    //         let account_id:AccountId = Default::default();
-            
-    //         // let template:TemplateStub = FromAccountId::from_account_id(account_id);
-    //         // let id =template.get_id();
-    //         // println!("id is :{}",id);
-
-
-    //         // let template = Tempalate::new(vec![132,31],vec![132,31],12,(10,100));
-    //         // // Can call using universal call syntax using the trait.
-    //         // assert_eq!(<Tempalate as TemplateStub>::get_id(&template), 12);
-    //     }
-    // }
 }
