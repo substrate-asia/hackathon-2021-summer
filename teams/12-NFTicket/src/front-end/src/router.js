@@ -10,6 +10,7 @@ import Mine from './page/mine/mine';
 import TestModule from './page/testmodule/testmodule';
 import TicketDetail from './page/TicketDetail/TicketDetail';
 import ActivityDetail from './page/ActivityDetail/ActivityDetail';
+import ConfirmVector from './page/ConfirmVector/ConfirmVector';
 import CreateEvent from './page/CreateEvent/CreateEvent';
 import Payment from './page/Payment/Payment';
 import './router.css';
@@ -29,6 +30,8 @@ class Routes extends Component{
                     <Route path='/Sort/ticketDetail' component={TicketDetail}></Route>
                     {/** 活动详情页面 */}
                     <Route path='/Home/activityDetail' component={ActivityDetail}></Route>
+                    {/** 确认座位页面 */}
+                    <Route path='/Home/ConfirmVector' component={ConfirmVector}></Route>
                     {/** 创建Event页面 */}
                     {/* <Route path='/Home/createEvent' component={CreateEvent}></Route> */}
                     {/** 购买页面*/}

@@ -112,6 +112,22 @@ class CreateEvent extends Component {
                             <input type="text" name="name" 
                             placeholder="Please input ticket inspector’s wallet address"></input>
                         </div>
+                        {/* Save */}
+                        <div className={styles.savebtngroup}>
+                            <div>
+                                <Button onClick={()=>{console.log(111);}}
+                                style={{ backgroundColor:'white',border:'2px solid #108ee9',fontSize:'13px',
+                                lineHeight:'24px',borderRadius:'30px',width:'128px',height:'31px',margin: '20px' }}>
+                                    Preview
+                                </Button>
+                            </div>
+                            <div>
+                                <Button type="primary" inline size="small"
+                                style={{ borderRadius:'30px',width:'128px',height:'31px',margin: '20px' }}>
+                                    Save
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

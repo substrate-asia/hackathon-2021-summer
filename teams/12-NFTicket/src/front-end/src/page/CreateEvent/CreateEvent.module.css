@@ -82,7 +82,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 .checkboxleft{
@@ -119,4 +119,12 @@
     align-content: center; */
     border: 0;
     border-bottom: 2px solid rgb(218, 214, 214);
+}
+
+.savebtngroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 12px;
 }
