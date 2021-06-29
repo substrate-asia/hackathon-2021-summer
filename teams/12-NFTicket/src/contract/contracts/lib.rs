@@ -19,6 +19,7 @@ pub use nftmart_contract::*;
 #[ink::contract(env = CustomEnvironment)]
 mod nfticket {
     #[cfg(not(feature = "ink-as-dependency"))]
+    use super::*;
     use ink_env::call::FromAccountId;
     use ink_prelude::format;
     use ink_prelude::vec::Vec;
@@ -27,10 +28,6 @@ mod nfticket {
         collections::{hashmap::Keys, HashMap as StorageHashMap, Stash as StrorageStash},
         lazy::Lazy,
     };
-    use nftmart_contract::Chars;
-    use nftmart_contract::ClassId;
-    use nftmart_contract::Metadata;
-    use nftmart_contract::NFTMartErr;
     use primitives::{MeetingStatus, Template};
     use primitives::TemplateStatus;
     use primitives::Ticket;
