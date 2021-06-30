@@ -673,22 +673,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "offline"
-version = "0.1.0"
-dependencies = [
- "ink_env",
- "ink_lang",
- "ink_metadata",
- "ink_prelude",
- "ink_primitives",
- "ink_storage",
- "parity-scale-codec",
- "primitives",
- "scale-info",
- "stub",
-]
-
-[[package]]
 name = "offline_meeting"
 version = "0.1.0"
 dependencies = [

@@ -48,8 +48,9 @@ ink-experimental-engine = ["ink_env/ink-experimental-engine"]
 [workspace]
 members = [
     "stub",
-    "offline",
     "nftmart-contract",
+    "online_template",
+    "offline_template",
     # "primitives",
 ]
 [profile.release]

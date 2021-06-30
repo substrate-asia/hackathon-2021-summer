@@ -49,14 +49,13 @@ mod template {
                 let total_balance = Self::env().balance();
                 let salt = self.meeting_seq.to_le_bytes();
                 self.meeting_seq.checked_add(1);
-                // let new_meeting = Meeting::new(caller, controller)
-                //                 .endowment(total_balance/4)
-                //                 .code_hash(code_hash)
-                //                 .salt_bytes(salt)
-                //                 .instantiate()
-                //                 .expect("fail");
-                // new_meeting.get_self()
-                controller
+                let new_meeting = Meeting::new(caller, controller)
+                                .endowment(total_balance/4)
+                                .code_hash(code_hash)
+                                .salt_bytes(salt)
+                                .instantiate()
+                                .expect("fail");
+                new_meeting.get_self()
         }
         /**
         Owner转移相关方法，可以活动模板的控制人
