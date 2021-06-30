@@ -62,6 +62,7 @@
     
 
 **技术栈： substrate 
+
 **黑客松期间所完成的事项 (7月5日初审前提交)
 7月5日前，在本栏列出黑客松期间最终完成的功能点。
 把相关代码放在 src 目录里，并在本栏列出在黑客松期间打完成的开发工作/功能点。我们将对这些目录/档案作重点技术评审。
@@ -73,7 +74,7 @@
   * 开发思路
   * 发展规划
 
-Danny完成的前台展示界面，如图所示：
+                      前端开发者 Danny完成的前台展示界面，如图所示：
 ![NFTmall](http://nft.ueuo.com/2021/webscreen.png)
 
 * 7、完成Demo 模型的制作（实现中）
@@ -105,4 +106,10 @@ Danny完成的前台展示界面，如图所示：
 
 
 ** 团队人员信息
-feiying	 Stvenyin  hfxx	 Danny cooper  越泽	海中蛟龙
+  * feiying	 
+  * Stvenyin  
+  * hfxx	 
+  * Danny 
+  * cooper  
+  * 越泽	
+  * 海中蛟龙
