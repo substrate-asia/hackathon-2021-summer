@@ -1,4 +1,3 @@
-本项目是为波卡hackathon-2021-summer比赛建立的，所列资料仅供比赛使用。
 
 ** 基本资料
 
@@ -20,15 +19,15 @@
 
 项目背景/原由/要解决的问题 (如有其他附件，可放到 docs 目录内。中文提交)。
 
-* 1、NFTmall 的愿景目标：
+* 1、NFTmall 的愿景：
 
-  * NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。
+  * NFTmall 的愿景是打造一个NFT数字资产的制作、交易平台。
   * 在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
 
 
 * 2、NFTmall 的目标：
 
-  * NFT mall目标是成为NFT资产的制作、交易平台。
+  * NFT mall目标是成为NFT数字资产的制作、交易平台。
 
 * 3、NFTmall 的基本功能
   * Create an NFT marketplace contract that supports ERC721 and ERC1155
@@ -62,16 +61,17 @@
     
 
 **技术栈： substrate 
-
 **黑客松期间所完成的事项 (7月5日初审前提交)
-7月5日前，在本栏列出黑客松期间最终完成的功能点。
+**7月5日前，在本栏列出黑客松期间最终完成的功能点。
+------
+------
 ------
 目前进度：（截止至 06.25）
 
 * 6、 完成项目定位、发展路径和发展规划（已完成）
-  * 项目定位
-  * 开发思路
-  * 发展规划
+  * ~~项目定位~~
+  * ~~开发思路~~
+  * ~~发展规划~~
 
                       前端开发者 Danny完成的前台展示界面，如图所示：
 ![NFTmall](http://nft.ueuo.com/2021/webscreen.png)
@@ -87,14 +87,14 @@
   * Test in production environment
 
 
-* 8、公链测试和部署Public chain deployment, testing and operation
+* 8、公链测试和部署Public chain deployment, testing（规划中）
   * Deployment & testing in Ethereum
   * Deployment & testing in moonbeam
   * Deployment & testing in Kusama
 
 
 
-* 9、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain
+* 9、在NFTmall公链部署和测试Deployment and operation in NFTmall chain（规划中）
   * NFTmall Public chain deployment
 
 
@@ -112,3 +112,8 @@
   * cooper    来自上海 目前在从事区块链链存储研究，四年区块链开发经验
   * 越泽	    来自广州，擅长golang、熟悉物联网
   * 海中蛟龙  来自北京，区块链交易员
+
+------
+------
+
+
