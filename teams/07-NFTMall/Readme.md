@@ -72,8 +72,6 @@ Buyers can preview, and purchase NFTs listed on the platform
       Deployment & testing in Ethereum
       Deployment & testing in moonbeam
       Deployment & testing in Kusama
-      Deployment & testing in BSC chain
-      Deployment & testing in Tron chain
 
 4、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain
       NFTmall Public chain deployment
