@@ -20,15 +20,21 @@
 
 项目背景/原由/要解决的问题 (如有其他附件，可放到 docs 目录内。中文提交)。
 
-* 1、NFTmall 的愿景和目标：
+* 1、NFTmall 的愿景目标：
+
 
 
 * NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。
 * 在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
+
+
+* 2、NFTmall 的目标：
+
+
+
 * NFT mall目标是成为NFT资产的制作、交易平台。
 
-
-* 3、Idea and functionalities
+* 3、NFTmall 的基本功能
   * Create an NFT marketplace contract that supports ERC721 and ERC1155
   * Sellers can list their NFTs on the platform
   * Buyers can preview, and purchase NFTs listed on the platform
@@ -54,7 +60,7 @@
       * 多平台服务网关和多类型发布渠道支持：需要支持Ethereum evm 合约 NFT、原生substrate NFT。
   
   
-  * 5 所属参赛类别：
+* 5 所属参赛类别：
     DApp、应用链、平行链 
         
     
@@ -70,6 +76,10 @@
       * 项目定位
       * 开发思路
       * 发展规划
+
+
+
+
 * 2、完成Demo 模型的制作（实现中）
       * Added ERC721 Contract
       * Connected to Metamask
@@ -80,15 +90,24 @@
       * Develop and Improve front-end
       * Test in production environment
 
+
+
 * 3、公链测试和部署Public chain deployment, testing and operation
       * Deployment & testing in Ethereum
       * Deployment & testing in moonbeam
       * Deployment & testing in Kusama
 
+
+
 * 4、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain
       * NFTmall Public chain deployment
 
+
+
 ** 路线图Roadmap & Plan
+
+![NFTmall](https://uploader.shimo.im/f/pQ5YP5fhoTuR1vIz.png?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2MjQ5NzQxODgsImciOiJ0UkRqRHFDUGNWOTZ3eEhRIiwiaWF0IjoxNjI0OTczODg4LCJ1c2VySWQiOjY1OTg1MTkwfQ.u61OVnzvjkkbfSaEewd2nEaqaY5Bqsrl4JOTtcgR9hc)
+
 
 ** 团队人员信息
 feiying	 Stvenyin  hfxx	 Danny cooper  越泽	海中蛟龙
