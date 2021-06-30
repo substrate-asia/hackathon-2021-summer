@@ -22,17 +22,13 @@
 
 * 1、NFTmall 的愿景目标：
 
-
-
-* NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。
-* 在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
+  * NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。
+  * 在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
 
 
 * 2、NFTmall 的目标：
 
-
-
-* NFT mall目标是成为NFT资产的制作、交易平台。
+  * NFT mall目标是成为NFT资产的制作、交易平台。
 
 * 3、NFTmall 的基本功能
   * Create an NFT marketplace contract that supports ERC721 and ERC1155
@@ -41,7 +37,7 @@
 
 * 4、项目总体思路
 
-* 我们研究现有的交易市场，结合自身的技术情况和目标，把NFTmall项目分解为以下三个部分：创建合约、交易市场  和 链平台。
+  我们研究现有的交易市场，结合自身的技术情况和目标，把NFTmall项目分解为以下三个部分：创建合约、交易市场  和 链平台。
   * 4.1 创建合约：
   * 创建合约部分的主要功能是：
     * web用户登录与身份验证
@@ -49,7 +45,7 @@
     * IPFS分布存储
     * 链上创建NFT Token
   * 4.2 交易市场：
-    * 交易市场，主要功能是服务于web用户，进行NFT Token的展示、交易、兑换、碎片化等功能。
+     交易市场，主要功能是服务于web用户，进行NFT Token的展示、交易、兑换、碎片化等功能。
       * NFT Token数字作品的展示\<br>
       * NFT Token数字作品的交易\<br>
       * NFT Token数字作品的兑换
@@ -64,8 +60,8 @@
     DApp、应用链、平行链 
         
     
-* 黑客松期间计划完成的事项
-* 技术栈： substrate 
+*  黑客松期间计划完成的事项
+技术栈： substrate 
 黑客松期间所完成的事项 (7月5日初审前提交)
 7月5日前，在本栏列出黑客松期间最终完成的功能点。
 把相关代码放在 src 目录里，并在本栏列出在黑客松期间打完成的开发工作/功能点。我们将对这些目录/档案作重点技术评审。
@@ -73,22 +69,22 @@
 目前进度：（截止至 06.25）
 
 * 1、 完成项目定位、发展路径和发展规划（已完成）
-      * 项目定位
-      * 开发思路
-      * 发展规划
+ * 项目定位
+ * 开发思路
+ * 发展规划
 
 
 
 
 * 2、完成Demo 模型的制作（实现中）
-      * Added ERC721 Contract
-      * Connected to Metamask
-      * Started NFTMinter Contract
-      * Added truffle-flattener and flattened openZeppelin contracts
-      *  Contracts and Solc compiler updated to version: "^0.8"
-      * Added Tests and Migration
-      * Develop and Improve front-end
-      * Test in production environment
+  * Added ERC721 Contract
+  * Connected to Metamask
+  * Started NFTMinter Contract
+  * Added truffle-flattener and flattened openZeppelin contracts
+  *  Contracts and Solc compiler updated to version: "^0.8"
+  * Added Tests and Migration
+  * Develop and Improve front-end
+  * Test in production environment
 
 
 
@@ -106,7 +102,7 @@
 
 ** 路线图Roadmap & Plan
 
-![NFTmall](https://uploader.shimo.im/f/pQ5YP5fhoTuR1vIz.png?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2MjQ5NzQxODgsImciOiJ0UkRqRHFDUGNWOTZ3eEhRIiwiaWF0IjoxNjI0OTczODg4LCJ1c2VySWQiOjY1OTg1MTkwfQ.u61OVnzvjkkbfSaEewd2nEaqaY5Bqsrl4JOTtcgR9hc)
+![NFTmall](https://uploader.shimo.im/f/pQ5YP5fhoTuR1vIz.png)
 
 
 ** 团队人员信息
