@@ -236,6 +236,15 @@ use ink_storage::{
             // .returns::<()>()
             // .fire()
             // .map_err(|_| Error::TransactionFailed);
+			
+			//调用主合约
+			// use ink_lang::ForwardCallMut;
+			// <&mut MainStub>::call_mut(&mut self.controller)
+            //     .buy_ticket(ticket.clone())
+            //     .transferred_value(100) // 加上了调用 payable 的方法的时候，提供transfer
+            //     .fire()
+            //     .expect("something wrong");
+
 
 			// // (*self.erc20_minable).mine(who, value)  // 虽然mine是payable的，但是没有接口调用transfer
             // // 等价于
