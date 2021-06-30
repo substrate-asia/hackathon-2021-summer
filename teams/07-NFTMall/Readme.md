@@ -14,17 +14,22 @@ NFTmall - 制作、销售、交易NFT数字资产的智能合约市场，完全�
 *项目简介： NFT mall目标是成为NFT资产的制作、交易平台
 
 项目背景/原由/要解决的问题 (如有其他附件，可放到 docs 目录内。中文提交)。
-*1、NFTmall 的愿景和目标：
+**1、NFTmall 的愿景和目标：
   *NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
   *NFT mall目标是成为NFT资产的制作、交易平台。
-*2项目LOGO:
+**2项目LOGO:
+
+
 ![NFTmall](http://nft.ueuo.com/img/movieimg.png)
-*3、Idea and functionalities
+
+
+
+**3、Idea and functionalities
   *Create an NFT marketplace contract that supports ERC721 and ERC1155
   *Sellers can list their NFTs on the platform
   *Buyers can preview, and purchase NFTs listed on the platform
 
-*4、项目总体思路
+**4、项目总体思路
   *我们研究现有的交易市场，结合自身的技术情况和目标，把NFTmall项目分解为以下三个部分：创建合约、交易市场  和 链平台。
   *4.1 创建合约：
   *创建合约部分的主要功能是：
