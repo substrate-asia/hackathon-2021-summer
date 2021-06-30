@@ -60,15 +60,15 @@
     DApp、应用链、平行链 
         
     
-*  黑客松期间计划完成的事项
-技术栈： substrate 
-黑客松期间所完成的事项 (7月5日初审前提交)
+
+**技术栈： substrate 
+**黑客松期间所完成的事项 (7月5日初审前提交)
 7月5日前，在本栏列出黑客松期间最终完成的功能点。
 把相关代码放在 src 目录里，并在本栏列出在黑客松期间打完成的开发工作/功能点。我们将对这些目录/档案作重点技术评审。
 可选：放一段不长于 5 分钟 的产品 DEMO 展示视频, 命名为 团队目录/docs/demo.mp4。
 目前进度：（截止至 06.25）
 
-* 1、 完成项目定位、发展路径和发展规划（已完成）
+* 6、 完成项目定位、发展路径和发展规划（已完成）
   * 项目定位
   * 开发思路
   * 发展规划
@@ -76,7 +76,7 @@
 Danny完成的前台展示界面，如图所示：
 ![NFTmall](http://nft.ueuo.com/2021/webscreen.png)
 
-* 2、完成Demo 模型的制作（实现中）
+* 7、完成Demo 模型的制作（实现中）
   * Added ERC721 Contract
   * Connected to Metamask
   * Started NFTMinter Contract
@@ -87,14 +87,14 @@ Danny完成的前台展示界面，如图所示：
   * Test in production environment
 
 
-* 3、公链测试和部署Public chain deployment, testing and operation
+* 8、公链测试和部署Public chain deployment, testing and operation
   * Deployment & testing in Ethereum
   * Deployment & testing in moonbeam
   * Deployment & testing in Kusama
 
 
 
-* 4、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain
+* 9、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain
   * NFTmall Public chain deployment
 
 
