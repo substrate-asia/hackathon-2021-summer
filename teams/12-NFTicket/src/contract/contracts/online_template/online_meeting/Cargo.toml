@@ -1,5 +1,5 @@
 [package]
-name = "meeting"
+name = "online_meeting"
 version = "0.1.0"
 authors = ["[your_name] <[your_email]>"]
 edition = "2018"
@@ -16,7 +16,7 @@ scale = { package = "parity-scale-codec", version = "2.1", default-features = fa
 scale-info = { version = "0.6.0", default-features = false, features = ["derive"], optional = true }
 
 [lib]
-name = "meeting"
+name = "online_meeting"
 path = "lib.rs"
 crate-type = [
 	# Used for normal contract Wasm blobs.

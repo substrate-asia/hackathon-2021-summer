@@ -1,6 +1,5 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-pub use self::meeting::Meeting;
 use ink_lang as ink;
 
 /**
@@ -30,12 +29,12 @@ pub mod meeting {
     struct CheckRecord{
         inspector: AccountId, // 检票人
         timestamp: u128, // 检票时间戳
-        block: u128, // 检票记录区块
+        block: u32, // 检票记录区块
     }
     impl Default for CheckRecord {
         fn default() -> CheckRecord {
             CheckRecord {
-                inspectors: Default::default(),
+                inspector: Default::default(),
                 timestamp: Default::default(),
                 block: Default::default(),
             }
@@ -164,7 +163,7 @@ pub mod meeting {
         #[ink(message)]
         pub fn remove_inspector(&mut self, inspector: AccountId){
             assert_eq!(Self::env().caller(), self.owner);
-            self.inspectors.take(inspector, true);
+            self.inspectors.take(&inspector);
         }
 
         /**
@@ -191,17 +190,18 @@ pub mod meeting {
             }
             let r = CheckRecord {
                 timestamp: timestamp.clone(),
-                inspectors: Self::env().caller(),
+                inspector: Self::env().caller(),
                 block: Self::env().block_number(),
             };
             let mut v = self.check_records.take(&ticket);
             let vec = match v {
                 None => vec![r],
                 Some(x) => vec![r], // fixme
-            }
+            };
             self.check_records.insert(ticket, vec);
 
             // todo: 调用 event
+            true
         }
 
         /**

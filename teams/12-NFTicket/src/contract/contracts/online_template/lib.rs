@@ -4,9 +4,9 @@ use ink_lang as ink;
 
 #[ink::contract]
 mod template {
-    use meeting::Meeting;
     use ink_prelude::vec::Vec;
     use ink_storage::Lazy;
+    use online_meeting::meeting::Meeting;
 
     #[ink(storage)]
     pub struct Onlinemeeting {
@@ -49,13 +49,14 @@ mod template {
                 let total_balance = Self::env().balance();
                 let salt = self.meeting_seq.to_le_bytes();
                 self.meeting_seq.checked_add(1);
-                let new_meeting = Meeting::new(caller, controller)
-                                .endowment(total_balance/4)
-                                .code_hash(code_hash)
-                                .salt_bytes(salt)
-                                .instantiate()
-                                .expect("fail");
-                new_meeting.get_self()
+                // let new_meeting = Meeting::new(caller, controller)
+                //                 .endowment(total_balance/4)
+                //                 .code_hash(code_hash)
+                //                 .salt_bytes(salt)
+                //                 .instantiate()
+                //                 .expect("fail");
+                // new_meeting.get_self()
+                controller
         }
         /**
         Owner转移相关方法，可以活动模板的控制人

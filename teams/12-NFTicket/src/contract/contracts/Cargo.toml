@@ -12,9 +12,9 @@ ink_storage = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink"
 ink_lang = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
 ink_prelude = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
 stub = { version = "0.1.0", path = "stub", default-features = false, features = ["ink-as-dependency"] }
-template = { version = "0.1.0", path = "template", default-features = false, features = ["ink-as-dependency"] }
 primitives = { version = "0.1.0", path = "primitives", default-features = false}
-offline-template = { version = "0.1.0", path = "offline-template", default-features = false}
+online_template = { version = "0.1.0", path = "online_template", default-features = false}
+offline_template = { version = "0.1.0", path = "offline_template", default-features = false}
 nftmart-contract = { version = "0.1.0", path = "nftmart-contract", default-features = false}
 scale = { package = "parity-scale-codec", version = "2.1", default-features = false, features = ["derive"] }
 scale-info = { version = "0.6", default-features = false, features = ["derive"], optional = true }
@@ -38,18 +38,16 @@ std = [
     "scale-info",
     "scale-info/std",
     "stub/std",
-    "template/std",
     "primitives/std",
-    "offline-template/std",
+    "online_template/std",
+    "offline_template/std",
     "nftmart-contract/std",
-    # "ink_log/std",
 ]
 ink-as-dependency = []
 ink-experimental-engine = ["ink_env/ink-experimental-engine"]
 [workspace]
 members = [
     "stub",
-    "template",
     "offline",
     "nftmart-contract",
     # "primitives",

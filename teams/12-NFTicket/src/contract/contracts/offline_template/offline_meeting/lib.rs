@@ -10,10 +10,15 @@ use ink_lang as ink;
 */
 #[ink::contract]
 mod meeting {
-	use ink_storage::{
+	use ink_env::call::FromAccountId;
+use ink_storage::{
 		collections::HashMap as StorageMap,
 		traits::{PackedLayout, SpreadLayout},
 	};
+	use ink_prelude::vec::Vec;
+	use primitives::Ticket;
+	use stub::MainStub;
+	use ink_prelude::format;
 
 	// 定价方式，Uniform 统一定价，Partition 分区定价
 	#[derive(
@@ -103,10 +108,11 @@ mod meeting {
 	pub struct Meeting {
 		// 这个是关于活动控制部分，不属于活动跟本身的信息
 		controller: AccountId, // 主合约地址
-		template: AccountId,   // 主合约地址
+		template: AccountId,   // 模板合约地址
 		owner: AccountId,      // 活动管理员
 		max_zone_id: u8,       // 最大的zone_id
-
+		ticket_id:u32,			//门票id
+		nfticket_main_fee: u32,   //支付主合约的手续费率,需要除以1万
 		// 活动基础信息
 		//      这部分信息的修改，通过主合约来修改
 		// name: Vec<u8>, // 活动名称
@@ -152,6 +158,8 @@ mod meeting {
 				inspectors: Default::default(),
 				check_records: Default::default(),
 				max_zone_id: Default::default(),
+				ticket_id:Default::default(),
+				nfticket_main_fee:100u32,
 			}
 		}
 
@@ -167,6 +175,84 @@ mod meeting {
 		pub fn get_owner(&self) -> AccountId {
 			self.owner
 		}
+
+		/// 购买ticker,需要支付一定数量的币.
+        /// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
+        #[ink(message, payable)]
+        pub fn buy_ticket(
+            &mut self,
+            meeting_addr: AccountId,
+            zone_id: u32,
+            seat_id: Option<(u32, u32)>,
+        ) -> bool {
+            ink_env::debug_message("=========================entrance!!!");
+            let ticket_price: Balance = self.get_ticket_price(zone_id, seat_id).unwrap();
+            ink_env::debug_message(&format!(
+                "-------------------------ticket_price {:?}",
+                ticket_price
+            ));
+            let income: Balance = self.env().transferred_balance();
+            ink_env::debug_message(&format!("-------------------------income {:?}", income));
+            ///保证用户传送的金额必须大于票价
+            assert!(income >= ticket_price, "not enough money!");
+            // 生成ticke
+            let ticket_id = self.ticket_id;
+            self.ticket_id
+                .checked_add(1)
+                .expect("checked plus 1 error!");
+            let ticket = Ticket::new(
+                self.template,
+                meeting_addr,
+                ticket_price,
+                zone_id,
+                seat_id,
+                ticket_id,
+            );
+            // 标记这个座位已经售出
+            self.make_seat_sealed(zone_id, seat_id);
+            // 把剩余转账给主合约,并记录这个主合约
+            // 计算应该支付给主合约多少资金.如果用户给的钱大于门票价应该怎么处理?
+            let nfticket_fee = ticket_price
+                .checked_mul(self.nfticket_main_fee.into())
+                .unwrap()
+                .checked_div(10000)
+                .unwrap();
+            ink_env::debug_message(&format!("-------------------------调用远程接口参数:主合约地址为:{:?}",meeting_addr));
+            self.env().transfer(self.controller,nfticket_fee);
+            let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
+            main_contract.buy_ticket(ticket.clone());
+            // <&mut MainStub>::call_mut(&mut *self.nfticket_addr);
+            // let mut main_contract: MainStub = FromAccountId::from_account_id(meeting_addr);
+            
+
+            //裸调用
+            // let result = build_call::<<Self as ::ink_lang::ContractEnv>::Env>()
+            // .callee(t.callee)
+            // .gas_limit(t.gas_limit)
+            // .transferred_value(t.transferred_value)
+            // .exec_input(
+            //     ExecutionInput::new(t.selector.into()).push_arg(CallInput(&t.input)),
+            // )
+            // .returns::<()>()
+            // .fire()
+            // .map_err(|_| Error::TransactionFailed);
+
+            true
+        }
+
+        /// 得到某个区域的票价
+        fn get_ticket_price(&self, zone_id: u32, seat_id: Option<(u32, u32)>) -> Option<Balance> {
+            ink_env::debug_message("=========================get_ticket_price entrance!!!");
+            //TODO 确保这个位置是有效的.
+            //TODO 获取这个位置的票价
+            return Some(20000000000u128.into());
+        }
+
+        /// 标记这个位置已经卖出.
+        fn make_seat_sealed(&mut self, zone_id: u32, seat_id: Option<(u32, u32)>) -> Option<bool> {
+            //TODO 标记这个位置已经卖出
+            return Some(true);
+        }
 
 		/**
 		更新活动信息，包括：活动基础信息、活动配置参数
@@ -250,19 +336,6 @@ mod meeting {
 				// self.seats.insert(*seat.clone(), SeatStatus::Disabled);
 			}
 			true
-		}
-
-		/**
-		购买门票
-		1. 需要检查作为是否可用（1）是否被禁用；（2）是否已经卖出去了；
-		2. 需要确认转过来的钱是否大于等于票价（如果大于需要退回一部分）
-		3. 调用主合约创建 NFT 门票，需要支付服务费：服务费按票价比例(ratio)，但是不得低于 min_ticket_price
-		4. 更新 seats、tickets
-		5. 返回
-		*/
-		pub fn buy_ticket(zone_id: u8, row: u8, col: u8) -> (u128, u128) {
-			// todo 与 online meeting 一致
-			(0,0)
 		}
 
 		/**

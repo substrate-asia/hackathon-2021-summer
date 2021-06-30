@@ -1,5 +1,5 @@
 [package]
-name = "localmeeting"
+name = "offline_template"
 version = "0.1.0"
 authors = ["[your_name] <[your_email]>"]
 edition = "2018"
@@ -11,13 +11,13 @@ ink_env = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", de
 ink_storage = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
 ink_lang = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
 ink_prelude = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
-meeting = { version = "0.1.0", path = "meeting", default-features = false}
+offline_meeting = { version = "0.1.0", path = "offline_meeting", default-features = false}
 
 scale = { package = "parity-scale-codec", version = "2.1", default-features = false, features = ["derive"] }
 scale-info = { version = "0.6.0", default-features = false, features = ["derive"], optional = true }
 
 [lib]
-name = "localmeeting"
+name = "offline_template"
 path = "lib.rs"
 crate-type = [
 	# Used for normal contract Wasm blobs.
@@ -34,6 +34,6 @@ std = [
     "ink_prelude/std",
     "scale/std",
     "scale-info/std",
-    "meeting/std",
+    "offline_meeting/std",
 ]
 ink-as-dependency = []
