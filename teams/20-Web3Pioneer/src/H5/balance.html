@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+	<meta charset="utf-8">
+
+	<head>
+		<meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1,maximum-scale=1">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection" />
+		<link rel="stylesheet" href="css/frozen.css">
+		<link rel="stylesheet" type="text/css" href="./main.css" />
+		<link rel="stylesheet" type="text/css" href="./balance.css" />
+		<script src="js/vue.min.js"></script>
+		<script src="js/moment.min.js"></script>
+		<script src="./jquery.min.js"></script>
+		<!-- <script src="js/eruda.js"></script>
+		<script>
+			eruda.init();
+		</script> -->
+
+		<script type="text/javascript">
+			var DOT_DECIMAL_PLACES = 1000000000000000;
+
+
+
+			$(document).ready(function() {
+
+				// 获取本人账号钱包地址
+				var address = window.havorld.jsCallAndroidReadByKey("account_address");
+				if (address != "") {
+					app.accountId = address;
+
+					//获取转出交易
+					var outs = window.havorld.jsCallAndroidReadTranser(address, "", "");
+					app.outData  = JSON.parse(outs);
+					// 获取转入交易
+					var ins = window.havorld.jsCallAndroidReadTranser("", address, "");
+					app.inData  = JSON.parse(ins);
+					// 获取全部交易
+					var all = window.havorld.jsCallAndroidReadTranser("", "", "");
+					app.allData = JSON.parse(all);
+
+
+					var free = window.havorld.jsCallAndroidReadByKey("account_free");
+					var feeFrozen = window.havorld.jsCallAndroidReadByKey("account_fee_frozen");
+					var reserved = window.havorld.jsCallAndroidReadByKey("account_reserved");
+					console.log('ready:', free, feeFrozen, reserved);
+					update(address, free, feeFrozen, reserved);
+
+					// document.getElementById("balanceDiv").innerHTML = "可用:" + free + ", 冻结:" + feeFrozen + ", 保留:" + reserved;
+					// document.getElementById("b2").innerHTML = free;
+					// document.getElementById("addressDiv").innerHTML = address;
+				}
+			})
+
+
+			function transferShow() {
+				$("#transferDiv").toggle();
+				$("#detailDiv").toggle();
+			};
+
+			function copyAddr() {
+				const addr = $('#addressDiv').text();
+				console.log(addr);
+
+				const range = document.createRange();
+				range.selectNode(document.getElementById('addressDiv'));
+				const selection = window.getSelection();
+				if (selection.rangeCount > 0) selection.removeAllRanges();
+				selection.addRange(range);
+				document.execCommand('copy');
+				dialog("复制成功！");
+			}
+
+			function update(address, free, feeFrozen, reserved) {
+				$("#addressDiv").text(address);
+				$("#totalDiv").text(free);
+				$("#kyDiv").text(free);
+				$("#djDiv").text(feeFrozen);
+				$("#blDiv").text(reserved);
+				$("#yeDiv").text(free);
+			}
+
+
+			function dialog(content, cb) {
+				app.loading = false;
+				app.dialogContent = content;
+				app.dialogShow = true;
+				app.dialogDissmissCallback = cb;
+			}
+
+			function loading() {
+				app.loading = true;
+				app.dialogContent = '正在转账...';
+				app.dialogShow = true;
+			}
+
+			function endLoading() {
+				app.loading = false;
+				app.dialogShow = false;
+			}
+		</script>
+
+		<script type="text/javascript">
+			function getQueryString(name, url) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				if (!url || url == "") {
+					url = window.location.search;
+				} else {
+					url = url.substring(url.indexOf("?"));
+				}
+				r = url.substr(1).match(reg)
+				if (r != null) return unescape(r[2]);
+				return null;
+			}
+
+			//转账重试。。。，
+			function dotransfer(toaddr, money) {
+
+				var params = {
+					toaddr: toaddr,
+					money: money
+				};
+				params = JSON.stringify(params);
+				window.havorld.jsCallAndroidRunTask("", "transfer", params, "0");
+			}
+
+			//扫码
+			function scanaddr() {
+				var aa = window.havorld.jsCallAndroidScanQrcode("transfer");
+
+			};
+
+			//扫码回调
+			function setaddr(result) {
+				var addrspread = getQueryString("addrspread", result);
+				var addr = getQueryString("addr", result);
+				console.log('接收人地址：', addr, '接收人的推荐人地址：', addrspread);
+				if (addrspread != null) { //如果带有addrspread， 是告诉我们这个URL的发布者，自己还没有交易过
+					$('#receiver_addr').val(addr);
+					$('#spread_addr').val(addrspread);
+				} else if (addr != null) {
+					$('#receiver_addr').val(addr);
+					$('#spread_addr').val(addr); //实际上这个没意义，传什么都不起作用，因为这个用户已经有推荐者了,这个参数是要被跑过的。
+
+				}
+
+
+			};
+
+			//点确认转账
+			function spreadTransfer() {
+				var toaddr = $('#receiver_addr').val();
+				var money = $('#tomoney').val();
+				var addrspread = $('#spread_addr').val();
+				if (!toaddr) {
+					dialog('请扫码来输入收款钱包地址！');
+					return;
+				}
+				if (!money || Number(money) <= 0) {
+					dialog('请输入转账金额！');
+					return;
+				}
+				app.twiceDialogCancel();
+				loading();
+				var address = window.havorld.jsCallAndroidReadByKey("account_address");
+
+				var params = {
+					toaddr: toaddr,
+					money: money,
+					spreadAddr: addrspread
+				};
+				params = JSON.stringify(params);
+
+				var trasferId = window.havorld.jsCallAndroidTranser("", address, toaddr, money, "2");//先保存一条记录，2表示，进行中
+				window.havorld.jsCallAndroidRunTask(trasferId, "spreadTransfer", params, "0");
+
+				//var outs = window.havorld.jsCallAndroidReadTranser(address, "", "");
+				//var jsonList = JSON.parse(outs);
+				// render(jsonList);
+			};
+			
+			function beforeSpreadTransfer() {
+				var toaddr = $('#receiver_addr').val();
+				var money = $('#tomoney').val();
+				var addrspread = $('#spread_addr').val();
+				if (!toaddr) {
+					dialog('请扫码来输入收款钱包地址！');
+					return;
+				}
+				if (!money) {
+					dialog('请输入转账金额！');
+					return;
+				}
+				if (Number(money) < 1 || !/^(\d+|\d+\.\d{1,2})$/.test(money)) {
+					dialog('转账金额必须要大于1，最多二位小数。');
+					return;
+				}
+				app.twiceDialogShow = true;
+			}
+
+
+			//转账任务，结果回调。。要异步等这个 事件发生
+			function task_callback(id, type, param, result) {
+				endLoading();
+				console.log("banances.html receive task_callback  type:" + type + "  " + param + "  " + result + '   id:' + id);
+				if (type == "transfer") {
+					dialog(result);
+				}
+
+				if (type == "spreadTransfer") {
+					if (result === '200') {
+						// 转账成功
+						dialog('转账成功！', () => {
+							console.log(app.allData);
+							window.havorld.jsCallAndroidTranser(id, "", "", "", "0");//根据id更新状态，0 表示成功
+							window.location.reload();
+						});
+					} else {
+						window.havorld.jsCallAndroidTranser(id, "", "", "", "1"); //根据id更新状态  1，表示失败
+						// 转账失败
+						dialog('转账失败，请检查收款人地址是否正确！', () => {
+							window.location.reload();
+						});
+					}
+				}
+			};
+
+			//处理事件，特别是转账事件
+			function event_block(type, body) {
+				console.log("balance.html receive event_block:" + type + "  " + body);
+				var address = window.havorld.jsCallAndroidReadByKey("account_address");
+				if (address == "") {
+					return;
+				}
+
+				if (type == "accountinfo") {
+					var free = window.havorld.jsCallAndroidReadByKey("account_free");
+					var feeFrozen = window.havorld.jsCallAndroidReadByKey("account_fee_frozen");
+					var reserved = window.havorld.jsCallAndroidReadByKey("account_reserved");
+					update(address, free, feeFrozen, reserved);
+				}
+
+				if (type == "eventInfoTransfer") { //所有转账事件
+					var dataList = JSON.parse(body);
+					var fromAccountId = dataList[0];
+					var toAccountId = dataList[1];
+					var money = (dataList[2] / DOT_DECIMAL_PLACES).toFixed(2)
+					console.log("fromAccountId:" + fromAccountId + "    toAccountId:" + toAccountId + "   Money:" + money);
+					if (fromAccountId == address) { //付款记录
+
+					} else if (toAccountId == address) { //收款记录
+						window.havorld.jsCallAndroidTranser("", fromAccountId, toAccountId, money, "1");
+						window.location.reload();
+					}
+				}
+
+			};
+
+
+		</script>
+	</head>
+
+	<body>
+		<!-- <div id="tx_all">
+		</div>
+		<div id="tx_out">
+		</div> -->
+		<!-- <div id="addressDiv"></div></br>
+		<a href="#">账户导出</a> <a href="#">导户账号</a>
+		<div id="balanceDiv"></div></br>
+
+		交易全部:<div id="tx_all"></div></br>
+		转入:<div id="tx_in"></div>:</br>
+		转出:<div id="tx_out"></div></br>
+
+
+		<div id="loginDiv"></div></br>
+		<div id="transferDiv" style="display:none;">
+			收款地址:<input type="text" id="receiver_addr" /><a href="javascript:scanaddr();">sacan</a><br />
+			数量<input type="text" id="tomoney" />(余额:<div id="b2"></div>)<br />
+			<input type="text" id="spread_addr" />
+			<button type="button" onclick="spreadTransfer()">确认</button>
+		</div>
+		<br />
+
+		<button type="button" onclick="transferShow();">转账</button>
+		<button type="button" onclick="dialog('初次收款，请在安全组内打开收款二维码接收。');">收款</button> -->
+		<div id="app">
+			<div id="transferDiv" class="main-content" style="display: none;">
+				<div class="module_container">
+					<!-- 收款地址:<input type="text" id="receiver_addr" /><a href="javascript:scanaddr();">sacan</a><br />
+				数量<input type="text" id="tomoney" />(余额:<div id="b2"></div>)<br />
+				<input type="text" id="spread_addr" />
+				<button type="button" onclick="spreadTransfer()">确认</button> -->
+					<div class="zz_header">
+						<a href="javascript:transferShow()" class="ui-icon-close">
+						</a>
+						<div class="">
+							转账
+						</div>
+						<div></div>
+					</div>
+					<div class="ui-form ui-border-t">
+						<!-- <form action=""> -->
+						<div class="ui-form-item ui-border-b">
+							<label>
+								收款地址：
+							</label>
+							<input id="receiver_addr" class="zz_input" type="text" value="" placeholder="输入收款地址">
+							<!-- <a href="" class="ui-icon-close">
+							</a> -->
+							<div onclick="scanaddr()" class="ic_qrcode">
+							</div>
+						</div>
+						<input id="spread_addr" style="display: none;" type="text">
+						<div class="ui-form-item ui-border-b">
+							<label>
+								转账金额：
+							</label>
+							<input id="tomoney" class="zz_input" type="text" placeholder="输入转账金额">
+						</div>
+						<footer>
+							余额：<span id="yeDiv">-</span>
+						</footer>
+						<div class="ui-btn-wrap">
+							<button onclick="beforeSpreadTransfer()" class="ui-btn-lg ui-btn-primary">
+								确认转账
+							</button>
+						</div>
+						<!-- </form> -->
+					</div>
+				</div>
+			</div>
+			<div id="detailDiv" class="main-content">
+				<div class="commission module_container">
+					<div class="cc_total" id="totalDiv">
+						-
+					</div>
+					<div class="cc_account_addr">
+						<span id="addressDiv"></span>
+						<span onclick="copyAddr();">复制</span>
+					</div>
+					<div class="cc_detail">
+						<div>
+							<div class="tjjl">
+								可用
+							</div>
+							<div class="cc_money" id="kyDiv">
+								-
+							</div>
+						</div>
+						<div>
+							<div class="dyjl">
+								冻结
+							</div>
+							<div class="cc_money" id="djDiv">
+								-
+							</div>
+						</div>
+						<div>
+							<div class="jdjl">
+								保留
+							</div>
+							<div class="cc_money" id="blDiv">
+								-
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="money_detail_tab_list" class="ui-tab sr_detail module_margin">
+					<ul class="ui-tab-nav ui-border-b">
+						<li v-bind:class="{current: tabIndex === 0}" @click="switchTabIndex(0)"><span>全部</span></li>
+						<li v-bind:class="{current: tabIndex === 1}" @click="switchTabIndex(1)"><span>转入</span></li>
+						<li v-bind:class="{current: tabIndex === 2}" @click="switchTabIndex(2)"><span>转出</span></li>
+					</ul>
+					<ul class="ui-tab-content sr_detail_body">
+						<li v-if="tabIndex === 0">
+							<ul class="sr_detail_list">
+								<li v-for="item in allData">
+									<div class="jezt">
+										<div class="je">
+											金额：<span>{{ item.money || '-' }}</span>
+										</div>
+										<div >
+											{{ item.toaddr ==  accountId ?  '转入' : '转出' }}
+										</div>
+									</div>
+									<div class="jydz">
+										交易地址：{{ addrBrief(item.toaddr) }}
+									</div>
+									<div class="jezt">
+										<div class="je">
+											交易时间：{{ covertTime(item.createdate) }}
+										</div>
+										<div :class="{ zt: item.status != '2', zc: item.status === '2'}">
+											{{ displayStatus(item.status) }}
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li v-if="tabIndex === 1">
+							<ul class="sr_detail_list">
+								<li v-for="item in inData">
+									<div class="jezt">
+										<div class="je">
+											金额：<span>{{ item.money || '-' }}</span>
+										</div>
+										<div >
+											{{ item.toaddr ==  accountId ?  '转入' : '转出' }}
+										</div>
+									</div>
+									<div class="jydz">
+										交易地址：{{ addrBrief(item.toaddr) }}
+									</div>
+									<div class="jezt">
+										<div class="je">
+											交易时间：{{ covertTime(item.createdate) }}
+										</div>
+										<div :class="{ zt: item.status != '2', zc: item.status === '2'}">
+											{{ displayStatus(item.status) }}
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+						<li v-if="tabIndex === 2">
+							<ul class="sr_detail_list">
+								<li v-for="item in outData">
+									<div class="jezt">
+										<div class="je">
+											金额：<span>{{ item.money || '-' }}</span>
+										</div>
+										<div >
+											{{ item.toaddr ==  accountId ?  '转入' : '转出' }}
+										</div>
+									</div>
+									<div class="jydz">
+										交易地址：{{ addrBrief(item.toaddr) }}
+									</div>
+									<div class="jezt">
+										<div class="je">
+											交易时间：{{ covertTime(item.createdate) }}
+										</div>
+										<div :class="{ zt: item.status != '2', zc: item.status === '2'}">
+											{{ displayStatus(item.status) }}
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+				<div class="operation_area">
+					<button onclick="transferShow();" class="ui-btn ui-btn-primary">转账</button>
+					<div></div>
+					<!-- <button onclick="dialog('初次收款，请在安全组内打开收款二维码接收。');" class="ui-btn ui-btn-danger">收款</button> -->
+					<button onclick="dialog('请点击分享,以获取收款二维码!');" class="ui-btn ui-btn-danger">收款</button>
+				</div>
+			</div>
+
+			<div class="ui-dialog" :class="{ show: dialogShow }">
+				<div class="ui-dialog-cnt">
+					<div class="ui-dialog-bd">
+						<h3 v-if="!loading">提示</h3>
+						<img v-else width="30" src="loading.gif" />
+						<p>{{ dialogContent }}</p>
+					</div>
+					<div v-if="!loading" class="ui-dialog-ft">
+						<button type="button" data-role="button" @click="dialogSure">确定</button>
+					</div>
+				</div>
+			</div>
+			<div class="ui-dialog" :class="{ show: twiceDialogShow }">
+				<div class="ui-dialog-cnt">
+					<div class="ui-dialog-bd">
+						<h3>提示</h3>
+						<p>确定转账？</p>
+					</div>
+					<div class="ui-dialog-ft">
+						<button type="button" data-role="button" @click="twiceDialogCancel">取消</button>
+						<button type="button" data-role="button" onclick="spreadTransfer()">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var app = new Vue({
+				el: '#app',
+				data: {
+					tabIndex: 0,
+					loading: false,
+					dialogShow: false,
+					dialogContent: '',
+					dialogDissmissCallback: null,
+					twiceDialogShow: false,
+					accountId: '',
+					allData: [],
+					inData: [],
+					outData: []
+				},
+				methods: {
+					switchTabIndex: function(index) {
+						this.tabIndex = index;
+					},
+					displayStatus: function(status) {
+						if(status == '2'){
+							return "处理中";
+						}else if(status == '0'){
+							return "完成";
+						}else {
+							return "失败";
+						}
+					},
+					addrBrief: function(addr) {
+						return  addr.substring(0, 12) + '......' + addr.substring(40);
+
+					},
+					covertTime: function(time) {
+						const t = new Date(time);
+						const result = moment(t).format('YYYY-MM-DD HH:mm:ss');
+						return result;
+					},
+					dialogSure: function() {
+						this.dialogShow = false;
+						this.dialogDissmissCallback && this.dialogDissmissCallback();
+					},
+					twiceDialogCancel: function() {
+						this.twiceDialogShow = false;
+					}
+				}
+			})
+		</script>
+		<!-- <a href="https://github.com/polkadot-js/extension/tree/master/packages/extension-dapp">see more</a> -->
+	</body>
+
+</html>
