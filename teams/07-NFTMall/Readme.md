@@ -17,24 +17,21 @@ NFTmall - 制作、销售、交易NFT数字资产的智能合约市场，完全�
 *1、NFTmall 的愿景和目标：
   *NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
   *NFT mall目标是成为NFT资产的制作、交易平台。
-
-*2、Idea and functionalities
+*2项目LOGO:
+![NFTmall](http://nft.ueuo.com/img/movieimg.png)
+*3、Idea and functionalities
   *Create an NFT marketplace contract that supports ERC721 and ERC1155
   *Sellers can list their NFTs on the platform
   *Buyers can preview, and purchase NFTs listed on the platform
 
-*3、项目LOGO:\<br>
-![NFTmall](http://nft.ueuo.com/img/movieimg.png)
-
-
 *4、项目总体思路
   *我们研究现有的交易市场，结合自身的技术情况和目标，把NFTmall项目分解为以下三个部分：创建合约、交易市场  和 链平台。
   *4.1 创建合约：
-    *创建合约部分的主要功能是：
-      *web用户登录与身份验证
-      *进行数字数据链上存证
-      *IPFS分布存储
-      *链上创建NFT Token
+  *创建合约部分的主要功能是：
+    *web用户登录与身份验证
+    *进行数字数据链上存证
+    *IPFS分布存储
+    *链上创建NFT Token
   *4.2 交易市场：
     *交易市场，主要功能是服务于web用户，进行NFT Token的展示、交易、兑换、碎片化等功能。
       *NFT Token数字作品的展示\<br>
@@ -57,11 +54,11 @@ NFTmall - 制作、销售、交易NFT数字资产的智能合约市场，完全�
 可选：放一段不长于 5 分钟 的产品 DEMO 展示视频, 命名为 团队目录/docs/demo.mp4。
 目前进度：（截止至 06.25）
 
-1、 完成项目定位、发展路径和发展规划（已完成）
+**1、 完成项目定位、发展路径和发展规划（已完成）
       项目定位
       开发思路
       发展规划
-2、完成Demo 模型的制作（实现中）
+**2、完成Demo 模型的制作（实现中）
       Added ERC721 Contract
       Connected to Metamask
       Started NFTMinter Contract
@@ -71,12 +68,12 @@ NFTmall - 制作、销售、交易NFT数字资产的智能合约市场，完全�
       Develop and Improve front-end
       Test in production environment
 
-3、公链测试和部署Public chain deployment, testing and operation\<br>
+**3、公链测试和部署Public chain deployment, testing and operation\<br>
       Deployment & testing in Ethereum
       Deployment & testing in moonbeam
       Deployment & testing in Kusama
 
-4、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain\<br>
+**4、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain\<br>
       NFTmall Public chain deployment\<br>
 
 ** 路线图Roadmap & Plan
