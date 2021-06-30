@@ -3,8 +3,8 @@
 **基本资料
 
 *项目名称：
-  *NFTmall - Creat&Mint Sell&Trade your NFT digital assets in an Ethereum-compatible smart contract parachain on Polkadot<br/>
-  *NFTmall - 制作、销售、交易NFT数字资产的智能合约市场，完全兼容以太坊和波卡<br/>
+  * NFTmall - Creat&Mint Sell&Trade your NFT digital assets in an Ethereum-compatible smart contract parachain on Polkadot<br/>
+  * NFTmall - 制作、销售、交易NFT数字资产的智能合约市场，完全兼容以太坊和波卡<br/>
 
 *项目立项日期：2021 年 5 月。
 
@@ -15,8 +15,11 @@
 项目背景/原由/要解决的问题 (如有其他附件，可放到 docs 目录内。中文提交)。
 
 *1、NFTmall 的愿景和目标：
-  *NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
-  *NFT mall目标是成为NFT资产的制作、交易平台。
+
+
+
+  * NFTmall 的愿景和目标是打造一个NFT数字资产的交易平台。在平台里，用户可以自由地创作、制作、交易自己的NFT Token，这个平台兼容主流的公链（具备跨链功能）。
+  * NFT mall目标是成为NFT资产的制作、交易平台。
 
 *2项目LOGO:
 
@@ -30,24 +33,27 @@
   *Sellers can list their NFTs on the platform
   *Buyers can preview, and purchase NFTs listed on the platform
 
-*4、项目总体思路
-  *我们研究现有的交易市场，结合自身的技术情况和目标，把NFTmall项目分解为以下三个部分：创建合约、交易市场  和 链平台。
-  *4.1 创建合约：
-  *创建合约部分的主要功能是：
-    *web用户登录与身份验证
-    *进行数字数据链上存证
-    *IPFS分布存储
-    *链上创建NFT Token
-  *4.2 交易市场：
-    *交易市场，主要功能是服务于web用户，进行NFT Token的展示、交易、兑换、碎片化等功能。
-      *NFT Token数字作品的展示\<br>
-      *NFT Token数字作品的交易\<br>
-      *NFT Token数字作品的兑换
-      *NFT Token数字作品的碎片化
-  *4.3 链平台：部署交易市场的链平台
-      *多平台服务网关和多类型发布渠道支持：需要支持Ethereum evm 合约 NFT、原生substrate NFT。
-      *多个去中心化存储渠道支持：需要支持 IPFS作为 NFT的内容存储平台。
-      *多平台服务网关和多类型发布渠道支持：需要支持Ethereum evm 合约 NFT、原生substrate NFT。
+* 4、项目总体思路
+
+
+
+* 我们研究现有的交易市场，结合自身的技术情况和目标，把NFTmall项目分解为以下三个部分：创建合约、交易市场  和 链平台。
+  * 4.1 创建合约：
+  * 创建合约部分的主要功能是：
+    * web用户登录与身份验证
+    * 进行数字数据链上存证
+    * IPFS分布存储
+    * 链上创建NFT Token
+  * 4.2 交易市场：
+    * 交易市场，主要功能是服务于web用户，进行NFT Token的展示、交易、兑换、碎片化等功能。
+      * NFT Token数字作品的展示\<br>
+      * NFT Token数字作品的交易\<br>
+      * NFT Token数字作品的兑换
+      * NFT Token数字作品的碎片化
+  * 4.3 链平台：部署交易市场的链平台
+      * 多平台服务网关和多类型发布渠道支持：需要支持Ethereum evm 合约 NFT、原生substrate NFT。
+      * 多个去中心化存储渠道支持：需要支持 IPFS作为 NFT的内容存储平台。
+      * 多平台服务网关和多类型发布渠道支持：需要支持Ethereum evm 合约 NFT、原生substrate NFT。
   *5 所属参赛类别：
     DApp、应用链、平行链 
         
