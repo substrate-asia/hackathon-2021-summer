@@ -237,6 +237,14 @@ use ink_storage::{
             // .fire()
             // .map_err(|_| Error::TransactionFailed);
 
+			// // (*self.erc20_minable).mine(who, value)  // 虽然mine是payable的，但是没有接口调用transfer
+            // // 等价于
+            // use ink_lang::ForwardCallMut;
+            // <&mut Erc20Minable>::call_mut(&mut *self.erc20_minable)
+            //     .mine(who, value)
+            //     .transferred_value(value) // 加上了调用 payable 的方法的时候，提供transfer
+            //     .fire()
+            //     .expect("something wrong");
             true
         }
 
