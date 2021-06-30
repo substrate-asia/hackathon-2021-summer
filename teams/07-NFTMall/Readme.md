@@ -46,8 +46,8 @@
     * 链上创建NFT Token
   * 4.2 交易市场：
      交易市场，主要功能是服务于web用户，进行NFT Token的展示、交易、兑换、碎片化等功能。
-      * NFT Token数字作品的展示\<br>
-      * NFT Token数字作品的交易\<br>
+      * NFT Token数字作品的展示
+      * NFT Token数字作品的交易
       * NFT Token数字作品的兑换
       * NFT Token数字作品的碎片化
   * 4.3 链平台：部署交易市场的链平台
@@ -65,8 +65,7 @@
 
 **黑客松期间所完成的事项 (7月5日初审前提交)
 7月5日前，在本栏列出黑客松期间最终完成的功能点。
-把相关代码放在 src 目录里，并在本栏列出在黑客松期间打完成的开发工作/功能点。我们将对这些目录/档案作重点技术评审。
-可选：放一段不长于 5 分钟 的产品 DEMO 展示视频, 命名为 团队目录/docs/demo.mp4。
+------
 目前进度：（截止至 06.25）
 
 * 6、 完成项目定位、发展路径和发展规划（已完成）
@@ -78,12 +77,12 @@
 ![NFTmall](http://nft.ueuo.com/2021/webscreen.png)
 
 * 7、完成Demo 模型的制作（实现中）
-  * Added ERC721 Contract
-  * Connected to Metamask
-  * Started NFTMinter Contract
-  * Added truffle-flattener and flattened openZeppelin contracts
-  *  Contracts and Solc compiler updated to version: "^0.8"
-  * Added Tests and Migration
+  * ~~Added ERC721 Contract~~
+  * ~~Connected to Metamask~~
+  * ~~Started NFTMinter Contract~~
+  * ~~Added truffle-flattener and flattened openZeppelin contracts~~
+  *  ~~Contracts and Solc compiler updated to version: "^0.8"~~
+  * ~~Added Tests and Migration~~
   * Develop and Improve front-end
   * Test in production environment
 
@@ -106,10 +105,10 @@
 
 
 ** 团队人员信息
-  * feiying	 
-  * Stvenyin  
-  * hfxx	 
-  * Danny 
-  * cooper  
-  * 越泽	
-  * 海中蛟龙
+  * feiying	  团队带头人，来自北京，丰富的投资行业经验
+  * Stvenyin  来自上海 经验丰富的区块链公链开发者
+  * hfxx	    来自上海 前neo高级研究员
+  * Danny     来自深圳 目前在大三计算机&金融在读，fisco bcos和eth合约开发经验
+  * cooper    来自上海 目前在从事区块链链存储研究，四年区块链开发经验
+  * 越泽	    来自广州，擅长golang、熟悉物联网
+  * 海中蛟龙  来自北京，区块链交易员
