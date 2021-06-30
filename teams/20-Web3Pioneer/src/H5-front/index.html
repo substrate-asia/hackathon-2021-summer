@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+		<title>P2PWorld</title>
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="./qrcode.min.js"></script>
+	</head>
+	<body>
+		<div id="showNewApp">
+			<!-- <a href="javascript:hideNewApp();">关闭</a>&nbsp; -->
+			<!-- <button onclick="hideNewApp()" class="ui-btn">关闭</button> -->
+			<!-- <div class="back_btn" onclick="hideNewApp()"></div> -->
+			<p class="main_title">out.title</p>
+			<p class="sub_title">out.subTitle</p>
+			<div id="newAppDiv"></div>
+			<span id="qrurltest">推荐理由：out.desp</span>
+			<!-- 固定下载本应用APK -->
+			<a class="download_btn" href="./SBrowser.apk">立即下载</a>
+			<div v-if="cover" class="cover"></div>
+			<input type="hidden" id="ipfscid" value="out.cid"> 
+			<img id="imgIdInvite" style="width:1px;height:1px;"/>
+		</div>
+		
+		<script>
+			var app = new Vue({
+				el: '#showNewApp',
+				data: {
+					cover: false,
+					mainTitle: "超越WEB极限，打开P2P新世界",
+					subTitle: "美好生活，来源最靓的你",
+					qrurltest: "这是一个可以带你好好生活的APP，这是一个可以带你好好生活的APP，这是一个可以带你好好生活的APP"
+				},
+				methods: {
+					isWeiXin: function() {
+					  const ua = window.navigator.userAgent.toLowerCase();
+					  if (ua.indexOf('micromessenger') > -1){
+						return true;
+					  } else {
+						return false;
+					  }
+					}
+				},
+				created: function() {
+					this.cover = this.isWeiXin();
+				}
+			})
+		</script>
+
+
+		<script type="text/javascript">
+			var qrcode = new QRCode(document.getElementById("newAppDiv"), {
+				width: 180,
+				height: 180,
+				correctLevel: QRCode.CorrectLevel.M
+			});
+
+			qrcode.makeCode(window.location.href);
+
+		</script>
+	</body>
+
+<script type="text/javascript">
+
+	function getQueryString(name, url) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		if (!url || url == ""){
+				url = window.location.search;
+		}else{
+			url = url.substring(url.indexOf("?"));
+		}
+		r = url.substr(1).match(reg)
+		if (r != null) return unescape(r[2]); return null;
+	}
+	var lurl = window.location.href;
+	var cid = document.getElementById("ipfscid").value; 	
+	if(cid!=null || cid!=""){
+		if(lurl.indexOf('?')>0){ 
+			lurl = lurl+"&cid="+cid;
+		}else{
+			lurl = lurl+"?cid="+cid;
+		}
+	}
+	var username = getQueryString("username", lurl);	
+	var referer = encodeURIComponent(lurl);
+	console.log(username);
+
+	//不要使用下面的 "from.js",  会被很多浏览器给阻止。用img就不会
+    document.getElementById("imgIdInvite").src = "http://211.159.227.141:8080/from?"+"username="+ username + "&referer="+referer;
+
+    //一般ipfs的gateway 都是https, 原则上，浏览器是不让访问 http的，但国内的手机浏览器都是不太有原则。都可以访问http
+	//var jsUrl = "http://211.159.227.141:8080/from.js?"+"username="+ username + "&referer="+referer;
+	//with(document)with(body)with(insertBefore(createElement("script"), firstChild))setAttribute("exparams","username="+ username + "&referer="+referer, id = "web3-invite", src = jsUrl);
+
+
+</script>
+
+
+
+</html>
