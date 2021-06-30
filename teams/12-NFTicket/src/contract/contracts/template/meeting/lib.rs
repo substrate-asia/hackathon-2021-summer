@@ -12,6 +12,7 @@ use ink_lang as ink;
 #[ink::contract]
 pub mod meeting {
     use ink_prelude::vec::Vec;
+    use ink_prelude::vec;
     use ink_storage::{
         collections::HashMap as StorageMap,
         traits::{PackedLayout, SpreadLayout},
@@ -34,7 +35,7 @@ pub mod meeting {
     impl Default for CheckRecord {
         fn default() -> CheckRecord {
             CheckRecord {
-                inspector: Default::default(),
+                inspectors: Default::default(),
                 timestamp: Default::default(),
                 block: Default::default(),
             }
@@ -120,7 +121,13 @@ pub mod meeting {
         */
         #[ink(message)]
         pub fn modify_meeting(&mut self, max_tickets: u64, price: Balance ){
+            assert_eq!(Self::env().caller(), self.owner);
+            assert_ne!(self.tickets.len(), 0);
+            // todo: 添加活动状态字段，检查状态
+            self.max_tickets = max_tickets;
+            self.price = price;
 
+            // todo: 触发事件
         }
 
 
@@ -144,7 +151,8 @@ pub mod meeting {
         */
         #[ink(message)]
         pub fn add_inspector(&mut self, inspector: AccountId){
-
+            assert_eq!(Self::env().caller(), self.owner);
+            self.inspectors.insert(inspector, true);
         }
 
         /**
@@ -155,7 +163,8 @@ pub mod meeting {
         */
         #[ink(message)]
         pub fn remove_inspector(&mut self, inspector: AccountId){
-
+            assert_eq!(Self::env().caller(), self.owner);
+            self.inspectors.take(inspector, true);
         }
 
         /**
@@ -170,7 +179,29 @@ pub mod meeting {
         */
         #[ink(message)]
         pub fn check_ticket(&mut self, ticket: (u128, u128), timestamp: u128, hash: Vec<u8> ) -> bool {
-            true
+            if Self::env().caller() != self.owner &&
+            self.inspectors.contains_key(&Self::env().caller()) == false {
+                return false
+            }
+            if self.tickets.contains_key(&ticket) == false {
+                return false
+            }
+            if timestamp as u64 - Self::env().block_timestamp() > 1000 {
+                return false
+            }
+            let r = CheckRecord {
+                timestamp: timestamp.clone(),
+                inspectors: Self::env().caller(),
+                block: Self::env().block_number(),
+            };
+            let mut v = self.check_records.take(&ticket);
+            let vec = match v {
+                None => vec![r],
+                Some(x) => vec![r], // fixme
+            }
+            self.check_records.insert(ticket, vec);
+
+            // todo: 调用 event
         }
 
         /**
