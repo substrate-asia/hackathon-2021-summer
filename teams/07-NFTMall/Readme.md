@@ -73,6 +73,8 @@
   * 开发思路
   * 发展规划
 
+Danny完成的前台展示界面，如图所示：
+![NFTmall](http://nft.ueuo.com/2021/webscreen.png)
 
 * 2、完成Demo 模型的制作（实现中）
   * Added ERC721 Contract
@@ -99,7 +101,7 @@
 
 ** 路线图Roadmap & Plan
 
-![NFTmall](https://uploader.shimo.im/f/pQ5YP5fhoTuR1vIz.png)
+![NFTmall](http://nft.ueuo.com/2021/roadmap.png)
 
 
 ** 团队人员信息
