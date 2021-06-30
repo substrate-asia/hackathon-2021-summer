@@ -184,6 +184,7 @@ mod nfticket {
             template_addr: AccountId,
             status: TemplateStatus,
         ) -> bool {
+            self.ensure_owner();
             self.template_map.get_mut(&template_addr).map(|t| {
                 t.status = status;
             });
@@ -309,6 +310,7 @@ mod nfticket {
         3. 触发 meeting_status_changed 事件
         4. 如果状态和先前状态一致，仍然返回 true ，只是不触发事件
         */
+        #[ink(message)]
         pub fn set_meeting_status(&mut self,meeting_addr:AccountId, status: MeetingStatus)->bool{
             self.meeting_map.get_mut(&meeting_addr).map(|t| {
                 t.status = status;
@@ -324,6 +326,7 @@ mod nfticket {
         4. 触发 meeting_modified 事件
         5. 更新成功，返回 true
         */
+        #[ink(message)]
         pub fn modify_meeting(&mut self, meeting_addr:AccountId, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64)->bool{
             self.ensure_owner();
             let caller = Self::env().caller();
@@ -407,53 +410,53 @@ mod nfticket {
         //     return result;
         // }
 
-        /// 添加合约的id和hash值
-        #[ink(message)]
-        pub fn add_template_hash(&mut self, hash: Hash, template_address: AccountId) -> bool {
-            let value = self
-                .template_hash_address_map
-                .insert(hash, template_address);
-            if let None = value {
-                //如果该key不存在,返回true
-                true
-            } else {
-                false
-            }
-        }
+        // /// 添加合约的id和hash值
+        // #[ink(message)]
+        // pub fn add_template_hash(&mut self, hash: Hash, template_address: AccountId) -> bool {
+        //     let value = self
+        //         .template_hash_address_map
+        //         .insert(hash, template_address);
+        //     if let None = value {
+        //         //如果该key不存在,返回true
+        //         true
+        //     } else {
+        //         false
+        //     }
+        // }
 
-        /// 查询所有模板的hash值队列
-        #[ink(message)]
-        pub fn get_all_template_hash(&self) -> Vec<Hash> {
-            let mut result: Vec<Hash> = Vec::new();
-            for k in self.template_hash_address_map.keys() {
-                result.push(*k);
-            }
-            result
-            // let temp_map:Vec<Hash> = self.template_index_hash_map.iter().map(|k,v|k).collect();
-            // temp_map
-        }
+        // /// 查询所有模板的hash值队列
+        // #[ink(message)]
+        // pub fn get_all_template_hash(&self) -> Vec<Hash> {
+        //     let mut result: Vec<Hash> = Vec::new();
+        //     for k in self.template_hash_address_map.keys() {
+        //         result.push(*k);
+        //     }
+        //     result
+        //     // let temp_map:Vec<Hash> = self.template_index_hash_map.iter().map(|k,v|k).collect();
+        //     // temp_map
+        // }
 
-        #[ink(message)]
-        pub fn get_template_address(&self, hash: Hash) -> AccountId {
-            self.template_hash_address_map.get(&hash).unwrap().clone()
-        }
+        // #[ink(message)]
+        // pub fn get_template_address(&self, hash: Hash) -> AccountId {
+        //     self.template_hash_address_map.get(&hash).unwrap().clone()
+        // }
 
-        #[ink(message)]
-        pub fn get_template_id_by_hash(&self, hash: Hash) -> u32 {
-            ink_env::debug_message("-------------1");
-            let address: AccountId = self.template_hash_address_map.get(&hash).unwrap().clone();
-            let template: MainStub = FromAccountId::from_account_id(address);
-            ink_env::debug_message("-------------2");
-            template.get_id()
-        }
+        // #[ink(message)]
+        // pub fn get_template_id_by_hash(&self, hash: Hash) -> u32 {
+        //     ink_env::debug_message("-------------1");
+        //     let address: AccountId = self.template_hash_address_map.get(&hash).unwrap().clone();
+        //     let template: MainStub = FromAccountId::from_account_id(address);
+        //     ink_env::debug_message("-------------2");
+        //     template.get_id()
+        // }
 
-        #[ink(message)]
-        pub fn get_template_id(&self, account_id: AccountId) -> u32 {
-            ink_env::debug_message("-------------333");
-            let template: MainStub = FromAccountId::from_account_id(account_id);
-            ink_env::debug_message("-------------444");
-            template.get_id()
-        }
+        // #[ink(message)]
+        // pub fn get_template_id(&self, account_id: AccountId) -> u32 {
+        //     ink_env::debug_message("-------------333");
+        //     let template: MainStub = FromAccountId::from_account_id(account_id);
+        //     ink_env::debug_message("-------------444");
+        //     template.get_id()
+        // }
 
         /// Panic if `owner` is not an owner,
         fn ensure_owner(&self) {
