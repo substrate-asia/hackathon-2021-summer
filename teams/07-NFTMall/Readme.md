@@ -69,11 +69,9 @@
 目前进度：（截止至 06.25）
 
 * 1、 完成项目定位、发展路径和发展规划（已完成）
- * 项目定位
- * 开发思路
- * 发展规划
-
-
+  * 项目定位
+  * 开发思路
+  * 发展规划
 
 
 * 2、完成Demo 模型的制作（实现中）
@@ -87,16 +85,15 @@
   * Test in production environment
 
 
-
 * 3、公链测试和部署Public chain deployment, testing and operation
-      * Deployment & testing in Ethereum
-      * Deployment & testing in moonbeam
-      * Deployment & testing in Kusama
+  * Deployment & testing in Ethereum
+  * Deployment & testing in moonbeam
+  * Deployment & testing in Kusama
 
 
 
 * 4、在NFTmall公链部署和测试Deployment, testing and operation in NFTmall chain
-      * NFTmall Public chain deployment
+  * NFTmall Public chain deployment
 
 
 
