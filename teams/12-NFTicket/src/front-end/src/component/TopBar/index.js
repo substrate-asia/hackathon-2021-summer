@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Flex,SearchBar,  WhiteSpace } from 'antd-mobile'
 import img1 from '../../images/icon.png'
+import wallet from '../../images/icon_wallet.png'
 import styles from './index.module.css'
 
 
@@ -19,6 +20,7 @@ export default class TopBar extends Component {
                         
                     </Flex.Item>
                     <Flex.Item className={styles.accountInfoRight} > 
+                        <img src={wallet} className={styles.walletIcon}></img>
                         <div className={styles.rightText}>
                             <span>0x4234...1e45</span>
                         </div>
@@ -28,3 +30,4 @@ export default class TopBar extends Component {
         )
     }
 }
+
