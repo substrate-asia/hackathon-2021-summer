@@ -87,6 +87,13 @@ mod nfticket {
         creator: AccountId, //创建人
     }
 
+    /// 活动创建事件
+    #[ink(event)]
+    pub struct TicketSelled {
+        #[ink(topic)]
+        ticket: Ticket, //模板地址
+    }
+
     #[ink(event)]
     pub struct CreateClassFromContract {
         #[ink(topic)]
@@ -359,12 +366,23 @@ mod nfticket {
         #[ink(message, payable)]
         pub fn buy_ticket(&mut self, _ticket: Ticket) -> bool {
             ink_env::debug_message("-------------------------buy_ticket开始调用");
-            // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee暂缓
+            // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
             let main_fee: Balance = self.env().transferred_balance();
+            assert!(main_fee>=min_ticket_fee,"转账金额必须大于最小费用");
+            ink_env::debug_message(&format!("-------------------------收到的费用{:?}",main_fee));
             //2. 仅能通过活动合约调用；
             let caller = self.env().caller();
             //查询调用者是否是来自合约.
-            if let Some(_) = self.meeting_map.get(&caller) {}
+            if let Some(_) = self.meeting_map.get(&caller) {
+                // todo 生成ticket NFT.
+                Self::env().emit_event(TicketSelled{
+                    ticket:_ticket,
+                });
+            }else{
+                ink_env::debug_message("-------------------------错误:当前合约只能通过活动合约调用!");
+                //触发pannic,整个事务回滚.
+                panic!("错误:当前合约只能通过活动合约调用!");
+            }
 
             // assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
             true
