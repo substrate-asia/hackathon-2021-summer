@@ -50,6 +50,8 @@ mod nfticket {
         meeting_map: StorageHashMap<AccountId, Meeting>,
         //模板集合
         template_map: StorageHashMap<AccountId, Template>,
+        // 记录会议对应的classId
+        classid_map:StorageHashMap<AccountId,ClassId>,
     }
 
     /// 模板创建事件
@@ -76,6 +78,8 @@ mod nfticket {
         meeting_addr: AccountId, //模板地址
         #[ink(topic)]
         creator: AccountId, //创建人
+        #[ink(topic)]
+        class_id:ClassId
     }
 
     /// 活动创建事件
@@ -113,6 +117,8 @@ mod nfticket {
                 fee_taker,
                 meeting_map: Default::default(),
                 template_map: Default::default(),
+                classid_map: Default::default(),
+                
             };
             instance
         }
@@ -257,7 +263,8 @@ mod nfticket {
             end_time: u64,
             start_sale_time: u64,
             end_sale_time: u64,
-        ) -> bool {
+        ) -> Result<ClassId,MeetingError >{
+            let mut my_class_id:ClassId = 0;
             let caller = Self::env().caller();
             // 判断是否重复
             if self.meeting_map.contains_key(&meeting_addr) {
@@ -279,9 +286,11 @@ mod nfticket {
                 self.meeting_map.insert(meeting_addr, meeting);
                 // 创建相应的 NFT 集合（调用 runtime 接口）
                 let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
-                Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller});
+                self.classid_map.insert(meeting_addr, class_id);
+                my_class_id=class_id;
+                Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller,class_id});
             }
-            true
+            Ok(my_class_id)
         }
 
         // 创建NFT类别
