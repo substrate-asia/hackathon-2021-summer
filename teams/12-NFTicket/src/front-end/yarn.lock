@@ -28,7 +28,7 @@
   "resolved" "https://registry.nlark.com/@babel/compat-data/download/@babel/compat-data-7.14.5.tgz"
   "version" "7.14.5"
 
-"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.1.0", "@babel/core@^7.12.0", "@babel/core@^7.12.3", "@babel/core@^7.13.0", "@babel/core@^7.4.0-0", "@babel/core@^7.7.5", "@babel/core@^7.8.4", "@babel/core@7 || ^7.0.0-rc.2", "@babel/core@7.12.3":
+"@babel/core@^7.1.0", "@babel/core@^7.12.3", "@babel/core@^7.7.5", "@babel/core@^7.8.4", "@babel/core@7.12.3":
   "integrity" "sha1-G0NohOHjv/b7EyjcArIIdZ3pKtg="
   "resolved" "https://registry.nlark.com/@babel/core/download/@babel/core-7.12.3.tgz"
   "version" "7.12.3"
@@ -1703,7 +1703,7 @@
     "tweetnacl" "^1.0.3"
     "xxhashjs" "^0.2.2"
 
-"@polkadot/util@*", "@polkadot/util@^6.9.1", "@polkadot/util@6.9.1":
+"@polkadot/util@^6.9.1", "@polkadot/util@6.9.1":
   "integrity" "sha1-AJqeB3FSM5hRfb86l4KFsHH2CBw="
   "resolved" "https://registry.nlark.com/@polkadot/util/download/@polkadot/util-6.9.1.tgz"
   "version" "6.9.1"
@@ -1758,7 +1758,7 @@
     "@types/node-fetch" "^2.5.10"
     "node-fetch" "^2.6.1"
 
-"@polkadot/x-randomvalues@*", "@polkadot/x-randomvalues@6.9.1":
+"@polkadot/x-randomvalues@6.9.1":
   "integrity" "sha1-4onnmEnjMnd/uW6FRLEZOk55Plk="
   "resolved" "https://registry.nlark.com/@polkadot/x-randomvalues/download/@polkadot/x-randomvalues-6.9.1.tgz"
   "version" "6.9.1"
@@ -1953,7 +1953,7 @@
     "@svgr/plugin-svgo" "^5.5.0"
     "loader-utils" "^2.0.0"
 
-"@testing-library/dom@^7.28.1", "@testing-library/dom@>=7.21.4":
+"@testing-library/dom@^7.28.1":
   "integrity" "sha1-3zYds49SEriFVQaKuBGfXYQajEo="
   "resolved" "https://registry.nlark.com/@testing-library/dom/download/@testing-library/dom-7.31.2.tgz?cache=0&sync_timestamp=1623491119871&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40testing-library%2Fdom%2Fdownload%2F%40testing-library%2Fdom-7.31.2.tgz"
   "version" "7.31.2"
@@ -2242,7 +2242,7 @@
     "@types/source-list-map" "*"
     "source-map" "^0.7.3"
 
-"@types/webpack@^4.41.8", "@types/webpack@4.x":
+"@types/webpack@^4.41.8":
   "integrity" "sha1-LmbB3oIjxEA2ZGlBXFCkfZdiV3M="
   "resolved" "https://registry.nlark.com/@types/webpack/download/@types/webpack-4.41.29.tgz?cache=0&sync_timestamp=1621535470280&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fwebpack%2Fdownload%2F%40types%2Fwebpack-4.41.29.tgz"
   "version" "4.41.29"
@@ -2273,7 +2273,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^4.0.0", "@typescript-eslint/eslint-plugin@^4.5.0", "@typescript-eslint/eslint-plugin@>= 4":
+"@typescript-eslint/eslint-plugin@^4.5.0":
   "integrity" "sha1-C3/JdOi8myteuY7VFCewvlKbStA="
   "resolved" "https://registry.nlark.com/@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-4.27.0.tgz?cache=0&sync_timestamp=1623692126278&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40typescript-eslint%2Feslint-plugin%2Fdownload%2F%40typescript-eslint%2Feslint-plugin-4.27.0.tgz"
   "version" "4.27.0"
@@ -2310,7 +2310,7 @@
     "eslint-scope" "^5.1.1"
     "eslint-utils" "^3.0.0"
 
-"@typescript-eslint/parser@^4.0.0", "@typescript-eslint/parser@^4.5.0":
+"@typescript-eslint/parser@^4.5.0":
   "integrity" "sha1-hUR+VzNkvOTEbH9kq6pJharfWpQ="
   "resolved" "https://registry.nlark.com/@typescript-eslint/parser/download/@typescript-eslint/parser-4.27.0.tgz?cache=0&sync_timestamp=1623692005683&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40typescript-eslint%2Fparser%2Fdownload%2F%40typescript-eslint%2Fparser-4.27.0.tgz"
   "version" "4.27.0"
@@ -2566,15 +2566,15 @@
   "resolved" "https://registry.nlark.com/acorn-walk/download/acorn-walk-7.2.0.tgz?cache=0&sync_timestamp=1619259236377&other_urls=https%3A%2F%2Fregistry.nlark.com%2Facorn-walk%2Fdownload%2Facorn-walk-7.2.0.tgz"
   "version" "7.2.0"
 
-"acorn@^6.0.0 || ^7.0.0 || ^8.0.0", "acorn@^7.1.0", "acorn@^7.1.1", "acorn@^7.4.0":
-  "integrity" "sha1-/q7SVZc9LndVW4PbwIhRpsY1IPo="
-  "resolved" "https://registry.nlark.com/acorn/download/acorn-7.4.1.tgz?cache=0&sync_timestamp=1623419734224&other_urls=https%3A%2F%2Fregistry.nlark.com%2Facorn%2Fdownload%2Facorn-7.4.1.tgz"
-  "version" "7.4.1"
-
 "acorn@^6.4.1":
   "integrity" "sha1-NYZv1xBSjpLeEM8GAWSY5H454eY="
   "resolved" "https://registry.nlark.com/acorn/download/acorn-6.4.2.tgz?cache=0&sync_timestamp=1623419734224&other_urls=https%3A%2F%2Fregistry.nlark.com%2Facorn%2Fdownload%2Facorn-6.4.2.tgz"
   "version" "6.4.2"
+
+"acorn@^7.1.0", "acorn@^7.1.1", "acorn@^7.4.0":
+  "integrity" "sha1-/q7SVZc9LndVW4PbwIhRpsY1IPo="
+  "resolved" "https://registry.nlark.com/acorn/download/acorn-7.4.1.tgz?cache=0&sync_timestamp=1623419734224&other_urls=https%3A%2F%2Fregistry.nlark.com%2Facorn%2Fdownload%2Facorn-7.4.1.tgz"
+  "version" "7.4.1"
 
 "acorn@^8.2.4":
   "integrity" "sha1-r1MmbmmNfP+kFnFLUDBmqCIhvmA="
@@ -2626,7 +2626,7 @@
   "resolved" "https://registry.npm.taobao.org/ajv-keywords/download/ajv-keywords-3.5.2.tgz?cache=0&sync_timestamp=1616882441894&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fajv-keywords%2Fdownload%2Fajv-keywords-3.5.2.tgz"
   "version" "3.5.2"
 
-"ajv@^6.1.0", "ajv@^6.10.0", "ajv@^6.10.2", "ajv@^6.12.4", "ajv@^6.12.5", "ajv@^6.9.1", "ajv@>=5.0.0":
+"ajv@^6.1.0", "ajv@^6.10.0", "ajv@^6.10.2", "ajv@^6.12.4", "ajv@^6.12.5":
   "integrity" "sha1-uvWmLoArB9l3A0WG+MO69a3ybfQ="
   "resolved" "https://registry.nlark.com/ajv/download/ajv-6.12.6.tgz"
   "version" "6.12.6"
@@ -2959,7 +2959,7 @@
   "resolved" "https://registry.npm.taobao.org/axobject-query/download/axobject-query-2.2.0.tgz"
   "version" "2.2.0"
 
-"babel-eslint@^10.0.0", "babel-eslint@^10.1.0":
+"babel-eslint@^10.1.0":
   "integrity" "sha1-aWjlaKkQt4+zd5zdi2rC9HmUMjI="
   "resolved" "https://registry.nlark.com/babel-eslint/download/babel-eslint-10.1.0.tgz?cache=0&sync_timestamp=1618846971799&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fbabel-eslint%2Fdownload%2Fbabel-eslint-10.1.0.tgz"
   "version" "10.1.0"
@@ -3407,7 +3407,7 @@
   dependencies:
     "pako" "~1.0.5"
 
-"browserslist@^4", "browserslist@^4.0.0", "browserslist@^4.12.0", "browserslist@^4.16.6", "browserslist@^4.6.2", "browserslist@^4.6.4":
+"browserslist@^4.0.0", "browserslist@^4.12.0", "browserslist@^4.16.6", "browserslist@^4.6.2", "browserslist@^4.6.4":
   "integrity" "sha1-15ASd6WojlVO0wWxg+ybDAj2b6I="
   "resolved" "https://registry.nlark.com/browserslist/download/browserslist-4.16.6.tgz?cache=0&sync_timestamp=1619789072079&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fbrowserslist%2Fdownload%2Fbrowserslist-4.16.6.tgz"
   "version" "4.16.6"
@@ -3701,13 +3701,12 @@
   dependencies:
     "anymatch" "~3.1.2"
     "braces" "~3.0.2"
+    "fsevents" "~2.3.2"
     "glob-parent" "~5.1.2"
     "is-binary-path" "~2.1.0"
     "is-glob" "~4.0.1"
     "normalize-path" "~3.0.0"
     "readdirp" "~3.6.0"
-  optionalDependencies:
-    "fsevents" "~2.3.2"
 
 "chownr@^1.1.1":
   "integrity" "sha1-b8nXtC0ypYNZYzdmbn0ICE2izGs="
@@ -5097,7 +5096,7 @@
     "lodash" "^4.17.15"
     "string-natural-compare" "^3.0.1"
 
-"eslint-plugin-import@^2.22.0", "eslint-plugin-import@^2.22.1":
+"eslint-plugin-import@^2.22.1":
   "integrity" "sha1-jc6x7Wtz5G5Q7JpbskEbZF59PZc="
   "resolved" "https://registry.nlark.com/eslint-plugin-import/download/eslint-plugin-import-2.23.4.tgz?cache=0&sync_timestamp=1622323063912&other_urls=https%3A%2F%2Fregistry.nlark.com%2Feslint-plugin-import%2Fdownload%2Feslint-plugin-import-2.23.4.tgz"
   "version" "2.23.4"
@@ -5118,7 +5117,7 @@
     "resolve" "^1.20.0"
     "tsconfig-paths" "^3.9.0"
 
-"eslint-plugin-jest@^24.0.0", "eslint-plugin-jest@^24.1.0":
+"eslint-plugin-jest@^24.1.0":
   "integrity" "sha1-XwygGRg8MYjFrTr46AtB3myOkXM="
   "resolved" "https://registry.nlark.com/eslint-plugin-jest/download/eslint-plugin-jest-24.3.6.tgz?cache=0&sync_timestamp=1619396671827&other_urls=https%3A%2F%2Fregistry.nlark.com%2Feslint-plugin-jest%2Fdownload%2Feslint-plugin-jest-24.3.6.tgz"
   "version" "24.3.6"
@@ -5142,12 +5141,12 @@
     "jsx-ast-utils" "^3.1.0"
     "language-tags" "^1.0.5"
 
-"eslint-plugin-react-hooks@^4.0.8", "eslint-plugin-react-hooks@^4.2.0":
+"eslint-plugin-react-hooks@^4.2.0":
   "integrity" "sha1-jCKcJo1GiVYzTJQ7tF/IYCgPVVY="
   "resolved" "https://registry.nlark.com/eslint-plugin-react-hooks/download/eslint-plugin-react-hooks-4.2.0.tgz?cache=0&sync_timestamp=1623797275468&other_urls=https%3A%2F%2Fregistry.nlark.com%2Feslint-plugin-react-hooks%2Fdownload%2Feslint-plugin-react-hooks-4.2.0.tgz"
   "version" "4.2.0"
 
-"eslint-plugin-react@^7.20.3", "eslint-plugin-react@^7.21.5":
+"eslint-plugin-react@^7.21.5":
   "integrity" "sha1-6t7fo1Gm82tJCqF/T6mxToQrnrQ="
   "resolved" "https://registry.nlark.com/eslint-plugin-react/download/eslint-plugin-react-7.24.0.tgz"
   "version" "7.24.0"
@@ -5165,7 +5164,7 @@
     "resolve" "^2.0.0-next.3"
     "string.prototype.matchall" "^4.0.5"
 
-"eslint-plugin-testing-library@^3.9.0", "eslint-plugin-testing-library@^3.9.2":
+"eslint-plugin-testing-library@^3.9.2":
   "integrity" "sha1-YJ7CsDadp88ubZ7f9doVPMMdh70="
   "resolved" "https://registry.nlark.com/eslint-plugin-testing-library/download/eslint-plugin-testing-library-3.10.2.tgz"
   "version" "3.10.2"
@@ -5241,7 +5240,7 @@
     "normalize-path" "^3.0.0"
     "schema-utils" "^3.0.0"
 
-"eslint@*", "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0", "eslint@^3 || ^4 || ^5 || ^6 || ^7", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0", "eslint@^5 || ^6 || ^7", "eslint@^5.0.0 || ^6.0.0 || ^7.0.0", "eslint@^7.0.0", "eslint@^7.1.0", "eslint@^7.11.0", "eslint@^7.5.0", "eslint@>= 4.12.1", "eslint@>=5":
+"eslint@^7.11.0":
   "integrity" "sha1-Q1qheguCwTuyvp1RQIthfknB6CA="
   "resolved" "https://registry.nlark.com/eslint/download/eslint-7.28.0.tgz?cache=0&sync_timestamp=1622846420761&other_urls=https%3A%2F%2Fregistry.nlark.com%2Feslint%2Fdownload%2Feslint-7.28.0.tgz"
   "version" "7.28.0"
@@ -5587,7 +5586,7 @@
   dependencies:
     "flat-cache" "^3.0.4"
 
-"file-loader@*", "file-loader@6.1.1":
+"file-loader@6.1.1":
   "integrity" "sha1-pvKd+z9ZM6HDULLbqiCsW+BTm6o="
   "resolved" "https://registry.npm.taobao.org/file-loader/download/file-loader-6.1.1.tgz"
   "version" "6.1.1"
@@ -7138,20 +7137,6 @@
     "jest-regex-util" "^26.0.0"
     "jest-snapshot" "^26.6.2"
 
-"jest-resolve@*", "jest-resolve@26.6.0":
-  "integrity" "sha1-Bw/nFZr4ewPlD1LqXhfulbvuQOE="
-  "resolved" "https://registry.nlark.com/jest-resolve/download/jest-resolve-26.6.0.tgz?cache=0&sync_timestamp=1622709020612&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjest-resolve%2Fdownload%2Fjest-resolve-26.6.0.tgz"
-  "version" "26.6.0"
-  dependencies:
-    "@jest/types" "^26.6.0"
-    "chalk" "^4.0.0"
-    "graceful-fs" "^4.2.4"
-    "jest-pnp-resolver" "^1.2.2"
-    "jest-util" "^26.6.0"
-    "read-pkg-up" "^7.0.1"
-    "resolve" "^1.17.0"
-    "slash" "^3.0.0"
-
 "jest-resolve@^26.6.2":
   "integrity" "sha1-o6sVFyF/RptQTxtWYDxbtUH7tQc="
   "resolved" "https://registry.nlark.com/jest-resolve/download/jest-resolve-26.6.2.tgz?cache=0&sync_timestamp=1622709020612&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjest-resolve%2Fdownload%2Fjest-resolve-26.6.2.tgz"
@@ -7164,6 +7149,20 @@
     "jest-util" "^26.6.2"
     "read-pkg-up" "^7.0.1"
     "resolve" "^1.18.1"
+    "slash" "^3.0.0"
+
+"jest-resolve@26.6.0":
+  "integrity" "sha1-Bw/nFZr4ewPlD1LqXhfulbvuQOE="
+  "resolved" "https://registry.nlark.com/jest-resolve/download/jest-resolve-26.6.0.tgz?cache=0&sync_timestamp=1622709020612&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjest-resolve%2Fdownload%2Fjest-resolve-26.6.0.tgz"
+  "version" "26.6.0"
+  dependencies:
+    "@jest/types" "^26.6.0"
+    "chalk" "^4.0.0"
+    "graceful-fs" "^4.2.4"
+    "jest-pnp-resolver" "^1.2.2"
+    "jest-util" "^26.6.0"
+    "read-pkg-up" "^7.0.1"
+    "resolve" "^1.17.0"
     "slash" "^3.0.0"
 
 "jest-runner@^26.6.0", "jest-runner@^26.6.3":
@@ -7322,7 +7321,7 @@
     "merge-stream" "^2.0.0"
     "supports-color" "^7.0.0"
 
-"jest@^26.0.0", "jest@26.6.0":
+"jest@26.6.0":
   "integrity" "sha1-VGslodjIiFadu+k8rhMXSAhqSiU="
   "resolved" "https://registry.nlark.com/jest/download/jest-26.6.0.tgz?cache=0&sync_timestamp=1622709000600&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjest%2Fdownload%2Fjest-26.6.0.tgz"
   "version" "26.6.0"
@@ -7445,7 +7444,7 @@
   "integrity" "sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss="
   "resolved" "https://registry.nlark.com/jsonfile/download/jsonfile-4.0.0.tgz"
   "version" "4.0.0"
-  optionalDependencies:
+  dependencies:
     "graceful-fs" "^4.1.6"
 
 "jsonfile@^6.0.1":
@@ -7453,9 +7452,8 @@
   "resolved" "https://registry.nlark.com/jsonfile/download/jsonfile-6.1.0.tgz"
   "version" "6.1.0"
   dependencies:
-    "universalify" "^2.0.0"
-  optionalDependencies:
     "graceful-fs" "^4.1.6"
+    "universalify" "^2.0.0"
 
 "jsx-ast-utils@^2.4.1 || ^3.0.0", "jsx-ast-utils@^3.1.0":
   "integrity" "sha1-QRCNLOxAjDRTwbvopKrp4eK9j4I="
@@ -9606,7 +9604,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.0.0", "prop-types@^15.5.10", "prop-types@^15.5.4", "prop-types@^15.5.6", "prop-types@^15.5.8", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@15.x":
+"prop-types@^15.5.10", "prop-types@^15.5.4", "prop-types@^15.5.6", "prop-types@^15.5.8", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@15.x":
   "integrity" "sha1-UsQedbjIfnK52TYOAga5ncv/psU="
   "resolved" "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz"
   "version" "15.7.2"
@@ -9920,15 +9918,6 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-dom@*", "react-dom@^15.5.4 || ^16.0.0 || ^17.0.0", "react-dom@^17.0.2":
-  "integrity" "sha1-7P+2hF462Nv83EmPDQqTlzZQLCM="
-  "resolved" "https://registry.nlark.com/react-dom/download/react-dom-17.0.2.tgz"
-  "version" "17.0.2"
-  dependencies:
-    "loose-envify" "^1.1.0"
-    "object-assign" "^4.1.1"
-    "scheduler" "^0.20.2"
-
 "react-dom@^15.1.0":
   "integrity" "sha512-mpjXqC2t1FuYsILOLCj0kg6pbg460byZkVA/80VtDmKU/pYmoTdHOtaMcTRIDiyXLz4sIur0cQ04nOC6iGndJg=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-15.7.0.tgz"
@@ -9938,6 +9927,15 @@
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.0"
     "prop-types" "^15.5.10"
+
+"react-dom@^17.0.2":
+  "integrity" "sha1-7P+2hF462Nv83EmPDQqTlzZQLCM="
+  "resolved" "https://registry.nlark.com/react-dom/download/react-dom-17.0.2.tgz"
+  "version" "17.0.2"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
+    "scheduler" "^0.20.2"
 
 "react-error-overlay@^6.0.9":
   "integrity" "sha1-PHQwEMk1lgjDdezWvHbzXZOZWwo="
@@ -9980,7 +9978,7 @@
     "prop-types" "^15.7.2"
     "react-is" "^16.13.1"
 
-"react-refresh@^0.8.3", "react-refresh@>=0.8.3 <0.10.0":
+"react-refresh@^0.8.3":
   "integrity" "sha1-ch1GV2ctQAxePHXQY8SoX7LV1o8="
   "resolved" "https://registry.nlark.com/react-refresh/download/react-refresh-0.8.3.tgz?cache=0&sync_timestamp=1623795792018&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact-refresh%2Fdownload%2Freact-refresh-0.8.3.tgz"
   "version" "0.8.3"
@@ -10014,7 +10012,7 @@
     "tiny-invariant" "^1.0.2"
     "tiny-warning" "^1.0.0"
 
-"react-scripts@>=2.1.3", "react-scripts@4.0.3":
+"react-scripts@4.0.3":
   "integrity" "sha1-scr+18P6YD52KLoPGHeHlky100U="
   "resolved" "https://registry.npm.taobao.org/react-scripts/download/react-scripts-4.0.3.tgz?cache=0&sync_timestamp=1614018572465&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-scripts%2Fdownload%2Freact-scripts-4.0.3.tgz"
   "version" "4.0.3"
@@ -10096,15 +10094,7 @@
     "raf" "^3.1.0"
     "tween-functions" "^1.0.1"
 
-"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.5.4 || ^16.0.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.2", "react@>= 16", "react@>=15", "react@17.0.2":
-  "integrity" "sha1-0LXMUW0p6z7uOD91tihkz7aAADc="
-  "resolved" "https://registry.nlark.com/react/download/react-17.0.2.tgz?cache=0&sync_timestamp=1623795810285&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact%2Fdownload%2Freact-17.0.2.tgz"
-  "version" "17.0.2"
-  dependencies:
-    "loose-envify" "^1.1.0"
-    "object-assign" "^4.1.1"
-
-"react@^15.1.0", "react@^15.7.0":
+"react@^15.1.0":
   "integrity" "sha512-5/MMRYmpmM0sMTHGLossnJCrmXQIiJilD6y3YN3TzAwGFj6zdnMtFv6xmi65PHKRV+pehIHpT7oy67Sr6s9AHA=="
   "resolved" "https://registry.npmjs.org/react/-/react-15.7.0.tgz"
   "version" "15.7.0"
@@ -10114,6 +10104,14 @@
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.0"
     "prop-types" "^15.5.10"
+
+"react@^17.0.2":
+  "integrity" "sha1-0LXMUW0p6z7uOD91tihkz7aAADc="
+  "resolved" "https://registry.nlark.com/react/download/react-17.0.2.tgz?cache=0&sync_timestamp=1623795810285&other_urls=https%3A%2F%2Fregistry.nlark.com%2Freact%2Fdownload%2Freact-17.0.2.tgz"
+  "version" "17.0.2"
+  dependencies:
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.1"
 
 "reactjs-iscroll@^0.3.2":
   "integrity" "sha1-l2cmbTktnIqOiWSc4LLyzMlm4yo="
@@ -10684,7 +10682,7 @@
   dependencies:
     "estree-walker" "^0.6.1"
 
-"rollup@^1.20.0 || ^2.0.0", "rollup@^1.20.0||^2.0.0", "rollup@^1.31.1", "rollup@>=0.60.0 <3", "rollup@>=0.66.0 <3":
+"rollup@^1.31.1":
   "integrity" "sha1-RIDlLZ2eKuS0a6DZ3erzFjlA+cQ="
   "resolved" "https://registry.nlark.com/rollup/download/rollup-1.32.1.tgz"
   "version" "1.32.1"
@@ -11101,7 +11099,7 @@
     "source-map-resolve" "^0.5.0"
     "use" "^3.1.0"
 
-"sockjs-client@^1.4.0", "sockjs-client@^1.5.0":
+"sockjs-client@^1.5.0":
   "integrity" "sha1-JWkI9tWt+5Tau9vQLGY2LMoPnqY="
   "resolved" "https://registry.npm.taobao.org/sockjs-client/download/sockjs-client-1.5.1.tgz?cache=0&sync_timestamp=1616686625852&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsockjs-client%2Fdownload%2Fsockjs-client-1.5.1.tgz"
   "version" "1.5.1"
@@ -11879,7 +11877,7 @@
   "resolved" "https://registry.npm.taobao.org/type-detect/download/type-detect-4.0.8.tgz"
   "version" "4.0.8"
 
-"type-fest@^0.13.1", "type-fest@^0.20.2":
+"type-fest@^0.20.2":
   "integrity" "sha1-G/IH9LKPkVg2ZstfvTJ4hzAc1fQ="
   "resolved" "https://registry.nlark.com/type-fest/download/type-fest-0.20.2.tgz?cache=0&sync_timestamp=1622543391721&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftype-fest%2Fdownload%2Ftype-fest-0.20.2.tgz"
   "version" "0.20.2"
@@ -12283,7 +12281,7 @@
     "range-parser" "^1.2.1"
     "webpack-log" "^2.0.0"
 
-"webpack-dev-server@3.11.1", "webpack-dev-server@3.x":
+"webpack-dev-server@3.11.1":
   "integrity" "sha1-x0Aov1uoiFqvIw5Iog6JNquFEfA="
   "resolved" "https://registry.nlark.com/webpack-dev-server/download/webpack-dev-server-3.11.1.tgz"
   "version" "3.11.1"
@@ -12348,7 +12346,7 @@
     "source-list-map" "^2.0.0"
     "source-map" "~0.6.1"
 
-"webpack@^4.0.0", "webpack@^4.0.0 || ^5.0.0", "webpack@^4.27.0 || ^5.0.0", "webpack@^4.36.0 || ^5.0.0", "webpack@^4.4.0 || ^5.0.0", "webpack@>=2", "webpack@>=4.43.0 <6.0.0", "webpack@2 || 3 || 4", "webpack@4.44.2":
+"webpack@4.44.2":
   "integrity" "sha1-a/4rCvBVyLLR6Q7SzZNj+EEma3I="
   "resolved" "https://registry.nlark.com/webpack/download/webpack-4.44.2.tgz"
   "version" "4.44.2"

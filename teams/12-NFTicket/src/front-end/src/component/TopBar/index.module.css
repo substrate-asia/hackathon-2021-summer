@@ -21,11 +21,11 @@
     margin: 2px;
     display:flex;
     justify-content: flex-start;
-   
-   
 }
 .accountInfoRight{
     margin: 2px;
+    display:flex;
+    justify-content: flex-end;
 }
 
 .rightText{
@@ -37,6 +37,7 @@
     border: 1px solid #a1a1a1;
     border-radius: 25px;
     text-align: center;
+    display: none;
 }
 
 .searchIcon{
@@ -50,6 +51,7 @@
     font-size: 18px;
     margin-top: 8px;
     display:flex;
+    
     margin-left: 5px;
     justify-content: space-between;
 }
@@ -57,4 +59,13 @@
    width: 50px;
    height: 37px;
    margin-left: 8px;
+}
+.walletIcon{
+   width: 27px;
+   height: 23px;
+   margin-right: 12px;
+}
+.lableText{
+  font-size: 18px;
+  color: #000;
 }
