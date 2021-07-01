@@ -21,6 +21,8 @@ IO在SGX里比较特殊，一般采ocall来实现
 （红框里是访问的网址，地址，及返回的结果，  
 返回结果显示网站已经有了回应，但还不是期望的数据，接下去我们会修改http的请求头，来获取正确的内容）  
 
+![image](https://user-images.githubusercontent.com/4797328/124059049-096ec480-da5d-11eb-8632-c014a18cc0be.png)
+
 
 
 ## 生成可验证报告
