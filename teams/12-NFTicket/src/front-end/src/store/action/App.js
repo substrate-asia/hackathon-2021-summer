@@ -1,4 +1,4 @@
-import {setTokenKey,setUsernameKey,setBottomstatusKey} from "../Type";
+import {setTokenKey,setUsernameKey,setBottomstatusKey,setShowmodalKey} from "../Type";
 export function setTokenAction(data){
     console.log("settokensettokensettokensettokensettoken")
     console.log(data)
@@ -20,6 +20,15 @@ export function setBottomstatusAction(data){
     console.log(data)
     return {
         type:setBottomstatusKey,
+        value:data
+    }
+}
+
+export function setShowmodalAction(data){
+    console.log("setShowmodalActionsetShowmodalAction")
+    console.log(data)
+    return {
+        type:setShowmodalKey,
         value:data
     }
 }
