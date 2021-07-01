@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { ListView, Card, SearchBar, Button, WhiteSpace, WingBlank } from 'antd-mobile';
-import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { ListView, Card, SearchBar, Button, WhiteSpace } from 'antd-mobile';
+// import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 
 //action
-import { setTokenAction,setUsernameAction,setBottomstatusAction } from '../../store/action/App';
+import { setTokenAction,setUsernameAction,setBottomstatusAction,setShowmodalAction } from '../../store/action/App';
 
 import './home.css';
 import TopBar from '../../component/TopBar';
@@ -98,6 +98,15 @@ class Home extends Component {
 
   }
 
+  
+    
+  hideModal=()=>{
+      //modal  显示底部状态栏
+      this.props.actions.setShowmodal(false);
+  }
+
+
+
   onEndReached = (event) => {
     // load new data
     // hasMore: from backend data, indicates whether it is the last page, here is false
@@ -157,6 +166,7 @@ class Home extends Component {
         </div>
       );
     };
+
     //搜索框高度
     const searchbarHeight = 25;
     //空白区域高度
@@ -168,7 +178,7 @@ class Home extends Component {
     //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
     const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-2*tabbarHeight+26;
     return (
-      <div className="content">
+      <div className="content" style={{position:"absolute"}}>
         <TopBar></TopBar>
         <div>
         <ListView
@@ -190,13 +200,22 @@ class Home extends Component {
           style={{height:''+height+'px',overflow:'auto'}}
         />
         </div>
-      </div>);
+                
+        <div className={this.props.app.showmodal?'showmodal':'hidemodal'}
+          onClick={()=>{
+            console.log(this.props.actions.setShowModal(false));
+          }} style={{position:"fixed",top:'0',left:'0',width:"100%",height:"100%",backgroundColor:'red'}}>
+            <Button>Create</Button>
+            <Button>Import</Button>
+        </div>
+      </div>
+    );
   }
 }
 
 //获取最新的store里的状态，通过this.props获取
 const mapStateToProps = (state)=>{
-  console.log("homehomehomehomehomehome");
+  console.log("ssssssssssssshomehomehomehomehomehome");
   console.log(state.app);
   return {
       app:state.app
@@ -208,7 +227,8 @@ const mapDispatchToProps = (dispatch)=>{
       actions:bindActionCreators({
         setToken:setTokenAction,
         setUsername:setUsernameAction,
-        setBottomstatus:setBottomstatusAction
+        setBottomstatus:setBottomstatusAction,
+        setShowModal:setShowmodalAction
       },dispatch)
   }
 }

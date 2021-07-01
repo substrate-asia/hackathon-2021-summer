@@ -1,6 +1,15 @@
 .am-search {
     border-bottom: 1px solid #ddd;
 }
+
+.showmodal{
+    display: block;
+}
+
+.hidemodal{
+    display: none;
+}
+
 .sub-title {
     color: #888;
     font-size: 14px;

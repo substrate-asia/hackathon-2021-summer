@@ -10,16 +10,12 @@ use ink_lang as ink;
 */
 #[ink::contract]
 mod meeting {
-	use ink_env::call::FromAccountId;
-use ink_storage::{
-		collections::HashMap as StorageMap,
-		traits::{PackedLayout, SpreadLayout},
-	};
+	use ink_storage::{Lazy, collections::HashMap as StorageMap, traits::{PackedLayout, SpreadLayout}};
 	use ink_prelude::vec::Vec;
 	use primitives::Ticket;
 	use stub::MainStub;
 	use ink_prelude::format;
-
+	const BASE_PERCENT:u128= 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
 	#[derive(
 		Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
@@ -113,6 +109,7 @@ use ink_storage::{
 		max_zone_id: u8,       // 最大的zone_id
 		ticket_id:u32,			//门票id
 		nfticket_main_fee: u32,   //支付主合约的手续费率,需要除以1万
+		main_stub:Lazy<MainStub>,
 		// 活动基础信息
 		//      这部分信息的修改，通过主合约来修改
 		// name: Vec<u8>, // 活动名称
@@ -142,7 +139,7 @@ use ink_storage::{
 
 	impl Meeting {
 		#[ink(constructor)]
-		pub fn new(controller: AccountId, template: AccountId) -> Self {
+		pub fn new(controller: AccountId, template: AccountId,main_stub_able:MainStub) -> Self {
 			let caller = Self::env().caller();
 			Self {
 				controller: controller,
@@ -160,6 +157,7 @@ use ink_storage::{
 				max_zone_id: Default::default(),
 				ticket_id:Default::default(),
 				nfticket_main_fee:100u32,
+				main_stub:Lazy::new(main_stub_able),
 			}
 		}
 
@@ -215,14 +213,12 @@ use ink_storage::{
             let nfticket_fee = ticket_price
                 .checked_mul(self.nfticket_main_fee.into())
                 .unwrap()
-                .checked_div(10000)
+                .checked_div(BASE_PERCENT)
                 .unwrap();
             ink_env::debug_message(&format!("-------------------------调用远程接口参数:主合约地址为:{:?}",meeting_addr));
-            self.env().transfer(self.controller,nfticket_fee);
-            let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
-            main_contract.buy_ticket(ticket.clone());
-            // <&mut MainStub>::call_mut(&mut *self.nfticket_addr);
-            // let mut main_contract: MainStub = FromAccountId::from_account_id(meeting_addr);
+            // self.env().transfer(self.controller,nfticket_fee);
+            // let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
+            // main_contract.buy_ticket(ticket.clone());
             
 
             //裸调用
@@ -246,14 +242,14 @@ use ink_storage::{
             //     .expect("something wrong");
 
 
-			// // (*self.erc20_minable).mine(who, value)  // 虽然mine是payable的，但是没有接口调用transfer
-            // // 等价于
-            // use ink_lang::ForwardCallMut;
-            // <&mut Erc20Minable>::call_mut(&mut *self.erc20_minable)
-            //     .mine(who, value)
-            //     .transferred_value(value) // 加上了调用 payable 的方法的时候，提供transfer
-            //     .fire()
-            //     .expect("something wrong");
+
+			use ink_lang::ForwardCallMut;
+            <&mut MainStub>::call_mut(&mut *self.main_stub)
+				.buy_ticket(ticket.clone())
+                .transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
+                .fire()
+                .expect("something wrong");
+
             true
         }
 

@@ -50,6 +50,8 @@ mod nfticket {
         meeting_map: StorageHashMap<AccountId, Meeting>,
         //模板集合
         template_map: StorageHashMap<AccountId, Template>,
+        // 记录会议对应的classId
+        classid_map:StorageHashMap<AccountId,ClassId>,
     }
 
     /// 模板创建事件
@@ -76,6 +78,8 @@ mod nfticket {
         meeting_addr: AccountId, //模板地址
         #[ink(topic)]
         creator: AccountId, //创建人
+        #[ink(topic)]
+        class_id:ClassId
     }
 
     /// 活动创建事件
@@ -85,6 +89,13 @@ mod nfticket {
         meeting_addr: AccountId, //模板地址
         #[ink(topic)]
         creator: AccountId, //创建人
+    }
+
+    /// 活动创建事件
+    #[ink(event)]
+    pub struct TicketSelled {
+        #[ink(topic)]
+        ticket: Ticket, //模板地址
     }
 
     #[ink(event)]
@@ -106,6 +117,8 @@ mod nfticket {
                 fee_taker,
                 meeting_map: Default::default(),
                 template_map: Default::default(),
+                classid_map: Default::default(),
+                
             };
             instance
         }
@@ -250,7 +263,8 @@ mod nfticket {
             end_time: u64,
             start_sale_time: u64,
             end_sale_time: u64,
-        ) -> bool {
+        ) -> Result<ClassId,MeetingError >{
+            let mut my_class_id:ClassId = 0;
             let caller = Self::env().caller();
             // 判断是否重复
             if self.meeting_map.contains_key(&meeting_addr) {
@@ -259,8 +273,8 @@ mod nfticket {
                 // TODO前置验证 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
                 let meeting = Meeting {
                     meeting_addr,
-                    name,
-                    desc,
+                    name:name.clone(),
+                    desc:desc.clone(),
                     poster,
                     uri,
                     start_time,
@@ -270,10 +284,13 @@ mod nfticket {
                     status:primitives::MeetingStatus::Active,
                 };
                 self.meeting_map.insert(meeting_addr, meeting);
-                // TODO 创建相应的 NFT 集合（调用 runtime 接口）
-                Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller});
+                // 创建相应的 NFT 集合（调用 runtime 接口）
+                let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
+                self.classid_map.insert(meeting_addr, class_id);
+                my_class_id=class_id;
+                Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller,class_id});
             }
-            true
+            Ok(my_class_id)
         }
 
         // 创建NFT类别
@@ -359,12 +376,24 @@ mod nfticket {
         #[ink(message, payable)]
         pub fn buy_ticket(&mut self, _ticket: Ticket) -> bool {
             ink_env::debug_message("-------------------------buy_ticket开始调用");
-            // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee暂缓
+            // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
             let main_fee: Balance = self.env().transferred_balance();
+            assert!(main_fee>=min_ticket_fee,"转账金额必须大于最小费用");
+            ink_env::debug_message(&format!("-------------------------收到的费用{:?}",main_fee));
             //2. 仅能通过活动合约调用；
             let caller = self.env().caller();
             //查询调用者是否是来自合约.
-            if let Some(_) = self.meeting_map.get(&caller) {}
+            if let Some(_) = self.meeting_map.get(&caller) {
+
+                // todo 生成ticket NFT.
+                Self::env().emit_event(TicketSelled{
+                    ticket:_ticket,
+                });
+            }else{
+                ink_env::debug_message("-------------------------错误:当前合约只能通过活动合约调用!");
+                //触发pannic,整个事务回滚.
+                panic!("错误:当前合约只能通过活动合约调用!");
+            }
 
             // assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
             true
