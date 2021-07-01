@@ -266,8 +266,8 @@ mod nfticket {
                 // TODO前置验证 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
                 let meeting = Meeting {
                     meeting_addr,
-                    name,
-                    desc,
+                    name:name.clone(),
+                    desc:desc.clone(),
                     poster,
                     uri,
                     start_time,
@@ -277,7 +277,8 @@ mod nfticket {
                     status:primitives::MeetingStatus::Active,
                 };
                 self.meeting_map.insert(meeting_addr, meeting);
-                // TODO 创建相应的 NFT 集合（调用 runtime 接口）
+                // 创建相应的 NFT 集合（调用 runtime 接口）
+                let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
                 Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller});
             }
             true
@@ -374,6 +375,7 @@ mod nfticket {
             let caller = self.env().caller();
             //查询调用者是否是来自合约.
             if let Some(_) = self.meeting_map.get(&caller) {
+
                 // todo 生成ticket NFT.
                 Self::env().emit_event(TicketSelled{
                     ticket:_ticket,
