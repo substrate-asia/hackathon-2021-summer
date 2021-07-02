@@ -1,0 +1,19 @@
+{
+  "name": "mintcraft-storage-ipfs",
+  "version": "0.1.0",
+  "description": "Mintcraft storage agent: ipfs",
+  "main": "index.js",
+  "repository": "git@github.com:MintEngine/mintcraft-nft-gateway.git",
+  "author": "Tang Bo Hao <tech@btang.cn>",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 14.0"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "gulp",
+    "serve": "node dist/index.js"
+  },
+  "dependencies": {
+  }
+}

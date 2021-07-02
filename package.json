@@ -1,0 +1,52 @@
+{
+  "name": "mintcraft-nft-gateway",
+  "version": "0.2.0",
+  "description": "Mintcraft NFT Gateway",
+  "main": "index.js",
+  "repository": "git@github.com:MintEngine/mintcraft-nft-gateway.git",
+  "author": "Tang Bo Hao <tech@btang.cn>",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 14.0"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "gulp",
+    "serve": "node dist/index.js"
+  },
+  "dependencies": {
+    "@jadepool/consts": "^1.0.0-alpha.0",
+    "@jadepool/instance": "^1.0.0-alpha.10",
+    "@jadepool/logger": "^2.0.3",
+    "@jadepool/service-consul": "^1.0.0-alpha.3",
+    "@jadepool/service-http": "^1.0.0-alpha.4",
+    "@jadepool/service-socketio": "^1.0.0-alpha.3",
+    "@jadepool/types": "^1.0.0-alpha.2",
+    "@koa/router": "^10.0.0",
+    "config": "^3.3.6",
+    "koa-sendfile": "^3.0.0",
+    "lodash": "^4.17.21",
+    "parameter": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.38",
+    "@types/koa": "^2.13.3",
+    "@types/koa__router": "^8.0.4",
+    "@types/lodash": "^4.14.170",
+    "@types/node": "^15.14.0",
+    "@types/parameter": "^3.6.1",
+    "@typescript-eslint/eslint-plugin": "4",
+    "@typescript-eslint/parser": "^4.28.0",
+    "del": "^6.0.0",
+    "eslint": "7",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-plugin-import": "2",
+    "eslint-plugin-node": "11",
+    "eslint-plugin-promise": "4",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "supports-color": "^9.0.1",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}
