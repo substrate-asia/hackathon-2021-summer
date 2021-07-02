@@ -55,6 +55,7 @@ Mintcraft 是春季波卡黑客松时期诞生的想法，最早是计划制作�
 | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出功能 |
 | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的功能 |
 | P0 | ue4-plugin | runtime-entity-loader | 运行中载入 NFT 资源的插件 |
+| P0 | ue4-asset | asset-entity-demo | demo 用模型 - 实体单位 |
 | P1 | ue4-asset | asset-actor-demo | demo 用模型 - 角色 |
 | P2 | ue4-asset | asset-equipment-sword | demo 用模型 - 剑 |
 | P2 | ue4-demo | demo-mini-game | 载入角色信息和 NFT 资源，通过地下城控制合约开启副本，并进行游戏的 demo |
@@ -85,13 +86,14 @@ ink!合约
 
 ue4插件
 
-- [ ] engine-wallet
+- [ ] engine-signer
 - [ ] editor-entity-builder
 - [ ] editor-entity-publisher
 - [ ] runtime-entity-loader
 
 游戏 Demo
 
+- [x] asset-entity-demo
 - [ ] asset-actor-demo
 - [ ] asset-equipment-sword
 - [ ] mini-game
