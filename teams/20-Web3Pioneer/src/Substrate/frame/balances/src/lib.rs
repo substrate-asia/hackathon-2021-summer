@@ -444,12 +444,8 @@ decl_storage! {
 		StorageVersion build(|_: &GenesisConfig<T, I>| Releases::V2_0_0): Releases;
 
 		//feng
-		//pub Spreads get(fn spreads): map hasher(blake2_128_concat) T::AccountId => Spread<T::AccountId, T::BlockNumber>;
-		//pub Spreads get(fn spreads): map hasher(blake2_128_concat) T::AccountId => Option<T::AccountId>;
 		pub Spreads get(fn spreads): map hasher(blake2_128_concat) T::AccountId => Spread<T::AccountId, T::BlockNumber>;
 
-
-		//pub SpreadsReturneds   get(fn spreadsReturneds):double_map hasher(blake2_128_concat) T::AccountId, hasher(blake2_128_concat) T::AccountId => SpreadReturned<T::BlockNumber, T::Balance>;
 
 		pub SpreadsReturneds   get(fn spreadsReturneds):
 			double_map hasher(blake2_128_concat) T::AccountId, hasher(blake2_128_concat) T::AccountId => u128;
@@ -697,7 +693,8 @@ decl_module! {
 		}
 
 		///
-		///feng
+		///注，目前是安百份比一级级上交，这样的算法在实际生产中会有问题，用户可能会故意“制造”很长的传播链
+		///toto: 防止这个有效的办法，就是上交top N ,安这样的方式给上一级收益.  但涉及一些性能测试，所以这个代码不急。
 		#[weight = T::WeightInfo::transfer()]
 		pub fn spread_return(
 			origin
