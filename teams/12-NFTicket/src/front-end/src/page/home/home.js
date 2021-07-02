@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { ListView, Card, SearchBar, Button, WhiteSpace } from 'antd-mobile';
+import React, { Component,button } from 'react';
+import { ListView, Card, SearchBar, Button, WhiteSpace,Modal } from 'antd-mobile';
 // import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
@@ -13,6 +12,7 @@ import './home.css';
 import TopBar from '../../component/TopBar';
 
 
+const alert = Modal.alert;
 const data = [
   {
     img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
@@ -72,7 +72,8 @@ class Home extends Component {
         enentName: "Event Name",
         location: "Location details",
         startTime: "Start time"
-      }]
+      }],
+      showToast:false
     };
   };
 
@@ -98,10 +99,15 @@ class Home extends Component {
 
   }
 
+  componentWillUnmount(){
+    //销毁
+    this.props.actions.setShowModal(false);
+  }
+
   
     
   hideModal=()=>{
-      //modal  显示底部状态栏
+      //modal  弹出框
       this.props.actions.setShowmodal(false);
   }
 
@@ -175,7 +181,7 @@ class Home extends Component {
     const accountInfoHeight = 42;
     //底部Tab高度
     const tabbarHeight = 46;
-    //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
+
     const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-2*tabbarHeight+26;
     return (
       <div className="content" style={{position:"absolute"}}>
@@ -202,11 +208,38 @@ class Home extends Component {
         </div>
                 
         <div className={this.props.app.showmodal?'showmodal':'hidemodal'}
-          onClick={()=>{
-            console.log(this.props.actions.setShowModal(false));
-          }} style={{position:"fixed",top:'0',left:'0',width:"100%",height:"100%",backgroundColor:'red'}}>
-            <Button>Create</Button>
-            <Button>Import</Button>
+            onClick={()=>{
+              // console.log(this.props.actions.setShowModal(false));
+            }} style={{}}>
+              <div className="flexaccount-mask"></div>
+              {/* account content */}
+              <div className="flexaccount">
+                <div className="flexaccount-form">
+                  {/* tips */}
+                  <div className="flexaccount-form-tips">
+                    <span>
+                      Please write down the following 12 words 
+                      and keep them in a safe place
+                    </span>
+                  </div>
+                  {/* red warning */}
+                  <div className="flexaccount-form-warning">
+                    <span>
+                      Attention: Please no dot screenshot words
+                    </span>
+                  </div>
+                  {/* 12 words */}
+                  <div className="flexaccount-form-textarea">
+                    <div className="flexaccount-form-textarea-con">
+                      {/* seed */}
+                    </div>
+                  </div>
+                  {/* button */}
+                  <div className="flexaccount-form-btn">
+                    <button className="flexaccount-btn">Continue</button>
+                  </div>
+                </div>
+              </div>
         </div>
       </div>
     );
@@ -215,8 +248,6 @@ class Home extends Component {
 
 //获取最新的store里的状态，通过this.props获取
 const mapStateToProps = (state)=>{
-  console.log("ssssssssssssshomehomehomehomehomehome");
-  console.log(state.app);
   return {
       app:state.app
   }
