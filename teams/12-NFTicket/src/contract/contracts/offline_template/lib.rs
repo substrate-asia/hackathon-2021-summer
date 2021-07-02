@@ -9,11 +9,15 @@ use ink_lang as ink;
 */
 #[ink::contract]
 mod localmeeting {
+    use ink_env::call::FromAccountId;
+    use stub::MainStub;
+    use ink_prelude::vec::Vec;
     #[ink(storage)]
     pub struct Localmeeting {
         controller: AccountId,   // 主合约地址
         owner: AccountId,   // 所有者
         fee_ratio: u64,     // 按票价提取多少比例作为服务费，不过服务费不能低于 min_ticket_fee
+        meeting_seq:u32,
     }
 
     impl Localmeeting {
@@ -24,6 +28,7 @@ mod localmeeting {
                 controller: controller,
                 owner: caller,
                 fee_ratio:Default::default(),
+                meeting_seq:Default::default(),
             }
         }
 
@@ -82,16 +87,45 @@ mod localmeeting {
 		// 	self.fee_ratio
         // }
 
+        
+        // pub fn create_meeting(&mut self, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64) -> AccountId{
+
+        // }
+
         // /**
-        // TODO
         // 创建会议活动
         // 1. 部署一个活动合约，传入主合约地址等参数，获得合约地址
         // 2. 调用主合约的 add_meeting 接口，添加活动；
         // 3. 返回活动合约地址
         // */
-        // pub fn create_meeting(&mut self, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64) -> AccountId{
+        #[ink(message,payable)]
+        pub fn create_meeting(&mut self, 
+            name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, 
+            start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,
+            meet_code_hash: Hash, main_stub_able:MainStub ) -> AccountId{
+                let caller = Self::env().caller();
+                let income = Self::env().transferred_balance();
+                // let total_balance:Balance = Self::env().balance();
+                let salt = self.meeting_seq.to_le_bytes();
+                let meeting_id = self.meeting_seq.checked_add(1).unwrap();
+                let template_addr = self.get_self();
+                let new_meeting = offline_meeting::Meeting::new(meeting_id,name.clone(), desc.clone(), poster.clone(), uri.clone(), start_time, end_time, start_sale_time, end_sale_time,self.controller, template_addr,main_stub_able)
+                                .endowment(income/4)
+                                .code_hash(meet_code_hash)
+                                .salt_bytes(salt)
+                                .instantiate()
+                                .expect("fail");
+                let meeting_addr = new_meeting.get_self();
+                // 调用主合约 add_meeting
+                // 调用主合约,注册活动.
+			let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
+            let class_id = main_contract.add_meeting(meeting_addr, name, desc, poster, uri, start_time, end_time, start_sale_time, end_sale_time).unwrap();
+            meeting_addr
+        }
 
-        // }
+        pub fn get_self(&self)-> AccountId{
+            Self::env().account_id()
+        }
 
 
 

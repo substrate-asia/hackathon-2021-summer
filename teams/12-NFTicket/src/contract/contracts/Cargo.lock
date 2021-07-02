@@ -701,6 +701,7 @@ dependencies = [
  "offline_meeting",
  "parity-scale-codec",
  "scale-info",
+ "stub",
 ]
 
 [[package]]
