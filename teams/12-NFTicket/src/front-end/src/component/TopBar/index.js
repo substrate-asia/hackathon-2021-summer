@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Flex, SearchBar, WhiteSpace, Popover, NavBar, Icon } from 'antd-mobile'
+import { Modal,Flex, SearchBar, WhiteSpace, Popover, NavBar, Icon } from 'antd-mobile'
 import img1 from '../../images/icon.png'
 import wallet from '../../images/icon_wallet.png'
+import search from '../../images/search.png'
 import styles from './index.module.css'
 
 
@@ -10,6 +11,7 @@ import { bindActionCreators } from "redux";
 
 //action
 import { setShowmodalAction } from '../../store/action/App';
+import { Button } from 'react-scroll'
 
 
 const Item = Popover.Item;
@@ -21,6 +23,7 @@ class TopBar extends Component {
     state = {
         visible: false,
         selected: '',
+        show:false,
     };
     onSelect = (opt) => {
         console.log(opt.props.value);
@@ -29,10 +32,23 @@ class TopBar extends Component {
             selected: opt.props.value,
         });
         //点击事件的处理
-
+        if(opt.props.value=="create"){
+            this.props.actions.setShowModal(true)
+        }
 
         
     };
+
+    showModalAlert=()=>{
+        console.log(111111);
+    };
+
+    handleCancel = (show)=>{
+        this.setState({
+            show
+        });
+    };
+
     handleVisibleChange = (visible) => {
         this.setState({
             visible,
@@ -89,6 +105,9 @@ class TopBar extends Component {
                             <img className={styles.iconImg} src={img1} alt="" />
                             <div className={styles.iconText}>
                                 <span className={styles.lableText}>NFTicket</span>
+                            </div>
+                            <div className={styles.searchImg}>
+                                <img src={search} alt="" />
                             </div>
                         </div>
                     }
