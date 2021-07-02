@@ -44,7 +44,7 @@ mod nfticket {
         owner: AccountId,
         //费率
         fee_rate: (u128, u128),
-        // 收取费用的人
+        // 收取费用的人,删除收费者,币留在合约内.TODO,owner可以把合约的资金转到指定的账户.
         fee_taker: AccountId,
         // 会议集合
         meeting_map: StorageHashMap<AccountId, Meeting>,
@@ -269,7 +269,7 @@ mod nfticket {
             let caller = Self::env().caller();
             // 判断是否重复
             if self.meeting_map.contains_key(&meeting_addr) {
-                ink_env::debug_message(&format!("-------------------------income {:?}", meeting_addr));
+                ink_env::debug_message(&format!("-------------------------add meeting meeting_addr {:?}", meeting_addr));
             } else {
                 // TODO前置验证 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
                 let meeting = Meeting {
@@ -287,6 +287,8 @@ mod nfticket {
                 self.meeting_map.insert(meeting_addr, meeting);
                 // 创建相应的 NFT 集合（调用 runtime 接口）
                 let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
+                //调试信息
+                // let class_id = 123;
                 self.classid_map.insert(meeting_addr, class_id);
                 my_class_id=class_id;
                 Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller,class_id});
@@ -298,9 +300,9 @@ mod nfticket {
         #[ink(message)]
         pub fn create_class(
             &mut self,
-            metadata: Metadata,
-            name: Chars,
-            description: Chars,
+            metadata: Vec<u8>,
+            name: Vec<u8>,
+            description: Vec<u8>,
             properties: u8,
         ) -> Result<(), NFTMartErr> {
             let (owner, class_id) = self.env().extension().create_class(metadata, name, description, properties)?;
@@ -319,6 +321,12 @@ mod nfticket {
         #[ink(message)]
         pub fn get_all_meeting(&self) -> Vec<Meeting> {
             self.meeting_map.values().map(|v|v.clone()).collect()
+        }
+
+
+        #[ink(message)]
+        pub fn get_class_id(&self,meeeting_addr:AccountId) -> u32 {
+            (*self.classid_map.get(&meeeting_addr).unwrap()).clone()
         }
 
         /**
