@@ -10,7 +10,7 @@
 增加设置当前APP在ipfs上的CID方法  
 fn set_app_cid(origin, app_cid: Vec<u8>)  
 
-## frame/system  
+## frame/balances  
 - 增加传播关系确定方法  
 pub fn spread_transfer  
   
