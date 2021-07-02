@@ -6,7 +6,7 @@ use ink_lang as ink;
 #[ink::contract]
 mod stub {
     use ink_prelude::vec::Vec;
-    use primitives::Ticket;
+    use primitives::{MeetingError, Ticket};
 
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
@@ -15,11 +15,36 @@ mod stub {
     #[ink(storage)]
     pub struct MainStub {}
 
-    pub type Result<T> = core::result::Result<T, Error>;
+    // pub type Result<T> = core::result::Result<T, Error>;
     impl MainStub {
         
         #[ink(constructor)]
         pub fn new(fee_taker: AccountId) -> Self {
+            unimplemented!()
+        }
+
+        /**
+        添加会议活动，仅限已登记并且处于激活状态的模板合约调用
+        1. 通过调用合约地址，确认是哪个模板
+        3. 确认活动地址是否重复，
+        4. 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止
+        5. 创建相应的 NFT 集合（调用 runtime 接口）
+        6. 添加活动信息
+        7. 触发事件 meeting_added
+        */
+        #[ink(message)]
+        pub fn add_meeting(
+            &mut self,
+            meeting_addr: AccountId,
+            name: Vec<u8>,
+            desc: Vec<u8>,
+            poster: Vec<u8>,
+            uri: Vec<u8>,
+            start_time: u64,
+            end_time: u64,
+            start_sale_time: u64,
+            end_sale_time: u64,
+        ) -> Result<u32,MeetingError >{
             unimplemented!()
         }
 

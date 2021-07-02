@@ -1,7 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use ink_lang as ink;
-
+pub use offline_meeting::*;
 /*
  活动合约
  1. 由活动模板合约创建，每个模板匹配一个活动合约
@@ -9,10 +9,11 @@ use ink_lang as ink;
  3. 所有合约的操作都是通过活动合约实现；
 */
 #[ink::contract]
-mod meeting {
+mod offline_meeting {
+	use ink_env::call::FromAccountId;
 	use ink_storage::{Lazy, collections::HashMap as StorageMap, traits::{PackedLayout, SpreadLayout}};
 	use ink_prelude::vec::Vec;
-	use primitives::Ticket;
+	use primitives::{MeetingStatus, Ticket};
 	use stub::MainStub;
 	use ink_prelude::format;
 	const BASE_PERCENT:u128= 10000;
@@ -103,24 +104,25 @@ mod meeting {
 	#[ink(storage)]
 	pub struct Meeting {
 		// 这个是关于活动控制部分，不属于活动跟本身的信息
-		controller: AccountId, // 主合约地址
+		// controller: AccountId, // 主合约地址
 		template: AccountId,   // 模板合约地址
 		owner: AccountId,      // 活动管理员
 		max_zone_id: u8,       // 最大的zone_id
 		ticket_id:u32,			//门票id
 		nfticket_main_fee: u32,   //支付主合约的手续费率,需要除以1万
-		main_stub:Lazy<MainStub>,
+		main_stub:Lazy<MainStub>, //主合约地址,controller取消.
+		meeting_id:u32,
 		// 活动基础信息
 		//      这部分信息的修改，通过主合约来修改
-		// name: Vec<u8>, // 活动名称
-		// desc: Vec<u8>, // 活动描述
-		// uri: Vec<u8>,  // 活动网址
-		// poster: Vec<u8>, // 活动海报地址
-		// start_time: u64,       // 活动开始时间
-		// end_time: u64,         // 活动结束时间
-		// start_sale_time: u64,       // 开始售卖时间
-		// end_sale_time: u64,         // 开始售卖时间
-		// status: MeetingStatus,  // 会议状态
+		name: Vec<u8>, // 活动名称
+		desc: Vec<u8>, // 活动描述
+		uri: Vec<u8>,  // 活动网址
+		poster: Vec<u8>, // 活动海报地址
+		start_time: u64,       // 活动开始时间
+		end_time: u64,         // 活动结束时间
+		start_sale_time: u64,       // 开始售卖时间
+		end_sale_time: u64,         // 开始售卖时间
+		status: MeetingStatus,  // 会议状态
 
 		// 活动配置参数
 		local_address: Vec<u8>,                      // 获取举办地址
@@ -139,10 +141,10 @@ mod meeting {
 
 	impl Meeting {
 		#[ink(constructor)]
-		pub fn new(controller: AccountId, template: AccountId,main_stub_able:MainStub) -> Self {
+		pub fn new(meeting_id:u32,name:Vec<u8>,desc:Vec<u8>,poster:Vec<u8>,uri:Vec<u8>,start_time:u64,end_time:u64,start_sale_time:u64,end_sale_time:u64,controller:AccountId,template: AccountId,main_stub_able:MainStub) -> Self {
 			let caller = Self::env().caller();
-			Self {
-				controller: controller,
+			let meeting = Self {
+				// controller: controller,
 				template: template,
 				owner: caller,
 				local_address: Default::default(),
@@ -157,9 +159,26 @@ mod meeting {
 				max_zone_id: Default::default(),
 				ticket_id:Default::default(),
 				nfticket_main_fee:100u32,
+
 				main_stub:Lazy::new(main_stub_able),
-			}
+				meeting_id,
+				name,
+				desc,
+				uri ,
+				poster ,
+				start_time ,
+				end_time ,
+				start_sale_time ,
+				end_sale_time ,
+				status:MeetingStatus::Active ,
+			};
+			meeting
 		}
+
+		#[ink(message)]
+        pub fn get_self(&self)-> AccountId{
+            Self::env().account_id()
+        }
 
 		/**
 		转移 owner
@@ -216,7 +235,6 @@ mod meeting {
                 .checked_div(BASE_PERCENT)
                 .unwrap();
             ink_env::debug_message(&format!("-------------------------调用远程接口参数:主合约地址为:{:?}",meeting_addr));
-            // self.env().transfer(self.controller,nfticket_fee);
             // let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
             // main_contract.buy_ticket(ticket.clone());
             
@@ -232,6 +250,15 @@ mod meeting {
             // .returns::<()>()
             // .fire()
             // .map_err(|_| Error::TransactionFailed);
+			
+			//调用主合约
+			// use ink_lang::ForwardCallMut;
+			// <&mut MainStub>::call_mut(&mut self.controller)
+            //     .buy_ticket(ticket.clone())
+            //     .transferred_value(100) // 加上了调用 payable 的方法的时候，提供transfer
+            //     .fire()
+            //     .expect("something wrong");
+
 
 
 			use ink_lang::ForwardCallMut;

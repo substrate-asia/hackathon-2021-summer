@@ -40,6 +40,7 @@ mod template {
         2. 调用主合约的 add_meeting 接口，添加活动；
         3. 返回活动合约地址
         */
+        #[ink(message)]
         pub fn create_meeting(&mut self, 
             name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, 
             start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,

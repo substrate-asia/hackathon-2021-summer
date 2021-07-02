@@ -251,6 +251,7 @@ mod nfticket {
         6. 添加活动信息
         7. 触发事件 meeting_added
         */
+        /// 创建活动,返回值nft classId,返回值可以不予理会
         #[ink(message)]
         pub fn add_meeting(
             &mut self,
@@ -263,8 +264,8 @@ mod nfticket {
             end_time: u64,
             start_sale_time: u64,
             end_sale_time: u64,
-        ) -> Result<ClassId,MeetingError >{
-            let mut my_class_id:ClassId = 0;
+        ) -> Result<u32,MeetingError >{
+            let mut my_class_id:ClassId = 0u32;
             let caller = Self::env().caller();
             // 判断是否重复
             if self.meeting_map.contains_key(&meeting_addr) {
