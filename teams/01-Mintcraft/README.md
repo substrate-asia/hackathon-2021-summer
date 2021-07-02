@@ -47,10 +47,10 @@ Mintcraft 是春季波卡黑客松时期诞生的想法，最早是计划制作�
 | P0 | ink! | entity | 实体，多类型、可培养(ERC1155实现) |
 | P1 | ink! | cultivate | 培养合约，NFT链上数据养成合约 |
 | P1 | ink! | dungeons | 地下城控制合约 |
-| P0 | backend | uploader | NFT资源上传并生成 metadata uri的API |
-| P0 | backend | metadata | metadata NFT资源数据查询API |
-| P0 | backend | tx-builder | 交易构造器 |
-| P0 | backend | tx-sender | 交易发送器 |
+| P0 | backend | nft-storage | NFT资源上传并生成 metadata uri的系列 API |
+| P0 | backend | nft-query | NFT资源的数据查询API |
+| P0 | backend | tx-builder | 多链交易构造器 |
+| P0 | backend | tx-sender | 多链交易发送及监控 |
 | P0 | ue4-plugin | engine-signer | UE4下可用的签名机 |
 | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出功能 |
 | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的功能 |
@@ -79,8 +79,8 @@ ink!合约
 
 后端API
 
-- [ ] uploader
-- [ ] metadata
+- [ ] nft-storage
+- [ ] nft-query
 - [ ] tx-builder
 - [ ] tx-sender
 
