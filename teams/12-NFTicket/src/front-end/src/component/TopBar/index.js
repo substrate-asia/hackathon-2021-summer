@@ -13,7 +13,6 @@ import { setShowmodalAction } from '../../store/action/App';
 
 
 const Item = Popover.Item;
-const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs" alt="" />;
 
 
 class TopBar extends Component {
