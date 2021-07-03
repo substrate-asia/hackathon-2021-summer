@@ -1,8 +1,8 @@
 {
-  "name": "@mintcraft/storage-ipfs",
+  "name": "@mintcraft/types",
   "version": "0.1.0",
-  "description": "Mintcraft storage agent: ipfs",
-  "main": "index.js",
+  "description": "Mintcraft package: types",
+  "main": "index.ts",
   "repository": "git@github.com:MintEngine/mintcraft-nft-gateway.git",
   "author": "Tang Bo Hao <tech@btang.cn>",
   "license": "Apache-2.0",
@@ -10,8 +10,8 @@
     "node": ">= 14.0"
   },
   "scripts": {
-    "start": "ts-node src/index.ts"
   },
   "dependencies": {
+    "@types/koa__multer": "^2.0.2"
   }
 }

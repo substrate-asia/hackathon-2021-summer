@@ -4,7 +4,7 @@ import { SocketIOService } from '@jadepool/service-socketio'
 import jadepool from '@jadepool/instance'
 import consts from '@jadepool/consts'
 import Logger from '@jadepool/logger'
-import { ParsedArgs } from '../types'
+import { ParsedArgs } from '@mintcraft/types'
 
 const logger = Logger.of('Methods')
 

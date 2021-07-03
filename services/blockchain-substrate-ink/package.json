@@ -1,5 +1,5 @@
 {
-  "name": "mintcraft-blockchain-substrate-ink",
+  "name": "@mintcraft/blockchain-substrate-ink",
   "version": "0.1.0",
   "description": "Mintcraft blockchain agent: substrate-ink",
   "main": "index.js",
@@ -10,9 +10,7 @@
     "node": ">= 14.0"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "build": "gulp",
-    "serve": "node dist/index.js"
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "@polkadot/api": "^4.15.1",

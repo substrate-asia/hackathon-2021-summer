@@ -1,6 +1,6 @@
 import Logger from '@jadepool/logger'
 import jadepool from '@jadepool/instance'
-// import * as consts from '@jadepool/consts'
+// import consts from '@jadepool/consts'
 import Context from './context'
 
 const logger = Logger.of('Mintcraft', 'Substrate Ink!')

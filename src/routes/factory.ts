@@ -1,14 +1,15 @@
+import 'koa-bodyparser' // fix types
 import _ from 'lodash'
 import fs from 'fs'
-import Parameter, { ParameterRules } from 'parameter'
 import jadepool from '@jadepool/instance'
-import { RouterContext, Middleware } from '@koa/router'
 import { NBError } from '@jadepool/types'
-import * as types from '../types'
+import Parameter, { ParameterRules } from 'parameter'
+import { RouterContext, Middleware } from '@koa/router'
+import { ParsedArgs, METHOD_NAMESPACE, RESPONSE_MODES } from '@mintcraft/types'
 
 export interface BuildHandlerOption {
   /** 预定义对象 */
-  preset: types.ParsedArgs
+  preset: ParsedArgs
   /** 允许rule以外的key在data之中 */
   allowUnruled: boolean
   /** 结果处理函数，默认为json */
@@ -25,7 +26,7 @@ const parameter = new Parameter({ convert: true })
  * @param dataRule 数据权限验证规则
  * @param opts 额外配置参数
  */
-async function parseMethodArgs (ctx: RouterContext, dataRule?: DataRuleParams, opts?: BuildHandlerOption): Promise<types.ParsedArgs> {
+async function parseMethodArgs (ctx: RouterContext, dataRule?: DataRuleParams, opts?: BuildHandlerOption): Promise<ParsedArgs> {
   const isGetMethod = ctx.method === 'GET'
   // 设置 data 数据
   let data = Object.assign({}, ctx.params, isGetMethod
@@ -51,7 +52,7 @@ async function parseMethodArgs (ctx: RouterContext, dataRule?: DataRuleParams, o
   }
 
   // 设置自动 key
-  const autoData: types.ParsedArgs = { presetKeys: [], autoKeys: [] }
+  const autoData: ParsedArgs = { presetKeys: [], autoKeys: [] }
   // 设置区块链类型
   if (_.isString(data.chain) || _.isString(data.platform)) {
     autoData.nftPlatform = data.chain ?? data.platform
@@ -59,6 +60,12 @@ async function parseMethodArgs (ctx: RouterContext, dataRule?: DataRuleParams, o
   // 设置存储类型
   if (_.isString(data.store)) {
     autoData.nftStorage = data.store
+  }
+  // 若存在 file，则设置 fileInfo
+  if (ctx.request.file !== undefined || ctx.request.files !== undefined) {
+    const files = ctx.request.file !== undefined ? [ctx.request.file] : ctx.request.files
+    // 仅提取要素
+    autoData.files = files.map(one => _.pick(one, ['fieldname', 'originalname', 'encoding', 'mimetype', 'size', 'destination', 'filename', 'path', 'buffer']))
   }
   // 预设值
   const preset = opts?.preset ?? {}
@@ -84,16 +91,18 @@ function buildMethodInvoker (methodName: string, methodNsp?: string | Function, 
     // 设置正确的namespace
     let namespace: string | null
     switch (methodNsp) {
-      case types.METHOD_NAMESPACE.NULL:
+      case METHOD_NAMESPACE.NULL:
+      case null:
+      case undefined:
         namespace = null
         break
-      case types.METHOD_NAMESPACE.BLOCKCHAIN:
+      case METHOD_NAMESPACE.BLOCKCHAIN:
         if (data.nftPlatform === undefined) {
           throw new NBError(501, 'missing chain type')
         }
         namespace = data.nftPlatform
         break
-      case types.METHOD_NAMESPACE.STORAGE:
+      case METHOD_NAMESPACE.STORAGE:
         if (data.nftStorage === undefined) {
           throw new NBError(501, 'missing storage type')
         }
@@ -127,7 +136,7 @@ export function buildHandler (methodName: string, methodNsp?: string, dataRule?:
     }
 
     // 根据res模式返回结果
-    if (opts?.responseMode === types.RESPONSE_MODES.DOWNLOAD) {
+    if (opts?.responseMode === RESPONSE_MODES.DOWNLOAD) {
       const filepath = _.isString(result?.filepath) ? result.filepath : (_.isString(result) ? result : undefined)
       if (typeof filepath !== 'string') {
         throw new NBError(500, 'result should be string for MODE - download')
