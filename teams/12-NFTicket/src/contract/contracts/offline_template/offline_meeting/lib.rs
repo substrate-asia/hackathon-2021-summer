@@ -9,7 +9,8 @@ pub use offline_meeting::*;
 */
 #[ink::contract]
 pub mod offline_meeting {
-	use ink_env::call::FromAccountId;
+	use ink_env::DefaultEnvironment;
+use ink_env::call::FromAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
 	use ink_storage::{
@@ -19,6 +20,7 @@ pub mod offline_meeting {
 	};
 	use primitives::{MeetingStatus, Ticket};
 	use stub::MainStub;
+	use ink_lang::ToAccountId;
 	const BASE_PERCENT: u128 = 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
 	#[derive(
@@ -221,26 +223,20 @@ pub mod offline_meeting {
 		#[ink(message, payable)]
 		pub fn buy_ticket(
 			&mut self,
-			meeting_addr: AccountId,
 			zone_id: u32,
 			seat_id: Option<(u32, u32)>,
 		) -> bool {
 			ink_env::debug_message("=========================entrance!!!");
+			let meeting_addr = Self::env().account_id();
 			let ticket_price: Balance = self.get_ticket_price(zone_id, seat_id).unwrap();
-			ink_env::debug_message(&format!(
-				"-------------------------ticket_price {:?}",
-				ticket_price
-			));
+			ink_env::debug_message(&format!("-------------------------ticket_price {:?}",ticket_price));
+			// 买票收入,通过前端传入进来
 			let income: Balance = self.env().transferred_balance();
 			ink_env::debug_message(&format!("-------------------------income {:?}", income));
-			///保证用户传送的金额必须大于票价
+			// 保证用户传送的金额必须大于票价
 			assert!(income >= ticket_price, "not enough money!");
-			// 生成ticke
-			let ticket_id = self.ticket_id;
-			self
-				.ticket_id
-				.checked_add(1)
-				.expect("checked plus 1 error!");
+			// 生成ticke_id +1
+			let ticket_id =self.ticket_id.checked_add(1).expect("checked plus 1 error!");
 			let ticket = Ticket::new(
 				self.template,
 				meeting_addr,
@@ -251,8 +247,7 @@ pub mod offline_meeting {
 			);
 			// 标记这个座位已经售出
 			self.make_seat_sealed(zone_id, seat_id);
-			// 把剩余转账给主合约,并记录这个主合约
-			// 计算应该支付给主合约多少资金.如果用户给的钱大于门票价应该怎么处理?
+			// 计算主合约按照比例应该抽成多少
 			let nfticket_fee = ticket_price
 				.checked_mul(self.nfticket_main_fee.into())
 				.unwrap()
@@ -285,6 +280,7 @@ pub mod offline_meeting {
 			//     .fire()
 			//     .expect("something wrong");
 
+			// 调用主合约的购票方法,并将抽成比例转给主合约.
 			use ink_lang::ForwardCallMut;
 			<&mut MainStub>::call_mut(&mut *self.main_stub)
 				.buy_ticket(ticket.clone())
