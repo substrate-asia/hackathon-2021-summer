@@ -19,4 +19,4 @@ TODO
 
 ## 队员信息
 
-- peilin (https://github.com/playdog-io)(wechat: peilin567)
+- peilin (https://github.com/playdog-io) (wechat: peilin567)
