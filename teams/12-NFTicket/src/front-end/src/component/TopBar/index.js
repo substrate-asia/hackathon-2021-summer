@@ -26,7 +26,7 @@ class TopBar extends Component {
         show:false,
     };
     onSelect = (opt) => {
-        console.log(opt.props.value);
+        console.log("topbar--"+opt.props.value);
         this.setState({
             visible: false,
             selected: opt.props.value,

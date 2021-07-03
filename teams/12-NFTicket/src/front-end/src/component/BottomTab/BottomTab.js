@@ -4,6 +4,8 @@ import './BottomTab.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 
+import bottomMine from "../../images/bottom-mine.png";
+
 class BottomTab extends Component{
     constructor(){
         super();

@@ -33,6 +33,7 @@ mod nfticket {
     use primitives::Ticket;
     use primitives::{Meeting, MeetingError};
     use stub::MainStub;
+    use ink_prelude::vec;
 
     const min_ticket_fee: u128 = 100u128;
     /// A simple ERC-20 contract.
@@ -285,10 +286,11 @@ mod nfticket {
                     status:primitives::MeetingStatus::Active,
                 };
                 self.meeting_map.insert(meeting_addr, meeting);
-                // 创建相应的 NFT 集合（调用 runtime 接口）
-                let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
+                ink_env::debug_message(&format!("-------------------------create_class name:{:?},desc:{:?}", name.clone(),desc.clone()));
+                // TODO 创建相应的 NFT 集合（调用 runtime 接口）
+                // let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
                 //调试信息
-                // let class_id = 123;
+                let class_id = 123;
                 self.classid_map.insert(meeting_addr, class_id);
                 my_class_id=class_id;
                 Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller,class_id});
@@ -393,8 +395,10 @@ mod nfticket {
             let caller = self.env().caller();
             //查询调用者是否是来自合约.
             if let Some(_) = self.meeting_map.get(&caller) {
-
-                // todo 生成ticket NFT.
+                let calss_id = self.classid_map.get(&_ticket.meeting).unwrap();
+                
+                let (_, _, _, token_id, quantity) = self.env().extension().proxy_mint(&_ticket.buyer, *calss_id, vec![1], 1,Some(false)).unwrap();
+                // 存储 token_id和数量
                 Self::env().emit_event(TicketSelled{
                     ticket:_ticket,
                 });
@@ -403,8 +407,7 @@ mod nfticket {
                 //触发pannic,整个事务回滚.
                 panic!("错误:当前合约只能通过活动合约调用!");
             }
-
-            // assert!(main_fee>min_ticket_fee,"main_fee is smaller than min_ticket_fee");
+            // TODO 根据class_id 创建ticke_id 
             true
         }
 
@@ -462,39 +465,7 @@ mod nfticket {
         //     }
         // }
 
-        // /// 查询所有模板的hash值队列
-        // #[ink(message)]
-        // pub fn get_all_template_hash(&self) -> Vec<Hash> {
-        //     let mut result: Vec<Hash> = Vec::new();
-        //     for k in self.template_hash_address_map.keys() {
-        //         result.push(*k);
-        //     }
-        //     result
-        //     // let temp_map:Vec<Hash> = self.template_index_hash_map.iter().map(|k,v|k).collect();
-        //     // temp_map
-        // }
-
-        // #[ink(message)]
-        // pub fn get_template_address(&self, hash: Hash) -> AccountId {
-        //     self.template_hash_address_map.get(&hash).unwrap().clone()
-        // }
-
-        // #[ink(message)]
-        // pub fn get_template_id_by_hash(&self, hash: Hash) -> u32 {
-        //     ink_env::debug_message("-------------1");
-        //     let address: AccountId = self.template_hash_address_map.get(&hash).unwrap().clone();
-        //     let template: MainStub = FromAccountId::from_account_id(address);
-        //     ink_env::debug_message("-------------2");
-        //     template.get_id()
-        // }
-
-        // #[ink(message)]
-        // pub fn get_template_id(&self, account_id: AccountId) -> u32 {
-        //     ink_env::debug_message("-------------333");
-        //     let template: MainStub = FromAccountId::from_account_id(account_id);
-        //     ink_env::debug_message("-------------444");
-        //     template.get_id()
-        // }
+        
 
         /// Panic if `owner` is not an owner,
         fn ensure_owner(&self) {
