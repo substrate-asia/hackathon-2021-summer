@@ -1,6 +1,7 @@
 import Router from '@koa/router'
-
+// middlewares
 import responseFormat from '../middlewares/response-format'
+// routers
 import v0Router from './v0'
 
 const router = new Router()
