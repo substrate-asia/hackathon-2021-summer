@@ -285,10 +285,11 @@ mod nfticket {
                     status:primitives::MeetingStatus::Active,
                 };
                 self.meeting_map.insert(meeting_addr, meeting);
-                // 创建相应的 NFT 集合（调用 runtime 接口）
-                let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
+                ink_env::debug_message(&format!("-------------------------create_class name:{:?},desc:{:?}", name.clone(),desc.clone()));
+                // TODO 创建相应的 NFT 集合（调用 runtime 接口）
+                // let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
                 //调试信息
-                // let class_id = 123;
+                let class_id = 123;
                 self.classid_map.insert(meeting_addr, class_id);
                 my_class_id=class_id;
                 Self::env().emit_event(MeetingAdded{meeting_addr,creator:caller,class_id});
