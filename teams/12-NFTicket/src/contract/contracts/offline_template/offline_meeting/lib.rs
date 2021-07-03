@@ -227,6 +227,7 @@ use ink_env::call::FromAccountId;
 			seat_id: Option<(u32, u32)>,
 		) -> bool {
 			ink_env::debug_message("=========================entrance!!!");
+			let caller = Self::env().caller();
 			let meeting_addr = Self::env().account_id();
 			let ticket_price: Balance = self.get_ticket_price(zone_id, seat_id).unwrap();
 			ink_env::debug_message(&format!("-------------------------ticket_price {:?}",ticket_price));
@@ -244,6 +245,7 @@ use ink_env::call::FromAccountId;
 				zone_id,
 				seat_id,
 				ticket_id,
+				caller,
 			);
 			// 标记这个座位已经售出
 			self.make_seat_sealed(zone_id, seat_id);
