@@ -1,10 +1,12 @@
-import {setTokenKey,setUsernameKey,setBottomstatusKey,setShowmodalKey} from "../Type";
+import {setTokenKey,setUsernameKey,setBottomstatusKey,setShowmodalKey,setShowmodaltwoKey,setAccountokmodalKey} from "../Type";
 
 const app = {
     token:"",
     username:"",
     bottomstatus:false,
-    showmodal:false
+    showmodal:false,
+    showmodaltwo:false,
+    showaccountok:false
 }
 
 //Reducer
@@ -38,6 +40,20 @@ const configReducer = function(state = app,action){
             return {
                 ...state,
                 showmodal:action.value,
+            }
+        }
+        //Account Modal Two
+        case setShowmodaltwoKey:{
+            return {
+                ...state,
+                showmodaltwo:action.value,
+            }
+        }
+        //Create Account OK
+        case setAccountokmodalKey:{
+            return {
+                ...state,
+                showaccountok:action.value,
             }
         }
 

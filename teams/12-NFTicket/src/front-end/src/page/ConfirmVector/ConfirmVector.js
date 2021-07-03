@@ -166,7 +166,6 @@ class ConfirmVector extends Component{
                             </div>
                         </div>
                     </div>
-                    <div style={{width:"100%",height:'100px'}}></div>
                     </div>
                 </div>
                 <div className={styles.bottomconfirm}>
