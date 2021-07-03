@@ -6,14 +6,9 @@
 
 ## 导航
 
-- [项目介绍](https://github.com/ParityAsia/hackathon-2021-spring/tree/main/teams/01-Web3Games/docs/project-CN.md)
-- [团队成员](https://github.com/ParityAsia/hackathon-2021-spring/blob/main/teams/01-Web3Games/docs/team-CN.md)
-- [代码资源](https://github.com/ParityAsia/hackathon-2021-spring/tree/main/teams/01-Web3Games/src/README-CN.md)
-- [演示稿](https://github.com/ParityAsia/hackathon-2021-spring/tree/main/teams/01-Web3Games/docs/presentation-CN.pdf)
-
-
-
-
+- [项目介绍](./docs/project-CN.md)
+- [代码资源](./src/README-CN.md)
+- [演示稿](./docs/presentation-CN.pdf)
 
 ## 基本资料
 
@@ -108,7 +103,5 @@ TODO
 | 杜林峰       | [mxd3236181](https://github.com/mxd3236181) |
 
 **团队联络人微信**
-
-
 
 ![wechat](\wechat.jpg)
