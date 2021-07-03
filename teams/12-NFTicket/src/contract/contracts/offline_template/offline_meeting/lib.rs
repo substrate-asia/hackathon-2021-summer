@@ -9,8 +9,9 @@ pub use offline_meeting::*;
 */
 #[ink::contract]
 pub mod offline_meeting {
+	use ink_env::call::FromAccountId;
 	use ink_env::DefaultEnvironment;
-use ink_env::call::FromAccountId;
+	use ink_lang::ToAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
 	use ink_storage::{
@@ -20,7 +21,6 @@ use ink_env::call::FromAccountId;
 	};
 	use primitives::{MeetingStatus, Ticket};
 	use stub::MainStub;
-	use ink_lang::ToAccountId;
 	const BASE_PERCENT: u128 = 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
 	#[derive(
@@ -221,23 +221,25 @@ use ink_env::call::FromAccountId;
 		/// 购买ticker,需要支付一定数量的币.
 		/// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
 		#[ink(message, payable)]
-		pub fn buy_ticket(
-			&mut self,
-			zone_id: u32,
-			seat_id: Option<(u32, u32)>,
-		) -> bool {
+		pub fn buy_ticket(&mut self, zone_id: u32, seat_id: Option<(u32, u32)>) -> bool {
 			ink_env::debug_message("=========================entrance!!!");
 			let caller = Self::env().caller();
 			let meeting_addr = Self::env().account_id();
 			let ticket_price: Balance = self.get_ticket_price(zone_id, seat_id).unwrap();
-			ink_env::debug_message(&format!("-------------------------ticket_price {:?}",ticket_price));
+			ink_env::debug_message(&format!(
+				"-------------------------ticket_price {:?}",
+				ticket_price
+			));
 			// 买票收入,通过前端传入进来
 			let income: Balance = self.env().transferred_balance();
 			ink_env::debug_message(&format!("-------------------------income {:?}", income));
 			// 保证用户传送的金额必须大于票价
 			assert!(income >= ticket_price, "not enough money!");
 			// 生成ticke_id +1
-			let ticket_id =self.ticket_id.checked_add(1).expect("checked plus 1 error!");
+			let ticket_id = self
+				.ticket_id
+				.checked_add(1)
+				.expect("checked plus 1 error!");
 			let ticket = Ticket::new(
 				self.template,
 				meeting_addr,
@@ -302,8 +304,11 @@ use ink_env::call::FromAccountId;
 		}
 
 		/// 标记这个位置已经卖出.
-		fn make_seat_sealed(&mut self, zone_id: u32, seat_id: Option<(u32, u32)>) -> Option<bool> {
-			//TODO 标记这个位置已经卖出
+		fn make_seat_sealed(&mut self, ticket_id: (u128, u128), seat_id: (u8, u8, u8)) -> Option<bool> {
+			self.seats.get(&seat_id).expect("seat does not exsits. ");
+			self
+				.seats
+				.insert(seat_id, SeatStatus::Ticket(ticket_id.0, ticket_id.1));
 			return Some(true);
 		}
 
@@ -412,7 +417,7 @@ use ink_env::call::FromAccountId;
 		3. 触发事件 inspector_removed
 		*/
 		pub fn remove_inspector(&mut self, inspector: AccountId) {
-			if self.inspectors.contains_key(&inspector){
+			if self.inspectors.contains_key(&inspector) {
 				Self::env().emit_event(InspectorRemoved {
 					inspector: inspector,
 				});
