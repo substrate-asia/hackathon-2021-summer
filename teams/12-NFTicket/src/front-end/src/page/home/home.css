@@ -93,7 +93,7 @@
 }
 
 .card-content{
-    height:250px;
+    max-width: 100%;
     padding: 15px 15px;
     margin:5px 15px;
     border-radius:25px;

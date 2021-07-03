@@ -151,9 +151,14 @@ class Home extends Component {
         index = data.length - 1;
       }
       const obj = data[index--];
+      const imageHeight = window.innerWidth-30-30;
       return (
         <div key={rowID} className='card-content'
-          style={{ backgroundImage: "url('./images/bg/back.jpg')" }} onClick={() => this.props.history.push('/Home/activityDetail')}>
+          style={{ 
+            backgroundImage: "url('./images/cardimg.png')",
+            backgroundRepeat:'no-repeat',
+            height:''+imageHeight+'px',
+           }} onClick={() => this.props.history.push('/Home/activityDetail')}>
           <div className="top-container">
             <div className='top-name' style={{
               borderRadius: '50px', width: '50px', height: '50px',

@@ -18,21 +18,7 @@ const tabs = [
 
 
 const data = [
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
-    title: 'Event name',
-    des: '不是所有的兼职汪都需要风吹日晒',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
-    title: 'McDonald\'s invites you',
-    des: '不是所有的兼职汪都需要风吹日晒',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
-    title: 'Eat the week',
-    des: '不是所有的兼职汪都需要风吹日晒',
-  },
+
 ];
 
 const NUM_ROWS = 20;
@@ -128,52 +114,72 @@ class sort extends Component {
     //标题高度
     const titleHeight = 72;
     //三栏Tab字体高度
-    const tabtextHeight = 44;
+    const tabtextHeight = 46;
     //底部Tab高度
     const tabbarHeight = 46;
-    //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
+
     const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-titleHeight-tabtextHeight-2*tabbarHeight+26;
 
     return (
+      
       <div className={styles.tabs}>
-      
-      
+        
+        <div className={styles.tabstop}>
+          <div className={styles.tabstopcont}>
+          </div>
+        </div>
          
-        <Tabs tabBarTextStyle={{height:'44px',fontSize:'14px',lineHeight:'14px',fontWeight:'bold'}} tabs={tabs}
-          initialPage={0}
-          tabBarUnderlineStyle={{padding:'4px',height:'34px',marginBottom:'4px',border:'1px solid #2f7ef5',zIndex:-1,
-          borderRadius:'25px',backgroundColor:'#2f7ef5'}}
-          tabBarActiveTextColor='#ffffff'
-          tabBarInactiveTextColor='#2f7ef5'
-          onChange={(tab, index) => {this.state.current=index;console.log('onChange', index, tab);}}
-          onTabClick={(tab, index) => { this.state.current=index;console.log('onTabClick', index, tab); }}
-        >
-          <div style={{   display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' , marginBottom: '60px' }}>
-            <ListView
-              ref={el => this.lv = el}
-              dataSource={this.state.dataSource}
-              renderHeader={() => <span>header</span>}
-              renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-                {this.state.isLoading ? 'Loading...' : 'Loaded'}
-              </div>)}
-              renderRow={row}
-              renderSeparator={separator}
-              className=""
-              pageSize={4}
-              useBodyScroll
-              onScroll={() => { console.log('scroll'); }}
-              scrollRenderAheadDistance={500}
-              onEndReached={this.onEndReached}
-              onEndReachedThreshold={8}
-              style={{overflow: 'auto' ,width:'100%',height:''+height+'px'}}/>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height:''+height+'px', backgroundColor: '#fff' }}>
-            Content of second tab
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height:''+height+'px', backgroundColor: '#fff' }}>
-            Content of third tab
-          </div>
-        </Tabs>
+        <div className={styles.tabsgroup}>
+          <Tabs tabBarTextStyle={{
+              height:'44px',
+              marginBottom:'3px',
+              fontSize:'14px',
+              fontWeight:'bold'
+            }} 
+            tabs={tabs}
+            initialPage={0}
+            tabBarUnderlineStyle={{
+              width:'32%',
+              height:'36px',
+              marginLeft:'2px',
+              marginBottom:'6px',
+              zIndex:-1,
+              borderRadius:'25px',
+              backgroundColor:'#2f7ef5'
+            }}
+            tabBarBackgroundColor='rgba(255,255,255,0.1)'
+            tabBarActiveTextColor='#ffffff'
+            tabBarInactiveTextColor='#2f7ef5'
+            onChange={(tab, index) => {this.state.current=index;console.log('onChange', index, tab);}}
+            onTabClick={(tab, index) => { this.state.current=index;console.log('onTabClick', index, tab); }}
+          >
+            <div style={{   display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' , marginBottom: '60px' }}>
+              <ListView
+                ref={el => this.lv = el}
+                dataSource={this.state.dataSource}
+                renderHeader={() => <span>header</span>}
+                renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+                  {this.state.isLoading ? 'Loading...' : 'Loaded'}
+                </div>)}
+                renderRow={row}
+                renderSeparator={separator}
+                className=""
+                pageSize={4}
+                useBodyScroll
+                onScroll={() => { console.log('scroll'); }}
+                scrollRenderAheadDistance={500}
+                onEndReached={this.onEndReached}
+                onEndReachedThreshold={8}
+                style={{overflow: 'auto' ,width:'100%',height:''+height+'px'}}/>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height:''+height+'px', backgroundColor: '#fff' }}>
+              Content of second tab
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height:''+height+'px', backgroundColor: '#fff' }}>
+              Content of third tab
+            </div>
+          </Tabs>
+        </div>
       </div>
     )
   }
@@ -185,6 +191,8 @@ class sort extends Component {
         <h1 className={styles.title}>My Tickets</h1>
         {/** 切换标签 */}
         {this.renderTabs()}
+        
+        
       </div>
     )
   }
