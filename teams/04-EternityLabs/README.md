@@ -1,14 +1,12 @@
 # 欢迎来到Eternity-Labs
 
-<img src="http://qpjf9b6ys.hn-bkt.clouddn.com/logo.png"/>
-
-中文 / [英文](https://github.com/ParityAsia/hackathon-2021-spring/tree/main/teams/01-Web3Games/README.md)
+中文 / [英文](./README.md)
 
 ## 导航
 
-- [项目介绍](./docs/project-CN.md)
-- [代码资源](./src/README-CN.md)
-- [演示稿](./docs/presentation-CN.pdf)
+- [项目介绍](./docs/project_CN.md)
+- [代码资源](./src/README_CN.md)
+- [演示稿](./docs/presentation_CN.pdf)
 
 ## 基本资料
 
