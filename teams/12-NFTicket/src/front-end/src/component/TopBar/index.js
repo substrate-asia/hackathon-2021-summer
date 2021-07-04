@@ -35,8 +35,6 @@ class TopBar extends Component {
         if(opt.props.value=="create"){
             this.props.actions.setShowModal(true)
         }
-
-        
     };
 
     showModalAlert=()=>{
@@ -59,7 +57,7 @@ class TopBar extends Component {
         return (
             <div className={styles.content}>
                 <SearchBar className={styles.searchBar} placeholder="Search" maxLength={8} />
-                <WhiteSpace />
+                <WhiteSpace className={styles.whiteSpace}/>
                 {/**
                  * 导航栏
                  */}

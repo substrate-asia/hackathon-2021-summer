@@ -1,0 +1,21 @@
+.body{
+    margin-top: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+    height: 118px;
+}
+.txidLable{
+    font-size: 10px;
+    color: #979797;
+    margin-bottom: 7px;
+    margin-top: 12px;
+}
+.txidContent{
+    font-size: 13px;
+    color: black; 
+}
+.topView{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+}
