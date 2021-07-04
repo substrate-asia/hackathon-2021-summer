@@ -35,8 +35,6 @@ class TopBar extends Component {
         if(opt.props.value=="create"){
             this.props.actions.setShowModal(true)
         }
-
-        
     };
 
     showModalAlert=()=>{
