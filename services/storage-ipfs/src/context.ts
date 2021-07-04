@@ -37,9 +37,9 @@ class Context extends jadepool.Context {
     let ClassToRegister: string | typeof BaseService
     if (typeof serviceClass === 'string') {
       switch (serviceClass) {
-        case consts.SERVICE_NAMES.SOCKET_IO: {
-          const { SocketIOService } = await import('@jadepool/service-socketio')
-          ClassToRegister = SocketIOService
+        case consts.SERVICE_NAMES.SIO_WORKER: {
+          const { SocketIOWorkerService } = await import('@jadepool/service-socketio')
+          ClassToRegister = SocketIOWorkerService
           break
         }
         case consts.SERVICE_NAMES.CONSUL: {

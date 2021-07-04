@@ -14,7 +14,7 @@ async function run (): Promise<void> {
   await jadepool.initialize(new Context())
   logger.diff('Launcher').tag('Context Built').logObj(jadepool.env)
 
-  // http 服务
+  // register http service
   const koaOpts: KoaOptions = {
     router: router,
     listenManually: true,
@@ -22,7 +22,7 @@ async function run (): Promise<void> {
   }
   const appSrv: KoaService = (await jadepool.registerService(consts.SERVICE_NAMES.KOA, koaOpts)) as KoaService
 
-  // socket.io服务
+  // register socket.io service
   await jadepool.registerService(consts.SERVICE_NAMES.SOCKET_IO)
 
   // 启动listen

@@ -13,5 +13,11 @@
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
+    "ipfs-car": "^0.4.2",
+    "nft.storage": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.0",
+    "ts-node": "^10.0.0"
   }
 }
