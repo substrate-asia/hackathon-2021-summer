@@ -8,7 +8,7 @@
 * 项目LOGO:
 
 
-![NFTmall](http://nft.ueuo.com/img/movieimg.png)
+![NFTmall](http://nft.ueuo.com/logo.png)
 
 
 * 项目立项日期：2021 年 5 月。
@@ -30,7 +30,7 @@
   * NFT mall目标是成为NFT数字资产的制作、交易平台。
 
 * 3、NFTmall 的基本功能
-  * Create an NFT marketplace contract that supports ERC721 and ERC1155
+  * Create an NFT marketplace contract that supports ERC721
   * Sellers can list their NFTs on the platform
   * Buyers can preview, and purchase NFTs listed on the platform
 
@@ -50,10 +50,9 @@
       * NFT Token数字作品的兑换
       * NFT Token数字作品的碎片化
   * 4.3 链平台：部署交易市场的链平台
-      * 多平台服务网关和多类型发布渠道支持：需要支持Ethereum evm 合约 NFT、原生substrate NFT。
-      * 多个去中心化存储渠道支持：需要支持 IPFS作为 NFT的内容存储平台。
-      * 多平台服务网关和多类型发布渠道支持：需要支持Ethereum evm 合约 NFT、原生substrate NFT。
-  
+      * 支持去中心化存储：需要支持 IPFS作为 NFT的内容存储平台。
+      * 主平台：需要兼容Ethereum、substrate
+      * 平台技术：选择[moonbeam](https://moonbeam.network/)作为进一步开发的基础
   
 * 5 所属参赛类别：
     DApp、应用链、平行链 
@@ -72,18 +71,28 @@
   * ~~开发思路~~
   * ~~发展规划~~
 
-                      前端开发者 Danny完成的前台展示界面，如图所示：
-![NFTmall](http://nft.ueuo.com/2021/webscreen.png)
 
-* 7、完成Demo 模型的制作（实现中）
-  * ~~Added ERC721 Contract~~
-  * ~~Connected to Metamask~~
-  * ~~Started NFTMinter Contract~~
-  * ~~Added truffle-flattener and flattened openZeppelin contracts~~
-  *  ~~Contracts and Solc compiler updated to version: "^0.8"~~
-  * ~~Added Tests and Migration~~
-  * Develop and Improve front-end
-  * Test in production environment
+* 7、完成Demo 模型的制作（实现中--以[decentraland](http://market.decentraland.org)为基础）
+  *  Develop and Improve front-end 
+    * ~~Test in localhost ~~
+    * ~~show products~~
+    * ~~show Lists & classification~~
+   
+                          完成的前台展示界面，如图所示：
+![NFTmall](http://nft.ueuo.com/2021/1.png)
+![NFTmall](http://nft.ueuo.com/2021/2.png)
+![NFTmall](http://nft.ueuo.com/2021/3.png)
+![NFTmall](http://nft.ueuo.com/2021/4.png)
+![NFTmall](http://nft.ueuo.com/2021/5.png)
+
+* Develop and Improve Back-end
+    * Added ERC721 Contract
+    * Connected to Metamask
+    * Started NFTMinter Contract
+    * Added truffle-flattener and flattened openZeppelin contracts
+
+    
+ * Deployment & testing in Ethereum
 
 
 * 8、公链测试和部署Public chain deployment, testing（规划中）
@@ -104,13 +113,13 @@
 
 
 ** 团队人员信息
-  * feiying	  团队带头人，来自北京，丰富的投资行业经验
+  * feiying   团队带头人，来自北京，丰富的投资行业经验
+  * hfxx      来自上海 前neo高级研究员
   * Stvenyin  来自上海 经验丰富的区块链公链开发者
-  * hfxx	    来自上海 前neo高级研究员
   * Danny     来自深圳 目前在大三计算机&金融在读，fisco bcos和eth合约开发经验
   * cooper    来自上海 目前在从事区块链链存储研究，四年区块链开发经验
-  * 越泽	    来自广州，擅长golang、熟悉物联网
-  * 海中蛟龙  来自北京，区块链交易员
+  * 越泽       来自广州，擅长golang、熟悉物联网
+  * 海中蛟龙   来自北京，区块链交易员
 
 ------
 ------
