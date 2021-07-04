@@ -13,7 +13,7 @@ ink_lang = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", d
 ink_prelude = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
 
 metis_lang = { version = "0.1.0", git = "https://github.com/patractlabs/metis", default-features = false }
-metis-ownable = { version = "0.1.0", git = "https://github.com/patractlabs/metis", default-features = false }
+metis_ownable = { version = "0.1.0", git = "https://github.com/patractlabs/metis", default-features = false }
 
 trait_erc1155 = { path = "../../../traits/tokens/erc1155", default-features = false, features = ["ink-as-dependency"] }
 
@@ -40,7 +40,7 @@ std = [
     "ink_lang/std",
     "ink_prelude/std",
     "metis_lang/std",
-    "metis-ownable/std",
+    "metis_ownable/std",
     "scale/std",
     "scale-info/std",
     "trait_erc1155/std",
