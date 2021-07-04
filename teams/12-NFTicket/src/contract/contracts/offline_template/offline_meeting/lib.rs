@@ -82,7 +82,7 @@ pub mod offline_meeting {
 	enum SeatStatus {
 		Disabled,
 		Empty,
-		Ticket(u128, u128),
+		Sealed,
 	}
 	impl Default for SeatStatus {
 		fn default() -> SeatStatus {
@@ -142,7 +142,7 @@ pub mod offline_meeting {
 		price_type: PriceType,                       // 收费方式
 		price: Balance,                              // 收费方式=Uniform 时候生效
 		prices: StorageMap<u8, Balance>, //收费明细，收费方式=Partition时候看，生效；带个是 zone_id
-		seats: StorageMap<(u8, u8, u8), SeatStatus>, // 活动场地的不可用的座位，是由元组组成的key，元组元素为 分区序号，排号，座号。这样可以快速检测座位是否被禁用
+		seats_status_map: StorageMap<(u32, u32, u32), SeatStatus>, // 活动场地的不可用的座位，是由元组组成的key，元组元素为 分区序号，排号，座号。这样可以快速检测座位是否被禁用
 		inspectors: StorageMap<AccountId, bool>,     // 检票员
 
 		// 用户参与后会产生的数据
@@ -177,7 +177,7 @@ pub mod offline_meeting {
 				price_type: Default::default(),
 				prices: Default::default(),
 				price: Default::default(),
-				seats: Default::default(),
+				seats_status_map: Default::default(),
 				tickets: Default::default(),
 				inspectors: Default::default(),
 				check_records: Default::default(),
@@ -304,12 +304,14 @@ pub mod offline_meeting {
 		}
 
 		/// 标记这个位置已经卖出.
-		fn make_seat_sealed(&mut self, ticket_id: (u128, u128), seat_id: (u8, u8, u8)) -> Option<bool> {
-			self.seats.get(&seat_id).expect("seat does not exsits. ");
+		fn make_seat_sealed(&mut self, zone_id: u32, seat_id: Option<(u32, u32)>) ->bool {
+			let seat_id = seat_id.unwrap();
+			let zone_seat=(zone_id,seat_id.0,seat_id.1);
+			self.seats_status_map.get(&zone_seat);
 			self
-				.seats
-				.insert(seat_id, SeatStatus::Ticket(ticket_id.0, ticket_id.1));
-			return Some(true);
+				.seats_status_map
+				.insert(zone_seat, SeatStatus::Sealed);
+			return true;
 		}
 
 		/**
@@ -388,14 +390,14 @@ pub mod offline_meeting {
 		 2. 所有未包含的座位都需要设置为可用
 		 3. 如果已经售出的，不允许修改
 		*/
-		pub fn set_disabled_seats(&mut self, seats: Vec<(u8, u8, u8)>) -> bool {
+		pub fn set_disabled_seats(&mut self, seats: Vec<(u32, u32, u32)>) -> bool {
 			for seat in &seats {
 				// todo 如果已经售出的，不允许修改 ?
-				let status = self.seats.get(seat).expect("seat does not exists. ");
+				let status = self.seats_status_map.get(seat).expect("seat does not exists. ");
 				if status.clone() != SeatStatus::Disabled && status.clone() != SeatStatus::Empty {
 					continue; // 如果已经售出的，不允许修改
 				};
-				self.seats.insert(seat.clone(), SeatStatus::Disabled);
+				self.seats_status_map.insert(seat.clone(), SeatStatus::Disabled);
 			}
 			true
 		}

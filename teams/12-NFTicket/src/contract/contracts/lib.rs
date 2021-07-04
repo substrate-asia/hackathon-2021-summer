@@ -28,7 +28,7 @@ mod nfticket {
         collections::{hashmap::Keys, HashMap as StorageHashMap, Stash as StrorageStash},
         lazy::Lazy,
     };
-    use primitives::{MeetingStatus, Template};
+    use primitives::{MeetingStatus, Template, TicketNft};
     use primitives::TemplateStatus;
     use primitives::Ticket;
     use primitives::{Meeting, MeetingError};
@@ -385,8 +385,9 @@ mod nfticket {
         /// 5. 返回创建的 class_id 和 NFT_ID的元组
         /// 6. 触发事件： ticket_created
         #[ink(message, payable)]
-        pub fn buy_ticket(&mut self, _ticket: Ticket) -> bool {
+        pub fn buy_ticket(&mut self, _ticket: Ticket) -> Result<TicketNft,NFTMartErr> {
             ink_env::debug_message("-------------------------buy_ticket开始调用");
+            let mut ticket_nft:TicketNft = Default::default();
             // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
             let main_fee: Balance = self.env().transferred_balance();
             assert!(main_fee>=min_ticket_fee,"转账金额必须大于最小费用");
@@ -397,7 +398,14 @@ mod nfticket {
             if let Some(_) = self.meeting_map.get(&caller) {
                 let calss_id = self.classid_map.get(&_ticket.meeting).unwrap();
                 
-                let (_, _, _, token_id, quantity) = self.env().extension().proxy_mint(&_ticket.buyer, *calss_id, vec![1], 1,Some(false)).unwrap();
+                let (_class_owner, _ticket_owner, _class_id, token_id, quantity) = self.env().extension().proxy_mint(&_ticket.buyer, *calss_id, vec![1], 1,Some(false)).unwrap();
+                ticket_nft=TicketNft{
+                    _class_owner,
+                    _ticket_owner,
+                    _class_id,
+                    token_id,
+                    quantity,
+                };
                 // 存储 token_id和数量
                 Self::env().emit_event(TicketSelled{
                     ticket:_ticket,
@@ -407,8 +415,8 @@ mod nfticket {
                 //触发pannic,整个事务回滚.
                 panic!("错误:当前合约只能通过活动合约调用!");
             }
+            return Ok(ticket_nft)
             // TODO 根据class_id 创建ticke_id 
-            true
         }
 
         /// 开始收费门票.

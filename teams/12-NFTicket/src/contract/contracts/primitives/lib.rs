@@ -74,6 +74,28 @@ pub struct Template {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
+#[cfg_attr(feature = "std",derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout))]
+pub struct TicketNft {
+    pub _class_owner:AccountId, 
+    pub _ticket_owner:AccountId, 
+    pub _class_id:u32, 
+    pub token_id:u64, 
+    pub quantity:u64,
+}
+
+impl Default for TicketNft{
+    fn default() -> Self {
+        TicketNft{
+        _class_owner:Default::default(),
+        _ticket_owner:Default::default(),
+        _class_id:Default::default(),
+        token_id:Default::default(),
+        quantity:Default::default(),
+    }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
 #[cfg_attr(
     feature = "std",
     derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
