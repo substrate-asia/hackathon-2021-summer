@@ -13,6 +13,7 @@ import ActivityDetail from './page/ActivityDetail/ActivityDetail';
 import ConfirmVector from './page/ConfirmVector/ConfirmVector';
 import CreateEvent from './page/CreateEvent/CreateEvent';
 import Payment from './page/Payment/Payment';
+import Transaction from './page/Transaction/Transaction';
 import './router.css';
 
 class Routes extends Component{
@@ -36,6 +37,8 @@ class Routes extends Component{
                     {/* <Route path='/Home/createEvent' component={CreateEvent}></Route> */}
                     {/** 购买页面*/}
                     <Route path='/Home/Payment' component={Payment}></Route>
+                    {/** 交易记录页面 */}
+                    <Route path='/Mine/Transaction' component={Transaction}></Route>
                 </div>
             </div>
         )

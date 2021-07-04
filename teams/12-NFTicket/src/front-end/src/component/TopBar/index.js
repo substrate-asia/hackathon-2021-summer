@@ -57,7 +57,7 @@ class TopBar extends Component {
         return (
             <div className={styles.content}>
                 <SearchBar className={styles.searchBar} placeholder="Search" maxLength={8} />
-                <WhiteSpace />
+                <WhiteSpace className={styles.whiteSpace}/>
                 {/**
                  * 导航栏
                  */}
