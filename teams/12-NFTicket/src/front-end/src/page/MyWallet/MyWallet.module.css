@@ -1,0 +1,66 @@
+.body{
+    width: 100%;
+    background-color: #f6f6f6;
+}
+.recordListView{
+    margin-top: 11px;
+    background-color: #fff;
+    height: 100%;
+    margin-bottom: 60px;
+}
+.topLable{
+    width: 100%;
+    height: 176px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+    background-color: #fff;
+}
+.labelView{
+    padding-top: 20px;
+    padding-bottom: 24px;
+}
+.transLable{
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 33px;
+}
+.totalLable{
+    margin-left: 33px;
+    font-size: 16px;
+    color: #979797;
+}
+.moneyLable{
+    margin-left: 33px;
+    margin-top: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.depositTicket{
+   width: 128px;
+   height: 31px;
+   line-height: 31px;
+   border-radius: 20px;
+   display: block;
+   font-size: 11px;
+}
+.withDraw{
+    width: 128px;
+    height: 31px;
+    line-height: 31px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: blue;
+    border: 1px solid blue;
+    text-align: center;
+}
+.bottomBtn{
+    display: flex;
+    width: 100%;
+    height: 60px;
+    align-items: center;
+    background-color: #fff;
+    justify-content:space-around;
+    position:absolute;
+    bottom:0px;
+}

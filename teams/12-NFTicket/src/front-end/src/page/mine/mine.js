@@ -6,8 +6,18 @@ import event from '../../images/my_event.png'
 import price from '../../images/my_wallets.png'
 import right from '../../images/icon_right.png'
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+//action
+import { setTokenAction, setUsernameAction, setBottomstatusAction } from '../../store/action/App';
 
-export default class mine extends Component {
+class mine extends Component {
+
+
+  componentDidMount() {
+    this.props.actions.setBottomstatus(false);
+}
+
   render() {
     return (
       <div className={styles.body}>
@@ -24,14 +34,14 @@ export default class mine extends Component {
         </div>
         {/** 显示其他项目 */}
         <div className={styles.otherView}>
-          <div className={styles.myItem}>
-            <img src={price} className={styles.iconWallets}></img>
+          <div className={styles.myItem} onClick={() => this.props.history.push('/Mine/wallet')}>
+            <img src={price} className={styles.iconWallets} ></img>
             <span className={styles.textLable}>My wallets</span>
             <img src={right} className={styles.rightArrow}></img>
           </div>
           {/** 分割线 */}
           <div className={styles.dotLine}></div>
-          <div className={styles.myItem}>
+          <div className={styles.myItem} onClick={()=>this.props.history.push('/Sort')}>
             <img src={event} className={styles.iconWallets}></img>
             <span className={styles.textLable}>My event</span>
             <img src={right} className={styles.rightArrow}></img>
@@ -53,4 +63,26 @@ export default class mine extends Component {
   }
 }
 
+//获取最新的store里的状态，通过this.props获取
+const mapStateToProps = (state) => {
+  console.log(state.app);
+  return {
+      app: state.app
+  }
+}
+//更新状态提交到store
+const mapDispatchToProps = (dispatch) => {
+  return {
+      actions: bindActionCreators({
+          setToken: setTokenAction,
+          setUsername: setUsernameAction,
+          setBottomstatus: setBottomstatusAction
+      }, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(mine);
 

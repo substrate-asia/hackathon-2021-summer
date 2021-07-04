@@ -14,6 +14,7 @@ import ConfirmVector from './page/ConfirmVector/ConfirmVector';
 import CreateEvent from './page/CreateEvent/CreateEvent';
 import Payment from './page/Payment/Payment';
 import Transaction from './page/Transaction/Transaction';
+import MyWallet from './page/MyWallet/MyWallet';
 import './router.css';
 
 class Routes extends Component{
@@ -39,6 +40,8 @@ class Routes extends Component{
                     <Route path='/Home/Payment' component={Payment}></Route>
                     {/** 交易记录页面 */}
                     <Route path='/Mine/Transaction' component={Transaction}></Route>
+                    {/** 我的钱包页面 */}
+                    <Route path='/Mine/wallet' component={MyWallet}></Route>
                 </div>
             </div>
         )
