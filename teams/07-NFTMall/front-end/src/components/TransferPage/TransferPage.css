@@ -1,0 +1,26 @@
+.TransferPage .ui.header {
+  margin-bottom: 8px;
+}
+
+.TransferPage .subtitle {
+  margin-bottom: 32px;
+}
+
+.TransferPage .subtitle.error {
+  color: var(--danger);
+}
+
+.TransferPage .warning {
+  color: var(--danger);
+  margin-bottom: 24px;
+}
+
+.TransferPage .message {
+  font-family: var(--font-family);
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.TransferPage .form-fields {
+  width: 420px;
+}
