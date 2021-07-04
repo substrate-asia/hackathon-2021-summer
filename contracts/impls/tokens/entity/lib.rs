@@ -13,9 +13,19 @@
 // limitations under the License.
 
 #![cfg_attr(not(feature = "std"), no_std)]
-#![cfg_attr(test, allow(dead_code))]
-#![cfg_attr(test, allow(unused_imports))]
 
+/// Evaluate `$x:expr` and if not true return `Err($y:expr)`.
+///
+/// Used as `ensure!(expression_to_ensure, expression_to_return_on_false)`.
+macro_rules! ensure {
+    ( $condition:expr, $error:expr $(,)? ) => {{
+        if !$condition {
+            return ::core::result::Result::Err(::core::convert::Into::into($error))
+        }
+    }};
+}
+
+pub use self::entity::Contract;
 #[metis_lang::contract]
 mod entity {
     #[allow(unused_imports)]
@@ -48,6 +58,7 @@ mod entity {
     use trait_erc1155::{
         consts::MAGIC_VALUE_RECEIVED,
         types::{
+            Error,
             Result,
             TokenId,
         },
@@ -92,27 +103,6 @@ mod entity {
         value: Balance,
     }
 
-    // /// @dev Either `TransferSingle` or `TransferBatch` MUST emit when tokens are transferred, including zero value transfers as well as minting or burning (see "Safe Transfer Rules" section of the standard).
-    // ///
-    // ///  The `_operator` argument MUST be the address of an account/contract that is approved to make the transfer (SHOULD be msg.sender).
-    // /// The `_from` argument MUST be the address of the holder whose balance is decreased.
-    // /// The `_to` argument MUST be the address of the recipient whose balance is increased.
-    // /// The `_ids` argument MUST be the list of tokens being transferred.
-    // /// The `_values` argument MUST be the list of number of tokens (matching the list and order of tokens specified in _ids) the holder balance is decreased by and match what the recipient balance is increased by.
-    // /// When minting/creating tokens, the `_from` argument MUST be set to `0x0` (i.e. zero address).
-    // /// When burning/destroying tokens, the `_to` argument MUST be set to `0x0` (i.e. zero address).
-    // #[ink(event)]
-    // pub struct TransferBatch {
-    //     #[ink(topic)]
-    //     operator: AccountId,
-    //     #[ink(topic)]
-    //     from: AccountId,
-    //     #[ink(topic)]
-    //     to: AccountId,
-    //     ids: Vec<TokenId>,
-    //     values: Vec<Balance>,
-    // }
-
     /// @dev MUST emit when approval for a second party/operator address to manage all tokens for an owner address is enabled or disabled (absence of an event assumes disabled).
     #[ink(event)]
     pub struct ApprovalForAll {
@@ -122,18 +112,6 @@ mod entity {
         operator: AccountId,
         approved: bool,
     }
-
-    // /// Emitted when the URI for token type `id` changes to `value`, if it is a non-programmatic URI.
-    // ///
-    // /// If an {URI} event was emitted for `id`, the standard
-    // /// https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[guarantees] that `value` will equal the value
-    // /// returned by {IERC1155MetadataURI-uri}.
-    // #[ink(event)]
-    // pub struct URI {
-    //     value: String,
-    //     #[ink(topic)]
-    //     token_id: TokenId,
-    // }
 
     /// Represents an (Owner, Operator) pair, in which the operator is allowed to spend funds on
     /// behalf of the operator.
@@ -248,13 +226,15 @@ mod entity {
         /// production environment you'd probably want to lock down the addresses that are allowed
         /// to mint tokens.
         #[ink(message)]
-        pub fn mint(&mut self, token_id: TokenId, value: Balance) {
+        pub fn mint(&mut self, token_id: TokenId, value: Balance) -> Result<()> {
+            ensure!(token_id <= self.token_id_nonce, Error::UnexistentToken);
+
             let caller = self.env().caller();
 
-            self._ensure_caller_is_token_creator(token_id);
-            self._ensure_token_id_valid(token_id);
+            let creator = self.creators.get(&token_id);
+            ensure!(creator.clone().unwrap() == &caller, Error::NotTokenCreator);
 
-            assert!(value > 0, "Cannot send mint zero amount.");
+            ensure!(value > 0, Error::ZeroAmountMint);
 
             self.balances.insert((caller, token_id), value);
 
@@ -266,6 +246,8 @@ mod entity {
                 token_id,
                 value,
             });
+
+            Ok(())
         }
 
         // Ownable messages
@@ -285,72 +267,24 @@ mod entity {
         }
 
         #[ink(message)]
-        pub fn set_base_uri(&mut self, new_base_uri: Option<String>) {
-            self._ensure_caller_is_contract_owner();
+        pub fn set_base_uri(&mut self, new_base_uri: Option<String>) -> Result<()> {
+            let caller = self.env().caller();
+
+            ensure!(
+                &self.get_ownership().clone().unwrap() == &caller,
+                Error::NotContractOwner
+            );
+
             self.base_uri = new_base_uri;
+
+            Ok(())
         }
 
         // ------------------------------ Private Methods ------------------------------
 
         /// get token uri
         fn _get_token_uri(&self, token_id: TokenId) -> Option<String> {
-            self._ensure_token_id_valid(token_id);
             self.token_uris.get(&token_id).unwrap_or(&None).clone()
-        }
-
-        /// Panic if token_id invalid
-        fn _ensure_token_id_valid(&self, token_id: TokenId) {
-            assert!(
-                token_id <= self.token_id_nonce,
-                "The `token_id` {:?} has not yet been created in this contract.",
-                token_id
-            );
-        }
-
-        /// Panic if `owner` is not a contract owner
-        fn _ensure_contract_owner(&self, owner: &AccountId) {
-            assert!(&self.get_ownership().clone().unwrap() == owner);
-        }
-
-        /// Panic if caller is not a contract owner
-        fn _ensure_caller_is_contract_owner(&self) {
-            self._ensure_contract_owner(&self.env().caller());
-        }
-
-        // Panic if `who` own less than value of the token id
-        fn _ensure_token_owner_amount(
-            &self,
-            who: &AccountId,
-            token_id: TokenId,
-            value: Balance,
-        ) {
-            self._ensure_token_id_valid(token_id);
-
-            let balance = self.balance_of(who.clone(), token_id);
-            assert!(
-                balance >= value,
-                "Insufficent token balance for transfer. Expected: {:?}, Got: {:?}",
-                value,
-                balance,
-            );
-        }
-
-        // Panic if caller own less than 1 of the token id
-        fn _ensure_caller_is_token_owner(&self, token_id: TokenId) {
-            self._ensure_token_owner_amount(&self.env().caller(), token_id, 1)
-        }
-
-        // Panic if `who` is not the creator of the token id
-        fn _ensure_token_creator(&self, who: &AccountId, token_id: TokenId) {
-            self._ensure_token_id_valid(token_id);
-
-            let creator = self.creators.get(&token_id);
-            assert!(creator.clone().unwrap() == who);
-        }
-
-        // Panic if caller is not the creator of the token id
-        fn _ensure_caller_is_token_creator(&self, token_id: TokenId) {
-            self._ensure_token_creator(&self.env().caller(), token_id)
         }
 
         // Helper function for performing single token transfers.
@@ -363,11 +297,7 @@ mod entity {
             to: AccountId,
             token_id: TokenId,
             value: Balance,
-            #[cfg_attr(test, allow(unused_variables))] data: Vec<u8>,
         ) {
-            self._ensure_token_id_valid(token_id);
-            self._ensure_token_owner_amount(&from, token_id, value);
-
             self.balances
                 .entry((from, token_id))
                 .and_modify(|b| *b -= value);
@@ -385,7 +315,23 @@ mod entity {
                 token_id,
                 value,
             });
+        }
 
+        // Check if the address at `to` is a smart contract which accepts ERC-1155 token transfers.
+        //
+        // If they're a smart contract which **doesn't** accept tokens transfers this call will
+        // revert. Otherwise we risk locking user funds at in that contract with no chance of
+        // recovery.
+        #[cfg_attr(test, allow(unused_variables))]
+        fn _transfer_acceptance_check(
+            &mut self,
+            caller: AccountId,
+            from: AccountId,
+            to: AccountId,
+            token_id: TokenId,
+            value: Balance,
+            data: Vec<u8>,
+        ) {
             // This is disabled during tests due to the use of `eval_contract()` not being
             // supported (tests end up panicking).
             #[cfg(not(test))]
@@ -466,20 +412,17 @@ mod entity {
         ) -> Result<()> {
             let caller = self.env().caller();
             if caller != from {
-                assert!(
-                    self.is_approved_for_all(from, caller),
-                    "Caller ({:?}) is not allowed to transfer on behalf of {:?}.",
-                    caller,
-                    from
-                );
+                ensure!(self.is_approved_for_all(from, caller), Error::NotApproved);
             }
 
-            assert!(
-                to != AccountId::default(),
-                "Cannot send tokens to the zero-address."
-            );
+            ensure!(to != AccountId::default(), Error::ZeroAddressTransfer);
 
-            self._perform_transfer(from, to, token_id, value, data);
+            let balance = self.balance_of(from, token_id);
+            ensure!(balance >= value, Error::InsufficientBalance);
+
+            self._perform_transfer(from, to, token_id, value);
+            self._transfer_acceptance_check(caller, from, to, token_id, value, data);
+
             Ok(())
         }
 
@@ -494,28 +437,36 @@ mod entity {
         ) -> Result<()> {
             let caller = self.env().caller();
             if caller != from {
-                assert!(
-                    self.is_approved_for_all(from, caller),
-                    "Caller is not allowed to transfer on behalf of {:?}.",
-                    from
-                );
+                ensure!(self.is_approved_for_all(from, caller), Error::NotApproved);
             }
 
-            assert!(
-                to != AccountId::default(),
-                "Cannot send tokens to the zero-address."
+            ensure!(to != AccountId::default(), Error::ZeroAddressTransfer);
+            ensure!(!token_ids.is_empty(), Error::BatchTransferMismatch);
+            ensure!(
+                token_ids.len() == values.len(),
+                Error::BatchTransferMismatch,
             );
 
-            assert_eq!(
-                token_ids.len(),
-                values.len(),
-                "The number of tokens being transferred ({:?}) does not match the number of transfer amounts ({:?}).",
-                token_ids.len(), values.len()
-            );
+            let transfers = token_ids.iter().zip(values.iter());
+            for (&id, &v) in transfers.clone() {
+                let balance = self.balance_of(from, id);
+                ensure!(balance >= v, Error::InsufficientBalance);
+            }
 
-            token_ids.iter().zip(values.iter()).for_each(|(&id, &v)| {
-                self._perform_transfer(from, to, id, v, data.clone());
-            });
+            for (&id, &v) in transfers {
+                self._perform_transfer(from, to, id, v);
+            }
+
+            // Can use the any token ID/value here, we really just care about knowing if `to` is a
+            // smart contract which accepts transfers
+            self._transfer_acceptance_check(
+                caller,
+                from,
+                to,
+                token_ids[0],
+                values[0],
+                data,
+            );
 
             Ok(())
         }
@@ -534,8 +485,8 @@ mod entity {
             let mut output = Vec::new();
             for o in &owners {
                 for t in &token_ids {
-                    let amt = self.balance_of(*o, *t);
-                    output.push(amt);
+                    let amount = self.balance_of(*o, *t);
+                    output.push(amount);
                 }
             }
             output
@@ -548,11 +499,7 @@ mod entity {
             approved: bool,
         ) -> Result<()> {
             let caller = self.env().caller();
-
-            assert!(
-                operator != caller,
-                "An account does not need to approve themselves to transfer tokens."
-            );
+            ensure!(operator != caller, Error::SelfApproval);
 
             let approval = Approval {
                 owner: caller,
@@ -600,7 +547,6 @@ mod entity {
             }
         }
     }
-
     impl IErc1155TokenReceiver for Contract {
         #[ink(message, selector = "0xF23A6E61")]
         fn on_received(
@@ -611,6 +557,14 @@ mod entity {
             _value: Balance,
             _data: Vec<u8>,
         ) -> Vec<u8> {
+            // The ERC-1155 standard dictates that if a contract does not accept token transfers
+            // directly to the contract, then the contract must revert.
+            //
+            // This prevents a user from unintentionally transferring tokens to a smart contract
+            // and getting their funds stuck without any sort of recovery mechanism.
+            //
+            // Note that the choice of whether or not to accept tokens is implementation specific,
+            // and we've decided to not accept them in this implementation.
             unimplemented!("This smart contract does not accept token transfer.")
         }
 
@@ -623,20 +577,33 @@ mod entity {
             _values: Vec<Balance>,
             _data: Vec<u8>,
         ) -> Vec<u8> {
+            // The ERC-1155 standard dictates that if a contract does not accept token transfers
+            // directly to the contract, then the contract must revert.
+            //
+            // This prevents a user from unintentionally transferring tokens to a smart contract
+            // and getting their funds stuck without any sort of recovery mechanism.
+            //
+            // Note that the choice of whether or not to accept tokens is implementation specific,
+            // and we've decided to not accept them in this implementation.
             unimplemented!("This smart contract does not accept batch token transfers.")
         }
     }
 
     /// Unit tests.
-    #[cfg(not(feature = "ink-experimental-engine"))]
     #[cfg(test)]
     mod tests {
         /// Imports all the definitions from the outer scope so we can use them here.
         use super::*;
-        use crate::Erc1155;
+        use crate::entity::Contract;
 
         use ink_lang as ink;
 
+        #[cfg(feature = "ink-experimental-engine")]
+        fn set_sender(sender: AccountId) {
+            ink_env::test::set_caller::<Environment>(sender);
+        }
+
+        #[cfg(not(feature = "ink-experimental-engine"))]
         fn set_sender(sender: AccountId) {
             const WALLET: [u8; 32] = [7; 32];
             ink_env::test::push_execution_context::<Environment>(
@@ -648,9 +615,14 @@ mod entity {
             );
         }
 
-        fn default_accounts(
-        ) -> ink_env::test::DefaultAccounts<ink_env::DefaultEnvironment> {
-            ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
+        #[cfg(feature = "ink-experimental-engine")]
+        fn default_accounts() -> ink_env::test::DefaultAccounts<Environment> {
+            ink_env::test::default_accounts::<Environment>()
+        }
+
+        #[cfg(not(feature = "ink-experimental-engine"))]
+        fn default_accounts() -> ink_env::test::DefaultAccounts<Environment> {
+            ink_env::test::default_accounts::<Environment>()
                 .expect("off-chain environment should have been initialized already")
         }
 
@@ -667,7 +639,7 @@ mod entity {
         }
 
         fn init_contract() -> Contract {
-            let mut erc = Contract::new();
+            let mut erc = Contract::new(Option::default());
             erc.balances.insert((alice(), 1), 10);
             erc.balances.insert((alice(), 2), 20);
             erc.balances.insert((bob(), 1), 10);
@@ -708,49 +680,61 @@ mod entity {
         fn can_send_tokens_between_accounts() {
             let mut erc = init_contract();
 
-            erc.safe_transfer_from(alice(), bob(), 1, 5, vec![]);
+            assert!(erc.safe_transfer_from(alice(), bob(), 1, 5, vec![]).is_ok());
             assert_eq!(erc.balance_of(alice(), 1), 5);
             assert_eq!(erc.balance_of(bob(), 1), 15);
 
-            erc.safe_transfer_from(alice(), bob(), 2, 5, vec![]);
+            assert!(erc.safe_transfer_from(alice(), bob(), 2, 5, vec![]).is_ok());
             assert_eq!(erc.balance_of(alice(), 2), 15);
             assert_eq!(erc.balance_of(bob(), 2), 5);
         }
 
         #[ink::test]
-        #[should_panic(
-            expected = "Insufficent token balance for transfer. Expected: 99, Got: 10"
-        )]
         fn sending_too_many_tokens_fails() {
             let mut erc = init_contract();
-            erc.safe_transfer_from(alice(), bob(), 1, 99, vec![]);
+            let res = erc.safe_transfer_from(alice(), bob(), 1, 99, vec![]);
+            assert_eq!(res.unwrap_err(), Error::InsufficientBalance);
         }
 
         #[ink::test]
-        #[should_panic(expected = "Cannot send tokens to the zero-address.")]
         fn sending_tokens_to_zero_address_fails() {
             let burn: AccountId = [0; 32].into();
 
             let mut erc = init_contract();
-            erc.safe_transfer_from(alice(), burn, 1, 10, vec![]);
+            let res = erc.safe_transfer_from(alice(), burn, 1, 10, vec![]);
+            assert_eq!(res.unwrap_err(), Error::ZeroAddressTransfer);
         }
 
         #[ink::test]
         fn can_send_batch_tokens() {
             let mut erc = init_contract();
-            erc.safe_batch_transfer_from(alice(), bob(), vec![1, 2], vec![5, 10], vec![]);
+            assert!(erc
+                .safe_batch_transfer_from(alice(), bob(), vec![1, 2], vec![5, 10], vec![])
+                .is_ok());
 
             let balances = erc.balance_of_batch(vec![alice(), bob()], vec![1, 2]);
             assert_eq!(balances, vec![5, 10, 15, 10])
         }
 
         #[ink::test]
-        #[should_panic(
-            expected = "The number of tokens being transferred (3) does not match the number of transfer amounts (1)."
-        )]
         fn rejects_batch_if_lengths_dont_match() {
             let mut erc = init_contract();
-            erc.safe_batch_transfer_from(alice(), bob(), vec![1, 2, 3], vec![5], vec![]);
+            let res = erc.safe_batch_transfer_from(
+                alice(),
+                bob(),
+                vec![1, 2, 3],
+                vec![5],
+                vec![],
+            );
+            assert_eq!(res.unwrap_err(), Error::BatchTransferMismatch);
+        }
+
+        #[ink::test]
+        fn batch_transfers_fail_if_len_is_zero() {
+            let mut erc = init_contract();
+            let res =
+                erc.safe_batch_transfer_from(alice(), bob(), vec![], vec![], vec![]);
+            assert_eq!(res.unwrap_err(), Error::BatchTransferMismatch);
         }
 
         #[ink::test]
@@ -761,10 +745,12 @@ mod entity {
             let operator = bob();
 
             set_sender(owner);
-            erc.set_approval_for_all(operator, true);
+            assert!(erc.set_approval_for_all(operator, true).is_ok());
 
             set_sender(operator);
-            erc.safe_transfer_from(owner, charlie(), 1, 5, vec![]);
+            assert!(erc
+                .safe_transfer_from(owner, charlie(), 1, 5, vec![])
+                .is_ok());
             assert_eq!(erc.balance_of(alice(), 1), 5);
             assert_eq!(erc.balance_of(charlie(), 1), 5);
         }
@@ -781,35 +767,51 @@ mod entity {
             set_sender(owner);
             assert!(erc.is_approved_for_all(owner, operator) == false);
 
-            erc.set_approval_for_all(operator, true);
+            assert!(erc.set_approval_for_all(operator, true).is_ok());
             assert!(erc.is_approved_for_all(owner, operator));
 
-            erc.set_approval_for_all(another_operator, true);
+            assert!(erc.set_approval_for_all(another_operator, true).is_ok());
             assert!(erc.is_approved_for_all(owner, another_operator));
 
-            erc.set_approval_for_all(operator, false);
+            assert!(erc.set_approval_for_all(operator, false).is_ok());
             assert!(erc.is_approved_for_all(owner, operator) == false);
         }
 
         #[ink::test]
         fn minting_tokens_works() {
-            let mut erc = Contract::new();
+            let mut erc = Contract::new(Option::default());
 
             set_sender(alice());
-            assert_eq!(erc.create(0, None), 1);
+            assert_eq!(erc.create(0, Option::default()), 1);
             assert_eq!(erc.balance_of(alice(), 1), 0);
 
-            erc.mint(1, 123);
+            assert!(erc.mint(1, 123).is_ok());
             assert_eq!(erc.balance_of(alice(), 1), 123);
         }
 
         #[ink::test]
-        #[should_panic(
-            expected = "The `token_id` 7 has not yet been created in this contract."
-        )]
         fn minting_not_allowed_for_nonexistent_tokens() {
-            let mut erc = Contract::new();
-            erc.mint(7, 123);
+            let mut erc = Contract::new(Option::default());
+
+            let res = erc.mint(1, 123);
+            assert_eq!(res.unwrap_err(), Error::UnexistentToken);
         }
+
+        #[ink::test]
+        fn init_baseurl_works() {
+            let mut erc = Contract::new(Some(String::from("test")));
+            let baseUrl = erc.base_uri.unwrap();
+            assert_eq!(baseUrl, String::from("test"));
+        }
+
+        #[ink::test]
+        fn set_baseurl_works() {
+            let mut erc = Contract::new(Option::default());
+            erc.set_base_uri(Some(String::from("test2")));
+            let baseUrl = erc.base_uri.unwrap();
+            assert_eq!(baseUrl, String::from("test2"));
+        }
+
+
     }
 }

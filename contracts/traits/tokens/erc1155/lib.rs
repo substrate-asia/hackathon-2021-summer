@@ -18,11 +18,7 @@
 
 // Export to pub
 pub use self::erc1155::{
-    consts,
-    types,
-    IERC1155Metadata,
-    IErc1155,
-    IErc1155TokenReceiver,
+    consts, types, IERC1155Metadata, IErc1155, IErc1155TokenReceiver,
 };
 // FIXME Cursor errors when export Event
 
@@ -30,35 +26,41 @@ use ink_lang as ink;
 
 #[ink::contract]
 mod erc1155 {
+    use crate::types::TokenId;
     use ink_lang as ink;
-    use ink_prelude::{
-        string::String,
-        vec::Vec,
-    };
+    use ink_prelude::{string::String, vec::Vec};
 
     /// export all types
     pub mod types {
-        use scale::{
-            Decode,
-            Encode,
-        };
+        use scale::{Decode, Encode};
 
         /// The result type.
         pub type Result<T> = core::result::Result<T, Error>;
         /// A token ID.
         pub type TokenId = u128;
 
-        #[derive(Encode, Decode, Debug, PartialEq, Eq, Copy, Clone)]
+        // The ERC-1155 error types.
+        #[derive(Debug, PartialEq, scale::Encode, scale::Decode)]
         #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
         pub enum Error {
-            NotOwner,
+            /// This token ID has not yet been created by the contract.
+            UnexistentToken,
+            /// The amount of Token minting should be not zero.
+            ZeroAmountMint,
+            /// The caller tried to sending tokens to the zero-address (0x00).
+            ZeroAddressTransfer,
+            /// The caller is not approved to transfer tokens on behalf of the account.
             NotApproved,
-            TokenExists,
-            TokenNotFound,
-            CannotInsert,
-            CannotRemove,
-            CannotFetchValue,
-            NotAllowed,
+            /// The account does not have enough funds to complete the transfer.
+            InsufficientBalance,
+            /// An account does not need to approve themselves to transfer tokens.
+            SelfApproval,
+            /// The number of tokens being transferred does not match the specified number of transfers.
+            BatchTransferMismatch,
+            // The caller is not the contract owner.
+            NotContractOwner,
+            // The caller is not the creator of the token.
+            NotTokenCreator,
         }
     }
 
@@ -226,11 +228,15 @@ mod erc1155 {
         // to 0xf23a6e61.
         //
         // Note that this is Ethereum specific, I don't know how it translates in Ink! land.
-        pub const MAGIC_VALUE_RECEIVED: [u8; 4] = [0xf2, 0x3a, 0x6e, 0x61];
+        #[cfg_attr(test, allow(dead_code))]
+        pub const MAGIC_VALUE_RECEIVED: [u8; 4] = [0xF2, 0x3A, 0x6E, 0x61];
+        // This is the return value that we expect if a smart contract supports batch receiving ERC-1155
+        // tokens.
+        //
         // It is calculated with
-        // `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`, and corresponds
-        // to 0xbc197c81
-        pub const MAGIC_VALUE_BATCH_RECEIVED: [u8; 4] = [0xbc, 0x19, 0x7c, 0x81];
+        // `bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))`, and
+        // corresponds to 0xbc197c81.
+        pub const MAGIC_VALUE_BATCH_RECEIVED: [u8; 4] = [0xBC, 0x19, 0x7C, 0x81];
     }
 
     /// The interface for an ERC-1155 Token Receiver contract.
