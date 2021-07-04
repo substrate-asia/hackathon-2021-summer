@@ -29,11 +29,13 @@ pub enum MeetingError {
 )]
 pub struct Ticket {
     template_addr: AccountId, //模板id
-    meeting: AccountId,       //活动地址
+    pub meeting: AccountId,       //活动地址
     hash: Vec<u8>,            //hash值
     price: u128,              //价格
     zone_id: u32,             //区域.
-    seat_id: Option<(u32, u32)>,
+    seat_id: Option<(u32, u32)>,//座位号
+    ticket_id:u32,              //票id
+    pub buyer:AccountId,            //购买者
 }
 
 /// 模板状态
@@ -97,6 +99,7 @@ impl Ticket {
         zone_id: u32,
         seat_id: Option<(u32, u32)>,
         ticket_id: u32,
+        buyer:AccountId
     ) -> Self {
         // 此处的生成hash的方法极度不合理.需要将template+meeting+price一起生成encode后得到进行hash运算.
         // let mut template_code=scale::Encode::encode(&template);
@@ -116,6 +119,8 @@ impl Ticket {
             price,
             zone_id,
             seat_id,
+            ticket_id,
+            buyer,
         }
     }
 }

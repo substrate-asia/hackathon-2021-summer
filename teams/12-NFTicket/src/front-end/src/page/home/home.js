@@ -6,10 +6,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 
 //action
-import { setTokenAction,setUsernameAction,setBottomstatusAction,setShowmodalAction } from '../../store/action/App';
+import { setTokenAction,setUsernameAction,setBottomstatusAction,setShowmodalAction,setShowmodaltwoAction,setAccountokmodalAction } from '../../store/action/App';
 
 import './home.css';
 import TopBar from '../../component/TopBar';
+
+import CreateWalletOne from '../../component/CreateWalletOne';
+import CreateWalletTwo from '../../component/CreateWalletTwo';
+import CreateWalletOK from '../../component/CreateWalletOK';
 
 
 const alert = Modal.alert;
@@ -49,6 +53,20 @@ class Home extends Component {
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
     this.state = {
+      words:[
+        "minor",
+        "nasty",
+        "wasp",
+        "major",
+        "pumpkin",
+        "lounge",
+        "door",
+        "blade",
+        "trip",
+        "value",
+        "render",
+        "cook"
+      ],
       dataSource,
       isLoading: true,
       dataList: [{
@@ -81,11 +99,8 @@ class Home extends Component {
     const tokendata = "mytoken";
     //actions
     this.props.actions.setToken(tokendata);
-
-
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
-
   }
 
   componentWillMount() {
@@ -96,22 +111,13 @@ class Home extends Component {
         isLoading: false,
       });
     }, 600);
-
   }
 
   componentWillUnmount(){
-    //销毁
     this.props.actions.setShowModal(false);
+    this.props.actions.setShowModalTwo(false);
+    this.props.actions.setAccountOKModal(false);
   }
-
-  
-    
-  hideModal=()=>{
-      //modal  弹出框
-      this.props.actions.setShowmodal(false);
-  }
-
-
 
   onEndReached = (event) => {
     // load new data
@@ -145,9 +151,14 @@ class Home extends Component {
         index = data.length - 1;
       }
       const obj = data[index--];
+      const imageHeight = window.innerWidth-30-30;
       return (
         <div key={rowID} className='card-content'
-          style={{ backgroundImage: "url('./images/bg/back.jpg')" }} onClick={() => this.props.history.push('/Home/activityDetail')}>
+          style={{ 
+            backgroundImage: "url('./images/cardimg.png')",
+            backgroundRepeat:'no-repeat',
+            height:''+imageHeight+'px',
+           }} onClick={() => this.props.history.push('/Home/activityDetail')}>
           <div className="top-container">
             <div className='top-name' style={{
               borderRadius: '50px', width: '50px', height: '50px',
@@ -208,38 +219,21 @@ class Home extends Component {
         </div>
                 
         <div className={this.props.app.showmodal?'showmodal':'hidemodal'}
-            onClick={()=>{
-              // console.log(this.props.actions.setShowModal(false));
-            }} style={{}}>
-              <div className="flexaccount-mask"></div>
-              {/* account content */}
-              <div className="flexaccount">
-                <div className="flexaccount-form">
-                  {/* tips */}
-                  <div className="flexaccount-form-tips">
-                    <span>
-                      Please write down the following 12 words 
-                      and keep them in a safe place
-                    </span>
-                  </div>
-                  {/* red warning */}
-                  <div className="flexaccount-form-warning">
-                    <span>
-                      Attention: Please no dot screenshot words
-                    </span>
-                  </div>
-                  {/* 12 words */}
-                  <div className="flexaccount-form-textarea">
-                    <div className="flexaccount-form-textarea-con">
-                      {/* seed */}
-                    </div>
-                  </div>
-                  {/* button */}
-                  <div className="flexaccount-form-btn">
-                    <button className="flexaccount-btn">Continue</button>
-                  </div>
-                </div>
-              </div>
+         style={{height:""+window.innerHeight+"px"}}>
+          {/* 生成钱包助记词---弹窗 */}
+          <CreateWalletOne words={this.state.words}></CreateWalletOne>
+        </div>
+
+        <div className={this.props.app.showmodaltwo?'showmodaltwo':'hidemodaltwo'}
+         style={{height:""+window.innerHeight+"px"}}>
+          {/* 输入钱包助记词---弹窗 */}
+          <CreateWalletTwo words={this.state.words}></CreateWalletTwo>
+        </div>
+
+        <div className={this.props.app.showaccountok?'showaccountokmodal':'hideaccountokmodal'}
+         style={{height:""+window.innerHeight+"px"}}>
+          {/* 输入钱包助记词---弹窗 */}
+          <CreateWalletOK words={this.state.words}></CreateWalletOK>
         </div>
       </div>
     );
@@ -259,7 +253,9 @@ const mapDispatchToProps = (dispatch)=>{
         setToken:setTokenAction,
         setUsername:setUsernameAction,
         setBottomstatus:setBottomstatusAction,
-        setShowModal:setShowmodalAction
+        setShowModal:setShowmodalAction,
+        setShowModalTwo:setShowmodaltwoAction,
+        setAccountOKModal:setAccountokmodalAction
       },dispatch)
   }
 }

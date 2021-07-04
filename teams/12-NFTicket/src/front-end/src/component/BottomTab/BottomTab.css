@@ -11,6 +11,8 @@
     left: 0;
     right: 0;
     background: #ffffff;
+    /* border-top-left-radius: 25px;
+    border-top-right-radius: 25px; */
     border-top: 1px solid #ddd;
     z-index: 1000;
 }
