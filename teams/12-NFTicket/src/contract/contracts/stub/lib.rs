@@ -6,7 +6,7 @@ use ink_lang as ink;
 #[ink::contract]
 mod stub {
     use ink_prelude::vec::Vec;
-    use primitives::{MeetingError, Ticket};
+    use primitives::{MeetingError, Ticket, TicketNft};
 
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
@@ -58,7 +58,7 @@ mod stub {
         6. 触发事件： ticket_created
         */
         #[ink(message, payable)]
-        pub fn buy_ticket(&mut self, _ticket:Ticket)->bool{
+        pub fn buy_ticket(&mut self, _ticket:Ticket)->Result<TicketNft,MeetingError>{
             unimplemented!()
         }
 

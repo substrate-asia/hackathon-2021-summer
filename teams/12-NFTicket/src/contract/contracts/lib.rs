@@ -385,7 +385,7 @@ mod nfticket {
         /// 5. 返回创建的 class_id 和 NFT_ID的元组
         /// 6. 触发事件： ticket_created
         #[ink(message, payable)]
-        pub fn buy_ticket(&mut self, _ticket: Ticket) -> Result<TicketNft,NFTMartErr> {
+        pub fn buy_ticket(&mut self, _ticket: Ticket) -> Result<TicketNft,MeetingError> {
             ink_env::debug_message("-------------------------buy_ticket开始调用");
             let mut ticket_nft:TicketNft = Default::default();
             // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
@@ -398,8 +398,10 @@ mod nfticket {
             if let Some(_) = self.meeting_map.get(&caller) {
                 let calss_id = self.classid_map.get(&_ticket.meeting).unwrap();
                 
-                let (_class_owner, _ticket_owner, _class_id, token_id, quantity) = self.env().extension().proxy_mint(&_ticket.buyer, *calss_id, vec![1], 1,Some(false)).unwrap();
-                ticket_nft=TicketNft{
+                let (_class_owner, _ticket_owner, _class_id, token_id, quantity) = self.env().extension()
+                .proxy_mint(&_ticket.buyer, *calss_id, vec![1], 1,Some(false))
+                .map_err(|_|MeetingError::NftCallerError)?;
+                ticket_nft = TicketNft{
                     _class_owner,
                     _ticket_owner,
                     _class_id,
@@ -416,7 +418,6 @@ mod nfticket {
                 panic!("错误:当前合约只能通过活动合约调用!");
             }
             return Ok(ticket_nft)
-            // TODO 根据class_id 创建ticke_id 
         }
 
         /// 开始收费门票.

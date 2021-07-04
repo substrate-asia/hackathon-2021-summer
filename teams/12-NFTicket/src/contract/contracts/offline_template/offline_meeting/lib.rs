@@ -19,7 +19,7 @@ pub mod offline_meeting {
 		traits::{PackedLayout, SpreadLayout},
 		Lazy,
 	};
-	use primitives::{MeetingStatus, Ticket};
+	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
 	use stub::MainStub;
 	const BASE_PERCENT: u128 = 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
@@ -286,12 +286,17 @@ pub mod offline_meeting {
 
 			// 调用主合约的购票方法,并将抽成比例转给主合约.
 			use ink_lang::ForwardCallMut;
-			<&mut MainStub>::call_mut(&mut *self.main_stub)
+			// <&mut MainStub>::call_mut(&mut *self.main_stub)
+			// 	.buy_ticket(ticket.clone())
+			// 	.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
+			// 	.fire()
+			// 	.expect("something wrong");
+			let buy_ticket_result:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
 				.buy_ticket(ticket.clone())
 				.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
 				.fire()
-				.expect("something wrong");
-
+				.unwrap().unwrap();
+			
 			true
 		}
 

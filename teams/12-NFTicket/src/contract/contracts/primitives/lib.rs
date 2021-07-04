@@ -6,6 +6,7 @@ use ink_env::{
 };
 use ink_prelude::vec::Vec;
 use ink_storage::traits::{PackedLayout, SpreadLayout};
+
 #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
 #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
 pub struct TickeResult {
@@ -20,6 +21,7 @@ pub enum MeetingError {
     NotOwner,
     CallBuyTickerError,
     TransferError,
+    NftCallerError,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
