@@ -33,7 +33,7 @@ async function parseMethodArgs (ctx: RouterContext, dataRule?: DataRuleParams, o
     ? typeof ctx.request.query.data === 'string' ? JSON.parse(decodeURIComponent(ctx.request.query.data)) : (ctx.request.query ?? {})
     : (ctx.request.body ?? {}))
   // 检测data是否合法
-  if (dataRule != null) {
+  if (!_.isEmpty(dataRule)) {
     if (ctx.method !== 'GET' && _.isEmpty(data) && !_.isEmpty(dataRule)) {
       throw new NBError(500, 'empty data.')
     }

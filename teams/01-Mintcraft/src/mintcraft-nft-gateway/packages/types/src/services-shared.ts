@@ -17,5 +17,6 @@ export const PLATFORMS = {
 
 export const STORAGES = {
   IPFS: 'ipfs',
+  ARWEAVE: 'ar',
   SWARM: 'swarm'
 }
