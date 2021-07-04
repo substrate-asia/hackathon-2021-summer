@@ -103,6 +103,7 @@
 
 
 * 9、在NFTmall公链部署和测试Deployment and operation in NFTmall chain（规划中）
+  * 以moonbeam平行链为基础，开发NFTmall平行链
   * NFTmall Public chain deployment
 
 
