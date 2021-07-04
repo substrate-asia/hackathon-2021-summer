@@ -33,6 +33,12 @@ function Mine() {
           <img src={right} className={styles.rightArrow}></img>
         </div>
         <div className={styles.dotLine}></div>
+        <div className={styles.myItem}>
+          <img src={event} className={styles.iconWallets}></img>
+          <span className={styles.textLable}>Transaction</span>
+          <img src={right} className={styles.rightArrow}></img>
+        </div>
+        <div className={styles.dotLine}></div>
       </div>
     </div>
   );
