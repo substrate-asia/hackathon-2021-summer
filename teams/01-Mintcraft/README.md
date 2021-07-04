@@ -47,11 +47,13 @@ Mintcraft 是春季波卡黑客松时期诞生的想法，最早是计划制作�
 | P0 | ink! | entity | 实体，多类型、可培养(ERC1155实现) |
 | P1 | ink! | cultivate | 培养合约，NFT链上数据养成合约 |
 | P1 | ink! | dungeons | 地下城控制合约 |
+| P0 | backend | gateway-api-design | 网关 API 架构设计 |
 | P0 | backend | nft-storage | NFT资源上传并生成 metadata uri的系列 API |
 | P0 | backend | nft-query | NFT资源的数据查询API |
 | P0 | backend | tx-builder | 多链交易构造器 |
 | P0 | backend | tx-sender | 多链交易发送及监控 |
-| P0 | ue4-plugin | engine-signer | UE4下可用的签名机 |
+| P0 | ue4-plugin | plugin-framework | UE4的插件框架 |
+| P0 | ue4-plugin | engine-signer | UE4可用的签名机 |
 | P0 | ue4-plugin | editor-entity-builder | UE4下 NFT 的构造导出功能 |
 | P0 | ue4-plugin | editor-entity-publisher | 将 NFT 资源导出到给服务器后端的功能 |
 | P0 | ue4-plugin | runtime-entity-loader | 运行中载入 NFT 资源的插件 |
@@ -64,7 +66,7 @@ Mintcraft 是春季波卡黑客松时期诞生的想法，最早是计划制作�
 
 > 7月5日前，在黑客松期间完成的功能点。
 
-ink!合约
+Demo ink!合约
 
 - [x] trait-erc721
 - [x] trait-erc1155
@@ -79,13 +81,15 @@ ink!合约
 
 后端API
 
-- [ ] nft-storage
-- [ ] nft-query
+- [x] gateway-api-design
+- [x] nft-storage
+- [x] nft-query
 - [ ] tx-builder
 - [ ] tx-sender
 
 ue4插件
 
+- [x] plugin-framework
 - [ ] engine-signer
 - [ ] editor-entity-builder
 - [ ] editor-entity-publisher
