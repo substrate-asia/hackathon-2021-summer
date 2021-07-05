@@ -3,7 +3,7 @@
 
 ### ONEPAPER 战队</br></br></br></br>
 
-<img src="https://github.com/paper-one/demo/blob/93c704b780b8da983cdeb333c359c23906aa2f54/one-paper%20logo.png" width="40%">  
+<img src="https://github.com/paper-one/demo/blob/93c704b780b8da983cdeb333c359c23906aa2f54/one-paper%20logo.png" width="40%">
 
 项目名称：one paper
 
@@ -26,7 +26,7 @@
 #### 用户可以通过多种形式获得PAPER
 通过发表论文获得奖励，通过登录检索或完成相关任务，通过分享或转载期刊论文来获得奖励，论文被引用将获得奖励</br>
 
-### 战队吉祥物  
+### 战队吉祥物
 
 #### One Paper机器人</br>
 
@@ -50,6 +50,10 @@
 
 #### OnePaper代码及重要模块介绍
 
+substrate-node-template下为substrate相关代码，ipfs功能尚未完成
+substrate-node-template/java 为论文上传临时解决方案
+使用py-substrate-interface使用java调用rpc进行余额相关操作
+substrate-node-template\java\src\main\resources下python文件为相关执行脚本
 
 
 </br></br></br></br></br>待补充</br></br></br></br></br>
