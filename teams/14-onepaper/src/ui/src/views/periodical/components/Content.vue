@@ -76,7 +76,7 @@ export default {
     },
 
     checkClick() {
-      this.$confirm('查看全文，将扣除您1个币', '提示', {
+      this.$confirm('查看全文，将扣除您1个Paper', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         dangerouslyUseHTMLString: true,
@@ -89,7 +89,7 @@ export default {
     },
 
     downClick() {
-      this.$confirm('下载，将扣除您1个币', '提示', {
+      this.$confirm('下载，将扣除您1个Paper', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         dangerouslyUseHTMLString: true,
