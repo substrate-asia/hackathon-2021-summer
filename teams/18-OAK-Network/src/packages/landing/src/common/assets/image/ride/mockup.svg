@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="450.446" height="823.052" viewBox="0 0 450.446 823.052">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-4 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke: #707070;
+      }
+
+      .cls-2, .cls-4 {
+        stroke-miterlimit: 10;
+        stroke-width: 3px;
+        opacity: 0.325;
+      }
+
+      .cls-3 {
+        fill: #fcfcfd;
+      }
+
+      .cls-4 {
+        stroke: #fff;
+      }
+
+      .cls-5 {
+        fill: #eceaf9;
+      }
+
+      .cls-6 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-7 {
+        fill: #f4f2ff;
+      }
+
+      .cls-8 {
+        fill: #fbfbfe;
+      }
+
+      .cls-9 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-10 {
+        clip-path: url(#clip-path-2);
+      }
+
+      .cls-11 {
+        stroke: none;
+      }
+
+      .cls-12 {
+        filter: url(#Rectangle_Copy_2);
+      }
+    </style>
+    <filter id="Rectangle_Copy_2" x="0" y="0" width="450.446" height="823.052" filterUnits="userSpaceOnUse">
+      <feOffset dx="-6" dy="-3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="15" result="blur"/>
+      <feFlood flood-color="#2a1a8e" flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect id="Mask" class="cls-1" width="205.845" height="43.427"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#eee"/>
+      <stop offset="0.473" stop-color="#fff"/>
+      <stop offset="1" stop-color="#d8d8d8"/>
+    </linearGradient>
+    <clipPath id="clip-path-2">
+      <rect id="Mask-2" data-name="Mask" class="cls-1" width="6.08" height="29.531"/>
+    </clipPath>
+  </defs>
+  <g id="mock_1" data-name="mock 1" transform="translate(-293.08 -209)">
+    <g id="Rectangle_Copy_8" data-name="Rectangle Copy 8" class="cls-2" transform="translate(346.685 261.343)">
+      <rect class="cls-11" width="355.235" height="725.235" rx="53"/>
+      <rect class="cls-1" x="1.5" y="1.5" width="352.235" height="722.235" rx="51.5"/>
+    </g>
+    <g class="cls-12" transform="matrix(1, 0, 0, 1, 293.08, 209)">
+      <rect id="Rectangle_Copy_2-2" data-name="Rectangle Copy 2" class="cls-3" width="360.446" height="733.052" rx="57" transform="translate(51 48)"/>
+    </g>
+    <g id="Rectangle_Copy_8-2" data-name="Rectangle Copy 8" class="cls-4" transform="translate(346.685 261.343)">
+      <rect class="cls-11" width="355.235" height="725.235" rx="53"/>
+      <rect class="cls-1" x="1.5" y="1.5" width="352.235" height="722.235" rx="51.5"/>
+    </g>
+    <rect id="Rectangle_Copy" data-name="Rectangle Copy" class="cls-5" width="334.39" height="705.258" rx="41" transform="translate(357.108 270.897)"/>
+    <g id="Rectangle" transform="translate(427.46 271.765)">
+      <rect id="Mask-3" data-name="Mask" class="cls-1" width="205.845" height="43.427"/>
+      <g id="Rectangle-2" data-name="Rectangle" class="cls-6">
+        <rect id="Rectangle-3" data-name="Rectangle" class="cls-5" width="178.92" height="46.033" rx="20" transform="translate(7.817 -14.765)"/>
+        <path id="Path" class="cls-7" d="M5.508,4.4c0-2.117-.856-4.4-4.357-4.4H6.4S5.508,6.521,5.508,4.4Z" transform="translate(2.454 4.343)"/>
+        <path id="Path_Copy" data-name="Path Copy" class="cls-7" d="M-6.3,4.4c0-2.117.856-4.4,4.357-4.4H-7.193S-6.3,6.521-6.3,4.4Z" transform="translate(193.062 4.343)"/>
+      </g>
+    </g>
+    <circle id="Oval" class="cls-8" cx="6.08" cy="6.08" r="6.08" transform="translate(556.005 281.319)"/>
+    <rect id="Rectangle-4" data-name="Rectangle" class="cls-8" width="46.901" height="5.211" rx="2.606" transform="translate(499.549 284.793)"/>
+    <rect id="Rectangle-5" data-name="Rectangle" class="cls-5" width="3.474" height="82.512" rx="1.737" transform="translate(704.526 428.972)"/>
+    <rect id="Rectangle_Copy_3" data-name="Rectangle Copy 3" class="cls-9" width="3.474" height="59.061" rx="1.737" transform="translate(340.606 472.399)"/>
+    <rect id="Rectangle_Copy_4" data-name="Rectangle Copy 4" class="cls-9" width="3.474" height="59.061" rx="1.737" transform="translate(340.606 406.39)"/>
+    <g id="Rectangle_Copy_5" data-name="Rectangle Copy 5" transform="translate(338 359.488)">
+      <rect id="Mask-4" data-name="Mask" class="cls-1" width="6.08" height="29.531"/>
+      <g id="Rectangle_Copy_5-2" data-name="Rectangle Copy 5" class="cls-10">
+        <rect id="Rectangle_Copy_5-3" data-name="Rectangle Copy 5" class="cls-9" width="12.16" height="20.845" rx="2" transform="translate(3.474 2.606)"/>
+      </g>
+    </g>
+  </g>
+</svg>

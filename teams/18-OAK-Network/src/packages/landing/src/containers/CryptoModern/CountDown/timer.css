@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.NormalClock {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  align-items: center;
+}
+
+.NormalUnitContainer {
+  display: block;
+  position: relative;
+  width: 140px;
+  height: auto;
+  -webkit-perspective-origin: 50% 50%;
+  perspective-origin: 50% 50%;
+  -webkit-perspective: 300px;
+  perspective: 300px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.NormalupperCard,
+.NormallowerCard {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.NormalupperCard span,
+.NormallowerCard span {
+  font-size: 4em;
+  font-family: 'Roboto', monospace;
+  font-weight: 300;
+  color: #000;
+}
+
+.NormalupperCard {
+  align-items: flex-end;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.NormalupperCard span {
+  /* -webkit-transform: translateY(50%);
+	transform: translateY(50%); */
+}
+
+.NormallowerCard {
+  align-items: flex-start;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.NormallowerCard span {
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.NormalCard {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.NormalCard span {
+  font-family: 'Roboto', monospace;
+  font-size: 4em;
+  font-weight: 300;
+  color: #000;
+}
+.digitLabel {
+  font-size: 14px;
+  font-family: 'Roboto';
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 12px;
+  text-align: center;
+}

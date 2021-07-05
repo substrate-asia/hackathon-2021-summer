@@ -1,0 +1,245 @@
+{
+  "features": [
+    {
+      "id": 1,
+      "icon": "flaticon-atom",
+      "title": "App Development",
+      "description": "If you have to develop a mobile app, this is the most appropriate time."
+    },
+    {
+      "id": 2,
+      "icon": "flaticon-trophy",
+      "title": "UI/UX Design",
+      "description": "We provide the best UI/UX Design by following the latest trends of the market."
+    },
+    {
+      "id": 3,
+      "icon": "flaticon-conversation",
+      "title": "Wireframing Task",
+      "description": " We respect our customer opinions and deals with them. "
+    }
+  ],
+  "featuresSliderTwo": [
+    {
+      "id": 1,
+      "image": "../../assets/image/app/6.svg",
+      "title": "Super Performance"
+    },
+    {
+      "id": 2,
+      "image": "../../assets/image/app/1.svg",
+      "title": "Search Optimization"
+    },
+    {
+      "id": 3,
+      "image": "../../assets/image/app/2.svg",
+      "title": "Customer Support"
+    },
+
+    {
+      "id": 4,
+      "image": "../../assets/image/app/3.svg",
+      "title": "100% Response Time"
+    },
+
+    {
+      "id": 5,
+      "image": "../../assets/image/app/4.svg",
+      "title": "Maintaining Milestones"
+    },
+
+    {
+      "id": 6,
+      "image": "../../assets/image/app/5.svg",
+      "title": "Organised Code"
+    }
+  ],
+  "menuWidget": [
+    {
+      "id": 1,
+      "title": "About Us",
+      "menuItems": [
+        {
+          "id": 1,
+          "url": "#",
+          "text": "Support Center"
+        },
+        {
+          "id": 2,
+          "url": "#",
+          "text": "Customer Support"
+        },
+        {
+          "id": 3,
+          "url": "#",
+          "text": "About Us"
+        },
+        {
+          "id": 4,
+          "url": "#",
+          "text": "Copyright"
+        },
+        {
+          "id": 5,
+          "url": "#",
+          "text": "Popular Campaign"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Our Information",
+      "menuItems": [
+        {
+          "id": 1,
+          "url": "#",
+          "text": "Return Policy"
+        },
+        {
+          "id": 2,
+          "url": "#",
+          "text": "Privacy Policy"
+        },
+        {
+          "id": 3,
+          "url": "#",
+          "text": "Terms & Conditions"
+        },
+        {
+          "id": 4,
+          "url": "#",
+          "text": "Site Map"
+        },
+        {
+          "id": 5,
+          "url": "#",
+          "text": "Store Hours"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "My Account",
+      "menuItems": [
+        {
+          "id": 1,
+          "url": "#",
+          "text": "Press inquiries"
+        },
+        {
+          "id": 2,
+          "url": "#",
+          "text": "Social media directories"
+        },
+        {
+          "id": 3,
+          "url": "#",
+          "text": "Images & B-roll"
+        },
+        {
+          "id": 4,
+          "url": "#",
+          "text": "Permissions"
+        },
+        {
+          "id": 5,
+          "url": "#",
+          "text": "Speaker requests"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Policy",
+      "menuItems": [
+        {
+          "id": 1,
+          "url": "#",
+          "text": "Application security"
+        },
+        {
+          "id": 2,
+          "url": "#",
+          "text": "Software principles"
+        },
+        {
+          "id": 3,
+          "url": "#",
+          "text": "Unwanted software policy"
+        },
+        {
+          "id": 4,
+          "url": "#",
+          "text": "Responsible supply chain"
+        }
+      ]
+    }
+  ],
+  "menuItems": [
+    {
+      "label": "Our Services",
+      "path": "#services",
+      "offset": "100"
+    },
+    {
+      "label": "Control Remotely",
+      "path": "#control",
+      "offset": "100"
+    },
+    {
+      "label": "Key Features",
+      "path": "#keyfeature",
+      "offset": "0"
+    },
+    {
+      "label": "Partners",
+      "path": "#partners",
+      "offset": "-100"
+    },
+    {
+      "label": "Payments",
+      "path": "#payments",
+      "offset": "100"
+    },
+    {
+      "label": "Testimonial",
+      "path": "#testimonialSection",
+      "offset": "100"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "description": "Best working experience  with this amazing team & in future, we want to work together",
+      "name": "Jon Doe",
+      "designation": "Founder of Dumpy"
+    },
+    {
+      "id": 2,
+      "description": "Impressed with master class support of the team and really look forward for the future.",
+      "name": "Roman Ul Oman",
+      "designation": "Co-founder of QatarDiaries"
+    },
+
+    {
+      "id": 3,
+      "description": "I have bought more than 10 themes on ThemeForest, and this is the first one I review. Wow! Amazing React Theme",
+      "name": "Jeny Doe",
+      "designation": "Director of Beauty-queen"
+    },
+
+    {
+      "id": 4,
+      "description": "Really, really well made! Love that each component is handmade and customised. Great Work",
+      "name": "Jeny Doe",
+      "designation": "Co-founder of Softo"
+    },
+
+    {
+      "id": 5,
+      "description": "It written well. The author has a firm understanding of React and other technologies. It been consistently updated. Great product. Thank you.",
+      "name": "Jon Doe",
+      "designation": "Co-founder of Antinio"
+    }
+  ]
+}
