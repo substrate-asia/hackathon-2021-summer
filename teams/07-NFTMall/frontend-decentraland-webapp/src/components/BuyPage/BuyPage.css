@@ -1,0 +1,11 @@
+.BuyPage .ui.header {
+  margin-bottom: 8px;
+}
+
+.BuyPage .buttons {
+  margin-top: 32px;
+}
+
+.BuyPage .error {
+  color: var(--danger);
+}
