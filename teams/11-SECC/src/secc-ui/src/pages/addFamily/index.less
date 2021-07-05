@@ -1,0 +1,35 @@
+.am-list-header {
+  text-align: left;
+}
+.family-wrapper {
+  h2.title {
+    color: #FDA64F;
+    font-size: .426667rem /* 16/37.5 */;
+    text-align: left;
+    padding-left: @common-padding;
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-bottom: 12px;
+  }
+  .chronic-list {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 @common-padding;
+    .item {
+      background: #ffffff;
+      border-radius: 3px;
+      width: 80px;
+      height: 36px;
+      line-height: 36px;
+      font-size: .373333rem /* 14/37.5 */;
+      text-align: center;
+      color: #666666;
+      border: 1px solid #999999;
+      &.selected {
+        color:#ffffff;
+        background-color: #FDA64F;
+        border-color: #FDA64F;
+      }
+    }
+  }
+}

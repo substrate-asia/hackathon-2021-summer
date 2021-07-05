@@ -1,0 +1,483 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1
+paths:
+  /medical/{idCard}:
+    get:
+      tags:
+      - medical
+      description: find medical by idCard
+      parameters:
+      - in: path
+        name: idCard
+        description: the idCard you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{medical} models.Medical'
+        "403":
+          description: :idCard is empty
+  /medical/UploadFile:
+    post:
+      tags:
+      - medical
+      description: UploadFile
+      parameters:
+      - in: body
+        name: body
+        description: The UploadFile content
+        required: true
+        schema:
+          $ref: '#/definitions/multipart.File'
+      responses:
+        "200":
+          description: '{medical} models.Medical'
+        "403":
+          description: body is empty
+  /object/:
+    get:
+      tags:
+      - object
+      description: get all objects
+      operationId: ObjectController.GetAll
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Object'
+        "403":
+          description: :objectId is empty
+    post:
+      tags:
+      - object
+      description: create object
+      operationId: ObjectController.Create
+      parameters:
+      - in: body
+        name: body
+        description: The object content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Object'
+      responses:
+        "200":
+          description: '{string} models.Object.Id'
+        "403":
+          description: body is empty
+  /object/{objectId}:
+    get:
+      tags:
+      - object
+      description: find object by objectid
+      operationId: ObjectController.Get
+      parameters:
+      - in: path
+        name: objectId
+        description: the objectid you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Object'
+        "403":
+          description: :objectId is empty
+    put:
+      tags:
+      - object
+      description: update the object
+      operationId: ObjectController.Update
+      parameters:
+      - in: path
+        name: objectId
+        description: The objectid you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: The body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Object'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Object'
+        "403":
+          description: :objectId is empty
+    delete:
+      tags:
+      - object
+      description: delete the object
+      operationId: ObjectController.Delete
+      parameters:
+      - in: path
+        name: objectId
+        description: The objectId you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: objectId is empty
+  /sleep/report/:
+    post:
+      tags:
+      - sleep/report
+      description: create sleep_report
+      parameters:
+      - in: body
+        name: body
+        description: The sleep_report content
+        required: true
+        schema:
+          $ref: '#/definitions/models.SleepReport'
+      responses:
+        "200":
+          description: ""
+        "403":
+          description: body is empty
+  /sleep/report/{deviceNo}:
+    get:
+      tags:
+      - sleep/report
+      description: find sleep_report by deviceNo
+      parameters:
+      - in: path
+        name: deviceNo
+        description: the deviceNo you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{sleep_report} models.Object'
+        "403":
+          description: :deviceNo is empty
+  /sleep/sign/:
+    post:
+      tags:
+      - sleep/sign
+      description: create sleep_sign
+      parameters:
+      - in: body
+        name: body
+        description: The sleep_sign content
+        required: true
+        schema:
+          $ref: '#/definitions/models.SleepSign'
+      responses:
+        "200":
+          description: ""
+        "403":
+          description: body is empty
+  /sleep/sign/{deviceNo}:
+    get:
+      tags:
+      - sleep/sign
+      description: find sleep_sign by deviceNo
+      parameters:
+      - in: path
+        name: deviceNo
+        description: the deviceNo you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{sleep_sign} models.Object'
+        "403":
+          description: :deviceNo is empty
+  /user/:
+    get:
+      tags:
+      - user
+      description: get all Users
+      operationId: UserController.GetAll
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+    post:
+      tags:
+      - user
+      description: create users
+      operationId: UserController.CreateUser
+      parameters:
+      - in: body
+        name: body
+        description: body for user content
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      responses:
+        "200":
+          description: '{int} models.User.Id'
+        "403":
+          description: body is empty
+  /user/{uid}:
+    get:
+      tags:
+      - user
+      description: get user by uid
+      operationId: UserController.Get
+      parameters:
+      - in: path
+        name: uid
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+        "403":
+          description: :uid is empty
+    put:
+      tags:
+      - user
+      description: update the user
+      operationId: UserController.Update
+      parameters:
+      - in: path
+        name: uid
+        description: The uid you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for user content
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+        "403":
+          description: :uid is not int
+    delete:
+      tags:
+      - user
+      description: delete the user
+      operationId: UserController.Delete
+      parameters:
+      - in: path
+        name: uid
+        description: The uid you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: uid is empty
+  /user/login:
+    get:
+      tags:
+      - user
+      description: Logs user into the system
+      operationId: UserController.Login
+      parameters:
+      - in: query
+        name: username
+        description: The username for login
+        required: true
+        type: string
+      - in: query
+        name: password
+        description: The password for login
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} login success'
+        "403":
+          description: user not exist
+  /user/logout:
+    get:
+      tags:
+      - user
+      description: Logs out current logged in user session
+      operationId: UserController.logout
+      responses:
+        "200":
+          description: '{string} logout success'
+  /wristband/:
+    post:
+      tags:
+      - wristband
+      description: create wristband
+      parameters:
+      - in: body
+        name: body
+        description: The wristband content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Wristband'
+      responses:
+        "200":
+          description: ""
+        "403":
+          description: body is empty
+  /wristband/{deviceNo}:
+    get:
+      tags:
+      - wristband
+      description: find wristband by deviceNo
+      parameters:
+      - in: path
+        name: deviceNo
+        description: the deviceNo you want to get
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{wristband} models.Object'
+        "403":
+          description: :deviceNo is empty
+definitions:
+  models.Object:
+    title: Object
+    type: object
+    properties:
+      ObjectId:
+        type: string
+      PlayerName:
+        type: string
+      Score:
+        type: integer
+        format: int64
+  models.Profile:
+    title: Profile
+    type: object
+    properties:
+      Address:
+        type: string
+      Age:
+        type: integer
+        format: int64
+      Email:
+        type: string
+      Gender:
+        type: string
+  models.SleepReport:
+    title: SleepReport
+    type: object
+    properties:
+      CreatedAt:
+        type: string
+        format: datetime
+      DataId:
+        type: string
+      DataTime:
+        type: string
+      DeepSleep:
+        type: integer
+        format: int32
+      DeletedAt:
+        type: string
+        format: datetime
+      DeviceNo:
+        type: string
+      LightSleep:
+        type: integer
+        format: int32
+      UpdatedAt:
+        type: string
+        format: datetime
+  models.SleepSign:
+    title: SleepSign
+    type: object
+    properties:
+      BreathRate:
+        type: integer
+        format: int32
+      CreatedAt:
+        type: string
+        format: datetime
+      DataId:
+        type: string
+      DataTime:
+        type: string
+      DeletedAt:
+        type: string
+        format: datetime
+      DeviceNo:
+        type: string
+      HeartRate:
+        type: integer
+        format: int32
+      UpdatedAt:
+        type: string
+        format: datetime
+  models.User:
+    title: User
+    type: object
+    properties:
+      Id:
+        type: string
+      Password:
+        type: string
+      Profile:
+        $ref: '#/definitions/models.Profile'
+      Username:
+        type: string
+  models.Wristband:
+    title: Wristband
+    type: object
+    properties:
+      CreatedAt:
+        type: string
+        format: datetime
+      DataId:
+        type: string
+      DataTime:
+        type: string
+      DeletedAt:
+        type: string
+        format: datetime
+      DeviceNo:
+        type: string
+      HeartRate:
+        type: integer
+        format: int32
+      UpdatedAt:
+        type: string
+        format: datetime
+  multipart.File:
+    title: File
+    type: object
+tags:
+- name: wristband
+  description: |
+    WristbandController Operations about wristband
+- name: sleep/sign
+  description: |
+    SleepSignController Operations about sleep_sign
+- name: sleep/report
+  description: |
+    SleepReportController Operations about sleep_report
+- name: medical
+  description: |
+    MedicalController Operations about medical
+- name: object
+  description: |
+    Operations about object
+- name: user
+  description: |
+    Operations about Users
