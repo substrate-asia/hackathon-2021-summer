@@ -10,7 +10,7 @@
     - [演示视频](./docs/demo.mp4)
     - [白皮书](./docs/EternityLabs_whitepaper.pdf)
 - **/src**
-	- [项目代码文档](./src/README_CN.md)
+	- [项目代码文档](./src/README.md)
 
 ## 基本资料
 
