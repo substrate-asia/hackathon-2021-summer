@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  substrate:
+    image: parity/substrate:latest
+    container_name: substrate
+    restart: unless-stopped
+    ports:
+      - 30333:30333
+      - 9933:9933
+      - 9944:9944
+    command: ["--chain", "${CHAINSPEC}", "--base-path", "/data", "--name", "${NODE_NAME}", "--pruning", "archive", "--alice", "--validator", "--unsafe-rpc-external", "--unsafe-ws-external", "--rpc-cors", "all"]
+    volumes:
+      - ./config:/config
+      - ./data/substrate:/data
+    networks:
+      - service
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    ports:
+      - '${DB_PORT}:5432'
+    command: ["postgres", "-cshared_preload_libraries=pg_stat_statements"]
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
+    networks:
+      - service
+
+  graphql:
+    image: hasura/graphql-engine:v1.3.0
+    container_name: graphql
+    ports:
+      - '${GQL_PORT}:8080'
+    depends_on:
+      - 'postgres'
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@postgres:5432/${DB_NAME}
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "${GQL_CONSOLE}"
+      HASURA_GRAPHQL_ADMIN_SECRET: ${GQL_SECRET}
+    networks:
+      - service
+
+networks:
+    service:
