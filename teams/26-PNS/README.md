@@ -47,4 +47,7 @@ https://app.ens.domains/
 
 https://www.figma.com/file/Ghc5wio7QParG5lzwwIj0d/Polkadot-Name-System?node-id=247%3A43
 
+# 演示文稿 Keynote
+
+https://www.dropbox.com/s/6kv712yuptxsbl4/PNS-Hackathon.pdf?dl=0
 
