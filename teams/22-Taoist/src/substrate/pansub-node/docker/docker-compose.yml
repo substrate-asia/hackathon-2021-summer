@@ -1,0 +1,22 @@
+version: "3.2"
+
+services:
+  pansub-node:
+    container_name: pansub-node
+    image: pansub-node:latest
+    ports:
+      - "9944:9944"
+      - "9933:9933"
+      - "30333:30333"
+    command: bash -c "/pansub-node --dev --ws-external --rpc-external --rpc-methods Unsafe --base-path /data"
+    volumes: 
+      - ./data:/data
+
+  polkadot-frontend:
+    container_name: polkadot-frontend
+    image: pansub-node:latest
+    ports:
+      - "3001:3001"
+    command: bash -c "cd /apps && serve -p 3001 build"
+    depends_on:
+      - pansub-node
