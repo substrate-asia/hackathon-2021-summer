@@ -1,0 +1,213 @@
+specVersion: 0.0.2
+description: Decentraland's Marketplace
+repository: https://github.com/decentraland/decentraland
+schema:
+  file: ./schema.graphql
+dataSources:
+  # ---------------------------------------------------------
+  # PARCELS -------------------------------------------------
+  # ---------------------------------------------------------
+  - kind: ethereum/contract
+    name: LANDRegistry
+    network: {{network}}
+    source:
+      address: '{{address:LANDRegistry}}'
+      abi: LANDRegistry
+      startBlock: {{startBlock:LANDRegistry}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/handlers/parcel.ts
+      entities:
+        - ERC721
+        - Parcel
+        - Data
+      abis:
+        - name: LANDRegistry
+          file: ./abis/LANDRegistry.json
+      callHandlers:
+        - function: initialize(bytes)
+          handler: handleInitialize
+      eventHandlers:
+        - event: Update(indexed uint256,indexed address,indexed address,string)
+          handler: handleUpdate
+
+  # ---------------------------------------------------------
+  # ESTATES -------------------------------------------------
+  # ---------------------------------------------------------
+  - kind: ethereum/contract
+    name: EstateRegistry
+    network: {{network}}
+    source:
+      address: '{{address:EstateRegistry}}'
+      abi: EstateRegistry
+      startBlock: {{startBlock:EstateRegistry}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/handlers/estate.ts
+      entities:
+        - Estate
+        - Parcel
+        - Data
+      abis:
+        - name: EstateRegistry
+          file: ./abis/EstateRegistry.json
+        - name: LANDRegistry
+          file: ./abis/LANDRegistry.json
+      eventHandlers:
+        - event: CreateEstate(indexed address,indexed uint256,string)
+          handler: handleCreateEstate
+        - event: AddLand(indexed uint256,indexed uint256)
+          handler: handleAddLand
+        - event: RemoveLand(indexed uint256,indexed uint256,indexed address)
+          handler: handleRemoveLand
+        - event: Update(indexed uint256,indexed address,indexed address,string)
+          handler: handleUpdate
+
+  # ---------------------------------------------------------
+  # MANA ----------------------------------------------------
+  # ---------------------------------------------------------
+  # - kind: ethereum/contract
+  #   name: MANAToken
+  #   network: {{network}}
+  #   source:
+  #     address: '{{address:MANAToken}}'
+  #     abi: MANAToken
+  #     startBlock: {{startBlock:MANAToken}}
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.3
+  #     language: wasm/assemblyscript
+  #     file: ./src/handlers/manaToken.ts
+  #     entities:
+  #       - Wallet
+  #     abis:
+  #       - name: MANAToken
+  #         file: ./abis/MANAToken.json
+  #     eventHandlers:
+  #       - event: Mint(indexed address,uint256)
+  #         handler: handleMint
+  #       - event: Burn(indexed address,uint256)
+  #         handler: handleBurn
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+
+  # ---------------------------------------------------------
+  # ORDERS --------------------------------------------------
+  # ---------------------------------------------------------
+  - kind: ethereum/contract
+    name: Marketplace
+    network: {{network}}
+    source:
+      address: '{{address:Marketplace}}'
+      abi: Marketplace
+      startBlock: {{startBlock:Marketplace}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/handlers/marketplace.ts
+      entities:
+        - Order
+        - NFT
+      abis:
+        - name: Marketplace
+          file: ./abis/Marketplace.json
+      eventHandlers:
+        - event: OrderCreated(bytes32,indexed uint256,indexed address,address,uint256,uint256)
+          handler: handleOrderCreated
+        - event: OrderSuccessful(bytes32,indexed uint256,indexed address,address,uint256,indexed address)
+          handler: handleOrderSuccessful
+        - event: OrderCancelled(bytes32,indexed uint256,indexed address,address)
+          handler: handleOrderCancelled
+
+  # ---------------------------------------------------------
+  # ENS -------------------------------------------------
+  # ---------------------------------------------------------
+  - kind: ethereum/contract
+    name: DCLRegistrar
+    network: {{network}}
+    source:
+      address: '{{address:DCLRegistrar}}'
+      abi: DCLRegistrar
+      startBlock: {{startBlock:DCLRegistrar}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/handlers/ens.ts
+      entities:
+        - DCLRegistrar
+      abis:
+        - name: DCLRegistrar
+          file: ./abis/DCLRegistrar.json
+      eventHandlers:
+        - event: NameRegistered(indexed address,indexed address,indexed bytes32,string,uint256)
+          handler: handleNameRegistered
+
+  # ---------------------------------------------------------
+  # BIDS ----------------------------------------------------
+  # ---------------------------------------------------------
+  - kind: ethereum/contract
+    name: ERC721Bid
+    network: {{network}}
+    source:
+      address: '{{address:ERC721Bid}}'
+      abi: ERC721Bid
+      startBlock: {{startBlock:ERC721Bid}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/handlers/bid.ts
+      entities:
+        - Bid
+      abis:
+        - name: ERC721Bid
+          file: ./abis/ERC721Bid.json
+      eventHandlers:
+        - event: BidCreated(bytes32,indexed address,indexed uint256,indexed address,uint256,uint256,bytes)
+          handler: handleBidCreated
+        - event: BidAccepted(bytes32,indexed address,indexed uint256,address,indexed address,uint256,uint256)
+          handler: handleBidAccepted
+        - event: BidCancelled(bytes32,indexed address,indexed uint256,indexed address)
+          handler: handleBidCancelled
+
+
+# ---------------------------------------------------------
+# TEMPLATES -----------------------------------------------
+# ---------------------------------------------------------
+templates:
+  - name: ERC721
+    kind: ethereum/contract
+    network: {{network}}
+    source:
+      abi: ERC721
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/handlers/nft.ts
+      entities:
+        - NFT
+        - Parcel
+        - Estate
+        - Wearable
+        - ENS
+      abis:
+        - name: ERC721
+          file: ./abis/ERC721.json
+        - name: LANDRegistry
+          file: ./abis/LANDRegistry.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256,address,bytes,bytes)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,indexed uint256,address,bytes)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer

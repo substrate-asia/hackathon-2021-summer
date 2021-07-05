@@ -1,0 +1,357 @@
+{
+  "global": {
+    "assets": "Assets",
+    "address": "Address",
+    "balance": "Balance",
+    "load_more": "Load more",
+    "not_found": "Not found",
+    "parcel": "Parcel",
+    "parcel_with_coords": "Parcel {x},{y}",
+    "estate": "Estate",
+    "wearable": "Wearable",
+    "ens": "Name",
+    "art": "Art",
+    "cancel": "Cancel",
+    "proceed": "Proceed",
+    "nft": "NFT",
+    "loading": "Loading",
+    "settings": "Settings",
+    "accept": "Accept",
+    "update": "Update",
+    "search": "Search",
+    "apply": "Apply",
+    "network": "Network"
+  },
+  "vendors": {
+    "decentraland": "Decentraland",
+    "super_rare": "SuperRare",
+    "makers_place": "MakersPlace",
+    "known_origin": "KnownOrigin"
+  },
+  "navigation": {
+    "decentraland": "Decentraland",
+    "partners": "Partners",
+    "my_assets": "My Assets",
+    "my_bids": "My Bids",
+    "activity": "Activity"
+  },
+  "menu": {
+    "all": "All Assets",
+    "land": "Land",
+    "parcels": "Parcels",
+    "estates": "Estates",
+    "wearables": "Wearables",
+    "wearables_head": "Head",
+    "wearables_eyebrows": "Eyebrows",
+    "wearables_eyes": "Eyes",
+    "wearables_facial_hair": "Facial hair",
+    "wearables_hair": "Hair",
+    "wearables_mouth": "Mouth",
+    "wearables_upper_body": "Upper body",
+    "wearables_lower_body": "Lower body",
+    "wearables_feet": "Feet",
+    "wearables_accesories": "Accesories",
+    "wearables_earring": "Earring",
+    "wearables_eyewear": "Eyewear",
+    "wearables_hat": "Hat",
+    "wearables_helmet": "Helmet",
+    "wearables_mask": "Mask",
+    "wearables_tiara": "Tiara",
+    "wearables_top_head": "Top head",
+    "ens": "Names",
+    "editions": "Editions",
+    "tokens": "Tokens",
+    "decentraland": "Decentraland",
+    "super_rare": "SuperRare",
+    "known_origin": "KnownOrigin",
+    "makers_place": "MakersPlace"
+  },
+  "vendor_menu": {
+    "no_assets": "No assets",
+    "assets_count": "{count} {count, plural, one {asset} other {assets}}",
+    "more_than_assets_count": "+{count} assets"
+  },
+  "filters": {
+    "name": "Name",
+    "newest": "Newest",
+    "recently_listed": "Recently listed",
+    "cheapest": "Cheapest"
+  },
+  "home_page": {
+    "title": "Decentraland Marketplace",
+    "subtitle": "Welcome to the virtual world’s one-stop-shop for the very best digital assets.",
+    "get_started": "Start Browsing",
+    "learn_more": "Learn More",
+    "home_wearables": "Wearables",
+    "home_land": "Parcels and Estates",
+    "home_ens": "Names"
+  },
+  "partners_page": {
+    "partners": "Partners",
+    "latest_from": "Latest from {vendor}"
+  },
+  "partner_sidebar": {
+    "assets": "{count} {count, plural, one {asset} other {assets}}"
+  },
+  "nft_list": {
+    "empty": "No results"
+  },
+  "nft_filters": {
+    "on_sale": "On sale",
+    "filter": "Filter",
+    "order_by": "Order By",
+    "results": "{count} {count, plural, one {result} other {results}}",
+    "more_than_results": "+{count} results",
+    "search": "Search {suffix}...",
+    "search_land": "Search land...",
+    "rarity": "Rarity",
+    "gender": "Gender",
+    "collection": "Collection",
+    "all_collections": "All Collections",
+    "network": "Network",
+    "all_networks": "All Networks"
+  },
+  "nft_card": {
+    "expires_at": "Expires {date}"
+  },
+  "nft_sidebar": {
+    "categories": "Categories",
+    "back": "Back"
+  },
+  "nft_page": {
+    "description": "Description",
+    "owner": "Owner",
+    "price": "Price",
+    "expires": "Expires in",
+    "cancel_sale": "Remove listing",
+    "buy": "Buy",
+    "sell": "Sell",
+    "see_listing": "See listing",
+    "bid": "Bid",
+    "update": "Update price",
+    "transfer": "Transfer",
+    "plaza": "Plaza",
+    "road": "Road",
+    "district": "District",
+    "jump": "Jump",
+    "in": "In",
+    "leaving_decentraland": "Leaving Decentraland",
+    "leaving_decentraland_description": "You can't publish or update {vendor} assets to the Decentraland Marketplace yet. Do you want to proceed to {vendor_link} to publish it there?",
+    "leaving_decentraland_disclaimer": "Your NFTs will still be listed in the Decentraland Marketplace"
+  },
+  "proximity": {
+    "adjacent": "Adjacent",
+    "distance": "{distance} {distance, plural, one {parcel} other {parcels}} away"
+  },
+  "bid": {
+    "from": "From",
+    "price": "Price",
+    "time_left": "Time Left",
+    "not_enough_mana_on_bid_received": "The bidder doesn't have enough MANA to pay for this bid",
+    "invalid_fingerprint_on_bid_received": "This asset has been modified since this bid was made and it's not valid anymore",
+    "invalid_seller": "You don't own this asset anymore",
+    "not_enough_mana_on_bid_placed": "You don't have enough MANA to pay for this bid",
+    "invalid_fingerprint_on_bid_placed": "This asset has been modified since this bid was made and it's not valid anymore unless you update it"
+  },
+  "transaction_history": {
+    "title": "Transaction History",
+    "from": "From",
+    "to": "To",
+    "when": "When",
+    "price": "Price"
+  },
+  "wearable": {
+    "body_shape": {
+      "male": "Male",
+      "female": "Female",
+      "unisex": "Unisex"
+    },
+    "rarity": {
+      "unique": "Unique",
+      "mythic": "Mythic",
+      "legendary": "Legendary",
+      "epic": "Epic",
+      "rare": "Rare",
+      "uncommon": "Uncommon",
+      "common": "Common"
+    },
+    "rarity_tooltip": {
+      "unique": "Grail-like: One-of-a-kind",
+      "mythic": "For the lucky few: max 10",
+      "legendary": "Limited supply: max 100",
+      "epic": "Max supply: 1000",
+      "rare": "Max supply: 5000",
+      "uncommon": "Max supply: 10,000",
+      "common": "Max supply: 100,000"
+    },
+    "category": {
+      "body_shape": "Body Shape",
+      "earring": "Earring",
+      "eyebrows": "Eyebrows",
+      "eyes": "Eyes",
+      "eyewear": "Eyewear",
+      "facial_hair": "Facial Hair",
+      "feet": "Feet",
+      "hair": "Hair",
+      "hat": "Hat",
+      "helmet": "Helmet",
+      "lower_body": "Lower Body",
+      "mask": "Mask",
+      "mouth": "Mouth",
+      "tiara": "Tiara",
+      "top_head": "Top Head",
+      "upper_body": "Upper Body"
+    }
+  },
+  "sell_page": {
+    "title": "List for sale",
+    "update_title": "Update your listing",
+    "subtitle": "Set a price and expiration date for {name}.",
+    "update_subtitle": "Set a new price and expiration date for {name}.",
+    "price": "Price",
+    "expiration_date": "Expiration date",
+    "invalid_date": "This date has already passed",
+    "submit": "List for sale",
+    "update_submit": "Update",
+    "invalid": "Something roto",
+    "confirm": {
+      "title": "Please confirm",
+      "line_one": "You are about to list {name} on sale for {amount}.",
+      "line_two": "Please re-enter the price to confirm:"
+    }
+  },
+  "buy_page": {
+    "title": "Buy {category}",
+    "subtitle": "You are about to buy {name} for {amount}.",
+    "not_for_sale": "{name} is not for sale.",
+    "price_too_high": "Given the current exchange rates buying this {category} will cost you over {percentageIncrease}% its normal price.",
+    "please_wait": "Please wait until prices normalize again",
+    "actual_price": "The price above is an approximation, given current exchange rates you'll end up paying around {computedPrice}",
+    "buy": "Buy",
+    "proceed_anyways": "Proceed anyways",
+    "no_fingerprint": "Could not load fingerprint.",
+    "is_owner": "You are the owner of {name}.",
+    "not_enough_mana": "You don't have enough MANA to buy {name} for {amount}."
+  },
+  "bid_page": {
+    "title": "Place a bid",
+    "subtitle": "Set a price and expiration date for your bid on {name}.",
+    "price": "Price",
+    "expiration_date": "Expiration date",
+    "invalid_date": "This date has already passed",
+    "not_enougn_mana": "You don't have enough MANA",
+    "submit": "Bid"
+  },
+  "my_bids_page": {
+    "bids_received": "Bids received",
+    "bids_placed": "Bids placed",
+    "bids_archived": "Bids archived",
+    "show_archived": "Show Archived ({amount})",
+    "show_received": "Show Received ({amount})",
+    "empty_received": "You haven't received any bids yet...",
+    "empty_archived": "You don't have any archived bids...",
+    "empty_placed": "You haven't placed any bids yet...",
+    "archive": "Archive",
+    "unarchive": "Unarchive"
+  },
+  "cancel_sale_page": {
+    "title": "Remove listing",
+    "subtitle": "You are about to remove the listing of {name} for {amount}.",
+    "not_for_sale": "There are no active listings for {name}.",
+    "invalid_owner": "You are not the owner of {name}.",
+    "submit": "Confirm"
+  },
+  "settings_page": {
+    "authorizations": "Authorizations",
+    "buy_more_mana": "BUY MORE",
+    "copy_address": "COPY ADDRESS",
+    "copied": "COPIED ✔",
+    "authorization_error": "We couldn't load your authorizations, please try again",
+    "authorization_error_contact": "If the error persist don't hesitate to contact us",
+    "for_buying": "For buying",
+    "for_bidding": "For bidding",
+    "authorization_Marketplace_MANAToken": "MANA",
+    "for_selling": "For selling",
+    "pending_tx": "Transaction pending, click the spinner to go to your activity for a detailed status"
+  },
+  "authorization": {
+    "authorize": "Authorize the {contract_link} contract to operate {symbol} on your behalf on {network}",
+    "allowed": "You authorized the {contract_link} contract to operate {symbol} on your behalf",
+    "approved": "You authorized the {contract_link} contract to operate {symbol} on your behalf",
+    "disallowed": "You unauthorized the {contract_link} contract to operate {symbol} on your behalf",
+    "disapproved": "You unauthorized the {contract_link} contract to operate {symbol} on your behalf"
+  },
+  "authorization_modal": {
+    "title": "Authorize {token}",
+    "description": "In order to continue you will need to authorize the {contract} contract to operate {token} tokens on your behalf.{br}This only has to be done once, and you can always manage your authorizations from the {settings_link} page."
+  },
+  "transfer_page": {
+    "title": "Transfer {category}",
+    "subtitle": "You are about to transfer {name}.",
+    "for_sale": "{name} can't be transferred because it's on sale.",
+    "invalid_owner": "You are not the owner of {name}.",
+    "invalid_address": "That's not a valid address",
+    "recipient": "Recepient address",
+    "warning": "Remember that transferring is an irreversible operation.{br}Please check the address carefully.",
+    "submit": "Transfer"
+  },
+  "activity_page": {
+    "latest_activity": "Latest Activity",
+    "clear_history": "Clear History",
+    "empty": "You have no activity yet.",
+    "clear_history_modal": {
+      "title": "Are you sure?",
+      "text": "You are about to clear your transaction history. Do you want to proceed?"
+    }
+  },
+  "transaction": {
+    "action": {
+      "approved": "approved",
+      "not_approved": "unapproved"
+    },
+    "detail": {
+      "approve_token": "You {action} the {contract} contract to operate {token} on your behalf.",
+      "create_order": "You listed {name} on sale for {price}.",
+      "cancel_order": "You removed the listing of {name} for {price}.",
+      "execute_order": "You bought {name} for {price}.",
+      "transfer": "You transferred {name} to {address}.",
+      "place_bid": "You placed a bid of {price} on {name}.",
+      "accept_bid": "You accepted a bid of {price} on {name}.",
+      "cancel_bid": "You cancelled a bid of {price} on {name}."
+    }
+  },
+  "mana": {
+    "running_on": "This is MANA running in the {network} Network"
+  },
+  "wallet": {
+    "sign_in_required": "You need to {sign_in} to access this page.",
+    "sign_in": "Sign In"
+  },
+  "slideshow": {
+    "view_all": "View All"
+  },
+  "highlights": {
+    "title": "Highlights"
+  },
+  "price_change_notice": {
+    "message": "The price may fluctuate due to market changes"
+  },
+  "networks": {
+    "ethereum": "Ethereum",
+    "matic": "Polygon"
+  },
+  "intro_popup": {
+    "title": "Introducing Polygon MANA",
+    "blog_link": "blog post",
+    "account_link": "Account dApp",
+    "manage_account": "Account",
+    "content": "Polygon MANA will allow you to make transactions much cheaper and faster.{br}You can learn more about Polygon MANA in our {blog_link}, and don't forget you can start managing your coins in our new {account_link}.{br}Click your avatar, select {manage_account} and start conquering the Metaverse.",
+    "dismiss": "Got It!"
+  },
+  "toast": {
+    "meta_transaction_failure": {
+      "title": "Meta transaction",
+      "body": "There was an error sending the meta transaction.{br}Please try again or join our {discord_link} to get support."
+    }
+  }
+}
