@@ -12,7 +12,9 @@
 基于区块链的数据服务交易及激励机制，降低数据使用方的成本，提高数据提供方收益。
 - 技术架构图
 ![image](https://github.com/Expandergraph/hackathon-2021-summer/blob/dev/teams/10-ExpanderGraph/docs/image/arch.jpg?raw=true)
+- 产品需求文档
 
+  [expandergrpah 需求文档](https://github.com/Expandergraph/hackathon-2021-summer/blob/dev/teams/10-ExpanderGraph/docs/expandergraph%20%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3.pdf)
 ## 黑客松期间计划完成的事项
 
 ### 区块链开发
