@@ -1,18 +1,15 @@
-# Welcome to EternityLabs Team
+# 欢迎来到Eternity-Labs
 
-English / [中文](./README_CN.md)
+中文 / [英文](./README.md)
 
-## Navigation
+## 导航
 
-[Presentation]()
-
-[Project Introduction](./docs/project.md)
-
-[Prospect](./docs/prospect.md)
-
-[Team Introduction](./docs/team.md)
-
-[White Paper](./docs/EternityLabs_whitepaper.pdf)
+- [项目介绍](./docs/project_CN.md)
+- [代码资源](./src/README_CN.md)
+- [团队人员](./docs/team_CN.md)
+- [演示视频](./docs/video.mp4)
+- [演示稿](./docs/presentation_CN.pdf)
+- [白皮书](./docs/EternityLabs_whitepaper.pdf)
 
 ## 基本资料
 
@@ -22,7 +19,7 @@ English / [中文](./README_CN.md)
 
 ## 项目整体简介
 
-TODO
+[项目介绍](./docs/project_CN.md)
 
 ## 黑客松期间计划完成的事项
 
