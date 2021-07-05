@@ -3,10 +3,10 @@
 ## 导航
 
 - **/docs**
-    - [演示稿](./docs/EternityLabs_Introduction.pdf)
     - [项目介绍](./docs/project_CN.md)
     - [项目前景](./docs/prospect_CN.md)
     - [团队人员](./docs/team_CN.md)
+    - [PPT](./docs/EternityLabs_Introduction.pdf)
     - [演示视频](./docs/demo.mp4)
     - [白皮书](./docs/EternityLabs_whitepaper.pdf)
 - **/src**
