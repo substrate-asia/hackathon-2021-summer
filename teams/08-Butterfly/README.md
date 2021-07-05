@@ -1,7 +1,7 @@
 ## 基本资料
 
 项目名称：众评链（PubComentsChain）
-项目成立日期: 2021.04
+项目成立日期: 2021.06
 
 ## 项目整体简介
 
@@ -9,26 +9,40 @@
 系统能够很好的解决传统中心化影评系统的问题。在实现该应用的核心功能后，我们基于此作为切入点加入影视相关NFT模块、DEFI模块及相关社交功能（后面还会涉及DAO模块），实现制片方/演员/影迷
 的电影IP数字化平台，希望打造出一个基于影视相关生态的区块链项目。
 
-LOGO
+![PubComents_chain_icon](https://user-images.githubusercontent.com/23429926/120581633-a6b4e980-c41a-11eb-933e-f1d5ed2068c0.png) 
+
+### 项目架构
+
+![架构](./docs/imgs/架构.png) 
+
+### 项目模型
+
+![模型](./docs/imgs/模型.png)
 
 
-![PubComents_chain_icon](https://user-images.githubusercontent.com/23429926/120581633-a6b4e980-c41a-11eb-933e-f1d5ed2068c0.png)
 
 ## 黑客松期间计划完成的事项
 
-- 请团队在报名那一周 git clone 这个代码库并创建团队目录，在 readme 里列出黑客松期间内打算完成的代码功能点。并提交 PR 到本代码库。例子如下 (这只是一个 nft 项目的例子，请根据团队项目自身定义具体工作)：
+### **区块链端**
 
-**区块链端**
 1、token合约的创建及相关转账函数的实现
 2、评定算法的实现。
 
-**网页端**
+### **客户端**
 
 1、账户登录流程的实现
+
 2、评定活动参与流程的实现。
+
 3、网页主要布局页面的实现。
+
+
 
 ## 队员信息
 
 唐林峰（https://github.com/tlf1234）
+
 季齐（https://github.com/wsjq5477）
+
+黄龙 (https://github.com/CorleoneH)
+
