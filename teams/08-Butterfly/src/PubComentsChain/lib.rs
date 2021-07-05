@@ -275,7 +275,6 @@ mod PubCommentsChain {
 
 
         // 影评计算函数
-        #[ink(message)]
         pub fn calculateFilmScore(&self, filmId:String) {
             // 计算平均分,需要实现浮点数据，数据类型后面具体解决
             let averageScore: u32 = self.filmEvaActivityMap.get(filmId).totalScore/self.filmEvaActivityMap.get(filmId).participateAgainNum;
@@ -312,7 +311,6 @@ mod PubCommentsChain {
 
 
         // 奖励算法
-        #[ink(message)]
         pub fn calculateRankScore(&self, filmId:String) { 
             // 下述权重化为整型，解决浮点问题
             let subWeight: u32 = 4; // 主观评分权重  
@@ -331,10 +329,11 @@ mod PubCommentsChain {
             while i < self.filmEvaActivityMap.get(filmId).participantAddress.len() {
                 i += 1;
                 // 变量引用
-                Data.ParticipantActivityData participantData=self.filmEvaActivityMap.get(filmId).participantDataMap[self.filmEvaActivityMap.get(filmId).participantAddress[i]];
-                if (participantData.evaScore != 0) && (participantData.forecastBoxOffice != 0) {
-                    let participantScore: u32 = participantData.evaScore;
-                    let participantBoxOffice: u32 = participantData.forecastBoxOffice;
+                let msgSender = self.env().caller(); //消息发送者
+                //Data.ParticipantActivityData participantData=self.filmEvaActivityMap.get(filmId).participantDataMap[self.filmEvaActivityMap.get(filmId).participantAddress[i]];
+                if (self.filmEvaActivityMap.get(filmId).participantDataMap.get(msgSender).evaScore != 0) && (self.filmEvaActivityMap.get(filmId).participantDataMap.get(msgSender).forecastBoxOffice != 0) {
+                    let participantScore: u32 = self.filmEvaActivityMap.get(filmId).participantDataMap.get(msgSender).evaScore;
+                    let participantBoxOffice: u32 = self.filmEvaActivityMap.get(filmId).participantDataMap.get(msgSender).forecastBoxOffice;
                     let forecastBoxOfficeScore: u32 = boxoffice2Score(participantBoxOffice);
                     let averageScoreBoxOffice: u32 = (participantScore+forecastBoxOfficeScore)/2;
                     if participantScore<averageScore{
@@ -353,7 +352,7 @@ mod PubCommentsChain {
                     }else{
                         subAndObjCoefficient=(averageScoreBoxOffice-realFilmBoxOfficeScore) / realFilmBoxOfficeScore;
                     }
-                    participantData.participantRankScore = scoreCoefficient+boxOfficeCoefficient+subAndObjCoefficient;
+                    self.filmEvaActivityMap.get(filmId).participantDataMap.get(msgSender).participantRankScore = scoreCoefficient+boxOfficeCoefficient+subAndObjCoefficient;
                 }
             }
         }
@@ -370,23 +369,23 @@ mod PubCommentsChain {
             let filmScore:u8 = self.filmEvaActivityMap.get(filmId).filmScore;
             let filmBoxOffice: u32 = self.filmEvaActivityMap.get(filmId).realFilmBoxOffice;
             let participants: u32 = self.filmEvaActivityMap.get(filmId).participateNum;
-            let reduceNum: u32 = filmBeEvaNum/reduceNumConstant;  
+            let reduceNum: u32 = self.filmEvaActivityMap.get(filmId).filmBeEvaNum/reduceNumConstant;  
             // 根据减半情况，计算本次影评能够挖到矿的总额。
             // let countNum=reduceNum<<1; // 2^reduceNum
-            let averageToken: u32 =SafeMath.div(startTokenNum, 2**reduceNum);
+            let averageToken: u32 =startTokenNum/2.pow(reduceNum);
 
             // 影响因子的乘机
-            let mut tokenCalcuateNum: u32 =SafeMath.div(participants, participantsMin)*SafeMath.div(filmBoxOffice, averageBoxOfficInBase)*SafeMath.div(filmScore, 5);
+            let mut tokenCalcuateNum: u32 = (participants/participantsMin)*(filmBoxOffice/averageBoxOfficInBase)*(filmScore/5);
             // 按照对数对tokenCalcuateNum计算数值
-            let logCalculateNum: u32 ;
-            if tokenCalcuateNum>=2**128 {tokenCalcuateNum>>=128;logCalculateNum+=128;}
-            if tokenCalcuateNum>=2**64 {tokenCalcuateNum>>=64;logCalculateNum+=64;}
-            if tokenCalcuateNum>=2**32 {tokenCalcuateNum>>=32;logCalculateNum+=32;}
-            if tokenCalcuateNum>=2**16 {tokenCalcuateNum>>=16;logCalculateNum+=16;}
-            if tokenCalcuateNum>=2**8 {tokenCalcuateNum>>=8;logCalculateNum+=8;}
-            if tokenCalcuateNum>=2**4 {tokenCalcuateNum>>=4;logCalculateNum+=4;}
-            if tokenCalcuateNum>=2**2 {tokenCalcuateNum>>=2;logCalculateNum+=2;}
-            if tokenCalcuateNum>=2**1 {/*x>>=1;*/logCalculateNum+=1;}
+            let mut logCalculateNum: u32 ;
+            if tokenCalcuateNum>=2.pow(128) {tokenCalcuateNum>>=128;logCalculateNum+=128;}
+            if tokenCalcuateNum>=2.pow(64) {tokenCalcuateNum>>=64;logCalculateNum+=64;}
+            if tokenCalcuateNum>=2.pow(32) {tokenCalcuateNum>>=32;logCalculateNum+=32;}
+            if tokenCalcuateNum>=2.pow(16) {tokenCalcuateNum>>=16;logCalculateNum+=16;}
+            if tokenCalcuateNum>=2.pow(8) {tokenCalcuateNum>>=8;logCalculateNum+=8;}
+            if tokenCalcuateNum>=2.pow(4) {tokenCalcuateNum>>=4;logCalculateNum+=4;}
+            if tokenCalcuateNum>=2.pow(2) {tokenCalcuateNum>>=2;logCalculateNum+=2;}
+            if tokenCalcuateNum>=2pow(1) {/*x>>=1;*/logCalculateNum+=1;}
 
             let tokenReward = averageToken+averageToken*logCalculateNum;
             self.filmEvaActivityMap.get(filmId).tokenPoll+=tokenReward;
@@ -418,31 +417,35 @@ mod PubCommentsChain {
 
     }
 
-    // / Unit tests in Rust are normally defined within such a `#[cfg(test)]`
-    // / module and test functions are marked with a `#[test]` attribute.
-    // / The below code is technically just normal Rust code.
-    #[cfg(test)]
-    mod tests {
-        // / Imports all the definitions from the outer scope so we can use them here.
-        use super::*;
 
-        // / Imports `ink_lang` so we can use `#[ink::test]`.
-        use ink_lang as ink;
+      // / Unit tests in Rust are normally defined within such a `#[cfg(test)]`
+    // / module and test functions are marked with a `#[test]` attribute.
+    // / The below code is technically just normal Rust code.
+    #[cfg(test)]
+    mod tests {
+        // / Imports all the definitions from the outer scope so we can use them here.
+        use super::*;
 
-        // / We test if the default constructor does its job.
-        #[ink::test]
-        fn default_works() {
-            let PubCommentsChain = PubCommentsChain::default();
-            assert_eq!(PubCommentsChain.get(), false);
-        }
+        // / Imports `ink_lang` so we can use `#[ink::test]`.
+        use ink_lang as ink;
 
-        // / We test a simple use case of our contract.
-        #[ink::test]
-        fn it_works() {
-            let mut PubCommentsChain = PubCommentsChain::new(false);
-            assert_eq!(PubCommentsChain.get(), false);
-            PubCommentsChain.flip();
-            assert_eq!(PubCommentsChain.get(), true);
-        }
-    }
+        // / We test if the default constructor does its job.
+        #[ink::test]
+        fn test_createEvaActivityWithToken() {
+            assert_eq!(PubCommentsChain.createEvaActivityWithToken("20210520GZJ",100), true);
+        }
+        #[ink::test]
+        fn test_setActivityState() {
+            assert_eq!(PubCommentsChain.setActivityState("20210520GZJ",1), true);
+        }
+        
+        #[ink::test]
+        fn test_sponsorFight() {
+            assert_eq!(PubCommentsChain.sponsorFight("20210520GZJ",20), true);
+        }
+        #[ink::test]
+        fn test_participateActivityWithReveal() {
+            assert_eq!(PubCommentsChain.participateActivityWithReveal("20210520GZJ",8,100000), true);
+        }
+    }
 }
