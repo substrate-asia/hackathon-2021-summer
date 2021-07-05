@@ -1,12 +1,13 @@
-import React, { Component,button } from 'react';
-import { ListView, Card, SearchBar, Button, WhiteSpace,Modal } from 'antd-mobile';
+import React, { Component, button } from 'react';
+import { ListView ,Modal} from 'antd-mobile';
 // import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
-import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
 
 //action
-import { setTokenAction,setUsernameAction,setBottomstatusAction,setShowmodalAction,setShowmodaltwoAction,setAccountokmodalAction } from '../../store/action/App';
+import { setTokenAction, setUsernameAction, setBottomstatusAction, setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction } from '../../store/action/App';
+
 
 import './home.css';
 import TopBar from '../../component/TopBar';
@@ -47,13 +48,14 @@ function genData(pIndex = 0) {
 }
 
 class Home extends Component {
+  
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
     this.state = {
-      words:[
+      words: [
         "minor",
         "nasty",
         "wasp",
@@ -91,18 +93,20 @@ class Home extends Component {
         location: "Location details",
         startTime: "Start time"
       }],
-      showToast:false
+      showToast: false
     };
+   
+
   };
 
   componentDidMount() {
+
     const tokendata = "mytoken";
     //actions
     this.props.actions.setToken(tokendata);
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
   }
-
   componentWillMount() {
     setTimeout(() => {
       this.rData = genData();
@@ -113,7 +117,7 @@ class Home extends Component {
     }, 600);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.props.actions.setShowModal(false);
     this.props.actions.setShowModalTwo(false);
     this.props.actions.setAccountOKModal(false);
@@ -136,7 +140,7 @@ class Home extends Component {
     }, 1000);
   }
 
-  render=() => {
+  render = () => {
     const separator = (sectionID, rowID) => (
       <div
         key={`${sectionID}-${rowID}`}
@@ -151,14 +155,14 @@ class Home extends Component {
         index = data.length - 1;
       }
       const obj = data[index--];
-      const imageHeight = window.innerWidth-30-30;
+      const imageHeight = window.innerWidth - 30 - 30;
       return (
         <div key={rowID} className='card-content'
-          style={{ 
+          style={{
             backgroundImage: "url('./images/cardimg.png')",
-            backgroundRepeat:'no-repeat',
-            height:''+imageHeight+'px',
-           }} onClick={() => this.props.history.push('/Home/activityDetail')}>
+            backgroundRepeat: 'no-repeat',
+            height: '' + imageHeight + 'px',
+          }} onClick={() => this.props.history.push('/Home/activityDetail')}>
           <div className="top-container">
             <div className='top-name' style={{
               borderRadius: '50px', width: '50px', height: '50px',
@@ -193,45 +197,45 @@ class Home extends Component {
     //底部Tab高度
     const tabbarHeight = 46;
 
-    const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight-2*tabbarHeight+26;
+    const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight - 2 * tabbarHeight + 26;
     return (
-      <div className="content" style={{position:"absolute"}}>
+      <div className="content" style={{ position: "absolute" }}>
         <TopBar></TopBar>
         <div>
-        <ListView
-          ref={el => this.lv = el}
-          dataSource={this.state.dataSource}
-          renderHeader={() => {console.log("card-height="+window.innerHeight +"///"+document.documentElement.clientHeight)}}
-          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-            {this.state.isLoading ? 'Loading...' : 'Loaded'}
-          </div>)}
-          renderRow={row}
-          renderSeparator={separator}
-          className=""
-          pageSize={4}
-          useBodyScroll
-          onScroll={() => { console.log('scroll'); }}
-          scrollRenderAheadDistance={500}
-          onEndReached={this.onEndReached}
-          onEndReachedThreshold={10}
-          style={{height:''+height+'px',overflow:'auto'}}
-        />
+          <ListView
+            ref={el => this.lv = el}
+            dataSource={this.state.dataSource}
+            renderHeader={() => { console.log("card-height=" + window.innerHeight + "///" + document.documentElement.clientHeight) }}
+            renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+              {this.state.isLoading ? 'Loading...' : 'Loaded'}
+            </div>)}
+            renderRow={row}
+            renderSeparator={separator}
+            className=""
+            pageSize={4}
+            useBodyScroll
+            onScroll={() => { console.log('scroll'); }}
+            scrollRenderAheadDistance={500}
+            onEndReached={this.onEndReached}
+            onEndReachedThreshold={10}
+            style={{ height: '' + height + 'px', overflow: 'auto' }}
+          />
         </div>
-                
-        <div className={this.props.app.showmodal?'showmodal':'hidemodal'}
-         style={{height:""+window.innerHeight+"px"}}>
+
+        <div className={this.props.app.showmodal ? 'showmodal' : 'hidemodal'}
+          style={{ height: "" + window.innerHeight + "px" }}>
           {/* 生成钱包助记词---弹窗 */}
           <CreateWalletOne words={this.state.words}></CreateWalletOne>
         </div>
 
-        <div className={this.props.app.showmodaltwo?'showmodaltwo':'hidemodaltwo'}
-         style={{height:""+window.innerHeight+"px"}}>
+        <div className={this.props.app.showmodaltwo ? 'showmodaltwo' : 'hidemodaltwo'}
+          style={{ height: "" + window.innerHeight + "px" }}>
           {/* 输入钱包助记词---弹窗 */}
           <CreateWalletTwo words={this.state.words}></CreateWalletTwo>
         </div>
 
-        <div className={this.props.app.showaccountok?'showaccountokmodal':'hideaccountokmodal'}
-         style={{height:""+window.innerHeight+"px"}}>
+        <div className={this.props.app.showaccountok ? 'showaccountokmodal' : 'hideaccountokmodal'}
+          style={{ height: "" + window.innerHeight + "px" }}>
           {/* 输入钱包助记词---弹窗 */}
           <CreateWalletOK words={this.state.words}></CreateWalletOK>
         </div>
@@ -241,22 +245,22 @@ class Home extends Component {
 }
 
 //获取最新的store里的状态，通过this.props获取
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
   return {
-      app:state.app
+    app: state.app
   }
 }
 //更新状态提交到store
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
   return {
-      actions:bindActionCreators({
-        setToken:setTokenAction,
-        setUsername:setUsernameAction,
-        setBottomstatus:setBottomstatusAction,
-        setShowModal:setShowmodalAction,
-        setShowModalTwo:setShowmodaltwoAction,
-        setAccountOKModal:setAccountokmodalAction
-      },dispatch)
+    actions: bindActionCreators({
+      setToken: setTokenAction,
+      setUsername: setUsernameAction,
+      setBottomstatus: setBottomstatusAction,
+      setShowModal: setShowmodalAction,
+      setShowModalTwo: setShowmodaltwoAction,
+      setAccountOKModal: setAccountokmodalAction
+    }, dispatch)
   }
 }
 
