@@ -56,8 +56,12 @@ substrate-node-template/java 为论文上传临时解决方案
 substrate-node-template\java\src\main\resources下python文件为相关执行脚本
 
 
-</br></br></br></br></br>待补充</br></br></br></br></br>
-
+#### OnePaper前端代码及重要模块介绍
+1. views/create 包含创建账号的完整逻辑
+2. views/home 包含查询链信息和最新块逻辑
+3. views/keys 包含密钥管理，密钥恢复逻辑
+4. views/periodical 包含期刊展示、上传、查看和币的增加扣除逻辑
+5. views/wallet 包含余额、最近10000个块内的交易记录、转账操作、金额单位、锁定账号的转账输入密码逻辑
 
 
 ### 项目截图展示

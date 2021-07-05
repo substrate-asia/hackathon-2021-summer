@@ -1,0 +1,57 @@
+
+/**  rel="stylesheet/scss" lang="scss"*/
+$wk-color-primary: #1749C7; // 主色调蓝色
+/// color|1|Background Color|4
+$wk-color-white: #FFFFFF !default;
+/// color|1|Background Color|4
+$wk-color-black: #000000 !default;
+
+/// color|1|Font Color|2
+$wk-color-text-primary: #333333 !default;
+/// color|1|Font Color|2
+$wk-color-text-regular: #666666 !default;
+/// color|1|Font Color|2
+$wk-color-text-secondary: #999999 !default;
+/// color|1|Font Color|2
+$wk-color-text-placeholder: #C0C4CC !default;
+
+
+// Box-shadow
+/// boxShadow|1|Shadow|1
+$wk-box-shadow-base: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04) !default;
+// boxShadow|1|Shadow|1
+$wk-box-shadow-dark: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12) !default;
+/// boxShadow|1|Shadow|1
+$wk-box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !default;
+
+/** backgroud */
+$wk--background-color-base: #EFF0F5;
+
+/** border */
+$wk-border-color-base: #9BA0B5;
+$wk-border-radius-base: 6px;
+/// borderRadius|1|Radius|0
+$wk-border-radius-small: 2px !default;
+$wk-border-line-color: $wk-border-color-base;
+$wk-focus-border: $wk-color-primary;
+
+/** table */
+$wk--table-border-color: $wk-border-color-base;
+
+$wk-font-size-base: 14px;
+$wk-font-size-small: 12px;
+$wk-font-size-large: 18px;
+
+/* Popover
+-------------------------- */
+
+/* Dialog
+-------------------------- */
+$wk-dialog-title-font-size: 16px;
+
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  wkColorPrimary: $wk-color-primary;
+}
+
