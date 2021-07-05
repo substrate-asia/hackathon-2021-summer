@@ -2,6 +2,20 @@ import { URL } from 'url'
 import { ParsedArgs } from './methods-shared'
 import { OpenSeaNFTMetadataBasics, NFTMetadata } from './nft'
 
+// ------- consts -------
+// 
+export const UPLOADING_FIELDS = {
+  CONTENT: 'content',
+  PREVIEW: 'preview'
+}
+
+// ------- interface -------
+//
+interface ArgsWithReference {
+  /** reference args for entity */
+  reference: string
+}
+
 export interface ArgsEntityUpload extends ParsedArgs, OpenSeaNFTMetadataBasics {
   /** nft properties json string */
   properties?: string
@@ -18,7 +32,4 @@ export interface ResultEntityUploaded {
   embed?: NFTMetadata
 }
 
-export const UPLOADING_FIELDS = {
-  CONTENT: 'content',
-  PREVIEW: 'preview'
-}
+export type ArgeEntityGetMetadata = ParsedArgs & ArgsWithReference

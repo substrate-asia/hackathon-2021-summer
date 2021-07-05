@@ -21,6 +21,7 @@ export = async (namespace: string, args: ArgsEntityUpload): Promise<ResultEntity
   if (_.isEmpty(endpoint)) throw new Error('missing nft.storage endpoint config.')
   const token: string = config.get('nftStorage.accessToken')
   if (_.isEmpty(token) || token.length < 200) throw new Error('missing nft.storage token config.')
+
   if (_.isEmpty(args.name)) throw new Error('invalid args: missing name.')
   if (_.isEmpty(args.description)) throw new Error('invalid args: missing description.')
 
