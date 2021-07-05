@@ -4,10 +4,7 @@
 
 # 项目整体介绍
 ## 简介
-- Domain Knowledge是一个基于领域知识的知识创作和分享系统。针对某个领域，创作该领域的知识内容，学习路径，最新进展，推荐书籍及影视作品等。
-
-## 类似项目 
-- EOS之上的Everipedia(https://everipedia.org)
+- Domain Knowledge是一个基于领域知识的知识创作和分享系统。针对某个领域，创作该领域的知识内容，学习路径，最新进展，推荐书籍等。
 
 ## 解决问题 
 - 通过对领域知识的全面描述解决知识碎片化问题；同时解决用户创作内容的版权问题。
@@ -41,6 +38,3 @@
 # 团队成员
 - Founder：Gordon (https://github.com/CHCP)
 - Frontend Developer: Chutian Yang (https://github.com/yct21)
-
-# 演示网址
-- https://zhishi.io
