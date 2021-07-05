@@ -11,7 +11,7 @@
 链上数据挖掘及展示，对链上地址进行标注，用户可以了解地址、项目更真实的信息,监控项目持仓状况及大额交易，对项目进行评级及风险预警。
 基于区块链的数据服务交易及激励机制，降低数据使用方的成本，提高数据提供方收益。
 - 技术架构图
-[架构图](https://github.com/Expandergraph/hackathon-2021-summer/blob/dev/teams/10-ExpanderGraph/docs/image/arch.jpg?raw=true)
+![image](https://github.com/Expandergraph/hackathon-2021-summer/blob/dev/teams/10-ExpanderGraph/docs/image/arch.jpg?raw=true)
 
 ## 黑客松期间计划完成的事项
 
