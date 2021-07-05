@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/admin/l/s</title>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="NutBox-icon" transform="translate(-372.000000, -362.000000)">
+            <g id="icon/admin/l/s" transform="translate(372.000000, 362.000000)">
+                <rect id="Rectangle-3" fill="#D8D8D8" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                <circle id="椭圆形" fill="#FFDB1B" cx="13" cy="8" r="5"></circle>
+                <path d="M12,11 C16.4118761,11 20.0823002,14.8799851 20.8516671,20.0004379 L18,20 L18,22 L3,22 C3,16.02612 6.89624196,11.1644818 11.7522704,11.0040866 Z" id="形状结合" fill="#FFDB1B"></path>
+                <circle id="椭圆形备份-2" fill="#FFDB1B" cx="19.5" cy="18.5" r="3.5"></circle>
+                <g id="编组-5" transform="translate(18.500000, 9.000000)" stroke="#FFDB1B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <line x1="0.5" y1="1.5" x2="0.5" y2="6" id="直线"></line>
+                    <line x1="0.5" y1="1" x2="3.5" y2="1" id="直线-2"></line>
+                    <line x1="0.5" y1="4" x2="3.5" y2="4" id="直线-2"></line>
+                </g>
+                <circle id="椭圆形" stroke="#242629" stroke-width="2" stroke-linecap="round" cx="12" cy="7" r="4"></circle>
+                <circle id="椭圆形备份-2" stroke="#242629" stroke-width="2" stroke-linecap="round" cx="18" cy="18" r="3"></circle>
+                <line x1="18" y1="9.5" x2="18" y2="14" id="直线" stroke="#242629" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="18" y1="9" x2="21" y2="9" id="直线-2" stroke="#242629" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="18" y1="12" x2="21" y2="12" id="直线-2" stroke="#242629" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                <path d="M12,11 C7.02943725,11 3,15.0294373 3,20 C3,20.3677978 3.02206234,20.7304427 3.06493581,21.0866835" id="路径" stroke="#242629" stroke-width="2" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>
