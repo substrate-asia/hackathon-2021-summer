@@ -1,0 +1,9 @@
+{% extends "rest_framework/base.html" %}
+
+{% block title %}{% if name %}{{ name }} – {% endif %}赛凡链{% endblock title %}
+
+{% block branding %}
+    <a class='navbar-brand' rel="nofollow" href='https://api.scifanchain.com/'>
+        赛凡链应用层API接口
+    </a>
+{% endblock %}

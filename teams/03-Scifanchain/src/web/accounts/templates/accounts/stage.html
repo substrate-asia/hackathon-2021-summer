@@ -1,0 +1,23 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}用户中心{% endblock %}
+
+{% block content %}
+
+<h2>{{ stage.title }}</h2>
+
+{{ stage.content}}
+
+<div class="">
+    <h2 class="h4 mt-3">最新片断</h2>
+    <ul class="list-unstyled">
+    {% for stage in stages %}
+        <li>
+            <a href="">{{ stage.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}

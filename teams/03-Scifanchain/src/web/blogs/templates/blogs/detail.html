@@ -1,0 +1,36 @@
+{% extends 'base_blogs.html' %}
+
+{% block content %}
+
+{% if post %}
+    <h2 class="mb-2">{{post.title}}</h2>
+
+     <div class="py-2 border-bottom">
+        <span>作者:{{post.owner.username}}</span>
+        <span>分类:{{post.category.name}}</span>
+    </div>
+
+    <div class="mt-4">
+        {{post.content|safe}}
+    </div>
+{% endif %}
+
+<h4 class="border-bottom border-2 pb-2 mb-4">评论</h4>
+
+<ul class="list-group">
+    {% for comment in comment_list %}
+        <li class="list-group-item">
+            <div class="mb-2">{{ comment.content }}</div>
+            <i class="small">{{ comment.nickname }} 发表于 {{comment.created_time}}</i>
+        </li>
+    {% endfor %}
+</ul>
+
+<form action="{% url 'comment' %}" method="POST" class="form-group">
+    {% csrf_token %}
+    <input type="hidden" name="target" value={{post.id}}>
+    {{comment_form.as_p}}
+    <input type="submit" class="btn btn-primary" value="提交">
+</form>
+
+{% endblock content %}

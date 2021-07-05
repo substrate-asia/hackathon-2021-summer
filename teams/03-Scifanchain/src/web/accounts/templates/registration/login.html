@@ -1,0 +1,55 @@
+{% extends "base_account.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-4 offset-4">
+            <div class="text-center">
+                <img src="{% static 'img/logo.png' %}" alt="赛凡链ScifanChain" style="width:80px">
+                <h1 class="h3 mb-3 fw-normal mt-3">登录赛凡链</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-10 offset-1">         
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">用户名或密码错误，请重新尝试。</div>
+                    {% endif %}
+
+                    <form action="{% url 'login' %}" method="post" class="border p-3 bg-light">
+                        {% csrf_token %}
+                        <label for="username" class="form-label small">用户名或电子邮件地址</label>
+                        <div class="mb-2">
+                            <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" class="form-control">
+                        </div>
+                        <label for="password" class="form-label small">用户密码</label>
+                        <div class="mb-2">
+                            <input type="password" name="password" autocomplete="current-password" required="" id="id_password" class="form-control">
+                        </div>
+                        {% comment %} <input type="hidden" name="next" id="" value="{{ next }}"> {% endcomment %}
+                        <div class="d-grid gap-2">
+                            <input type="submit" name="" id="" value="用户登录"  class="mt-3 btn btn-primary">
+                        </div>
+                    </form>
+                    <div class="mt-4 mb-1 small"><a href="{% url 'password_change' %}" class="">忘记密码？</a></div>
+                    <div class="small">没有赛凡链账号？马上<a href="{% url 'signup' %}" class="link-primary">注册一个</a></div>
+                </div>
+            </div>
+
+
+<!--             <ul class="list-unstyled list-inline mt-5 small text-center">
+                <li class="list-inline-item">条款</li>
+                <li class="list-inline-item">安全协议</li>
+                <li class="list-inline-item">文档</li>
+            </ul> -->
+        
+        </div>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

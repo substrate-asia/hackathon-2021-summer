@@ -1,0 +1,8 @@
+[client]
+host = nj-cdb-4onyqbzd.sql.tencentcdb.com
+port = 63942
+database = sfc_web_db
+user = unity
+password = rally!912
+default-character-set = utf8
+auth_plugin = mysql_native_password
