@@ -15,7 +15,10 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use ink_lang as ink;
-
+use Arbitrition;
+use BaseArbitrition;
+use Contract;
+use BaseContract;
 #[ink::contract]
 mod credit_contract_chain {
     #[cfg(not(feature = "ink-as-dependency"))]
@@ -46,13 +49,6 @@ mod credit_contract_chain {
     /// The ERC-20 result type.
     pub type Result<T> = core::result::Result<T, Error>;
 
-
-    /// Trait implemented by all ERC-20 respecting smart contracts.
-    #[ink::trait_definition]
-    pub trait BaseContract {
-
-    }
-    
 
     /// Trait implemented by all ERC-20 respecting smart contracts.
     #[ink::trait_definition]
@@ -117,43 +113,7 @@ mod credit_contract_chain {
     }
 
  
-    struct Contract{
-        demanderId:AccountId,
-        contractDocumentHash:Hash,
-        laberID:AccountId,
-        resultVoucher:Hash,
-        depositeCoins:Balance,
-        arbitrateRatio:Balance,
-        requireCredit:Balance,
-        curState:State,
-        // private BigInteger demanderId;
-        // private BigInteger laberID;
-        // private BigInteger resultVoucher;
-        // private float depositeCoins;
-        // private float arbitrateRatio;
-        // private float requireCredit;
-        // private State curState;
-    }
-    impl Contract{
-        // 发布契约
-        pub fn launch(demanderId:AccountId,
-            contractDocumentHash:Hash,
-            depositeCoins:Balance,
-            arbitrateRatio:Balance,
-            requireCredit:Balance
-        )->Contract{
-            Contract{
-                demanderId:demanderId,
-                contractDocumentHash:contractDocumentHash,
-                laberID:AccountId::default(),
-                resultVoucher:Hash::default(),
-                depositeCoins:depositeCoins,
-                arbitrateRatio:arbitrateRatio,
-                requireCredit:requireCredit,
-                curState:State::LAUNCHED  
-            }
-        }
-    }
+    
 
 
     /// Event emitted when a token transfer occurs.
@@ -340,6 +300,56 @@ mod credit_contract_chain {
             //     return contract.getHash();
             // }
              0x123130
+        }
+
+        
+        fn acceptContract(laberAddressId:AccountId, contractId:Hash)->boolean {
+            // Verify condition.
+            if (!contractMap.get(contractId)) return false;
+            if(contractMap.get(contractId).getState()!= Contract.State.LAUNCHED) return false;
+            if (!addressMap.containsKey(laberAddressId)) return false;
+            let mut requireCredit = contractMap.get(contractId).getRequireCredit();
+            let laberAddress = addressMap.get(laberAddressId);
+            if (laberAddress.getAvailiableCredit() < requireCredit) return false;
+            // Process account
+            laberAddress.lockCredit(&requireCredit);
+
+            return contractMap.get(contractId).acceptedBy(laberAddress.getAddressId());
+        }
+
+        fn Contract.State getContractState( contractId:AccountId)->State {
+            contractMap.get(contractId).getState()
+        }
+
+        fn finishedContract(laberId:AccountId, contractId:Hash,resultVoucher:Hash)->boolean {
+            if(!addressMap.containsKey(laberId)) return false;
+            if(!contractMap.containsKey(contractId)) return false;
+
+            let mut contract=contractMap.get(contractId);
+            contract.completed(laberId,resultVoucher)
+
+        }
+
+        fn confirmResultContract(demanderId:AccountId, contractId:Hash)->boolean {
+            if(!addressMap.containsKey(demanderId)) return false;
+            if(!contractMap.containsKey(contractId)) return false;
+
+            let contract=contractMap.get(contractId);
+
+            let isConfirmed= contractMap.get(contractId).confirmed(demanderId,contractId);
+            if(isConfirmed){
+                BigInteger laberId= contract.getLaberID();
+                // 转账
+                if(!transfer(contract.getDemanderId(),laberId,contract.getDepositeCoins())) return false;
+                // 添加信用
+                let transactionCredit= contract.calculateTransactionCredit();
+                addressMap.get(laberId).unlockCredit(contract.getRequireCredit());
+                addressMap.get(laberId).improveCredit(transactionCredit);
+                addressMap.get(contract.getDemanderId()).improveCredit(transactionCredit);
+                return true;
+            }else {
+                return false;
+            }
         }
     }
 
