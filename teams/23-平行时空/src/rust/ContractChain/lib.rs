@@ -102,7 +102,57 @@ mod credit_contract_chain {
         /// Mapping of the token amount which an account is allowed to withdraw
         /// from another account.
         allowances: StorageHashMap<(AccountId, AccountId), Balance>,
+
+        // Save Contract
+        contractMap:StorageHashMap<Hash,
     }
+
+    pub enum State{
+        LAUNCHED,
+        ACCEPTED,
+        COMPLETED,
+        CONFIRMED
+    }
+
+ 
+    struct Contract{
+        demanderId:AccountId,
+        contractDocumentHash:Hash,
+        laberID:AccountId,
+        resultVoucher:Hash,
+        depositeCoins:Balance,
+        arbitrateRatio:Balance,
+        requireCredit:Balance,
+        curState:State,
+        // private BigInteger demanderId;
+        // private BigInteger laberID;
+        // private BigInteger resultVoucher;
+        // private float depositeCoins;
+        // private float arbitrateRatio;
+        // private float requireCredit;
+        // private State curState;
+    }
+    impl Contract{
+        // 发布契约
+        pub fn launch(demanderId:AccountId,
+            contractDocumentHash:Hash,
+            depositeCoins:Balance,
+            arbitrateRatio:Balance,
+            requireCredit:Balance
+        )->Contract{
+            Contract{
+                demanderId:demanderId,
+                contractDocumentHash:contractDocumentHash,
+                laberID:AccountId::default(),
+                resultVoucher:Hash::default(),
+                depositeCoins:depositeCoins,
+                arbitrateRatio:arbitrateRatio,
+                requireCredit:requireCredit,
+                curState:State::LAUNCHED  
+            }
+        }
+    }
+
 
     /// Event emitted when a token transfer occurs.
     #[ink(event)]
@@ -132,10 +182,6 @@ mod credit_contract_chain {
     // }
     impl BaseErc20 for ContractChain {
 
-        #[ink(message)]
-        fn launchContract(&mut self, contractDocumentHash:u128, depositeCoins:f64, arbitrateRatio:f64, requireTrust:f64)->u128{
-            return 0x123;
-        }
 
         /// Creates a new ERC-20 contract with the specified initial supply.
         #[ink(constructor)]
@@ -271,6 +317,25 @@ mod credit_contract_chain {
                 value,
             });
             Ok(())
+        }
+
+        
+        #[ink(message)]
+        pub fn launchContract(&mut self, contractDocumentHash:Hash, depositeCoins:Balance, arbitrateRatio:Balance, requireTrust:Balance)->Balance{
+            let caller = self.env().caller();
+            self.balances.get(&caller).copied().unwrap_or(0);
+            
+            let contract= Contract::launch(caller,contractDocumentHash,depositeCoins,arbitrateRatio,requireTrust
+            );
+
+            // if (!addressMap.containsKey(demanderId)) {
+            //     return BigInteger.ZERO;
+            // } else {
+            //     Contract contract = new Contract(demanderId, depositeCoins, arbitrateRatio, requireTrust);
+            //     contractMap.put(contract.getHash(), contract);
+            //     return contract.getHash();
+            // }
+             0x123130
         }
     }
 
@@ -615,10 +680,10 @@ mod credit_contract_chain {
             // Bob owns 10 tokens.
             assert_eq!(contractChain.balance_of(accounts.bob), 10);
             {
-                let contractDocumentHash:u128=0x98128172;
-                let depositeCoins:f64=300.0;
-                let arbitrateRatio:f64=0.1;
-                let requireTrust:f64 = 0.1;
+                let contractDocumentHash:Hash=Hash::default();
+                let depositeCoins:Balance=30000;
+                let arbitrateRatio:Balance=10;
+                let requireTrust:Balance = 10;
 
                 assert_eq!(contractChain.launchContract(contractDocumentHash, depositeCoins, arbitrateRatio, requireTrust),0x124);
                 // u128 contractDocumentHash = BigInteger.valueOf(192102);
