@@ -5,15 +5,19 @@
 * 1、代码目录及结构
   * 主目录07-NFTmall
     
-	* --backend-decentraland-indexer    实现4.2 交易市场后端功能，和 7.2 Develop and Improve Back-end，需要整合thegraph，因此，正在进行中，尚未完成。
+	* --backend-decentraland-indexer    
+	  实现4.2 交易市场后端功能，和 7.2 Develop and Improve Back-end，需要整合thegraph，因此，正在进行中。
     
 	* --docs    说明文档
     
-	* --frontend-decentraland-webapp    实现4.2 进行NFT Token的展示，服务于web用户 可见界面。已经在本地运行测试。详见 7.1 完成的前台展示界面截图。
+	* --frontend-decentraland-webapp    
+	  实现4.2 进行NFT Token的展示，服务于web用户 可见界面。已经在本地运行测试。详见 7.1 完成的前台展示界面截图。
     
-	* --frontend-mint-ERC721-IPFS       实现4.1 创建合约功能，进行IPFS分布存储，链上创建NFT Token。本地测试截图见4.1
+	* --frontend-mint-ERC721-IPFS       
+	   实现4.1 创建合约功能，进行IPFS分布存储，链上创建NFT Token。本地测试截图见4.1
     
-	* --moonbeam-master 	        实现9、在NFTmall公链部署和测试。以moonbeam为基础发行自有平行链，进行交易市场平行链开发。发链设计chan spec修改，正在进行中。
+	* --moonbeam-master 	        
+	   实现9、在NFTmall公链部署和测试。以moonbeam为基础发行自有平行链，进行交易市场平行链开发。发链设计chan spec修改，正在进行中。
     
 	* --Readme	
 	
@@ -26,6 +30,8 @@
     * 进行数字数据链上存证
     * IPFS分布存储
     * 链上创建NFT Token
+    
+    
 	            完成的上传图片保持到IPFS展示界面，如图所示：
 ![NFTmall](http://nft.ueuo.com/2021/6choose-image.png)
 ![NFTmall](http://nft.ueuo.com/2021/7upload-image-to-IPFS.png)
@@ -38,6 +44,8 @@
       * NFT Token数字作品的交易
       * NFT Token数字作品的兑换
       * NFT Token数字作品的碎片化
+      
+      
   * 4.3 链平台：部署交易市场的链平台
       * 支持去中心化存储：需要支持 IPFS作为 NFT的内容存储平台。
       * 主平台：需要兼容Ethereum、substrate
