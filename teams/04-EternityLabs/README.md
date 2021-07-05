@@ -2,12 +2,15 @@
 
 ## 导航
 
-- [项目介绍](./docs/project_CN.md)
-- [代码资源](./src/README_CN.md)
-- [团队人员](./docs/team_CN.md)
-- [演示视频](./docs/video.mp4)
-- [演示稿](./docs/presentation_CN.pdf)
-- [白皮书](./docs/EternityLabs_whitepaper.pdf)
+- **/docs**
+    - [演示稿](./docs/EternityLabs_Introduction.pdf)
+    - [项目介绍](./docs/project_CN.md)
+    - [项目前景](./docs/prospect_CN.md)
+    - [团队人员](./docs/team_CN.md)
+    - [演示视频](./docs/demo.mp4)
+    - [白皮书](./docs/EternityLabs_whitepaper.pdf)
+- **/src**
+	- [项目代码文档](./src/README_CN.md)
 
 ## 基本资料
 
@@ -84,7 +87,7 @@
 - 量化节点
   - [x] 多种量化指标
   - [ ] 网格交易策略模型
-  - [x] 火币、okex、binance等多家交易所的策略套利模型
+  - [ ] 火币、okex、binance等多家交易所的策略套利模型（实现了部分交易所的套利策略）
 
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
