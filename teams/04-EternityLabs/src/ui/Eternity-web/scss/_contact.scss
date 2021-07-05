@@ -1,0 +1,41 @@
+//
+// contact.scss
+//
+
+.bg-contact{
+  background-image: url(../images/overlay-3.png);
+}
+
+.custom-form{
+  .alert-warning{
+    padding: 10px;
+  }
+}
+
+
+textarea.form-control {
+  height: auto !important;
+}
+.form-control {
+  box-shadow: none !important;
+  height: 42px;
+  padding-left: 20px;
+  border: 1px solid #dfe9f1;
+  font-size: 16px;
+  border-radius: 5px;
+  &:focus {
+    border-color: #e4eef7;
+  }
+}
+
+textarea.form-control {
+  height: auto;
+  padding-top: 14px;
+}
+
+
+.client-images{
+  img{
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,28 @@
+//
+// cta.scss
+//
+
+.features-1{
+  position: relative;
+  img{
+    position: relative;
+    margin-left: -130%;
+  }
+}
+
+
+
+
+.features-icon{
+  width: 60px;
+  height: 60px;
+  line-height: 52px;
+  text-align: center;
+  border-radius: 5px;
+  border: 2px solid rgba($primary, 0.3);
+  background: rgba($primary, 0.1);
+  .uim-svg{
+    fill: $muted;
+  }
+ 
+ }

@@ -1,0 +1,87 @@
+//
+// testimonial.scss
+//
+
+
+.client-title-main{
+  font-size: 160px;
+    color: rgba($primary, 0.03);
+    position: absolute;
+    left: 0px;
+    right: 0;
+    margin-top: 70px;
+}
+
+.testi-box{
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.carousel-control-prev,
+.carousel-control-next{
+  background: transparent;
+  border: none;
+  width: 5%;
+}
+
+
+.carousel-indicators {
+  margin-right: 0%;
+    margin-left: 0%;
+  position: relative;
+ 
+  button{
+      width: 280px;
+      height: 110px;
+      margin-right: 10px;
+      margin-left: 10px;
+      cursor: pointer;
+      overflow: hidden;
+      border: none;
+      background: transparent;
+      opacity: 0.3;
+  }
+
+  .testi-img{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+  }
+  .active {
+      opacity: 1;
+      border-top: 3px solid $primary;
+      z-index: 3;
+      opacity: 1 !important;
+      box-shadow: $box-shadow;
+  }
+}
+
+
+.client-title {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 18px;
+}
+
+.client-icon{
+  i{
+      font-size: 50px;
+      color: $primary;
+  }
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: $primary;
+  background-size: 100% 40%;
+  border-radius: 50%;
+  
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  opacity: 1;
+}
