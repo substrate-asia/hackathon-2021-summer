@@ -1,0 +1,22 @@
+.ActivityPage .center {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ActivityPage .ui.basic.button {
+  padding: 0;
+}
+
+.ActivityPage .center p {
+  color: var(--secondary-text);
+}
+
+.ActivityPage .transactions {
+  margin-top: 20px;
+}

@@ -1,0 +1,35 @@
+:root {
+  --page-header-height: 420px;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.danger-text {
+  color: var(--danger);
+}
+
+@media (max-width: 768px) {
+  .dcl.navbar.overlay .ui.container {
+    width: calc(100% - 32px) !important;
+  }
+
+  .ui.modal .actions {
+    flex-direction: column-reverse;
+  }
+
+  .ui.modal .actions .ui.button + .ui.button {
+    margin-left: 0px;
+  }
+}
