@@ -428,11 +428,7 @@ pub mod offline_meeting {
 		3. 触发事件 inspector_removed
 		*/
 		pub fn remove_inspector(&mut self, inspector: AccountId) {
-			if self.inspectors.contains_key(&inspector) {
-				Self::env().emit_event(InspectorRemoved {
-					inspector: inspector,
-				});
-			}
+			self.inspectors.take(&inspector);
 		}
 
 		/**
