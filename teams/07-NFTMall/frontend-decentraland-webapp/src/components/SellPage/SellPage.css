@@ -1,0 +1,24 @@
+.SellPage .ui.header {
+  margin-bottom: 8px;
+}
+
+.SellPage .subtitle {
+  margin-bottom: 32px;
+}
+
+.SellPage .form-fields {
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.ConfirmPriceModal .dcl.field .ui.sub.header {
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .SellPage .dcl.field,
+  .ConfirmPriceModal .dcl.field {
+    width: 100%;
+    min-width: auto;
+  }
+}

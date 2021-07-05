@@ -1,0 +1,42 @@
+{
+  "extends": "@polkadot/dev/config/tsconfig.json",
+  "exclude": [
+    "build/**/*",
+    "**/build/**/*"
+  ],
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "noUnusedLocals": false,
+    "resolveJsonModule": true,
+    "paths": {
+      "@wasmark/apps/*": ["packages/apps/src/*"],
+      "@wasmark/apps": ["packages/apps/src"],
+      "@wasmark/apps-common/*": ["packages/apps-common/src/**"],
+      "@wasmark/apps-common": ["packages/apps-common/src"],
+      "@polkadot/apps-config": [ "packages/apps-config/src" ],
+      "@polkadot/apps-config/*": [ "packages/apps-config/src/*" ],
+      "@polkadot/apps-routing": [ "packages/apps-routing/src" ],
+      "@polkadot/apps-routing/*": [ "packages/apps-routing/src/*" ],
+      "@polkadot/app-contracts": [ "packages/page-contracts/src" ],
+      "@polkadot/app-contracts/*": [ "packages/page-contracts/src/*" ],
+      "@polkadot/react-api": [ "packages/react-api/src" ],
+      "@polkadot/react-api/*": [ "packages/react-api/src/*" ],
+      "@polkadot/react-components": [ "packages/react-components/src" ],
+      "@polkadot/react-components/*": [ "packages/react-components/src/*" ],
+      "@polkadot/react-hooks": [ "packages/react-hooks/src" ],
+      "@polkadot/react-hooks/*": [ "packages/react-hooks/src/*" ],
+      "@polkadot/react-params": [ "packages/react-params/src" ],
+      "@polkadot/react-params/*": [ "packages/react-params/src/*" ],
+      "@polkadot/react-query": [ "packages/react-query/src" ],
+      "@polkadot/react-query/*": [ "packages/react-query/src/*" ],
+      "@polkadot/react-signer": [ "packages/react-signer/src" ],
+      "@polkadot/react-signer/*": [ "packages/react-signer/src/*" ],
+    },
+    "skipLibCheck": true,
+    "typeRoots": [
+      "./node_modules/@polkadot/ts",
+      "./node_modules/@types"
+    ]
+  }
+}

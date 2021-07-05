@@ -1,0 +1,352 @@
+{
+  "global": {
+    "assets": "Listado",
+    "address": "Direccion",
+    "balance": "Balance",
+    "load_more": "Cargar Más",
+    "not_found": "No se ha encontrado",
+    "parcel": "Parcela",
+    "parcel_with_coords": "Parcela {x},{y}",
+    "estate": "Estate",
+    "wearable": "Vestimenta",
+    "ens": "Nombre",
+    "art": "Arte",
+    "cancel": "Cancelar",
+    "proceed": "Aceptar",
+    "nft": "NFT",
+    "loading": "Cargando",
+    "settings": "Configuración",
+    "accept": "Aceptar",
+    "update": "Actualizar",
+    "search": "Buscar",
+    "apply": "Aplicar",
+    "network": "Red"
+  },
+  "vendors": {
+    "decentraland": "Decentraland",
+    "super_rare": "SuperRare",
+    "makers_place": "MakersPlace",
+    "known_origin": "KnownOrigin"
+  },
+  "navigation": {
+    "decentraland": "Decentraland",
+    "partners": "Socios",
+    "my_assets": "Mi Inventario",
+    "my_bids": "Mis Ofertas",
+    "activity": "Actividad"
+  },
+  "menu": {
+    "all": "Todos",
+    "land": "Tierra",
+    "parcels": "Parcelas",
+    "estates": "Estates",
+    "wearables": "Vestimenta",
+    "wearables_head": "Cabeza",
+    "wearables_eyebrows": "Cejas",
+    "wearables_eyes": "Ojos",
+    "wearables_facial_hair": "Barba",
+    "wearables_hair": "Cabello",
+    "wearables_mouth": "Boca",
+    "wearables_upper_body": "Torso",
+    "wearables_lower_body": "Piernas",
+    "wearables_feet": "Piez",
+    "wearables_accesories": "Accesorios",
+    "wearables_earring": "Aros",
+    "wearables_eyewear": "Gafas",
+    "wearables_hat": "Sombreros",
+    "wearables_helmet": "Cascos",
+    "wearables_mask": "Mascaras",
+    "wearables_tiara": "Tiara",
+    "wearables_top_head": "Tope de la cabeza",
+    "ens": "Nombres",
+    "decentraland": "Decentraland",
+    "super_rare": "SuperRare",
+    "known_origin": "KnownOrigin",
+    "makers_place": "MakersPlace"
+  },
+  "vendor_menu": {
+    "no_assets": "Sin assets",
+    "assets_count": "{count} {count, plural, one {asset} other {assets}}",
+    "more_than_assets_count": "+{count} assets"
+  },
+  "filters": {
+    "name": "Nombre",
+    "newest": "Más nuevos",
+    "recently_listed": "Listados recientemente",
+    "cheapest": "Más baratos"
+  },
+  "home_page": {
+    "title": "Mercado de Decentraland",
+    "subtitle": "Bienvenido al mercado virtual de Decentraland, donde encontrarás los mejores ítems virtuales.",
+    "get_started": "Comienza a navegar",
+    "learn_more": "Aprende Más",
+    "home_wearables": "Vestimenta",
+    "home_land": "Land",
+    "home_ens": "Nombres"
+  },
+  "partners_page": {
+    "partners": "Socios",
+    "latest_from": "Último de {vendor}"
+  },
+  "partner_sidebar": {
+    "assets": "{count} {count, plural, one {asset} other {assets}}"
+  },
+  "nft_list": {
+    "empty": "Sin resultados"
+  },
+  "nft_filters": {
+    "on_sale": "En venta",
+    "filter": "Filtrar",
+    "order_by": "Ordenar por",
+    "results": "{count} {count, plural, one {resultado} other {resultados}}",
+    "more_than_results": "+{count} resultados",
+    "search": "Buscar {suffix}...",
+    "search_land": "Buscar tierras...",
+    "rarity": "Rareza",
+    "gender": "Género",
+    "collection": "Colección",
+    "all_collections": "Todas las colecciones",
+    "network": "Red",
+    "all_networks": "Todas las redes"
+  },
+  "nft_card": {
+    "expires_at": "Expira {date}"
+  },
+  "nft_sidebar": {
+    "categories": "Categorías",
+    "back": "Atrás"
+  },
+  "nft_page": {
+    "description": "Descripción",
+    "owner": "Dueño",
+    "price": "Precio",
+    "expires": "Expira en",
+    "cancel_sale": "Borrar publicación",
+    "buy": "Comprar",
+    "sell": "Vender",
+    "see_listing": "Ver publicación",
+    "bid": "Ofertar",
+    "update": "Actualizar precio",
+    "transfer": "Transferir",
+    "plaza": "Plaza",
+    "road": "Calle",
+    "district": "Distrito",
+    "leaving_decentraland": "Saliendo de Decentraland",
+    "leaving_decentraland_description": "Aún no se pueden publicar o actualizar {vendor} assets en el Marketplace de Decentraland. ¿Quiere proceder a {vendor_link} para publicarlo ahí?",
+    "leaving_decentraland_disclaimer": "Tus NFTs van a listarse en el Marketplace de Decentraland"
+  },
+  "proximity": {
+    "adjacent": "Adyacente",
+    "distance": "{distance} {distance, plural, one {parcela} other {parcelas}} de distancia"
+  },
+  "bid": {
+    "from": "Ofertante",
+    "price": "Precio",
+    "time_left": "Expiración",
+    "not_enough_mana_on_bid_received": "El usuario no tiene suficiente MANA para pagar esta oferta",
+    "invalid_fingerprint_on_bid_received": "Este artículo ha sido modificado desde que se hizo esta oferta y ya no es válida",
+    "invalid_seller": "Ya no eres el dueño de este artículo",
+    "not_enough_mana_on_bid_placed": "No tienes suficiente MANA para pagar por esta oferta",
+    "invalid_fingerprint_on_bid_placed": "Este artículo ha sido modificado desde que realizaste esta oferta y ya no es valida, a menos que la actualices"
+  },
+  "transaction_history": {
+    "title": "Historial de Transacciones",
+    "from": "Vendedor",
+    "to": "Comprador",
+    "when": "Fecha",
+    "price": "Precio"
+  },
+  "wearable": {
+    "body_shape": {
+      "male": "Hombre",
+      "female": "Mujer",
+      "unisex": "Unisex"
+    },
+    "rarity": {
+      "unique": "Único",
+      "mythic": "Mítico",
+      "legendary": "Legendario",
+      "epic": "Épico",
+      "rare": "Raro",
+      "uncommon": "Poco común",
+      "common": "Común"
+    },
+    "rarity_tooltip": {
+      "unique": "Único en su tipo: uno solo en existencia",
+      "mythic": "Para algunos pocos: máximo 10",
+      "legendary": "Edición limitada: máximo 100",
+      "epic": "Suministro máximo: 1000",
+      "rare": "Suministro máximo: 5000",
+      "uncommon": "Suministro máximo: 10.000",
+      "common": "Suministro máximo: 100.000"
+    },
+    "category": {
+      "body_shape": "Cuerpo",
+      "earring": "Aros",
+      "eyebrows": "Cejas",
+      "eyes": "Ojos",
+      "eyewear": "Gafas",
+      "facial_hair": "Barba",
+      "feet": "Pies",
+      "hair": "Cabello",
+      "hat": "Sombrero",
+      "helmet": "Cazco",
+      "lower_body": "Piernas",
+      "mask": "Mascara",
+      "mouth": "Boca",
+      "tiara": "Tiara",
+      "top_head": "Cabeza",
+      "upper_body": "Torso"
+    }
+  },
+  "sell_page": {
+    "title": "Poner en venta",
+    "update_title": "Actualizar venta",
+    "subtitle": "Pon un precio y fecha de expiración para {name}.",
+    "update_subtitle": "Pon un nuevo precio y fecha de expiración para {name}.",
+    "price": "Precio",
+    "expiration_date": "Fecha de expiración",
+    "invalid_date": "Esta fecha ya pasó",
+    "submit": "Poner en venta",
+    "update_submit": "Actualizar",
+    "confirm": {
+      "title": "Por favor confirma",
+      "line_one": "Estás por poner en venta {name} por {amount}.",
+      "line_two": "Por favor vuelve a escribir el precio para confirmar:"
+    }
+  },
+  "buy_page": {
+    "title": "Comprar {category}",
+    "subtitle": "Estás por comprar {name} por {amount}.",
+    "not_for_sale": "{name} no esta en venta.",
+    "price_too_high": "Dados los precios de cambio actuales, comprar {category} te costará un {percentageIncrease}% más de su precio normal",
+    "please_wait": "Por favor espere a que los precios se normalicen nuevamente",
+    "actual_price": "El precio arriba es una aproximación, tomando los precios de cambio actuales terminarás pagando al rededor de {computedPrice}",
+    "buy": "Comprar",
+    "proceed_anyways": "Proceder",
+    "no_fingerprint": "No se pudo cargar la identificación del Estate.",
+    "is_owner": "Ya eres el dueño de {name}.",
+    "not_enough_mana": "No tienes suficiente MANA para comprar {name} por {amount}."
+  },
+  "bid_page": {
+    "title": "Haz una oferta",
+    "subtitle": "Pon un precio y una fecha de expiración para tu oferta sobre {name}.",
+    "price": "Precio",
+    "expiration_date": "Fecha de expiración",
+    "invalid_date": "Esta fecha ya pasó",
+    "not_enougn_mana": "No tienes suficiente MANA",
+    "submit": "Ofertar"
+  },
+  "my_bids_page": {
+    "bids_received": "Ofertas recibidas",
+    "bids_placed": "Ofertas realizadas",
+    "bids_archived": "Ofertas Archivadas",
+    "show_archived": "Mostrar Archivadas ({amount})",
+    "show_received": "Mostrar Recibidas ({amount})",
+    "empty_received": "No haz recibido ofertas aún...",
+    "empty_archived": "No haz archivado ofertas aún...",
+    "empty_placed": "No haz realizado ofertas aún...",
+    "archive": "Archivar",
+    "unarchive": "Desarchivar"
+  },
+  "cancel_sale_page": {
+    "title": "Cancelar venta",
+    "subtitle": "Estás por cancelar la venta de {name} por {amount}.",
+    "not_for_sale": "{name} no esta en venta.",
+    "invalid_owner": "No eres el dueño de {name}.",
+    "submit": "Confirmar"
+  },
+  "settings_page": {
+    "authorizations": "Autorizaciones",
+    "buy_more_mana": "COMPRAR MÁS",
+    "copy_address": "COPIAR DIRECCIÓN",
+    "copied": "COPIADO ✔",
+    "authorization_error": "No pudimos cargar tu autorizaciones, intenta nuevamente.",
+    "authorization_error_contact": "Si el error continua no dudes en contactarnos",
+    "for_buying": "Para comprar",
+    "for_bidding": "Para ofertar",
+    "authorization_Marketplace_MANAToken": "MANA",
+    "for_selling": "Para vender",
+    "pending_tx": "Transaccion pendiente, haz click aquí para ir a tu pantalla de actividad y ver más información"
+  },
+  "authorization": {
+    "authorize": "Autoriza al contrato de {contract_link} a operar {symbol} por tí en {network}",
+    "allowed": "Haz autorizado al contrato de {contract_link} a operar {symbol} por tí",
+    "approved": "Haz autorizado al contrato de {contract_link} a operar {symbol} por tí",
+    "disallowed": "Haz desautorizado al contrato de {contract_link} a operar {symbol} por tí",
+    "disapproved": "Haz desautorizado al contrato de {contract_link} a operar {symbol} por tí"
+  },
+  "authorization_modal": {
+    "title": "Autorizar {token}",
+    "description": "Para poder continuar deberás autorizar al contrato de {contract} a operar tus tokens de {token}.{br}Esto solo debe realizarse una única vez, y siempre puedes gestionar tus autorizaciones desde la pagina de {settings_link}."
+  },
+  "transfer_page": {
+    "title": "Transferir {category}",
+    "subtitle": "Estás por transferir {name}.",
+    "for_sale": "{name} no puede ser transferido porque esta en venta.",
+    "invalid_owner": "No eres el dueño de {name}.",
+    "invalid_address": "Dirección invalida",
+    "recipient": "Direccion del destinatario",
+    "warning": "Recuerda que transferir es una operación irreversible.{br}Por favor verifica que la dirección sea la correcta.",
+    "submit": "Transferir"
+  },
+  "activity_page": {
+    "latest_activity": "Última Actividad",
+    "clear_history": "Limpiar Historial",
+    "empty": "No tienes actividad aún.",
+    "clear_history_modal": {
+      "title": "̉̉̉̉̉̉̉¿Estás seguro?",
+      "text": "Estas por limpiar tu historial de actividad. ¿Deseas proseguir?"
+    }
+  },
+  "transaction": {
+    "action": {
+      "approved": "Aprobada",
+      "not_approved": "Desaprobada"
+    },
+    "detail": {
+      "approve_token": "{action} al contrato de {contract} para que opere tokens de {token} por tí.",
+      "create_order": "Pusiste {name} en venta por {price}.",
+      "cancel_order": "Cancelaste la venta de {name} por {price}.",
+      "execute_order": "Compraste {name} por {price}.",
+      "transfer": "Transferiste {name} a {address}.",
+      "place_bid": "Hiciste una oferta de {price} por {name}.",
+      "accept_bid": "Aceptaste una oferta de {price} por {name}.",
+      "cancel_bid": "Cancelaste una oferta de {price} por {name}."
+    }
+  },
+  "mana": {
+    "running_on": "MANA en la red {network}"
+  },
+  "wallet": {
+    "sign_in_required": "Necesitas {sign_in} para acceder a esta página.",
+    "sign_in": "iniciar sesión"
+  },
+  "slideshow": {
+    "view_all": "Ver Todo"
+  },
+  "highlights": {
+    "title": "Destacados"
+  },
+  "price_change_notice": {
+    "message": "El precio puede variar debido a cambios en el mercado"
+  },
+  "networks": {
+    "ethereum": "Ethereum",
+    "matic": "Polygon"
+  },
+  "intro_popup": {
+    "title": "Introducimos Polygon MANA",
+    "blog_link": "blog post",
+    "account_link": "dApp de Account",
+    "manage_account": "Mi Cuenta",
+    "content": "Polygon MANA te permitirá hacer transacciones mas rápido y barato.{br}Puedes aprender mas sobre Polygon MANA en nuestro {blog_link}.{br}Puedes gestionar tus tokens desde la {account_link}.{br}Haz click en tu avatar, luego en {manage_account} y comienza a conquistar el Metaverso.",
+    "dismiss": "Entendido!"
+  },
+  "toast": {
+    "meta_transaction_failure": {
+      "title": "Meta transacción",
+      "body": "Ocurrió un error publicando la meta transacción.{br}Intentelo de nuevo o ingrese a nuestro {discord_link} para obtener más información."
+    }
+  }
+}
