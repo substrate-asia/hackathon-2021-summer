@@ -1,0 +1,51 @@
+[package]
+authors = ['ctt-dev']
+edition = '2018'
+name = 'ctt-pallet-kp'
+version = "2.0.0"
+license = "GPL-3.0-or-later"
+repository = "https://github.com/CTT-block-chain/substrate.git"
+description = "Knowledge power pallet"
+
+[package.metadata.substrate]
+categories = [
+	"pallet",
+]
+compatibility_version = "2.0.0"
+
+
+[dependencies]
+# external dependencies
+codec = { package = "parity-scale-codec", version = "1.3.1", default-features = false, features = ["derive"] }
+parking_lot = "0.10.0"
+serde = { version = "1.0.101", features = ["derive"], optional = true }
+rand_chacha = { version = "0.2", default-features = false }
+hex = { version = "0.4", default-features = false }
+substrate-fixed = { git = 'https://github.com/encointer/substrate-fixed.git' }
+
+# Substrate dependencies
+frame-support = { version = '2.0.0', default-features = false, path = "../../../../frame/support" }
+frame-system = { version = '2.0.0', default-features = false, path = "../../../../frame/system" }
+sp-runtime = { version = '2.0.0', default-features = false, path = "../../../../primitives/runtime" }
+sp-core = { version = '2.0.0', default-features = false, path = "../../../../primitives/core" }
+sp-io = { version = '2.0.0', default-features = false, path = "../../../../primitives/io" }
+sp-std = { version = '2.0.0', default-features = false, path = "../../../../primitives/std" }
+pallet-balances = { version = "2.0.0", default-features = false, path = "../../../../frame/balances" }
+members = { version = "2.0.0", path = "../members", package = "ctt-pallet-members", default-features = false }
+primitives = { package = "ctt-primitives", path = "../../primitives", default-features = false }
+
+[features]
+default = ['std']
+std = [
+	'frame-support/std',
+	'frame-system/std',
+	'rand_chacha/std',
+	'sp-io/std',
+	'sp-runtime/std',
+	'sp-std/std',
+	'codec/std',
+	'serde',
+	'members/std',
+	"primitives/std",
+	"hex/std",
+]
