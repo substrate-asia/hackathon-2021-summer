@@ -90,7 +90,7 @@ pub mod offline_meeting {
 		}
 	}
 
-	// 检票历史记录
+	/// 检票历史记录
 	#[derive(
 		Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
 	)]
@@ -98,14 +98,14 @@ pub mod offline_meeting {
 		feature = "std",
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
-	struct check_record {
+	struct CheckRecord {
 		inspectors: AccountId, // 检票人
 		timestamp: u128,       // 检票时间戳
 		block: u128,           // 检票记录区块
 	}
-	impl Default for check_record {
-		fn default() -> check_record {
-			check_record {
+	impl Default for CheckRecord {
+		fn default() -> CheckRecord {
+			CheckRecord {
 				inspectors: Default::default(),
 				timestamp: Default::default(),
 				block: Default::default(),
@@ -148,7 +148,8 @@ pub mod offline_meeting {
 		// 用户参与后会产生的数据
 		tickets: StorageMap<(u128, u128), (u8, u8, u8)>, // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
-		check_records: StorageMap<(u128, u128), Vec<check_record>>, // 检票记录：
+		check_records: StorageMap<(u128, u128), Vec<CheckRecord>>, // 检票记录：
+		user_NFT_ticket_map:StorageMap<AccountId,TicketNft>,			//	用户购买的票产生的NFT存储.
 	}
 
 	impl Meeting {
@@ -196,6 +197,7 @@ pub mod offline_meeting {
 				start_sale_time,
 				end_sale_time,
 				status: MeetingStatus::Active,
+				user_NFT_ticket_map:Default::default(),
 			};
 			meeting
 		}
@@ -286,18 +288,20 @@ pub mod offline_meeting {
 
 			// 调用主合约的购票方法,并将抽成比例转给主合约.
 			use ink_lang::ForwardCallMut;
-			// <&mut MainStub>::call_mut(&mut *self.main_stub)
-			// 	.buy_ticket(ticket.clone())
-			// 	.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
-			// 	.fire()
-			// 	.expect("something wrong");
-			let buy_ticket_result:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
+			let ticketNft:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
 				.buy_ticket(ticket.clone())
 				.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
 				.fire()
 				.unwrap().unwrap();
-			
+			// 存储用户购买的ticketNFT存储到链上,key:用户的AccountId,value:ticketNft
+			self.user_NFT_ticket_map.insert(caller,ticketNft);
 			true
+		}
+
+		#[ink(message)]
+		pub fn get_user_nft_ticket(&self)->TicketNft{
+			let caller = Self::env().caller();
+			self.user_NFT_ticket_map.get(&caller).unwrap().clone()
 		}
 
 		/// 得到某个区域的票价
