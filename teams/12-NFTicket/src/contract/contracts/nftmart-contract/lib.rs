@@ -57,7 +57,7 @@ pub trait NFTMart {
     ///     name: the name of the class
     ///     description: description of the class
     ///     properties: properties of the class
-    #[ink(extension = 2002, returns_result = false)]
+    #[ink(extension = 2022, returns_result = false)]
     fn create_class(metadata: Metadata, name: Chars, description: Chars, properties: u8) -> (ink_env::AccountId, ClassId);
 
     /// Create an NFT
