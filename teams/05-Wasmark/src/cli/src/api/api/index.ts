@@ -1,7 +1,6 @@
 import Router from 'koa-router';
 import { router } from './router';
 import './config';
-import './book';
 
 const apiRouter = new Router();
 
