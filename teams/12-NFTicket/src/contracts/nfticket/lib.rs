@@ -7,17 +7,13 @@ mod nfticket {
     use super::*;
     use template::TemplateTrait;
     use ink_env::call::FromAccountId;
-    use ink_env::account_id;
-    use ink_lang::ToAccountId;
+    // use ink_lang::ToAccountId;
     use ink_prelude::string::String;
     use ink_prelude::vec::Vec;
     use primitives::{Meeting, MeetingStatus, NFTicketError};
     use primitives::{Template, TemplateStatus};
-    use ink_storage::{
-        collections::{hashmap::Keys, HashMap as StorageHashMap, Stash as StrorageStash},
-        lazy::Lazy,
-    };
-    use ink_env::{debug_message,debug_print,debug_println};
+    use ink_storage::collections::{HashMap as StorageMap};
+    // use ink_env::{debug_message,debug_print,debug_println};
 
     #[cfg(not(feature = "ink-as-dependency"))]
     #[ink(storage)]
@@ -25,9 +21,9 @@ mod nfticket {
         owner: AccountId,
         min_create_meeting_fee: Balance,
         min_create_ticket_fee: Balance,
-        template_map: StorageHashMap<AccountId, Template>,
-        meeting_map: StorageHashMap<AccountId, Meeting>,
-        classid_map: StorageHashMap<AccountId,ClassId>,
+        template_map: StorageMap<AccountId, Template>,
+        meeting_map: StorageMap<AccountId, Meeting>,
+        classid_map: StorageMap<AccountId,ClassId>,
     }
 
     /// 模板创建事件
@@ -55,9 +51,6 @@ mod nfticket {
         pub fn new(min_create_meeting_fee:Balance, min_create_ticket_fee:Balance) -> Self {
             let caller = Self::env().caller();
 
-            debug_message("部署合约");
-            debug_print!("部署合约，1");
-            debug_println!("部署合约，2");
             Self {
                 owner: caller,
                 min_create_meeting_fee: min_create_meeting_fee,
@@ -163,7 +156,7 @@ mod nfticket {
             end_time: u64,
             start_sale_time: u64,
             end_sale_time: u64,
-        ) -> Result<(), NFTicketError >{
+        ) -> Result<u32, NFTicketError >{
             let transferred: Balance = self.env().transferred_balance();
             if transferred < self.min_create_meeting_fee {
                 return Err(NFTicketError::LessThanMinCreateMeetingFee)
@@ -177,7 +170,8 @@ mod nfticket {
             let creator = caller;
 
             let meeting = Meeting {
-                template_addr: creator,
+                template: creator,
+                meeting: meeting_addr,
                 name: name.clone(),
                 desc: desc.clone(),
                 poster,
@@ -186,20 +180,27 @@ mod nfticket {
                 end_time,
                 start_sale_time,
                 end_sale_time,
-                status: MeetingStatus::Active,
+                status: MeetingStatus::Stop,
             };
 
             self.meeting_map.insert(meeting_addr, meeting);
 
             // 调用 Runtime 创建门票NFT的class，并存下ID
             let creator = Self::env().account_id();
-            let (_, class_id) = self.env().extension().create_class(&creator, name.clone().into_bytes(), name.into_bytes(), desc.into_bytes(), 0).unwrap();
+            // let class_id = 100u32;
+            let (_, class_id) = self.env().extension().create_class(
+                    &creator,
+                    name.clone().into_bytes(),
+                    name.into_bytes(),
+                    desc.into_bytes(),
+                    0u8
+                )
+                .unwrap();
             self.classid_map.insert(meeting_addr, class_id);
 
-            // let class_id = 100u32;
             Self::env().emit_event(MeetingAdded{meeting_addr, creator, class_id});
 
-            Ok(())
+            Ok(class_id)
         }
 
         /// 修改活动状态
@@ -223,13 +224,19 @@ mod nfticket {
             self.meeting_map.values().map(|v|v.clone()).collect()
         }
 
+        #[ink(message)]
+        pub fn get_meeting(&self, meeting_addr: AccountId) -> Meeting{
+            
+            self.meeting_map.get(meeting_addr).unwrap()
+        }
+
         /// 返回活动关联的NFT Class 的 ID
         #[ink(message)]
         pub fn get_class_id(&self,meeeting_addr:AccountId) -> u32 {
             (*self.classid_map.get(&meeeting_addr).unwrap()).clone()
         }
 
-        //
+        /// 创建门票NFT，受活动合约调用
         #[ink(message, payable)]
         pub fn create_ticket(&mut self, buyer: AccountId, metadata: String) -> Result<(u32, u64), NFTicketError> {
             // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
@@ -267,8 +274,6 @@ mod nfticket {
         fn ensure_owner(&self) {
             assert_eq!(self.owner, self.env().caller(), "not owner");
         }
-
-
 
 /* TODO
         #[ink(message)]

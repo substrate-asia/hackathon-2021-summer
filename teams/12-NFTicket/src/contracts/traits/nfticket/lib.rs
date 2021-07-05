@@ -8,7 +8,7 @@ pub use nftmart_contract::*;
 mod nfticket {
 
     use super::*;
-    use primitives::NFTicketError;
+    use primitives::{Meeting, NFTicketError};
     use ink_prelude::string::String;
 
     #[ink(storage)]
@@ -46,16 +46,20 @@ mod nfticket {
             unimplemented!()
         }
 
-        #[ink(message, payable)]
+        #[ink(message)]
+        pub fn get_meeting(&self, meeting_addr: AccountId) -> Meeting{
+            unimplemented!()
+        }
+
+        #[ink(message)]
         pub fn get_min_create_meeting_fee(&self) -> Balance{
             unimplemented!()
         }
 
-        #[ink(message, payable)]
+        #[ink(message,)]
         pub fn get_min_create_ticket_fee(&self) -> Balance{
             unimplemented!()
         }
-
         
         #[ink(message)]
         pub fn fetch_random( &self ) -> [u8; 32] {

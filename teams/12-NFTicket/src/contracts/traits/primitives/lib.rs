@@ -75,17 +75,6 @@ pub enum TemplateError {
     MeetingDeployFail,  // 活动合约部署失败
 }
 
-/// 活动状态
-#[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
-#[cfg_attr(
-    feature = "std",
-    derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
-)]
-pub enum MeetingStatus {
-    Active,
-    Stop,
-}
-
 // 模板数据结构
 #[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
 #[cfg_attr(
@@ -101,13 +90,15 @@ pub struct Template {
     pub status: TemplateStatus,
 }
 
+/// 活动数据
 #[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
 #[cfg_attr(
     feature = "std",
     derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 )]
 pub struct Meeting {
-    pub template_addr: AccountId,
+    pub template: AccountId,
+    pub meeting: AccountId,
     pub name: String,
     pub desc: String,
     pub poster: String,
@@ -117,6 +108,17 @@ pub struct Meeting {
     pub start_sale_time: u64,
     pub end_sale_time: u64,
     pub status: MeetingStatus,
+}
+
+/// 活动状态
+#[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
+#[cfg_attr(
+    feature = "std",
+    derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
+)]
+pub enum MeetingStatus {
+    Active,
+    Stop,
 }
 
 impl Ticket {
