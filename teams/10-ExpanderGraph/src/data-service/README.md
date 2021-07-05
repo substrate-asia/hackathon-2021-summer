@@ -1,5 +1,5 @@
-## Metagraph Data Service
-
+## Polkadot on-chain data collector
+Get the data on the Polkadot chain and write it into the database. The architecture is shown in the figure below.
 ```
  +--------------------------------------------------------------------------------------------+
  |                                                                                            |
