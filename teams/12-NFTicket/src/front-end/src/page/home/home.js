@@ -17,6 +17,15 @@ import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 
 
+import { ApiPromise, WsProvider } from '@polkadot/api';
+
+async function initPolkdot(){
+  const wsProvider = new WsProvider('ws://127.0.0.1:9944');
+  const api = await ApiPromise.create({ provider: wsProvider });
+  console.log(api.genesisHash.toHex());
+}
+
+
 const alert = Modal.alert;
 const data = [
   {
@@ -96,7 +105,7 @@ class Home extends Component {
       showToast: false
     };
    
-
+    initPolkdot()
   };
 
   componentDidMount() {
