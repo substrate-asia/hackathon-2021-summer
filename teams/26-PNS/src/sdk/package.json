@@ -1,0 +1,31 @@
+{
+  "name": "sdk",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "rm -rfv lib/* && tsc -d --project tsconfig.json --outDir lib/",
+    "serve": "vite",
+    "build": "vite build --base=./",
+    "fmt": "prettier --write src/**",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ensdomains/content-hash": "^2.5.6",
+    "buffer": "^6.0.3",
+    "ethers": "^5.2.0",
+    "idna-uts46-hx": "^3.4.0",
+    "is-valid-domain": "0.0.20"
+  },
+  "devDependencies": {
+    "@metamask/providers": "^8.1.1",
+    "@types/node": "^15.12.1",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.6"
+  }
+}

@@ -1,0 +1,57 @@
+@import url("antd/dist/antd.css");
+
+@import url("../styles/portal.css");
+@import url("../styles/fonts.css");
+
+body {
+  overscroll-behavior-y: none;
+  margin: 0;
+  font-family: Noto Sans, Source Han Sans CN, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+input,
+textarea {
+  font-family: Noto Sans, Source Han Sans CN, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+body * {
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: hsl(0, 0%, 96%);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: hsl(0, 0%, 61%);
+}
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: hsl(0, 0%, 80%);
+}
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: hsl(0, 0%, 80%);
+}
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: hsl(0, 0%, 80%);
+}
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: hsl(0, 0%, 80%);
+}
+
+.dev-shadows,
+.dev-shadows * {
+  box-shadow: 0 0 1px hsla(0, 0%, 0%, 0.2);
+}
+
+body * {
+  /* box-shadow: 0 0 1px red; */
+}
