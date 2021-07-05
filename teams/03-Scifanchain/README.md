@@ -37,20 +37,13 @@
 - 协同创作，工作量证明
 - 上链存证，创造性解决版权保护与内容分享的矛盾
 
-### logo和文化
-
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/logo_two.png" alt="logo"/>
+### 文化
 
 - 多元融合。科学与艺术、创意与实践、线上与线下、中心化平台与分布式应用、Rust与Python、人文与AI……海纳百川，取长补短，兼容并收，美美与共。
 - 全球视野。我们认为创造无国界，人类是一个命运共同体，这颗星球应当像一个大家庭一样团结起来，共同创造前所未有的灿烂文明。
 - 创造未来。立足现实，仰望星空，大胆创新，拥抱理想。
 
 ## 黑客松期间计划完成的事项
-
-**整体架构图和黑客松期间功能的流程图**
-
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/sfc_struct.png" alt="struct"/>
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/sfc_flow.png" alt="flow"/>
 
 **区块链端**
 
