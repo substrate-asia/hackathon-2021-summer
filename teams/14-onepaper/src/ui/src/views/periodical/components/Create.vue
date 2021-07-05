@@ -202,7 +202,7 @@ export default {
         accountName: this.pair.meta.name
       }).then(res => {
         this.$emit('success')
-        this.$message.success('上传成功，已为您增加10个币')
+        this.$message.success('上传成功，已为您增加10个Paper')
         this.closeClick()
         this.loading = false
       }).catch(() => {
