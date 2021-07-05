@@ -104,7 +104,9 @@ mod credit_contract_chain {
         allowances: StorageHashMap<(AccountId, AccountId), Balance>,
 
         // Save Contract
-        contractMap:StorageHashMap<Hash,
+        contractMap:StorageHashMap<u128,Contract>,
+        // creditMap: StorageHashMap<AccountId, >,
+
     }
 
     pub enum State{
@@ -188,6 +190,7 @@ mod credit_contract_chain {
         fn new(initial_supply: Balance) -> Self {
             let caller = Self::env().caller();
             let mut balances = StorageHashMap::new();
+            let mut contractMap = StorageHashMap::new();
             balances.insert(caller, initial_supply);
             let instance = Self {
                 total_supply: Lazy::new(initial_supply),
@@ -321,13 +324,14 @@ mod credit_contract_chain {
 
         
         #[ink(message)]
-        pub fn launchContract(&mut self, contractDocumentHash:Hash, depositeCoins:Balance, arbitrateRatio:Balance, requireTrust:Balance)->Balance{
+        pub fn launchContract(&mut self, contractDocumentHash:Hash, depositeCoins:Balance, arbitrateRatio:Balance, requireTrust:Balance)->Hash{
             let caller = self.env().caller();
             self.balances.get(&caller).copied().unwrap_or(0);
             
-            let contract= Contract::launch(caller,contractDocumentHash,depositeCoins,arbitrateRatio,requireTrust
+            let mut contract= Contract::launch(caller,contractDocumentHash,depositeCoins,arbitrateRatio,requireTrust
             );
-
+            contractMap.insert(0x67261, contract);
+            
             // if (!addressMap.containsKey(demanderId)) {
             //     return BigInteger.ZERO;
             // } else {
