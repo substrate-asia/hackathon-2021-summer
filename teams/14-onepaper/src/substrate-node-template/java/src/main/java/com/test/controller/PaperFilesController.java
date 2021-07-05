@@ -99,7 +99,7 @@ public class PaperFilesController {
         paperFiles.setFirstChar(String.valueOf(PinyinUtil.getFirstLetter(paperFiles.getTitle().charAt(0))));
         paperFilesService.save(paperFiles);
         List<String> strings = RuntimeUtil.execForLines("python3 /opt/reward.py "+ paperFiles.getAccount());
-        if(strings.size() > 5) {
+        if(strings.size() >= 5) {
             if(strings.get(2).contains("Success")){
                 log.info("转账操作成功，处理账号：{}",paperFiles.getAccount());
                 return ResultUtil.ok();
@@ -124,7 +124,7 @@ public class PaperFilesController {
         final String fileName = file.getName();
         final String contentType = ObjectUtil.defaultIfNull(FileUtil.getMimeType(fileName), "application/octet-stream");
         List<String> strings = RuntimeUtil.execForLines("python3 /opt/deduct.py "+ accountId);
-        if(strings.size() > 5) {
+        if(strings.size() >= 5) {
             if(!strings.get(2).contains("Success")){
                 ServletUtil.write(response,"没有足够的Paper","text/plain;charset=utf-8");
                 return;
