@@ -257,6 +257,7 @@ mod nfticket {
         pub fn add_meeting(
             &mut self,
             meeting_addr: AccountId,
+            creator:AccountId,
             name: Vec<u8>,
             desc: Vec<u8>,
             poster: Vec<u8>,
@@ -288,7 +289,7 @@ mod nfticket {
                 self.meeting_map.insert(meeting_addr, meeting);
                 ink_env::debug_message(&format!("-------------------------create_class name:{:?},desc:{:?}", name.clone(),desc.clone()));
                 // TODO 创建相应的 NFT 集合（调用 runtime 接口）
-                let (_, class_id) = self.env().extension().create_class(name.clone(), name, desc, 0).unwrap();
+                let (_, class_id) = self.env().extension().create_class(&creator,name.clone(), name, desc, 0).unwrap();
                 //调试信息
                 // let class_id = 123;
                 self.classid_map.insert(meeting_addr, class_id);
@@ -302,12 +303,13 @@ mod nfticket {
         #[ink(message)]
         pub fn create_class(
             &mut self,
+            creator:AccountId,
             metadata: Vec<u8>,
             name: Vec<u8>,
             description: Vec<u8>,
             properties: u8,
         ) -> Result<(), NFTMartErr> {
-            let (owner, class_id) = self.env().extension().create_class(metadata, name, description, properties)?;
+            let (owner, class_id) = self.env().extension().create_class(&creator,metadata, name, description, properties)?;
             self.env().emit_event(CreateClassFromContract { owner, class_id });
             Ok(())
         }
@@ -385,7 +387,7 @@ mod nfticket {
         /// 5. 返回创建的 class_id 和 NFT_ID的元组
         /// 6. 触发事件： ticket_created
         #[ink(message, payable)]
-        pub fn buy_ticket(&mut self, _ticket: Ticket) -> Result<TicketNft,MeetingError> {
+        pub fn buy_ticket(&mut self,creator:AccountId, _ticket: Ticket) -> Result<TicketNft,MeetingError> {
             ink_env::debug_message("-------------------------buy_ticket开始调用");
             let mut ticket_nft:TicketNft = Default::default();
             // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
@@ -400,7 +402,7 @@ mod nfticket {
                 let calss_id = self.classid_map.get(&_ticket.meeting).unwrap();
                 
                 let (_class_owner, _ticket_owner, _class_id, token_id, quantity) = self.env().extension()
-                .proxy_mint(&_ticket.buyer, *calss_id, vec![1], 1,Some(false))
+                .proxy_mint(&creator,&_ticket.buyer, *calss_id, vec![1], 1,Some(false))
                 .map_err(|_|MeetingError::NftCallerError)?;
                 ticket_nft = TicketNft{
                     _class_owner,

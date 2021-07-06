@@ -52,13 +52,38 @@ pub trait NFTMart {
     #[ink(extension = 2001, returns_result = false)]
     fn fetch_random() -> [u8; 32];
 
+    #[ink(extension = 2002, returns_result = false)]
+    fn create_class(creator: &ink_env::AccountId, metadata: Metadata, name: Chars, description: Chars, properties: u8) -> (ink_env::AccountId, ClassId);
+
+    #[ink(extension = 2012, returns_result = false)]
+    fn create_class_by_caller(metadata: Metadata, name: Chars, description: Chars, properties: u8) -> (ink_env::AccountId, ClassId);
+
     /// Create an NFT portfolio, which is a collection used by creators to distinguish different NFT works
     ///     metadata: metadata of the class
     ///     name: the name of the class
     ///     description: description of the class
     ///     properties: properties of the class
     #[ink(extension = 2022, returns_result = false)]
-    fn create_class(metadata: Metadata, name: Chars, description: Chars, properties: u8) -> (ink_env::AccountId, ClassId);
+    fn create_class_by_white_list(metadata: Metadata, name: Chars, description: Chars, properties: u8) -> (ink_env::AccountId, ClassId);
+
+    #[ink(extension = 2003, returns_result = false)]
+    fn proxy_mint(
+        creator: &ink_env::AccountId,
+        to: &ink_env::AccountId,
+        class_id: ClassId,
+        metadata: Metadata,
+        quantity: Quantity,
+        charge_royalty: Option<bool>,
+    ) -> (ink_env::AccountId, ink_env::AccountId, ClassId, TokenId, Quantity);
+
+    #[ink(extension = 2013, returns_result = false)]
+    fn proxy_mint_by_caller(
+        to: &ink_env::AccountId,
+        class_id: ClassId,
+        metadata: Metadata,
+        quantity: Quantity,
+        charge_royalty: Option<bool>,
+    ) -> (ink_env::AccountId, ink_env::AccountId, ClassId, TokenId, Quantity);
 
     /// Create an NFT
     ///     to: Who is the created work for?
@@ -67,7 +92,7 @@ pub trait NFTMart {
     ///     quantity: How many works are created with the same data?
     ///     charg_royalty: Whether to charge royalties    
     #[ink(extension = 2023, returns_result = false)]
-    fn proxy_mint(
+    fn proxy_mint_by_white(
         to: &ink_env::AccountId,
         class_id: ClassId,
         metadata: Metadata,

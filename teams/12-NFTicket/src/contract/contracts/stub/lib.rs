@@ -36,6 +36,7 @@ mod stub {
         pub fn add_meeting(
             &mut self,
             meeting_addr: AccountId,
+            creator:AccountId,
             name: Vec<u8>,
             desc: Vec<u8>,
             poster: Vec<u8>,
@@ -58,7 +59,7 @@ mod stub {
         6. 触发事件： ticket_created
         */
         #[ink(message, payable)]
-        pub fn buy_ticket(&mut self, _ticket:Ticket)->Result<TicketNft,MeetingError>{
+        pub fn buy_ticket(&mut self,creator:AccountId, _ticket:Ticket,)->Result<TicketNft,MeetingError>{
             unimplemented!()
         }
 

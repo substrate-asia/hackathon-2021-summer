@@ -9,7 +9,8 @@ pub use offline_meeting::*;
 */
 #[ink::contract]
 pub mod offline_meeting {
-	use ink_env::call::FromAccountId;
+
+use ink_env::call::FromAccountId;
 	use ink_env::DefaultEnvironment;
 	use ink_lang::ToAccountId;
 	use ink_prelude::format;
@@ -21,6 +22,8 @@ pub mod offline_meeting {
 	};
 	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
 	use stub::MainStub;
+	use ink_prelude::collections::BTreeMap;
+
 	const BASE_PERCENT: u128 = 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
 	#[derive(
@@ -149,7 +152,7 @@ pub mod offline_meeting {
 		tickets: StorageMap<(u128, u128), (u8, u8, u8)>, // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
 		check_records: StorageMap<(u128, u128), Vec<CheckRecord>>, // 检票记录：
-		user_NFT_ticket_map:StorageMap<AccountId,TicketNft>,			//	用户购买的票产生的NFT存储.
+		user_NFT_ticket_map:StorageMap<AccountId,BTreeMap<(u32,u64),TicketNft>>,	//	用户购买的票产生的NFT存储.StorageMap<用户id,BTreeMap<(classid,ticketid),TicketNft>>
 	}
 
 	impl Meeting {
@@ -290,18 +293,24 @@ pub mod offline_meeting {
 			// 调用主合约的购票方法,并将抽成比例转给主合约.
 			use ink_lang::ForwardCallMut;
 			let ticketNft:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
-				.buy_ticket(ticket.clone())
+				.buy_ticket(caller,ticket.clone())
 				.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
 				.fire()
 				.unwrap().unwrap();
 				ink_env::debug_message(&format!("-------------------------income {:?}", ticketNft));
 			// 存储用户购买的ticketNFT存储到链上,key:用户的AccountId,value:ticketNft
-			self.user_NFT_ticket_map.insert(caller,ticketNft);
+			if let Some(nft_tree_map)=self.user_NFT_ticket_map.get_mut(&caller){
+				nft_tree_map.insert((ticketNft._class_id,ticketNft.token_id), ticketNft);
+			}else{
+				let mut nft_tree_map = BTreeMap::<(u32,u64),TicketNft>::default();
+				nft_tree_map.insert((ticketNft._class_id,ticketNft.token_id), ticketNft);
+				self.user_NFT_ticket_map.insert(caller, nft_tree_map);
+			}
 			true
 		}
 
 		#[ink(message)]
-		pub fn get_user_nft_ticket(&self)->TicketNft{
+		pub fn get_user_nft_ticket(&self)->BTreeMap<(u32,u64),TicketNft>{
 			let caller = Self::env().caller();
 			self.user_NFT_ticket_map.get(&caller).unwrap().clone()
 		}
