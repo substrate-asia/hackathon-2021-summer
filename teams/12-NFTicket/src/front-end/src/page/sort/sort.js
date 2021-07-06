@@ -134,7 +134,7 @@ class sort extends Component {
               height:'44px',
               marginBottom:'3px',
               fontSize:'14px',
-              fontWeight:'bold'
+              fontWeight:'bold',
             }} 
             tabs={tabs}
             initialPage={0}
