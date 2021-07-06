@@ -38,6 +38,19 @@ mod localmeeting {
             self.controller
         }
 
+        // 设置主合约地址
+        #[ink(message)]
+        pub fn set_controller(&mut self,new_onwer:AccountId)->bool {
+            self.ensure_owner();
+            self.controller = new_onwer;
+            true
+        }
+
+        /// Panic if `owner` is not an owner,
+        fn ensure_owner(&self) {
+            assert_eq!(self.owner, self.env().caller(), "not owner");
+        }
+
 
 		// /**
         // 创建会议活动

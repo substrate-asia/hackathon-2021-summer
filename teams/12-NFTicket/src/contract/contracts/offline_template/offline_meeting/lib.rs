@@ -223,7 +223,7 @@ pub mod offline_meeting {
 		/// 购买ticker,需要支付一定数量的币.
 		/// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
 		#[ink(message, payable)]
-		pub fn buy_ticket(&mut self, zone_id: u32, seat_id: Option<(u32, u32)>) -> bool {
+		pub fn buy_ticket(&mut self, zone_id: u32, seat_id: (u32, u32)) -> bool {
 			ink_env::debug_message("=========================entrance!!!");
 			let caller = Self::env().caller();
 			let meeting_addr = Self::env().account_id();
@@ -251,6 +251,7 @@ pub mod offline_meeting {
 				ticket_id,
 				caller,
 			);
+			ink_env::debug_message(&format!("-------------------------ticket is {:?}", ticket));
 			// 标记这个座位已经售出
 			self.make_seat_sealed(zone_id, seat_id);
 			// 计算主合约按照比例应该抽成多少
@@ -293,6 +294,7 @@ pub mod offline_meeting {
 				.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
 				.fire()
 				.unwrap().unwrap();
+				ink_env::debug_message(&format!("-------------------------income {:?}", ticketNft));
 			// 存储用户购买的ticketNFT存储到链上,key:用户的AccountId,value:ticketNft
 			self.user_NFT_ticket_map.insert(caller,ticketNft);
 			true
@@ -305,7 +307,7 @@ pub mod offline_meeting {
 		}
 
 		/// 得到某个区域的票价
-		fn get_ticket_price(&self, zone_id: u32, seat_id: Option<(u32, u32)>) -> Option<Balance> {
+		fn get_ticket_price(&self, zone_id: u32, seat_id: (u32, u32)) -> Option<Balance> {
 			ink_env::debug_message("=========================get_ticket_price entrance!!!");
 			//TODO 确保这个位置是有效的.
 			//TODO 获取这个位置的票价
@@ -313,8 +315,8 @@ pub mod offline_meeting {
 		}
 
 		/// 标记这个位置已经卖出.
-		fn make_seat_sealed(&mut self, zone_id: u32, seat_id: Option<(u32, u32)>) ->bool {
-			let seat_id = seat_id.unwrap();
+		fn make_seat_sealed(&mut self, zone_id: u32, seat_id: (u32, u32)) ->bool {
+			// let seat_id = seat_id.unwrap();
 			let zone_seat=(zone_id,seat_id.0,seat_id.1);
 			self.seats_status_map.get(&zone_seat);
 			self

@@ -66,7 +66,7 @@ pub trait NFTMart {
     ///     metadata: metadata of the work
     ///     quantity: How many works are created with the same data?
     ///     charg_royalty: Whether to charge royalties    
-    #[ink(extension = 2003, returns_result = false)]
+    #[ink(extension = 2023, returns_result = false)]
     fn proxy_mint(
         to: &ink_env::AccountId,
         class_id: ClassId,

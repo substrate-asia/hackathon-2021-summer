@@ -45,8 +45,8 @@ mod nfticket {
         owner: AccountId,
         //费率
         fee_rate: (u128, u128),
-        // 收取费用的人,删除收费者,币留在合约内.TODO,owner可以把合约的资金转到指定的账户.
-        fee_taker: AccountId,
+        // // 收取费用的人,删除收费者,币留在合约内.TODO,owner可以把合约的资金转到指定的账户.
+        // fee_taker: AccountId,
         // 会议集合
         meeting_map: StorageHashMap<AccountId, Meeting>,
         //模板集合
@@ -109,13 +109,13 @@ mod nfticket {
     impl NftTicket {
         /// Creates a new ERC-20 contract with the specified initial supply.
         #[ink(constructor)]
-        pub fn new(fee_taker: AccountId) -> Self {
+        pub fn new() -> Self {
             let caller = Self::env().caller();
             let instance = Self {
                 template_hash_address_map: Default::default(),
                 owner: caller,
                 fee_rate: (10, 100),
-                fee_taker,
+                // fee_taker,
                 meeting_map: Default::default(),
                 template_map: Default::default(),
                 classid_map: Default::default(),
@@ -394,6 +394,7 @@ mod nfticket {
             ink_env::debug_message(&format!("-------------------------收到的费用{:?}",main_fee));
             //2. 仅能通过活动合约调用；
             let caller = self.env().caller();
+            ink_env::debug_message(&format!("-------------------------调用者为caller{:?}",caller));
             //查询调用者是否是来自合约.
             if let Some(_) = self.meeting_map.get(&caller) {
                 let calss_id = self.classid_map.get(&_ticket.meeting).unwrap();
