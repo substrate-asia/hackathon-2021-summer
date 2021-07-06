@@ -1,0 +1,10 @@
+[infura]
+  token = "test_token"
+
+[dbinfo]
+  type = "mysql"
+  user = "expander001"
+  password = "expander@hz"
+  ip = "127.0.0.1"
+  port = "3306"
+  name = "test"
