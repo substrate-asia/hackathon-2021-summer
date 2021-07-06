@@ -1,0 +1,5 @@
+node_modules/
+other
+dist/
+bundle.js
+lib/*
