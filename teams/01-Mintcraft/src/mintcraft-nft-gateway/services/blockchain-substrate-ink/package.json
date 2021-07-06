@@ -1,0 +1,23 @@
+{
+  "name": "@mintcraft/blockchain-substrate-ink",
+  "version": "0.1.0",
+  "description": "Mintcraft blockchain agent: substrate-ink",
+  "main": "index.js",
+  "repository": "git@github.com:MintEngine/mintcraft-nft-gateway.git",
+  "author": "Tang Bo Hao <tech@btang.cn>",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">= 14.0"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@polkadot/api": "^4.15.1",
+    "@polkadot/api-contract": "^4.15.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.0",
+    "ts-node": "^10.0.0"
+  }
+}

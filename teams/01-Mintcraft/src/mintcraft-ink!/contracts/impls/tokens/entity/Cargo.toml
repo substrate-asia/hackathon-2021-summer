@@ -1,0 +1,49 @@
+[package]
+name = "entity"
+version = "0.1.0"
+authors = ["MintEngine Lab <admin@mintcraft.org>"]
+edition = "2018"
+
+[dependencies]
+ink_primitives = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_metadata = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false, features = ["derive"], optional = true }
+ink_env = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_storage = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_lang = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_prelude = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+
+metis_lang = { version = "0.1.0", git = "https://github.com/patractlabs/metis", default-features = false }
+metis_ownable = { version = "0.1.0", git = "https://github.com/patractlabs/metis", default-features = false }
+
+trait_erc1155 = { path = "../../../traits/tokens/erc1155", default-features = false, features = ["ink-as-dependency"] }
+
+scale = { package = "parity-scale-codec", version = "2.1", default-features = false, features = ["derive"] }
+scale-info = { version = "0.6", default-features = false, features = ["derive"], optional = true }
+
+[lib]
+name = "entity"
+path = "lib.rs"
+crate-type = [
+	# Used for normal contract Wasm blobs.
+	"cdylib",
+	# Used for ABI generation.
+	"rlib",
+]
+
+[features]
+default = ["std"]
+std = [
+    "ink_primitives/std",
+    "ink_metadata/std",
+    "ink_env/std",
+    "ink_storage/std",
+    "ink_lang/std",
+    "ink_prelude/std",
+    "metis_lang/std",
+    "metis_ownable/std",
+    "scale/std",
+    "scale-info/std",
+    "trait_erc1155/std",
+]
+ink-as-dependency = []
+ink-experimental-engine = ["ink_env/ink-experimental-engine"]

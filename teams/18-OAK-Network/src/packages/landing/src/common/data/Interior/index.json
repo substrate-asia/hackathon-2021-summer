@@ -1,0 +1,488 @@
+{
+  "menuData": [
+    {
+      "label": "Feature",
+      "path": "#feature",
+      "offset": "80"
+    },
+    {
+      "label": "About",
+      "path": "#aboutUs",
+      "offset": "80"
+    },
+    {
+      "label": "Project",
+      "path": "#project",
+      "offset": "80"
+    },
+    {
+      "label": "Team",
+      "path": "#team",
+      "offset": "80"
+    },
+    {
+      "label": "News",
+      "path": "#news",
+      "offset": "40"
+    },
+    {
+      "label": "Testimonial",
+      "path": "#testimonial",
+      "offset": "80"
+    }
+  ],
+  "bannerData": {
+    "discount": "25%",
+    "discountLabel": "DISCOUNT ON YOUR FIRST PROJECT",
+    "title": "We craft affordable design",
+    "text": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+    "carousel": [
+      {
+        "id": 1,
+        "thumb_url": "../../assets/image/interior/slider/slide-1.png",
+        "title": "Restroom",
+        "link": "#"
+      },
+      {
+        "id": 2,
+        "thumb_url": "../../assets/image/interior/slider/slide-2.png",
+        "title": "Livingroom",
+        "link": "#"
+      },
+      {
+        "id": 3,
+        "thumb_url": "../../assets/image/interior/slider/slide-3.png",
+        "title": "Corner",
+        "link": "#"
+      }
+    ]
+  },
+  "featureData": {
+    "title": "OUR SERVICES",
+    "slogan": "Featured Service that We Provide",
+    "features": [
+      {
+        "id": 1,
+        "icon": "../../assets/image/interior/feature/1.svg",
+        "title": "Corporate Design",
+        "description": "Corporate design is a crucial part of your brand. Our approach corporate design is extraordinary."
+      },
+      {
+        "id": 2,
+        "icon": "../../assets/image/interior/feature/2.svg",
+        "title": "Landscape Design",
+        "description": "Learn more about landscape plans, how to design them, what to watch out for in your layout."
+      },
+      {
+        "id": 3,
+        "icon": "../../assets/image/interior/feature/3.svg",
+        "title": "Interior Design",
+        "description": "Discover our design ideas, beautiful photos and how-to projects to create Interior Design."
+      }
+    ]
+  },
+  "aboutData": {
+    "thumb_url": "../../assets/image/interior/about_parent.png",
+    "title": "Hi, Meet <br> Concrete Squarefeet",
+    "text": "Your interior should still represent your style and feel like a place you want to unwind in. No matter how large your space is or what your design preference is, these designer examples are designed to inspire you. No matter what your choices are, customer satisfaction is our desired goal.",
+    "text2": "When considering the design of your bedroom, it’s important to keep in mind both aesthetics and functionality. If storage is a primary concern, it is important to integrate the right cupboards and wardrobes into your design."
+  },
+  "projectData": {
+    "title": "WORK PROCEDURE",
+    "slogan": "How We Do Our Projects",
+    "thumb_url": "../../assets/image/interior/projects/1.png",
+    "projects": [
+      {
+        "id": 1,
+        "text": "Create a mind map to brainstorm your project to inspire new ideas. Use a simple piece of paper, poster, or whiteboard for your mind map and we write the destination of your project in the middle.We  Write down related topics, subtopics, and relevant concepts around the goal and branch from them to create and follow different tangents.",
+        "text2": "When you conduct a group project, each group member can benefit from the ideas of others and gain new insights by brainstorming together."
+      },
+      {
+        "id": 2,
+        "text": "Schedule a brainstorming session in a quiet place with few distractions. If you are working on a project alone, you can use group discussions with friends or colleagues to gain a new perspective on the topic. When you conduct a group project, each group member can benefit from the ideas of others and gain new insights by brainstorming together.",
+        "text2": "Completing a successful project requires a significant amount of time and work, which means evaluating your priorities and planning your course of action."
+      },
+      {
+        "id": 3,
+        "text": "Create a mind map to brainstorm your project to inspire new ideas. Use a simple piece of paper, poster, or whiteboard for your mind map and we write the destination of your project in the middle.We  Write down related topics, subtopics, and relevant concepts around the goal and branch from them to create and follow different tangents.",
+        "text2": "When you conduct a group project, each group member can benefit from the ideas of others and gain new insights by brainstorming together."
+      }
+    ]
+  },
+  "teamData": {
+    "title": "OUR TEAM MEMBER",
+    "slogan": "Meet Our Perfectionist",
+    "members": [
+      {
+        "id": 1,
+        "avatar": "../../assets/image/interior/team/member1.jpg",
+        "name": "Roman Ul Oman",
+        "designation": "Project Manager",
+        "social_links": [
+          {
+            "id": 1,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M288,192v-38.1c0-17.2,3.8-25.9,30.5-25.9H352V64h-55.9c-68.5,0-91.1,31.4-91.1,85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z'></path></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 2,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><g><g><g><path d='M256,64C150,64,64,150,64,256c0,106.1,86,192,192,192s192-85.9,192-192C448,150,362,64,256,64z M256,415.5c-88.1,0-159.5-71.4-159.5-159.5c0-88.1,71.4-159.5,159.5-159.5c88.1,0,159.5,71.4,159.5,159.5C415.5,344.1,344.1,415.5,256,415.5z'><path d='M256,64C150,64,64,150,64,256c0,106.1,86,192,192,192s192-85.9,192-192C448,150,362,64,256,64z M256,415.5c-88.1,0-159.5-71.4-159.5-159.5c0-88.1,71.4-159.5,159.5-159.5c88.1,0,159.5,71.4,159.5,159.5C415.5,344.1,344.1,415.5,256,415.5z'></path></path></g></g><g><g><path d='M306.3,246.7c23.4-2.2,50.9-2.9,77.2-2.4c-2.3-25.4-12-48.7-27-67.6c-16.5,14.9-38,28.1-63.3,39C297.8,225.7,302.1,236.1,306.3,246.7z'><path d='M306.3,246.7c23.4-2.2,50.9-2.9,77.2-2.4c-2.3-25.4-12-48.7-27-67.6c-16.5,14.9-38,28.1-63.3,39C297.8,225.7,302.1,236.1,306.3,246.7z'></path></path><path d='M335.4,155.6C313.6,138.3,286,128,256,128c-5.1,0-10.2,0.3-15.2,0.9c13.8,17.7,26.7,37.6,38.6,59.5C301.1,179.2,320,168.1,335.4,155.6z'><path d='M335.4,155.6C313.6,138.3,286,128,256,128c-5.1,0-10.2,0.3-15.2,0.9c13.8,17.7,26.7,37.6,38.6,59.5C301.1,179.2,320,168.1,335.4,155.6z'></path></path><path d='M205.9,138.2c-34.1,14.5-60.7,43.4-72,79.1c41.1-0.7,79.6-7,113.4-17.3C234.7,177,220.7,156.3,205.9,138.2z'><path d='M205.9,138.2c-34.1,14.5-60.7,43.4-72,79.1c41.1-0.7,79.6-7,113.4-17.3C234.7,177,220.7,156.3,205.9,138.2z'></path></path><path d='M383,272.2c-22.3-0.6-46-0.2-66.9,1.5c4.1,12.3,8.1,24.9,11.5,37.9c3.8,14.6,7,29.1,9.6,43.4C361.8,334.7,378.8,305.4,383,272.2z'><path d='M383,272.2c-22.3-0.6-46-0.2-66.9,1.5c4.1,12.3,8.1,24.9,11.5,37.9c3.8,14.6,7,29.1,9.6,43.4C361.8,334.7,378.8,305.4,383,272.2z'></path></path><path d='M258,256.1c3.9-1.6,8.8-3,14.3-4.3c-3.4-8.3-7.1-16.4-10.8-24.3c-39.1,12.6-84.6,20.3-133.3,21.3c-0.1,2.4-0.2,4.8-0.2,7.3c0,29.1,9.7,55.9,26,77.4C178.9,301,214.9,274.2,258,256.1z'><path d='M258,256.1c3.9-1.6,8.8-3,14.3-4.3c-3.4-8.3-7.1-16.4-10.8-24.3c-39.1,12.6-84.6,20.3-133.3,21.3c-0.1,2.4-0.2,4.8-0.2,7.3c0,29.1,9.7,55.9,26,77.4C178.9,301,214.9,274.2,258,256.1z'></path></path><path d='M282.6,278.2c-6.9,1.5-12.9,3.2-17.4,5.3c-37.1,16.8-68.3,41.6-90.4,71.5c22.1,18.2,50.4,29,81.2,29c18.5,0,36-3.9,51.8-10.9c-2.7-15.1-6-30.3-10-45.7C293.4,310.5,288.2,294,282.6,278.2z'><path d='M282.6,278.2c-6.9,1.5-12.9,3.2-17.4,5.3c-37.1,16.8-68.3,41.6-90.4,71.5c22.1,18.2,50.4,29,81.2,29c18.5,0,36-3.9,51.8-10.9c-2.7-15.1-6-30.3-10-45.7C293.4,310.5,288.2,294,282.6,278.2z'></path></path></g></g></g></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 3,
+            "icon": "<i fill=currentColor style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><g><path d='M242.1,275.6l-18.2-13.7l-0.1-0.1c-5.8-4.6-10-8.3-10-14.7c0-7,5-11.8,10.9-17.4l0.5-0.4c20-15.2,44.7-34.3,44.7-74.6c0-26.9-11.9-44.7-23.3-57.7h13L320,64H186.5c-25.3,0-62.7,3.2-94.6,28.6l-0.1,0.3C70,110.9,57,137.4,57,163.5c0,21.2,8.7,42.2,23.9,57.4c21.4,21.6,48.3,26.1,67.1,26.1c1.5,0,3,0,4.5-0.1c-0.8,3-1.2,6.3-1.2,10.3c0,10.9,3.6,19.3,8.1,26.2c-24,1.9-58.1,6.5-84.9,22.3C35.1,328.4,32,361.7,32,371.3c0,38.2,35.7,76.8,115.5,76.8c91.6,0,139.5-49.8,139.5-99C287,312,264.2,293.5,242.1,275.6z M116.7,139.9c0-13.4,3-23.5,9.3-30.9c6.5-7.9,18.2-13.1,29-13.1c19.9,0,32.9,15,40.4,27.6c9.2,15.5,14.9,36.1,14.9,53.6c0,4.9,0,20-10.2,29.8c-7,6.7-18.7,11.4-28.6,11.4c-20.5,0-33.5-14.7-40.7-27C120.4,173.5,116.7,153.1,116.7,139.9z M237.8,368c0,27.4-25.2,44.5-65.8,44.5c-48.1,0-80.3-20.6-80.3-51.3c0-26.1,21.5-36.8,37.8-42.5c18.9-6.1,44.3-7.3,50.1-7.3c3.9,0,6.1,0,8.7,0.2C224.9,336.8,237.8,347.7,237.8,368z'><path d='M242.1,275.6l-18.2-13.7l-0.1-0.1c-5.8-4.6-10-8.3-10-14.7c0-7,5-11.8,10.9-17.4l0.5-0.4c20-15.2,44.7-34.3,44.7-74.6c0-26.9-11.9-44.7-23.3-57.7h13L320,64H186.5c-25.3,0-62.7,3.2-94.6,28.6l-0.1,0.3C70,110.9,57,137.4,57,163.5c0,21.2,8.7,42.2,23.9,57.4c21.4,21.6,48.3,26.1,67.1,26.1c1.5,0,3,0,4.5-0.1c-0.8,3-1.2,6.3-1.2,10.3c0,10.9,3.6,19.3,8.1,26.2c-24,1.9-58.1,6.5-84.9,22.3C35.1,328.4,32,361.7,32,371.3c0,38.2,35.7,76.8,115.5,76.8c91.6,0,139.5-49.8,139.5-99C287,312,264.2,293.5,242.1,275.6z M116.7,139.9c0-13.4,3-23.5,9.3-30.9c6.5-7.9,18.2-13.1,29-13.1c19.9,0,32.9,15,40.4,27.6c9.2,15.5,14.9,36.1,14.9,53.6c0,4.9,0,20-10.2,29.8c-7,6.7-18.7,11.4-28.6,11.4c-20.5,0-33.5-14.7-40.7-27C120.4,173.5,116.7,153.1,116.7,139.9z M237.8,368c0,27.4-25.2,44.5-65.8,44.5c-48.1,0-80.3-20.6-80.3-51.3c0-26.1,21.5-36.8,37.8-42.5c18.9-6.1,44.3-7.3,50.1-7.3c3.9,0,6.1,0,8.7,0.2C224.9,336.8,237.8,347.7,237.8,368z'></path></path><polygon points='402,142 402,64 368,64 368,142 288,142 288,176 368,176 368,257 402,257 402,176 480,176 480,142'><polygon points='402,142 402,64 368,64 368,142 288,142 288,176 368,176 368,257 402,257 402,176 480,176 480,142'></polygon></polygon></g></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 4,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M436.9,296.8c2.8-12.5,4.2-25.4,4.2-38.7c0-99.7-82-180.6-183.2-180.6c-10.7,0-21.1,0.9-31.3,2.6C210.3,69.9,191,64,170.2,64C111.6,64,64,110.9,64,168.7c0,19.4,5.3,37.5,14.6,53c-2.4,11.7-3.7,23.9-3.7,36.3c0,99.8,82,180.6,183.1,180.6c11.5,0,22.7-1,33.5-3c15,7.9,32.1,12.4,50.2,12.4c58.7,0,106.2-46.9,106.2-104.7C448,326.6,444,310.8,436.9,296.8z M351.9,344.3c-8.5,11.8-21,21.2-37.2,27.8c-16.1,6.6-35.3,9.9-57.3,9.9c-26.3,0-48.3-4.6-65.6-13.6c-12.3-6.6-22.4-15.4-30.2-26.4c-7.8-11-11.7-22-11.7-32.6c0-6.6,2.6-12.3,7.6-17.1c5-4.6,11.5-7,19.1-7c6.3,0,11.7,1.8,16.1,5.5c4.2,3.5,7.8,8.7,10.7,15.5c3.3,7.3,6.8,13.5,10.6,18.4c3.6,4.7,8.7,8.6,15.3,11.7c6.7,3.1,15.6,4.7,26.6,4.7c15.1,0,27.5-3.2,36.8-9.5c9.2-6.1,13.6-13.5,13.6-22.5c0-7.1-2.3-12.7-7.1-17.1c-5-4.6-11.5-8.2-19.6-10.6c-8.3-2.6-19.6-5.3-33.6-8.2c-19-4-35.1-8.8-48-14.2c-13.1-5.5-23.7-13.2-31.5-22.7c-7.9-9.7-11.8-21.9-11.8-36.2c0-13.7,4.2-25.9,12.4-36.5c8.2-10.5,20.1-18.7,35.6-24.3c15.2-5.6,33.3-8.4,53.7-8.4c16.4,0,30.7,1.9,42.7,5.5c12.1,3.7,22.2,8.7,30.3,14.9c8,6.2,14,12.8,17.8,19.7c3.8,7,5.7,13.9,5.7,20.6c0,6.4-2.5,12.3-7.5,17.4c-5,5.1-11.3,7.8-18.8,7.8c-6.8,0-12.1-1.6-15.8-4.8c-3.4-3-7-7.6-10.9-14.3c-4.6-8.5-10.1-15.3-16.4-20.1c-6.2-4.6-16.4-7-30.6-7c-13.1,0-23.8,2.6-31.7,7.7c-7.6,4.9-11.3,10.6-11.3,17.3c0,4.1,1.2,7.5,3.7,10.5c2.6,3.1,6.2,5.9,10.9,8.2c4.8,2.4,9.8,4.3,14.7,5.6c5.1,1.4,13.6,3.5,25.3,6.1c14.9,3.1,28.5,6.7,40.5,10.4c12.2,3.9,22.7,8.6,31.3,14.1c8.8,5.6,15.7,12.9,20.7,21.5c4.9,8.6,7.4,19.4,7.4,31.8C364.8,318.9,360.5,332.5,351.9,344.3z'></path></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 5,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M492,109.5c-17.4,7.7-36,12.9-55.6,15.3c20-12,35.4-31,42.6-53.6c-18.7,11.1-39.4,19.2-61.5,23.5C399.8,75.8,374.6,64,346.8,64c-53.5,0-96.8,43.4-96.8,96.9c0,7.6,0.8,15,2.5,22.1c-80.5-4-151.9-42.6-199.6-101.3c-8.3,14.3-13.1,31-13.1,48.7c0,33.6,17.2,63.3,43.2,80.7C67,210.7,52,206.3,39,199c0,0.4,0,0.8,0,1.2c0,47,33.4,86.1,77.7,95c-8.1,2.2-16.7,3.4-25.5,3.4c-6.2,0-12.3-0.6-18.2-1.8c12.3,38.5,48.1,66.5,90.5,67.3c-33.1,26-74.9,41.5-120.3,41.5c-7.8,0-15.5-0.5-23.1-1.4C62.8,432,113.7,448,168.3,448C346.6,448,444,300.3,444,172.2c0-4.2-0.1-8.4-0.3-12.5C462.6,146,479,129,492,109.5z'></path></svg></i>",
+            "url": "#"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "avatar": "../../assets/image/interior/team/member2.jpg",
+        "name": "Jeny Doe",
+        "designation": "Lead Designer",
+        "social_links": [
+          {
+            "id": 1,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M288,192v-38.1c0-17.2,3.8-25.9,30.5-25.9H352V64h-55.9c-68.5,0-91.1,31.4-91.1,85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z'></path></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 2,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><g><g><g><path d='M256,64C150,64,64,150,64,256c0,106.1,86,192,192,192s192-85.9,192-192C448,150,362,64,256,64z M256,415.5c-88.1,0-159.5-71.4-159.5-159.5c0-88.1,71.4-159.5,159.5-159.5c88.1,0,159.5,71.4,159.5,159.5C415.5,344.1,344.1,415.5,256,415.5z'><path d='M256,64C150,64,64,150,64,256c0,106.1,86,192,192,192s192-85.9,192-192C448,150,362,64,256,64z M256,415.5c-88.1,0-159.5-71.4-159.5-159.5c0-88.1,71.4-159.5,159.5-159.5c88.1,0,159.5,71.4,159.5,159.5C415.5,344.1,344.1,415.5,256,415.5z'></path></path></g></g><g><g><path d='M306.3,246.7c23.4-2.2,50.9-2.9,77.2-2.4c-2.3-25.4-12-48.7-27-67.6c-16.5,14.9-38,28.1-63.3,39C297.8,225.7,302.1,236.1,306.3,246.7z'><path d='M306.3,246.7c23.4-2.2,50.9-2.9,77.2-2.4c-2.3-25.4-12-48.7-27-67.6c-16.5,14.9-38,28.1-63.3,39C297.8,225.7,302.1,236.1,306.3,246.7z'></path></path><path d='M335.4,155.6C313.6,138.3,286,128,256,128c-5.1,0-10.2,0.3-15.2,0.9c13.8,17.7,26.7,37.6,38.6,59.5C301.1,179.2,320,168.1,335.4,155.6z'><path d='M335.4,155.6C313.6,138.3,286,128,256,128c-5.1,0-10.2,0.3-15.2,0.9c13.8,17.7,26.7,37.6,38.6,59.5C301.1,179.2,320,168.1,335.4,155.6z'></path></path><path d='M205.9,138.2c-34.1,14.5-60.7,43.4-72,79.1c41.1-0.7,79.6-7,113.4-17.3C234.7,177,220.7,156.3,205.9,138.2z'><path d='M205.9,138.2c-34.1,14.5-60.7,43.4-72,79.1c41.1-0.7,79.6-7,113.4-17.3C234.7,177,220.7,156.3,205.9,138.2z'></path></path><path d='M383,272.2c-22.3-0.6-46-0.2-66.9,1.5c4.1,12.3,8.1,24.9,11.5,37.9c3.8,14.6,7,29.1,9.6,43.4C361.8,334.7,378.8,305.4,383,272.2z'><path d='M383,272.2c-22.3-0.6-46-0.2-66.9,1.5c4.1,12.3,8.1,24.9,11.5,37.9c3.8,14.6,7,29.1,9.6,43.4C361.8,334.7,378.8,305.4,383,272.2z'></path></path><path d='M258,256.1c3.9-1.6,8.8-3,14.3-4.3c-3.4-8.3-7.1-16.4-10.8-24.3c-39.1,12.6-84.6,20.3-133.3,21.3c-0.1,2.4-0.2,4.8-0.2,7.3c0,29.1,9.7,55.9,26,77.4C178.9,301,214.9,274.2,258,256.1z'><path d='M258,256.1c3.9-1.6,8.8-3,14.3-4.3c-3.4-8.3-7.1-16.4-10.8-24.3c-39.1,12.6-84.6,20.3-133.3,21.3c-0.1,2.4-0.2,4.8-0.2,7.3c0,29.1,9.7,55.9,26,77.4C178.9,301,214.9,274.2,258,256.1z'></path></path><path d='M282.6,278.2c-6.9,1.5-12.9,3.2-17.4,5.3c-37.1,16.8-68.3,41.6-90.4,71.5c22.1,18.2,50.4,29,81.2,29c18.5,0,36-3.9,51.8-10.9c-2.7-15.1-6-30.3-10-45.7C293.4,310.5,288.2,294,282.6,278.2z'><path d='M282.6,278.2c-6.9,1.5-12.9,3.2-17.4,5.3c-37.1,16.8-68.3,41.6-90.4,71.5c22.1,18.2,50.4,29,81.2,29c18.5,0,36-3.9,51.8-10.9c-2.7-15.1-6-30.3-10-45.7C293.4,310.5,288.2,294,282.6,278.2z'></path></path></g></g></g></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 3,
+            "icon": "<i fill=currentColor style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><g><path d='M242.1,275.6l-18.2-13.7l-0.1-0.1c-5.8-4.6-10-8.3-10-14.7c0-7,5-11.8,10.9-17.4l0.5-0.4c20-15.2,44.7-34.3,44.7-74.6c0-26.9-11.9-44.7-23.3-57.7h13L320,64H186.5c-25.3,0-62.7,3.2-94.6,28.6l-0.1,0.3C70,110.9,57,137.4,57,163.5c0,21.2,8.7,42.2,23.9,57.4c21.4,21.6,48.3,26.1,67.1,26.1c1.5,0,3,0,4.5-0.1c-0.8,3-1.2,6.3-1.2,10.3c0,10.9,3.6,19.3,8.1,26.2c-24,1.9-58.1,6.5-84.9,22.3C35.1,328.4,32,361.7,32,371.3c0,38.2,35.7,76.8,115.5,76.8c91.6,0,139.5-49.8,139.5-99C287,312,264.2,293.5,242.1,275.6z M116.7,139.9c0-13.4,3-23.5,9.3-30.9c6.5-7.9,18.2-13.1,29-13.1c19.9,0,32.9,15,40.4,27.6c9.2,15.5,14.9,36.1,14.9,53.6c0,4.9,0,20-10.2,29.8c-7,6.7-18.7,11.4-28.6,11.4c-20.5,0-33.5-14.7-40.7-27C120.4,173.5,116.7,153.1,116.7,139.9z M237.8,368c0,27.4-25.2,44.5-65.8,44.5c-48.1,0-80.3-20.6-80.3-51.3c0-26.1,21.5-36.8,37.8-42.5c18.9-6.1,44.3-7.3,50.1-7.3c3.9,0,6.1,0,8.7,0.2C224.9,336.8,237.8,347.7,237.8,368z'><path d='M242.1,275.6l-18.2-13.7l-0.1-0.1c-5.8-4.6-10-8.3-10-14.7c0-7,5-11.8,10.9-17.4l0.5-0.4c20-15.2,44.7-34.3,44.7-74.6c0-26.9-11.9-44.7-23.3-57.7h13L320,64H186.5c-25.3,0-62.7,3.2-94.6,28.6l-0.1,0.3C70,110.9,57,137.4,57,163.5c0,21.2,8.7,42.2,23.9,57.4c21.4,21.6,48.3,26.1,67.1,26.1c1.5,0,3,0,4.5-0.1c-0.8,3-1.2,6.3-1.2,10.3c0,10.9,3.6,19.3,8.1,26.2c-24,1.9-58.1,6.5-84.9,22.3C35.1,328.4,32,361.7,32,371.3c0,38.2,35.7,76.8,115.5,76.8c91.6,0,139.5-49.8,139.5-99C287,312,264.2,293.5,242.1,275.6z M116.7,139.9c0-13.4,3-23.5,9.3-30.9c6.5-7.9,18.2-13.1,29-13.1c19.9,0,32.9,15,40.4,27.6c9.2,15.5,14.9,36.1,14.9,53.6c0,4.9,0,20-10.2,29.8c-7,6.7-18.7,11.4-28.6,11.4c-20.5,0-33.5-14.7-40.7-27C120.4,173.5,116.7,153.1,116.7,139.9z M237.8,368c0,27.4-25.2,44.5-65.8,44.5c-48.1,0-80.3-20.6-80.3-51.3c0-26.1,21.5-36.8,37.8-42.5c18.9-6.1,44.3-7.3,50.1-7.3c3.9,0,6.1,0,8.7,0.2C224.9,336.8,237.8,347.7,237.8,368z'></path></path><polygon points='402,142 402,64 368,64 368,142 288,142 288,176 368,176 368,257 402,257 402,176 480,176 480,142'><polygon points='402,142 402,64 368,64 368,142 288,142 288,176 368,176 368,257 402,257 402,176 480,176 480,142'></polygon></polygon></g></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 4,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M436.9,296.8c2.8-12.5,4.2-25.4,4.2-38.7c0-99.7-82-180.6-183.2-180.6c-10.7,0-21.1,0.9-31.3,2.6C210.3,69.9,191,64,170.2,64C111.6,64,64,110.9,64,168.7c0,19.4,5.3,37.5,14.6,53c-2.4,11.7-3.7,23.9-3.7,36.3c0,99.8,82,180.6,183.1,180.6c11.5,0,22.7-1,33.5-3c15,7.9,32.1,12.4,50.2,12.4c58.7,0,106.2-46.9,106.2-104.7C448,326.6,444,310.8,436.9,296.8z M351.9,344.3c-8.5,11.8-21,21.2-37.2,27.8c-16.1,6.6-35.3,9.9-57.3,9.9c-26.3,0-48.3-4.6-65.6-13.6c-12.3-6.6-22.4-15.4-30.2-26.4c-7.8-11-11.7-22-11.7-32.6c0-6.6,2.6-12.3,7.6-17.1c5-4.6,11.5-7,19.1-7c6.3,0,11.7,1.8,16.1,5.5c4.2,3.5,7.8,8.7,10.7,15.5c3.3,7.3,6.8,13.5,10.6,18.4c3.6,4.7,8.7,8.6,15.3,11.7c6.7,3.1,15.6,4.7,26.6,4.7c15.1,0,27.5-3.2,36.8-9.5c9.2-6.1,13.6-13.5,13.6-22.5c0-7.1-2.3-12.7-7.1-17.1c-5-4.6-11.5-8.2-19.6-10.6c-8.3-2.6-19.6-5.3-33.6-8.2c-19-4-35.1-8.8-48-14.2c-13.1-5.5-23.7-13.2-31.5-22.7c-7.9-9.7-11.8-21.9-11.8-36.2c0-13.7,4.2-25.9,12.4-36.5c8.2-10.5,20.1-18.7,35.6-24.3c15.2-5.6,33.3-8.4,53.7-8.4c16.4,0,30.7,1.9,42.7,5.5c12.1,3.7,22.2,8.7,30.3,14.9c8,6.2,14,12.8,17.8,19.7c3.8,7,5.7,13.9,5.7,20.6c0,6.4-2.5,12.3-7.5,17.4c-5,5.1-11.3,7.8-18.8,7.8c-6.8,0-12.1-1.6-15.8-4.8c-3.4-3-7-7.6-10.9-14.3c-4.6-8.5-10.1-15.3-16.4-20.1c-6.2-4.6-16.4-7-30.6-7c-13.1,0-23.8,2.6-31.7,7.7c-7.6,4.9-11.3,10.6-11.3,17.3c0,4.1,1.2,7.5,3.7,10.5c2.6,3.1,6.2,5.9,10.9,8.2c4.8,2.4,9.8,4.3,14.7,5.6c5.1,1.4,13.6,3.5,25.3,6.1c14.9,3.1,28.5,6.7,40.5,10.4c12.2,3.9,22.7,8.6,31.3,14.1c8.8,5.6,15.7,12.9,20.7,21.5c4.9,8.6,7.4,19.4,7.4,31.8C364.8,318.9,360.5,332.5,351.9,344.3z'></path></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 5,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M492,109.5c-17.4,7.7-36,12.9-55.6,15.3c20-12,35.4-31,42.6-53.6c-18.7,11.1-39.4,19.2-61.5,23.5C399.8,75.8,374.6,64,346.8,64c-53.5,0-96.8,43.4-96.8,96.9c0,7.6,0.8,15,2.5,22.1c-80.5-4-151.9-42.6-199.6-101.3c-8.3,14.3-13.1,31-13.1,48.7c0,33.6,17.2,63.3,43.2,80.7C67,210.7,52,206.3,39,199c0,0.4,0,0.8,0,1.2c0,47,33.4,86.1,77.7,95c-8.1,2.2-16.7,3.4-25.5,3.4c-6.2,0-12.3-0.6-18.2-1.8c12.3,38.5,48.1,66.5,90.5,67.3c-33.1,26-74.9,41.5-120.3,41.5c-7.8,0-15.5-0.5-23.1-1.4C62.8,432,113.7,448,168.3,448C346.6,448,444,300.3,444,172.2c0-4.2-0.1-8.4-0.3-12.5C462.6,146,479,129,492,109.5z'></path></svg></i>",
+            "url": "#"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "avatar": "../../assets/image/interior/team/member3.jpg",
+        "name": "Nancy Cooper",
+        "designation": "Marketing Manager",
+        "social_links": [
+          {
+            "id": 1,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M288,192v-38.1c0-17.2,3.8-25.9,30.5-25.9H352V64h-55.9c-68.5,0-91.1,31.4-91.1,85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z'></path></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 2,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><g><g><g><path d='M256,64C150,64,64,150,64,256c0,106.1,86,192,192,192s192-85.9,192-192C448,150,362,64,256,64z M256,415.5c-88.1,0-159.5-71.4-159.5-159.5c0-88.1,71.4-159.5,159.5-159.5c88.1,0,159.5,71.4,159.5,159.5C415.5,344.1,344.1,415.5,256,415.5z'><path d='M256,64C150,64,64,150,64,256c0,106.1,86,192,192,192s192-85.9,192-192C448,150,362,64,256,64z M256,415.5c-88.1,0-159.5-71.4-159.5-159.5c0-88.1,71.4-159.5,159.5-159.5c88.1,0,159.5,71.4,159.5,159.5C415.5,344.1,344.1,415.5,256,415.5z'></path></path></g></g><g><g><path d='M306.3,246.7c23.4-2.2,50.9-2.9,77.2-2.4c-2.3-25.4-12-48.7-27-67.6c-16.5,14.9-38,28.1-63.3,39C297.8,225.7,302.1,236.1,306.3,246.7z'><path d='M306.3,246.7c23.4-2.2,50.9-2.9,77.2-2.4c-2.3-25.4-12-48.7-27-67.6c-16.5,14.9-38,28.1-63.3,39C297.8,225.7,302.1,236.1,306.3,246.7z'></path></path><path d='M335.4,155.6C313.6,138.3,286,128,256,128c-5.1,0-10.2,0.3-15.2,0.9c13.8,17.7,26.7,37.6,38.6,59.5C301.1,179.2,320,168.1,335.4,155.6z'><path d='M335.4,155.6C313.6,138.3,286,128,256,128c-5.1,0-10.2,0.3-15.2,0.9c13.8,17.7,26.7,37.6,38.6,59.5C301.1,179.2,320,168.1,335.4,155.6z'></path></path><path d='M205.9,138.2c-34.1,14.5-60.7,43.4-72,79.1c41.1-0.7,79.6-7,113.4-17.3C234.7,177,220.7,156.3,205.9,138.2z'><path d='M205.9,138.2c-34.1,14.5-60.7,43.4-72,79.1c41.1-0.7,79.6-7,113.4-17.3C234.7,177,220.7,156.3,205.9,138.2z'></path></path><path d='M383,272.2c-22.3-0.6-46-0.2-66.9,1.5c4.1,12.3,8.1,24.9,11.5,37.9c3.8,14.6,7,29.1,9.6,43.4C361.8,334.7,378.8,305.4,383,272.2z'><path d='M383,272.2c-22.3-0.6-46-0.2-66.9,1.5c4.1,12.3,8.1,24.9,11.5,37.9c3.8,14.6,7,29.1,9.6,43.4C361.8,334.7,378.8,305.4,383,272.2z'></path></path><path d='M258,256.1c3.9-1.6,8.8-3,14.3-4.3c-3.4-8.3-7.1-16.4-10.8-24.3c-39.1,12.6-84.6,20.3-133.3,21.3c-0.1,2.4-0.2,4.8-0.2,7.3c0,29.1,9.7,55.9,26,77.4C178.9,301,214.9,274.2,258,256.1z'><path d='M258,256.1c3.9-1.6,8.8-3,14.3-4.3c-3.4-8.3-7.1-16.4-10.8-24.3c-39.1,12.6-84.6,20.3-133.3,21.3c-0.1,2.4-0.2,4.8-0.2,7.3c0,29.1,9.7,55.9,26,77.4C178.9,301,214.9,274.2,258,256.1z'></path></path><path d='M282.6,278.2c-6.9,1.5-12.9,3.2-17.4,5.3c-37.1,16.8-68.3,41.6-90.4,71.5c22.1,18.2,50.4,29,81.2,29c18.5,0,36-3.9,51.8-10.9c-2.7-15.1-6-30.3-10-45.7C293.4,310.5,288.2,294,282.6,278.2z'><path d='M282.6,278.2c-6.9,1.5-12.9,3.2-17.4,5.3c-37.1,16.8-68.3,41.6-90.4,71.5c22.1,18.2,50.4,29,81.2,29c18.5,0,36-3.9,51.8-10.9c-2.7-15.1-6-30.3-10-45.7C293.4,310.5,288.2,294,282.6,278.2z'></path></path></g></g></g></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 3,
+            "icon": "<i fill=currentColor style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><g><path d='M242.1,275.6l-18.2-13.7l-0.1-0.1c-5.8-4.6-10-8.3-10-14.7c0-7,5-11.8,10.9-17.4l0.5-0.4c20-15.2,44.7-34.3,44.7-74.6c0-26.9-11.9-44.7-23.3-57.7h13L320,64H186.5c-25.3,0-62.7,3.2-94.6,28.6l-0.1,0.3C70,110.9,57,137.4,57,163.5c0,21.2,8.7,42.2,23.9,57.4c21.4,21.6,48.3,26.1,67.1,26.1c1.5,0,3,0,4.5-0.1c-0.8,3-1.2,6.3-1.2,10.3c0,10.9,3.6,19.3,8.1,26.2c-24,1.9-58.1,6.5-84.9,22.3C35.1,328.4,32,361.7,32,371.3c0,38.2,35.7,76.8,115.5,76.8c91.6,0,139.5-49.8,139.5-99C287,312,264.2,293.5,242.1,275.6z M116.7,139.9c0-13.4,3-23.5,9.3-30.9c6.5-7.9,18.2-13.1,29-13.1c19.9,0,32.9,15,40.4,27.6c9.2,15.5,14.9,36.1,14.9,53.6c0,4.9,0,20-10.2,29.8c-7,6.7-18.7,11.4-28.6,11.4c-20.5,0-33.5-14.7-40.7-27C120.4,173.5,116.7,153.1,116.7,139.9z M237.8,368c0,27.4-25.2,44.5-65.8,44.5c-48.1,0-80.3-20.6-80.3-51.3c0-26.1,21.5-36.8,37.8-42.5c18.9-6.1,44.3-7.3,50.1-7.3c3.9,0,6.1,0,8.7,0.2C224.9,336.8,237.8,347.7,237.8,368z'><path d='M242.1,275.6l-18.2-13.7l-0.1-0.1c-5.8-4.6-10-8.3-10-14.7c0-7,5-11.8,10.9-17.4l0.5-0.4c20-15.2,44.7-34.3,44.7-74.6c0-26.9-11.9-44.7-23.3-57.7h13L320,64H186.5c-25.3,0-62.7,3.2-94.6,28.6l-0.1,0.3C70,110.9,57,137.4,57,163.5c0,21.2,8.7,42.2,23.9,57.4c21.4,21.6,48.3,26.1,67.1,26.1c1.5,0,3,0,4.5-0.1c-0.8,3-1.2,6.3-1.2,10.3c0,10.9,3.6,19.3,8.1,26.2c-24,1.9-58.1,6.5-84.9,22.3C35.1,328.4,32,361.7,32,371.3c0,38.2,35.7,76.8,115.5,76.8c91.6,0,139.5-49.8,139.5-99C287,312,264.2,293.5,242.1,275.6z M116.7,139.9c0-13.4,3-23.5,9.3-30.9c6.5-7.9,18.2-13.1,29-13.1c19.9,0,32.9,15,40.4,27.6c9.2,15.5,14.9,36.1,14.9,53.6c0,4.9,0,20-10.2,29.8c-7,6.7-18.7,11.4-28.6,11.4c-20.5,0-33.5-14.7-40.7-27C120.4,173.5,116.7,153.1,116.7,139.9z M237.8,368c0,27.4-25.2,44.5-65.8,44.5c-48.1,0-80.3-20.6-80.3-51.3c0-26.1,21.5-36.8,37.8-42.5c18.9-6.1,44.3-7.3,50.1-7.3c3.9,0,6.1,0,8.7,0.2C224.9,336.8,237.8,347.7,237.8,368z'></path></path><polygon points='402,142 402,64 368,64 368,142 288,142 288,176 368,176 368,257 402,257 402,176 480,176 480,142'><polygon points='402,142 402,64 368,64 368,142 288,142 288,176 368,176 368,257 402,257 402,176 480,176 480,142'></polygon></polygon></g></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 4,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M436.9,296.8c2.8-12.5,4.2-25.4,4.2-38.7c0-99.7-82-180.6-183.2-180.6c-10.7,0-21.1,0.9-31.3,2.6C210.3,69.9,191,64,170.2,64C111.6,64,64,110.9,64,168.7c0,19.4,5.3,37.5,14.6,53c-2.4,11.7-3.7,23.9-3.7,36.3c0,99.8,82,180.6,183.1,180.6c11.5,0,22.7-1,33.5-3c15,7.9,32.1,12.4,50.2,12.4c58.7,0,106.2-46.9,106.2-104.7C448,326.6,444,310.8,436.9,296.8z M351.9,344.3c-8.5,11.8-21,21.2-37.2,27.8c-16.1,6.6-35.3,9.9-57.3,9.9c-26.3,0-48.3-4.6-65.6-13.6c-12.3-6.6-22.4-15.4-30.2-26.4c-7.8-11-11.7-22-11.7-32.6c0-6.6,2.6-12.3,7.6-17.1c5-4.6,11.5-7,19.1-7c6.3,0,11.7,1.8,16.1,5.5c4.2,3.5,7.8,8.7,10.7,15.5c3.3,7.3,6.8,13.5,10.6,18.4c3.6,4.7,8.7,8.6,15.3,11.7c6.7,3.1,15.6,4.7,26.6,4.7c15.1,0,27.5-3.2,36.8-9.5c9.2-6.1,13.6-13.5,13.6-22.5c0-7.1-2.3-12.7-7.1-17.1c-5-4.6-11.5-8.2-19.6-10.6c-8.3-2.6-19.6-5.3-33.6-8.2c-19-4-35.1-8.8-48-14.2c-13.1-5.5-23.7-13.2-31.5-22.7c-7.9-9.7-11.8-21.9-11.8-36.2c0-13.7,4.2-25.9,12.4-36.5c8.2-10.5,20.1-18.7,35.6-24.3c15.2-5.6,33.3-8.4,53.7-8.4c16.4,0,30.7,1.9,42.7,5.5c12.1,3.7,22.2,8.7,30.3,14.9c8,6.2,14,12.8,17.8,19.7c3.8,7,5.7,13.9,5.7,20.6c0,6.4-2.5,12.3-7.5,17.4c-5,5.1-11.3,7.8-18.8,7.8c-6.8,0-12.1-1.6-15.8-4.8c-3.4-3-7-7.6-10.9-14.3c-4.6-8.5-10.1-15.3-16.4-20.1c-6.2-4.6-16.4-7-30.6-7c-13.1,0-23.8,2.6-31.7,7.7c-7.6,4.9-11.3,10.6-11.3,17.3c0,4.1,1.2,7.5,3.7,10.5c2.6,3.1,6.2,5.9,10.9,8.2c4.8,2.4,9.8,4.3,14.7,5.6c5.1,1.4,13.6,3.5,25.3,6.1c14.9,3.1,28.5,6.7,40.5,10.4c12.2,3.9,22.7,8.6,31.3,14.1c8.8,5.6,15.7,12.9,20.7,21.5c4.9,8.6,7.4,19.4,7.4,31.8C364.8,318.9,360.5,332.5,351.9,344.3z'></path></svg></i>",
+            "url": "#"
+          },
+          {
+            "id": 5,
+            "icon": "<i fill='currentColor' style='display: inline-block;'><svg fill='currentColor' height='16' width='16' viewBox='0 0 512 512' style='display: inline-block; vertical-align: middle;'><path d='M492,109.5c-17.4,7.7-36,12.9-55.6,15.3c20-12,35.4-31,42.6-53.6c-18.7,11.1-39.4,19.2-61.5,23.5C399.8,75.8,374.6,64,346.8,64c-53.5,0-96.8,43.4-96.8,96.9c0,7.6,0.8,15,2.5,22.1c-80.5-4-151.9-42.6-199.6-101.3c-8.3,14.3-13.1,31-13.1,48.7c0,33.6,17.2,63.3,43.2,80.7C67,210.7,52,206.3,39,199c0,0.4,0,0.8,0,1.2c0,47,33.4,86.1,77.7,95c-8.1,2.2-16.7,3.4-25.5,3.4c-6.2,0-12.3-0.6-18.2-1.8c12.3,38.5,48.1,66.5,90.5,67.3c-33.1,26-74.9,41.5-120.3,41.5c-7.8,0-15.5-0.5-23.1-1.4C62.8,432,113.7,448,168.3,448C346.6,448,444,300.3,444,172.2c0-4.2-0.1-8.4-0.3-12.5C462.6,146,479,129,492,109.5z'></path></svg></i>",
+            "url": "#"
+          }
+        ]
+      }
+    ]
+  },
+  "newsData": [
+    {
+      "id": 1,
+      "title": "Corporate design is a crucial part of your brand.",
+      "excerpt": "Corporate design is a crucial part of your brand. Our approach corporate design is extraordinary. Please come and visit us",
+      "link_text": "Read",
+      "link_url": "#"
+    },
+    {
+      "id": 2,
+      "title": "Learn more about landscape plans, how to design them",
+      "excerpt": "Learn more about landscape plans, how to design them, what to watch out for in your layout. We deign the appropriate layout for our clients to deliver best",
+      "link_text": "Read",
+      "link_url": "#"
+    },
+    {
+      "id": 3,
+      "title": "Discover our design ideas, beautiful photos for interior design",
+      "excerpt": "Discover our design ideas, beautiful photos and how-to projects to create Interior Design. We try to reflect your personality on our design",
+      "link_text": "Read",
+      "link_url": "#"
+    },
+    {
+      "id": 4,
+      "title": "Interior design is an art and we are trying to paint monalisa",
+      "excerpt": "With the best players in the designing sector, we explore a whole new world of interior design.Our approach corporate design is extraordinary",
+      "link_text": "Read",
+      "link_url": "#"
+    }
+  ],
+  "testimonialData": {
+    "title": "TESTIMONIAL",
+    "slogan": "What Our Clients Say",
+    "reviews": [
+      {
+        "id": 0,
+        "name": "Jessica Parker",
+        "designation": "Co-Founder & CEO",
+        "username": "@Moon’s craft",
+        "account_url": "#",
+        "comment": "Get working experience to work with this amazing team & in future want to work together for bright future projects and also make deposit to freelancer.",
+        "avatar": "https://tinyfac.es/data/avatars/7D3FA6C0-83C8-4834-B432-6C65ED4FD4C3-500w.jpeg"
+      },
+      {
+        "id": 1,
+        "name": "Britney Cooper",
+        "designation": "Co-Founder & CEO",
+        "username": "@Moon’s craft",
+        "account_url": "#",
+        "comment": "Impressed with master class support of the team and really look forward for the future.Really, really well made! Love that each component is handmade and customised. Great Work :)",
+        "avatar": "https://randomuser.me/api/portraits/women/63.jpg"
+      },
+      {
+        "id": 2,
+        "name": "June Cha",
+        "designation": "Co-Founder & CEO",
+        "username": "@Moon’s craft",
+        "account_url": "#",
+        "comment": "Get working experience to work with this amazing team & in future want to work together for bright future projects and also make deposit to freelancer.",
+        "avatar": "https://randomuser.me/api/portraits/women/44.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Jessica Parker",
+        "designation": "Co-Founder & CEO",
+        "username": "@Moon’s craft",
+        "account_url": "#",
+        "comment": "Impressed with master class support of the team and really look forward for the future.Really, really well made! Love that each component is handmade and customised. Great Work!",
+        "avatar": "https://pbs.twimg.com/profile_images/1049383024306081792/cQkGbpRO.jpg"
+      },
+      {
+        "id": 4,
+        "name": "Jessica Parker",
+        "designation": "Co-Founder & CEO",
+        "username": "@Moon’s craft",
+        "account_url": "#",
+        "comment": "Impressed with master class support of the team and really look forward for the future.Really, really well made! Love that each component is handmade and customised. Great Work :)",
+        "avatar": "https://pbs.twimg.com/profile_images/974736784906248192/gPZwCbdS.jpg"
+      }
+    ]
+  },
+  "galleryData": [
+    {
+      "id": 1,
+      "thumb_url": "../../assets/image/interior/gallery/1.jpg",
+      "name": "Eco friendly",
+      "link": "#"
+    },
+    {
+      "id": 2,
+      "thumb_url": "../../assets/image/interior/gallery/2.jpg",
+      "name": "Living",
+      "link": "#"
+    },
+    {
+      "id": 3,
+      "thumb_url": "../../assets/image/interior/gallery/3.jpg",
+      "name": "Corner",
+      "link": "#"
+    },
+    {
+      "id": 4,
+      "thumb_url": "../../assets/image/interior/gallery/4.jpg",
+      "name": "Wall decor",
+      "link": "#"
+    },
+    {
+      "id": 5,
+      "thumb_url": "../../assets/image/interior/gallery/5.jpg",
+      "name": "Restroom",
+      "link": "#"
+    }
+  ],
+  "newsletterData": {
+    "title": "SUBSCRIBE NEWSLETTER",
+    "slogan": "Don’t Miss Out Any Offer",
+    "note": "Note: Please call us at 12pm to 8am. otherwise our customer supporter will not available to reach your call, but you can drop mail anytime."
+  },
+  "footerData": {
+    "logo": "../../assets/image/interior/logo.svg",
+    "mail": "hello@redq.io",
+    "phone": "585-396-6302",
+    "menuWidgets": [
+      {
+        "id": 1,
+        "title": "ABOUT US",
+        "menu": [
+          {
+            "id": 1,
+            "text": "Support Center",
+            "link": "#"
+          },
+          {
+            "id": 2,
+            "text": "Customer Support",
+            "link": "#"
+          },
+          {
+            "id": 3,
+            "text": "About Us",
+            "link": "#"
+          },
+          {
+            "id": 4,
+            "text": "Copyright",
+            "link": "#"
+          },
+          {
+            "id": 5,
+            "text": "Popular Campaign",
+            "link": "#"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "OUR INFORMATION",
+        "menu": [
+          {
+            "id": 1,
+            "text": "Return Policy",
+            "link": "#"
+          },
+          {
+            "id": 2,
+            "text": "Privacy Policy",
+            "link": "#"
+          },
+          {
+            "id": 3,
+            "text": "Terms & Conditions",
+            "link": "#"
+          },
+          {
+            "id": 4,
+            "text": "Site Map",
+            "link": "#"
+          },
+          {
+            "id": 5,
+            "text": "Store Hours",
+            "link": "#"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "MY ACCOUNT",
+        "menu": [
+          {
+            "id": 1,
+            "text": "Press inquiries",
+            "link": "#"
+          },
+          {
+            "id": 2,
+            "text": "Social media directories",
+            "link": "#"
+          },
+          {
+            "id": 3,
+            "text": "Images & B-roll",
+            "link": "#"
+          },
+          {
+            "id": 4,
+            "text": "Permissions",
+            "link": "#"
+          },
+          {
+            "id": 5,
+            "text": "Speaker requests",
+            "link": "#"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "POLICY",
+        "menu": [
+          {
+            "id": 1,
+            "text": "Application security",
+            "link": "#"
+          },
+          {
+            "id": 2,
+            "text": "Software principles",
+            "link": "#"
+          },
+          {
+            "id": 3,
+            "text": "Unwanted software policy",
+            "link": "#"
+          },
+          {
+            "id": 4,
+            "text": "Responsible supply chain",
+            "link": "#"
+          }
+        ]
+      }
+    ]
+  },
+  "socialProfile": [
+    {
+      "id": 1,
+      "icon": "flaticon-facebook-logo",
+      "link": "#"
+    },
+    {
+      "id": 2,
+      "icon": "flaticon-twitter-logo-silhouette",
+      "link": "#"
+    },
+    {
+      "id": 3,
+      "icon": "flaticon-instagram",
+      "link": "#"
+    },
+    {
+      "id": 4,
+      "icon": "flaticon-tumblr-logo",
+      "link": "#"
+    },
+    {
+      "id": 5,
+      "icon": "flaticon-dribble-logo",
+      "link": "#"
+    }
+  ]
+}
