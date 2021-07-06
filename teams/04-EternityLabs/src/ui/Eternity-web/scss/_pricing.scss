@@ -1,0 +1,148 @@
+//
+// pricing.scss
+//
+
+.pricing-box{
+  position: relative;
+  padding: 30px 40px;
+  box-shadow: $box-shadow;
+  .pricing-title{
+    font-size: 36px;
+  }
+  .pricing-img{
+    img{
+     height: 110px;
+    }
+  }
+  
+.pricing-badge {
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  right: 0;
+  width: 100%;
+  display: block;
+  font-size: 15px;
+  padding: 0;
+  overflow: hidden;
+  height: 100px;
+  .badge {
+    float: right;
+    transform: rotate(45deg);
+    right: -60px;
+    top: 28px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+    font-size: 13px;
+    margin: 0;
+    padding: 7px 10px;
+    font-weight: 500;
+    color: $white;
+    background: $primary;
+  }
+}
+}
+
+.pricing-box.active{
+  transform: scale(1.08);
+  z-index: 2;
+}
+
+
+//
+// Pills
+//
+
+
+
+.pricing-badge {
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  right: 0;
+  width: 100%;
+  display: block;
+  font-size: 15px;
+  padding: 0;
+  overflow: hidden;
+  height: 100px;
+  .badge {
+    float: right;
+    transform: rotate(45deg);
+    right: -67px;
+    top: 17px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+    font-size: 13px;
+    margin: 0;
+    padding: 7px 10px;
+    font-weight: 500;
+    color: $white;
+    background: $primary;
+  }
+}
+
+.nav-tabs,.nav-pills {
+  > li {
+      > a {
+          color: $dark;
+      }
+  }
+}
+
+.nav-pills {
+  > a {
+      color: $dark;  
+  }
+}
+
+
+
+.pricing-tab-border{
+  border: 1px solid $gray-400;
+  background: $white;
+}
+
+
+.nav-link.active,
+.show > .nav-link {
+ background-color: $primary !important;
+}
+
+
+.nav-tabs-custom {
+border-bottom: 2px solid $gray-400;
+
+
+.nav-item {
+  position: relative;
+  color: $dark;
+  .nav-link {
+    border: none;
+
+    &::after {
+      content: "";
+      background: $primary;
+      height: 2px;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: -1px;
+      transition: all 250ms ease 0s;
+      transform: scale(0);
+    }
+
+    &.active{
+      color: $primary;
+      &:after{
+        transform: scale(1);
+      }
+    }
+
+  }
+}
+}
+
+

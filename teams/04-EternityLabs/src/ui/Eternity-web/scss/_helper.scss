@@ -1,0 +1,240 @@
+//
+// helper.scss
+//
+
+.section {
+  padding-top: 90px;
+  padding-bottom: 90px;
+  position: relative;
+}
+
+.bg-lightan{
+  background: linear-gradient(to bottom, $white 50%, rgba($primary , 0.08) 100%);
+}
+
+.home-center {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+
+.home-desc-center {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.bg-gradient{
+  background: $bg-gradient;
+}
+
+.bg-overlay {
+  background-position: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+}
+
+.bg-overlay-black {
+  background-color: #242527;
+  opacity: 0.8;
+  background-position: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+}
+
+// HEADing Title
+
+
+
+.title-box {
+  .title-sub-title {
+    background: rgba($primary, 0.1);
+    padding: 7px 22px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: inline-block;
+  }
+  .title-heading {
+    font-size: 30px;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  
+}
+
+.btn-rounded {
+  border-radius: 30px;
+}
+
+.box-shadow {
+  box-shadow: $box-shadow;
+}
+
+hr {
+  border-top: 1px solid $muted;
+  margin: 0;
+}
+
+// font-size
+
+.f-10 {
+  font-size: 10px;
+}
+
+.f-12 {
+  font-size: 12px;
+}
+
+.f-13 {
+  font-size: 13px;
+}
+
+.f-14 {
+  font-size: 14px;
+}
+
+.f-15 {
+  font-size: 15px;
+}
+
+.f-16 {
+  font-size: 16px;
+}
+
+.f-18 {
+  font-size: 18px;
+}
+
+.f-19 {
+  font-size: 19px;
+}
+
+.f-20 {
+  font-size: 20px;
+}
+
+.line-height_1_4 {
+  line-height: 1.4;
+}
+
+.line-height_1_6 {
+  line-height: 1.6;
+}
+
+.line-height_1_8 {
+  line-height: 1.8;
+}
+
+// font-weight
+
+.fw-normal {
+  font-weight: 500 !important;
+}
+
+.fw-bold {
+  font-weight: 600 !important;
+}
+
+
+
+// icon
+
+//  icon
+.icon-size-15 {
+  height: 15px;
+  width: 15px;
+  svg {
+    height: 15px !important;
+    width: 15px !important;
+  }
+}
+
+.icon-sm {
+  height: 18px;
+  width: 18px;
+  svg {
+    height: 18px !important;
+    width: 18px !important;
+  }
+}
+
+.icon-xs {
+  height: 20px;
+  width: 20px;
+  svg {
+    height: 20px !important;
+    width: 20px !important;
+  }
+}
+
+.icon-md {
+  height: 25px;
+  width: 25px;
+  svg{
+    height: 25px !important;
+    width: 25px !important;
+  }
+}
+
+.icon-lg {
+  height: 30px;
+  width: 30px;
+  svg {
+    height: 30px !important;
+    width: 30px !important;
+  }
+}
+
+.icon-xl {
+  height: 35px;
+  width: 35px;
+  svg {
+    height: 35px !important;
+    width: 35px !important;
+  }
+}
+
+.icon-xxl {
+  height: 40px;
+  width: 40px;
+  svg {
+    height: 40px !important;
+    width: 40px !important;
+  }
+}
+
+.icon-xxxl {
+  height: 60px;
+  width: 60px;
+  svg {
+    height: 60px !important;
+    width: 60px !important;
+  }
+}
+
+
+@each $name, $value in $colors {
+  .uim-icon-#{$name} {
+      .uim-svg{
+          fill: $value !important;
+      }
+  }
+  .icon-fill-#{$name} {
+      fill: rgba($value, 0.15);
+  }
+}
+
+
+.icon {
+position: relative;
+top: -2px;
+}
