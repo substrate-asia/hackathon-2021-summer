@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@polkadot/api": "^4.16.3-4",
+    "@polkadot/api-contract": "^4.16.3-4",
+    "@polkadot/util-crypto": "^6.10.1",
+    "connect-busboy": "^0.0.2",
+    "express": "^4.17.1",
+    "ipfs-core": "^0.8.0",
+    "ipfs-http-client": "^50.1.2",
+    "multiparty": "^4.2.2",
+    "uuid": "^8.3.2"
+  }
+}

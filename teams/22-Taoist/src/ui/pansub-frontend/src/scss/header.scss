@@ -1,0 +1,106 @@
+.header{
+  height: 100px;
+  padding-top: 25px;
+  box-sizing: border-box;
+  .headerRht{
+    text-align: right;
+    position: relative;
+    .ant-select{
+      position: fixed;
+      right: 10%;
+      top: 25px;
+      z-index: 99999999999;
+      min-width: 200px;
+      text-align: left;
+
+      .ant-select-clear{
+        background: #000!important;
+        border-radius: 100%;
+        color: #ffffff;
+      }
+      .ant-select-selector{
+        background: rgba(0,0,0,0.5);
+        border: 1px solid #000;
+        color: #cecfd2;
+      }
+
+      .ant-select-arrow{
+        color: #cecfd2;
+      }
+    }
+  }
+  .headerlft{
+    img{
+      width: 200px;
+    }
+  }
+  .topBtn{
+    border-radius: 50px;
+    background: transparent;
+    padding: 10px 50px;
+    //border: 2px solid #4FA1D9;
+    //color: #4FA1D9;
+    border: 2px solid #000;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 14px;
+    -webkit-transition-property: background,color;
+    transition-property: background,color;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+    &:hover {
+      color: white;
+      //background: #4FA1D9;
+      background: #000;
+      cursor: pointer;
+      -webkit-transition-property: background,color;
+      transition-property: background,color;
+      -webkit-transition-duration: .2s;
+      transition-duration: .2s;
+    }
+  }
+}
+
+.ant-select-dropdown {
+  background: rgba(0,0,0,0.5)!important;
+
+}
+
+
+.ant-select-item-option{
+  color: #cecfd2!important;
+  &:hover{
+    background: #000!important;
+  }
+}
+.ant-select-item-option-selected{
+  color: #66c0fd!important;
+  background: #000!important;
+}
+.ant-select-item-option-active:not(.ant-select-item-option-disabled){
+  background: #000!important;
+}
+.topName{
+  font-size: 16px;
+  line-height: 50px;
+  .username{
+    padding-right: 20px;
+    .anticon{
+      padding:0 5px;
+      color: #66c0fd!important;
+    }
+  }
+  .credit{
+    padding-right:5px;
+    .anticon{
+      padding:0 5px;
+      color: #ff4d4f!important;
+    }
+  }
+
+}

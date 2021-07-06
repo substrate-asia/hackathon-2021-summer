@@ -1,0 +1,214 @@
+.maincontain{
+  width: 100%;
+  //flex-grow: 1;
+  //margin-bottom: 80px;
+  height: 75vh;
+
+  box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
+  opacity: 1;
+  -webkit-transition-timing-function: cubic-bezier(0.68, -0.25, 0.265, 0.85);
+  -webkit-transition-property: -webkit-transform,opacity,box-shadow,top,left;
+  transition-property: transform,opacity,box-shadow,top,left;
+  -webkit-transition-duration: .5s;
+  transition-duration: .5s;
+  -webkit-transform-origin: 161px 100%;
+  -ms-transform-origin: 161px 100%;
+  transform-origin: 161px 100%;
+  -webkit-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  background: #35394a;
+  /* Old browsers */
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #35394a), color-stop(100%, rgb(0, 0, 0)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(230deg, rgba(53, 57, 74, 0) 0%, rgb(0, 0, 0) 100%);
+  /* Chrome10+,Safari5.1+ */
+  /* Opera 11.10+ */
+  /* IE10+ */
+  background: linear-gradient(230deg, rgba(53, 57, 74, 0) 0%, rgb(0, 0, 0) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(53, 57, 74, 0)', endColorstr='rgb(0, 0, 0)',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+  .title{
+    color: #d3d8f6;
+    font-size: 24px;
+    text-align: center;
+    padding: 10px 0 ;
+    font-weight: bold;
+  }
+}
+
+.overAuto{
+  height: 100%;
+}
+.h100{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.list{
+  color: #cecfd2;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 20px;
+    &:hover{
+      background:rgba(0,0,0,0.1) ;
+    }
+    .clickBtn{
+      color: #66c0fd;
+      cursor: pointer;
+      white-space: nowrap;
+      span{
+        padding-left: 10px;
+      }
+    }
+  }
+}
+.uploadBrdr{
+  padding: 50px;
+  background: rgba(0,0,0,0.4);
+  height: 100%;
+  overflow-y: auto;
+  .ant-upload-list{
+    margin-top:20px;
+    height: 100%;
+    color: #66c0fd!important;
+  }
+}
+
+.ant-upload-list-item-info .anticon-loading .anticon, .ant-upload-list-item-info .ant-upload-text-icon .anticon,.ant-upload-list-item-card-actions .anticon{
+  color: #66c0fd;
+}
+.ant-upload-list-item-error, .ant-upload-list-item-error .ant-upload-text-icon > .anticon{
+  color: #ff4d4f;
+}
+.ant-upload.ant-upload-drag{
+    background: transparent;
+    padding: 20px;
+  p.ant-upload-text{
+    color: #fff;
+  }
+  p.ant-upload-hint{
+    color: #cecfd2;
+  }
+  }
+.ant-tooltip-open{
+  background: transparent!important;
+}
+.ant-upload-list-item{
+  height: 2.5em;
+  &:hover{
+    .ant-upload-list-item-info{
+      background: rgba(0,0,0,0.2)!important;
+
+    }
+  }
+
+}
+.ant-upload-list-item-info{
+  padding:5px!important;
+}
+.ant-upload-span{
+  background: transparent!important;
+}
+.list{
+  li{
+    display: flex;
+    align-items: center;
+  }
+  .overEllipse{
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: normal;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:1;
+    word-break: break-all;
+
+  }
+  .iconfont{
+    margin-right: 10px;
+    font-size: 1.5em;
+    vertical-align: middle;
+  }
+  .icon-format_image{
+    color: #01beff;
+  }
+  .icon-format_doc{
+    color: rgb(77, 147, 247);
+  }
+  .icon-format_ppt{
+    color: rgb(245, 166, 35);
+  }
+  .icon-format_pdf{
+    color: rgb(255, 94, 94);
+  }
+  .icon-format_mp{
+    color: rgb(155, 131, 255);
+  }
+  .icon-format_zip{
+    color: rgb(143, 161, 187);
+  }
+  .icon-format_video{
+    color: rgb(101, 200, 81);
+  }
+  .icon-format_html{
+    color: rgb(155, 131, 255);
+  }
+  .icon-format_excel{
+    color: rgb(49, 203, 57);
+  }
+  .icon-format_txt{
+    color: rgb(143, 161, 187);
+  }
+
+}
+.ant-message{
+  .ant-message-notice-content{
+    z-index: 9999999999999999;
+    background: rgba(0,0,0,.3)!important;
+    color: #ffffff;
+  }
+
+
+}
+.ant-modal-header{
+  background: #000;
+  border-bottom: 1px solid #333;
+  padding-top: 30px;
+  .ant-modal-title{
+    color: #d3d8f6!important;
+    font-size: 18px;
+  }
+
+}
+.ant-modal-close{
+  color: #d3d8f6!important;
+}
+
+.ant-modal-footer{
+  display: none;
+}
+.modalBrdr{
+  .info{
+    padding-left: 10px;
+  }
+   p > span{
+    width: 50px;
+    padding-right: 10px;
+    color: #66c0fd;
+  }
+}
+.loadingMore{
+  text-align: center;
+  margin-top: 20px;
+}
