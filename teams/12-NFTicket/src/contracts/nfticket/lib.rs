@@ -224,10 +224,11 @@ mod nfticket {
             self.meeting_map.values().map(|v|v.clone()).collect()
         }
 
+        /// 返回指定的活动信息
         #[ink(message)]
         pub fn get_meeting(&self, meeting_addr: AccountId) -> Meeting{
-            
-            self.meeting_map.get(meeting_addr).unwrap()
+
+            self.meeting_map.get( &meeting_addr ).unwrap().clone()
         }
 
         /// 返回活动关联的NFT Class 的 ID
