@@ -1,0 +1,6 @@
+.cache
+.vscode
+artifacts
+node_modules
+contracts
+contracts.bak
