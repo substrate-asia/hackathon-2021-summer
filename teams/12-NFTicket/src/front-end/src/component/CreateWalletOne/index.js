@@ -6,21 +6,20 @@ import {useDispatch} from 'react-redux';
 import { setShowmodalAction,setShowmodaltwoAction } from '../../store/action/App';
 
 
+
+
 // 生成钱包助记词
 function CreateWalletOne(_props) {
-    const [words,setWords] = useState([]);
-
     const dispatch = useDispatch();
-
-    useEffect(()=>{
-        setWords(_props.words)
-    });
-
-    function createtwo(){
-        return <div>
-
-        </div>
-    };
+    const mnemonic=localStorage.getItem("words")
+    var  words;
+    if(mnemonic!=null&&mnemonic.length>0){
+        words=mnemonic.trim().split(' ')
+        console.log("助记词:",words)
+        console.log("xujie>>>>>",words)
+    }else{
+        words=_props.words
+    }
 
     return (
         <div className={styles.accbody}>
@@ -45,8 +44,8 @@ function CreateWalletOne(_props) {
                         <div className={styles.seedwords}>
                             <div className={styles.seedwordspanel}>
                             {
-                                words.map((item,i)=>{
-                                    return <span key={i}>{item}</span>
+                                words.map((item)=>{
+                                    return <span key={item}>{item}</span>
                                 })
                             }
                             </div>
@@ -56,8 +55,12 @@ function CreateWalletOne(_props) {
                 <div className={styles.flexaccountformbtn}>
                     <button className={styles.flexaccountbtn}
                     onClick={()=>{
+
                         dispatch(setShowmodalAction(false))
                         dispatch(setShowmodaltwoAction(true))
+
+
+
                     }}>Continue</button>
                 </div>
                 </div>

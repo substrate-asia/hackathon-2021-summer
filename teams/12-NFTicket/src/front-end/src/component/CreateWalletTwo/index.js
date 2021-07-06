@@ -8,13 +8,25 @@ import { setShowmodaltwoAction,setAccountokmodalAction } from '../../store/actio
 
 // 生成钱包助记词
 function CreateWalletTwo(props) {
-    const [words,setWords] = useState([]);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        setWords(props.words)
-    });
-
+    // const [words,setWords] = useState([]);
+    let  [selectWords,setSelectWords] = useState([]);
+    const mnemonic=localStorage.getItem("words")
+    var  words;
+    if(mnemonic!=null&&mnemonic.length>0){
+        words=mnemonic.trim().split(' ')
+    }
+    words.sort();  
+    function handleClick(item,index) {
+        //选中的进数组
+        selectWords ={
+            ...selectWords,
+            item
+        }
+        setSelectWords(selectWords)
+        words.splice(index,1)
+    }
     return (
         <div className={styles.accbody}>
             {/* mask */}
@@ -30,14 +42,19 @@ function CreateWalletTwo(props) {
                 <div className={styles.flexaccountformtextarea}>
                     <div className={styles.flexaccountformtextareacon}>
                         {/* seed */}
+                        {
+                            selectWords?(selectWords.map((item,i)=>{
+                                return <span key={i}>{item}</span>
+                            })):null
                         
+                        }
                     </div>
                 </div>
                 <div className={styles.seedwords}>
                     <div className={styles.seedwordspanel}>
                     {
                         words.map((item,i)=>{
-                            return <span key={i}>{item}</span>
+                            return <span key={i} onClick={() => handleClick(item,i)}>{item}</span>
                         })
                     }
                     </div>
