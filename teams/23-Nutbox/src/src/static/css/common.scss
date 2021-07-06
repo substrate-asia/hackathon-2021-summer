@@ -1,0 +1,280 @@
+th,
+ponsived {
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.table .table th,
+.table td {
+  border-color: rgba(246, 247, 249, 1) !important;
+}
+
+.table thead th {
+  border-bottom: 1px !important;
+}
+
+.c-tr {
+  border: 1px solid rgba(246, 247, 249, 1);
+}
+
+.c-tr:hover{
+  background: rgba(255, 219, 38, 0.05) !important;
+}
+
+.c-th {
+  background: rgba(246, 247, 249, 1);
+}
+
+.c-th {
+  border-left: 1px solid rgba(246, 247, 249, 1);
+  border-right: 2px solid rgba(246, 247, 249, 1);
+}
+
+.page-item .page-link {
+  border-color: rgba(246, 247, 249, 1) !important;
+}
+
+.page-item.active .page-link {
+  background: var(--primary-custom) !important;
+  color: rgba(36, 38, 41, 1) !important;
+}
+
+.page-item .page-link {
+  color: rgba(36, 38, 41, 1) !important;
+}
+
+.primary-btn {
+  height: 2.4rem;
+  width: 13.5rem;
+  margin: 0 auto;
+  border: none;
+  background: var(--primary-custom);
+  box-shadow: 0 8px 12px -4px rgba(255, 236, 136, 1);
+  border-radius: .8rem;
+  font-size: .8rem;
+  font-weight: bold;
+}
+
+.primary-btn:disabled {
+  background: rgba(227, 229, 232, 1);
+  color: rgba(189, 191, 194, 1);
+  box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.1);
+  cursor: not-allowed !important;
+}
+
+.primary-btn:hover {
+  cursor: pointer;
+}
+
+.flex-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-between-start {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.flex-start-center {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.font56 {
+  font-size: 2.8rem;
+}
+
+.font46 {
+  font-size: 2.3rem;
+}
+
+.font40 {
+  font-size: 2rem;
+}
+
+.font32 {
+  font-size: 1.6rem;
+}
+
+.font28 {
+  font-size: 1.4rem;
+}
+
+.font26 {
+  font-size: 1.3rem;
+}
+
+.font24 {
+  font-size: 1.2rem;
+}
+
+.font20 {
+  font-size: 1rem;
+}
+
+.font18 {
+  font-size: .9rem;
+}
+
+.font16 {
+  font-size: .8rem;
+}
+
+.font14 {
+  font-size: .7rem;
+}
+
+.fon12 {
+  font-size: .6rem;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.text-grey-light {
+  color: #BDBFC2;
+}
+
+.text-grey {
+  color: #464A53;
+}
+
+.text-black {
+  color: #242629;
+}
+
+.carousel,
+.carousel-inner,
+.carousel-item {
+  height: 100%;
+  border-radius: 1.4rem;
+}
+
+.carousel-caption {
+  top: 1.4rem;
+  text-shadow: none;
+  text-align: left !important;
+  left: 1.4rem !important;
+  right: 1.4rem !important;
+  z-index: 20;
+}
+
+.empty-bg{
+  padding: 2rem 0;
+  text-align: center;
+  img{
+    height: 7rem;
+  }
+}
+
+input,
+button {
+  outline: none;
+}
+.btn {
+  padding: .6rem 1.2rem!important;
+}
+[role="button"] {
+  outline: none;
+}
+
+.dropdown {
+  outline: none;
+}
+
+.boder-bottom{
+  border-bottom: 1px solid var(--dividers);
+}
+h3 {
+  padding-top: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.8rem;
+  margin: 0 !important;
+}
+.spinner-grow {
+  margin-bottom: .1rem;
+  margin-right: .4rem;
+}
+input {
+  border: none;
+  outline: none;
+}
+input::-webkit-input-placeholder {
+  color: var(--disable);
+}
+
+.mask {
+  z-index: 2000;
+  overflow: hidden;
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+  font-size: 16px;
+  border-radius: 16px !important;
+  box-shadow: 0px 8px 12px -4px #ffec88;
+  border: 0px !important;
+  padding: 12px 24px;
+  font-weight: 600;
+  color: var(--primary-text) !important;
+}
+
+.btn-primary:hover {
+  background: #ffeb75 !important;
+}
+.table thead th {
+  border-top: 0;
+}
+.table th, .table td {
+  white-space: nowrap;
+}
+.pagination li {
+  margin: 0 .2rem;
+}
+.status-container {
+  //position: absolute;
+  //right: 0;
+  //top: 0;
+  img {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+  span {
+    padding: 0 .4rem;
+    display: inline-block;
+    border-radius: 1.2rem;
+    font-size: .6rem;
+    line-height: 1.2rem;
+  }
+  .Active {
+    color: rgba(80, 191, 0, 1);
+    border: 1px solid rgba(80, 191, 0, 1);
+    background: rgba(80, 191, 0, 0.05);
+  }
+  .Retired {
+    color: rgba(248, 182, 42, 1);
+    border: 1px solid rgba(248, 182, 42, 1);
+    background: rgba(255, 219, 38, 0.05);
+  }
+  .Completed {
+    color: rgba(255, 91, 77, 1);
+    border: 1px solid rgba(255, 91, 77, 1);
+    background: rgba(255, 91, 77, 0.051);
+  }
+}

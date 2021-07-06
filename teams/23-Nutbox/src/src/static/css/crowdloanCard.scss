@@ -1,0 +1,123 @@
+.c-card {
+    width: 100%;
+    border-radius: 1.4rem;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.02);
+    position: relative;
+    padding: 1.8rem 1.2rem;
+    background-color: white;
+    .card-title-box {
+      .icons {
+        position: relative;
+        margin-right: 2.4rem;
+        img {
+          width: 2rem;
+          height:2rem;
+        }
+        .icon2 {
+          position: absolute;
+          left: 1.6rem;
+          border: 1px solid #e3e5e8;
+          border-radius: 1rem;
+        }
+        .icon1 {
+          position: relative;
+          left: 0;
+          border: 1px solid #e3e5e8;
+          box-shadow: 0px 4px 12px 4px rgba(0, 0, 0, 0.05);
+          border-radius: 1rem;
+        }
+      }
+      .title-text{
+        display: flex;
+        justify-items: center;
+        align-items: center;
+      }
+      .card-link-title-text {
+        flex: 1;
+        overflow: hidden;
+        .link-title {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-right: .4rem;
+          }
+          .link-icon {
+            display: inline-block;
+            min-width: .8rem;
+            width: .8rem;
+            height: .8rem;
+            background-repeat: no-repeat;
+            background-image: url("~@/static/images/link-icon.png");
+            background-position: center center;
+            background-size: 100% 100%;
+          }
+        }
+      }
+
+    }
+    .h-line {
+      width: 1.6rem;
+      height: 0.2rem;
+      background: var(--primary-custom);
+      margin-top: 1.6rem;
+      margin-bottom: 0.8rem;
+      border-radius: 4px;
+    }
+    .detail-info-box {
+      margin-bottom: 1.8rem;
+    }
+    .project-info-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: .8rem;
+      .name {
+        flex: 1;
+        text-align: left;
+        color: rgba(189, 191, 194, 1);
+        font-weight: bold;
+      }
+      .info {
+        // flex: 0.8;
+        text-align: right;
+        font-weight: 500;
+      }
+    }
+    .primary-btn {
+      margin-bottom: 0;
+      width: 90%;
+    }
+  }
+.card-top-box {
+  border-top-left-radius: 1.4rem;
+  border-top-right-radius: 1.4rem;
+  background-image: linear-gradient(to bottom, #ffffff, #F6F7F9);
+  padding: .8rem 1.2rem 2.2rem;
+  overflow: hidden;
+  .icons {
+    display: flex;
+    align-items: flex-end;
+    width: 3.5rem;
+    margin-right: .4rem;
+    .icon1 {
+      width: 2.8rem;
+      height: 2.8rem;
+    }
+    .icon2 {
+      margin-left: -.7rem;
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+  .title-text {
+    flex: 1;
+    overflow: hidden;
+  }
+}
