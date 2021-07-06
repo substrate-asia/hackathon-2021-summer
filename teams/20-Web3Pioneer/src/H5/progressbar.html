@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+	<meta charset="utf-8">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+		<link rel="stylesheet" type="text/css" href="./progressbar.css" />
+		<script src="./jquery.min.js"></script>
+		<script src="./index.js"></script>
+		<!-- <script src="js/eruda.js"></script>
+		<script>
+			eruda.init();
+		</script> -->
+		<script type="text/javascript">
+			var addr = '';
+			var DOT_DECIMAL_PLACES = 1000000000000000;
+
+			function feng() {
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				window.PolkadotWeb3JSSample.feng(addr).then(res => {
+					accountinfo = res;
+
+					//document.getElementById("fengDiv").innerHTML = JSON.stringify(accounts);
+					document.getElementById("fengDiv").innerHTML = "账号" + addr + "<br/> 可用：" + (accountinfo.data.free /
+						DOT_DECIMAL_PLACES).toFixed(2) + "锁定 :" + (accountinfo.data.feeFrozen / DOT_DECIMAL_PLACES).toFixed(2);
+				}).catch(e => {
+					console.log(e);
+					alert(e);
+				})
+			}
+
+
+			function getUserandStart(mnemonic) {
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				window.PolkadotWeb3JSSample.getUser(mnemonic).then(res => {
+					console.log(res);
+					var mym = res;
+					window.havorld.jsCallAndroid("account_mnemonic", mym.mnemonic);
+					window.havorld.jsCallAndroid("account_address", mym.address);
+					addr = mym.address;
+					start();
+
+					//document.getElementById("fengDiv").innerHTML = JSON.stringify(accounts);
+					document.getElementById("mnemonicDiv").innerHTML = "账号" + mym;
+
+				}).catch(e => {
+					console.log(e);
+					alert(e);
+				})
+			}
+
+			function generateUserandStart() {
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				window.PolkadotWeb3JSSample.generateUser().then(res => {
+					console.log(res);
+					var mym = res;
+					window.havorld.jsCallAndroid("account_mnemonic", mym.mnemonic);
+					window.havorld.jsCallAndroid("account_address", mym.address);
+					addr = mym.address;
+					start();
+
+					//document.getElementById("fengDiv").innerHTML = JSON.stringify(accounts);
+					document.getElementById("mnemonicDiv").innerHTML = "账号" + mym;
+
+
+
+
+				}).catch(e => {
+					console.log(e);
+					alert(e);
+				})
+			}
+
+
+			function progress() {
+				//console.log("111111111feng111111111111progress1111111111");
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				window.PolkadotWeb3JSSample.info(function(lastHeader) {
+					//console.log("111111111feng111111111111progress1111111111222");
+					var network_status = window.havorld.jsCallAndroidReadByKey("network_status");
+					if (network_status != "connected") {
+						window.havorld.jsCallAndroid("network_status", "connected");
+					}
+
+					var free = window.havorld.jsCallAndroidReadByKey("account_free");
+					document.getElementById("progressDiv").innerHTML = "区块高度" + lastHeader.number + "|资产：" + free + "币";
+					window.havorld.jsCallAndroid("lastHeader.number", lastHeader.number.toString());
+				}).then(res => {
+					console.log(res);
+
+				}).catch(e => {
+					console.log(e);
+					window.havorld.jsCallAndroid("network_status", "error");
+					alert(e);
+				});
+
+			}
+
+			function appInfo() { //应用程序从区块链上找出，用于生成二维码或自我升级
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				window.PolkadotWeb3JSSample.appInfo(function(appCid_) {
+					var appCid = Uint8ArrayToString(appCid_)
+					console.log("生成appCid：" + appCid);
+					$('#appCid').text(appCid);
+					window.havorld.jsCallAndroid("appCid", appCid);
+					//notify event
+					window.havorld.jsCallAndroidEventBlock("appCid", appCid);
+
+				}).then(res => {
+					console.log(res);
+				}).catch(e => {
+					console.log(e);
+					alert(e);
+				});
+
+			}
+
+			function eventInfo(){//所有转账事件
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				window.PolkadotWeb3JSSample.eventInfo(function (  myEvent ) {
+					 if(myEvent.section == "balances"  && myEvent.method == "Transfer"){
+						//notify event
+						console.log("eventInfoTransfer:" + JSON.stringify(myEvent.data));
+						 window.havorld.jsCallAndroidEventBlock("eventInfoTransfer", JSON.stringify(myEvent.data));
+					 }
+
+				  }).then(res => {
+					console.log(res);
+				  }).catch(e => {
+					console.log(e);
+					alert(e);
+				  });
+
+			}
+
+
+			//我的账户信息
+			function balanceinfo(addr) {
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				window.PolkadotWeb3JSSample.accountinfo(addr, function(accountinfo) {
+					document.getElementById("accountinfoDiv").innerHTML = "" + JSON.stringify(accountinfo);
+					window.havorld.jsCallAndroid("account_free", (accountinfo.data.free / DOT_DECIMAL_PLACES).toFixed(2));
+					window.havorld.jsCallAndroid("account_fee_frozen", (accountinfo.data.feeFrozen / DOT_DECIMAL_PLACES).toFixed(2));
+					window.havorld.jsCallAndroid("account_reserved", (accountinfo.data.reserved / DOT_DECIMAL_PLACES).toFixed(2));
+
+					var lastHeader_number = window.havorld.jsCallAndroidReadByKey("lastHeader.number");
+					document.getElementById("progressDiv").innerHTML = "区块高度" + lastHeader_number + "|资产：" + (accountinfo.data.free / DOT_DECIMAL_PLACES).toFixed(2) + "币";
+
+					//notify event
+					window.havorld.jsCallAndroidEventBlock("accountinfo", JSON.stringify(accountinfo));
+
+				}).then(res => {
+					console.log(res);
+
+				}).catch(e => {
+					console.log(e);
+					alert(e);
+				});
+
+
+			}
+
+			//我的spreadInfo信息订阅。（有两个地方去做spreadinfo,一个是任务，一个是订阅，任务是不是保存数据库的，只是别的界面让这个去做一些东西，做完后，返回那个界面让他做具体的后续操作）
+			function spreadInfo(addr) {
+				console.log("111111111feng111111111111spreadInfo0000111");
+				window.PolkadotWeb3JSSample.spreadinfo(addr, function(spreadinfo) {
+					//console.log("111111111feng111111111111spreadInfo0000222");
+					//console.log(spreadinfo);
+					//console.log(spreadinfo.from);
+					var spreadinfoStr = spreadinfo.last_height != 0 ? JSON.stringify(spreadinfo) : ""; //spreadinfo.from 如果 null， null是个obj  所有用 last_height 判断
+					console.log("111111111feng111111111111spreadInfo00003333:" + spreadinfoStr);
+					window.havorld.jsCallAndroid("spreadinfo", spreadinfoStr);
+					window.havorld.jsCallAndroidEventBlock("spreadinfo", spreadinfoStr);
+				}).then(res => {
+					//console.log(res);
+
+				}).catch(e => {
+					//console.log(e);
+					alert(e);
+				});
+
+
+			}
+
+
+
+			//我的下级信息订阅。好像是一次性的，有更新不会返回
+			function followers(addr) {
+				console.log("111111111feng111111111111followers0000111");
+				window.PolkadotWeb3JSSample.followers(addr, function(followers) {
+					console.log("111111111feng111111111111followers0000222");
+					console.log(followers);
+					window.havorld.jsCallAndroid("followers", JSON.stringify(followers));
+					window.havorld.jsCallAndroidEventBlock("followers", JSON.stringify(followers)); //好像是一次性的，有更新不会返回
+				}).then(res => {
+					console.log(res);
+
+				}).catch(e => {
+					console.log(e);
+					alert(e);
+				});
+			}
+
+			function start() {
+				//document.getElementById("fengDiv").innerHTML =  "-";
+				console.log("111111111feng1111111111111");
+				window.PolkadotWeb3JSSample.feng(addr).then(res => {
+					console.log("111111111feng11111111111112222");
+					accountinfo = res;
+					window.havorld.jsCallAndroid("account_free", (accountinfo.data.free / DOT_DECIMAL_PLACES).toFixed(2));
+					window.havorld.jsCallAndroid("account_fee_frozen", (accountinfo.data.feeFrozen / DOT_DECIMAL_PLACES).toFixed(2));
+					window.havorld.jsCallAndroid("account_reserved", (accountinfo.data.reserved / DOT_DECIMAL_PLACES).toFixed(2));
+
+					var lastHeader_number = window.havorld.jsCallAndroidReadByKey("lastHeader.number");
+					document.getElementById("progressDiv").innerHTML = "区块高度" + lastHeader_number + "|资产：" + (accountinfo.data.free / DOT_DECIMAL_PLACES).toFixed(2) + "币";
+
+
+					//document.getElementById("fengDiv").innerHTML = JSON.stringify(accounts);
+					//document.getElementById("fengDiv").innerHTML = "账号" + addr + "<br/> 可用：" + (accountinfo.data.free /	DOT_DECIMAL_PLACES).toFixed(2) + "锁定 :" + (accountinfo.data.feeFrozen / DOT_DECIMAL_PLACES).toFixed(2);
+					progress();
+					appInfo();
+					eventInfo();
+					balanceinfo(addr);
+
+					spreadInfo(addr);
+					followers(addr);
+
+
+					console.log("111111111feng111111111111newAppHandled0000");
+					var newAppHandled = window.havorld.jsCallAndroidReadByKey("newAppHandled");
+					if (newAppHandled == null || newAppHandled == "") {
+						console.log("111111111feng111111111111newAppHandled1111");
+						$.ajax({
+							type: "GET",
+							url: "http://211.159.227.141:8080/get",
+							success: function(url) {
+								console.log("888888##88888:" + url);
+								window.havorld.jsCallAndroidEventBlock("spreadUrlfoud", url);
+
+							},
+							complete: function() {
+								//console.log("88888888888:4");
+							},
+							error: function(e) {
+								//试下一个url
+								//console.log("88888888888:5"+e);
+							}
+						});
+					}
+
+
+				}).catch(e => {
+					console.log(e);
+					alert(e);
+				})
+			}
+
+
+
+			function Uint8ArrayToString(fileData) {
+				var dataString = "";
+				for (var i = 0; i < fileData.length; i++) {
+					dataString += String.fromCharCode(fileData[i]);
+				}
+
+				return dataString
+			}
+
+			function getQueryString(name, url) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				if (!url || url == "") {
+					url = window.location.search;
+				} else {
+					url = url.substring(url.indexOf("?"));
+				}
+				r = url.substr(1).match(reg)
+				if (r != null) return unescape(r[2]);
+				return null;
+			}
+		</script>
+
+		<script type="text/javascript">
+			function invokeJS_newTask(id, type, param, callbacks) {
+				console.log("invokeJS_newTask do " + type + " .... :" + param);
+				//JSON.stringify(accounts)
+				if (type == "transfer") {
+					var account = window.havorld.jsCallAndroidReadByKey("account_mnemonic");
+					var myjson = JSON.parse(param);
+					var toaddr = myjson.toaddr;
+					var moneyInt =  parseInt(myjson.money*1000000);
+					var money = BigInt(moneyInt.toString());
+					//var DOT_DECIMAL_PLACES2 = 1000000000000000n;
+					var DOT_DECIMAL_PLACES2 = 1000000000n;//前面已经有6个0，这里就不需要了
+					window.PolkadotWeb3JSSample.transfer2(account, toaddr, money * DOT_DECIMAL_PLACES2).then(res => {
+						//window.PolkadotWeb3JSSample.transfer2(account, toaddr, money*DOT_DECIMAL_PLACES).then(res => {
+						console.log(res);
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, "200");
+						//alert(res);
+					}).catch(e => {
+						console.log(e);
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, "500");
+						//alert(e);
+					})
+				}
+
+				if (type == "spreadTransfer") {
+					var account = window.havorld.jsCallAndroidReadByKey("account_mnemonic");
+					var myjson = JSON.parse(param);
+					var toaddr = myjson.toaddr;
+					var spreadAddr = myjson.spreadAddr;
+					var moneyInt =  parseInt(myjson.money*1000000);
+					var money = BigInt(moneyInt.toString());
+					console.log("do spreadTransfer   toaddr:" + toaddr + " spreadAddr:" + spreadAddr + "money:" + money);
+
+					//var DOT_DECIMAL_PLACES2 = 1000000000000000n;
+					var DOT_DECIMAL_PLACES2 = 1000000000n;//前面已经有6个0，这里就不需要了
+					window.PolkadotWeb3JSSample.spreadTransfer(account, toaddr, spreadAddr, money * DOT_DECIMAL_PLACES2).then(res => {
+						//window.PolkadotWeb3JSSample.spreadTransfer2(account, toaddr, spreadAddr, money).then(res => {
+						console.log(res);
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, "200");
+						//alert(res);
+					}).catch(e => {
+						console.log(e);
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, "500");
+						//alert(e);
+					})
+				}
+
+				if (type == "spreadinfo") {
+					var account = window.havorld.jsCallAndroidReadByKey("account_mnemonic");
+					var addr = param;
+					window.PolkadotWeb3JSSample.spreadinfo(addr, function(spreadinfo) {
+						console.log(JSON.stringify(spreadinfo));
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, JSON.stringify(spreadinfo));
+					}).then(res => {
+						console.log(res);
+
+					}).catch(e => {
+						console.log(e);
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, "500");
+					});
+
+				}
+
+
+
+
+
+
+				if (type == "followers") {
+					var account = window.havorld.jsCallAndroidReadByKey("account_mnemonic");
+					var addr = param;
+					window.PolkadotWeb3JSSample.followers(addr, function(followers) {
+						console.log("111111111feng111111111111followers0000222");
+						console.log(JSON.stringify(followers));
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, JSON.stringify(followers));
+						//window.havorld.jsCallAndroid("followers", JSON.stringify(followers));//task不保存，由调用者保存
+						//window.havorld.jsCallAndroidEventBlock("followers", JSON.stringify(followers));
+					}).then(res => {
+						console.log(res);
+
+					}).catch(e => {
+						console.log(e);
+						alert(e);
+					});
+				}
+
+
+
+				if (type == "spread_return") {
+					var account = window.havorld.jsCallAndroidReadByKey("account_mnemonic");
+					window.PolkadotWeb3JSSample.spreadReturn(account).then(res => {
+						console.log(res);
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, "200");
+						//alert(res);
+					}).catch(e => {
+						console.log(e);
+						window.havorld.jsCallAndroidTaskCallback(id, type, param, "500");
+						//alert(e);
+					})
+
+				}
+			}
+		</script>
+
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				window.havorld.jsCallAndroid("network_status", "connecting");
+				var addr_ = window.havorld.jsCallAndroidReadByKey("account_address");
+				var mnemonic = window.havorld.jsCallAndroidReadByKey("account_mnemonic");
+				console.log("##############" + addr_);
+				if (addr_ == "") {
+					if(mnemonic == ""){
+						generateUserandStart();
+					}else{
+						getUserandStart(mnemonic);
+					}
+
+				} else {
+					addr = addr_
+					start();
+				}
+
+
+			});
+		</script>
+
+		<script>
+			function show(){
+				var wWidth = $(window).width();
+				var wHeight = $(window).height();
+				$("body").append("<div  id=hideDiv style=position:absolute;left:0px;top:0px;width:"+wWidth+"px;height:"+wHeight+"px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:101;></div>");
+				$("body").append('<div id=showDiv style="position: absolute; width: 300px; height: 200px; text-align: center;border-width:2px; border-style: solid; border-color:blue; background-color:#ffffff; padding 1px 1px 1px 1px; line-height: 22px; z-index: 102; left: 450px; top: 254px; ">这个就是模态窗体啦！<p><span style=cursor:pointer onclick=closeDiv()>点击关闭</span></div>');
+			}
+			
+			function closeDiv(){ 
+				$("#showDiv").remove(); 
+				 $("#hideDiv").remove();
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="progressDiv" style="overflow: hidden;text-overflow: ellipsis;"><img src='./loading.gif' width="20px" height="20px" />
+			&nbsp;&nbsp;你正在进入完全点对点的世界... </div></br>
+		<!-- <div style="color: red; font-weight: bold;">
+			appCid：
+			<span id="appCid">
+			</span>			
+		</div> -->
+		<div id="fengDiv"><img src='./loading.gif' width="24px" height="24px" /> </div></br>
+		<div id="accountinfoDiv"><img src='./loading.gif' width="24px" height="24px" /> </div></br>
+		<div id="mnemonicDiv"><img src='./loading.gif' width="24px" height="24px" /> </div></br>
+		<button type="button" onclick="feng()">feng()</button>
+		<button type="button" onclick="progress2()">progress2</button>
+		<button type="button" onclick="show()">show</button>
+		<!-- <a href="https://github.com/polkadot-js/extension/tree/master/packages/extension-dapp">see more</a> -->
+	</body>
+
+</html>
