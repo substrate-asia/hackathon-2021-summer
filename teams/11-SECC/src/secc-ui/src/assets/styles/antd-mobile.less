@@ -1,0 +1,33 @@
+/*
+ * @Author: wudi(max24@vip.qq.com)
+ * @Date: 2021-07-03 22:17:01
+ * @Description: 修改antd-mobile的默认样式
+ */
+.am-button-primary {
+  background: @primary-color;
+  &::before {
+    border: 1px solid @primary-color !important;
+  }
+  &.am-button-active {
+    background-color: mix(@primary-color, #ffffff, 80%);
+  }
+  &.am-button-small {
+    font-size: 0.346667rem /* 13/37.5 */;
+  }
+}
+.am-list-item .am-input-label {
+  font-size: 0.373333rem /* 14/37.5 */;
+  color: #070301;
+}
+.am-list-item .am-input-control input {
+  font-size: 0.373333rem /* 14/37.5 */;
+}
+.am-list-item .am-list-line .am-list-content {
+  font-size: 0.373333rem /* 14/37.5 */;
+}
+.am-list-item .am-list-line .am-list-extra {
+  font-size: 0.373333rem /* 14/37.5 */;
+}
+.am-picker-popup-item {
+  color: @primary-color;
+}
