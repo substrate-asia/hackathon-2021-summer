@@ -11,3 +11,4 @@
 **/node_modules
 .vscode
 build
+teams/12-NFTicket/src/contract/package-lock.json
