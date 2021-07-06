@@ -453,8 +453,18 @@ use ink_env::call::FromAccountId;
 		7. 触发事件 ticket_checked
 		*/
 		pub fn check_ticket(&mut self, ticket: (u128, u128), timestamp: u128, hash: Vec<u8>) -> bool {
-			// todo 与 online meeting 一致
+			if self.is_owner_or_inspector() {
+				// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap
+			}
 			true
+		}
+
+		/// 确保调用者是owner或者是设置的验票员
+		fn is_owner_or_inspector(&self)->bool{
+			let caller = self.env().caller();
+			let is_owner = caller==self.owner;
+			let is_respector = self.inspectors.contains_key(&caller);
+			is_owner | is_respector
 		}
 
 		/**
