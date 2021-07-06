@@ -1,0 +1,86 @@
+.content{
+    height: 96px;
+}
+
+.searchBar{
+    padding: 0px 8px 0 8px;
+}
+.accountInfo{
+    height: 25px;
+    width: 100%;
+    margin: 3px;
+    display: flex;
+    align-content: space-between;
+}
+
+.am-flexbox-item{
+    height: 42px!important;
+}
+
+.accountInfoLeft{
+    margin: 2px;
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.iconText{
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    display:flex;
+    margin-left: 5px;
+    justify-content: space-between;
+}
+
+.lableText{
+    font-size: 18px;
+    color: #000;
+  }
+
+.iconImg{
+   width: 50px;
+   height: 37px;
+   margin-left: 8px;
+}
+
+.searchImg{
+    width: 20px;
+    height: 45px;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+.searchImg img{
+    width: 100%;
+    height: 20px;
+    line-height: 10px;
+}
+.accountInfoRight{
+    margin: 2px;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.rightText{
+    width: auto;
+    font-size: 10px;
+    line-height: 14px;
+    margin: 10px;
+    padding: 2px 8px 2px 8px;
+    border: 1px solid #a1a1a1;
+    border-radius: 25px;
+    text-align: center;
+    display: none;
+}
+
+.walletIcon{
+   width: 27px;
+   height: 23px;
+   margin-right: 12px;
+}
+.whiteSpace{
+    background-color: #fff;
+}

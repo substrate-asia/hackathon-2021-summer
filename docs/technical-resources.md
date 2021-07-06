@@ -79,3 +79,10 @@ Substrate 让您可以通过制作及整合不同的模块来创建定制化的�
 - [Deeper Network](https://github.com/ParityAsia/hackathon-2021-spring/blob/main/teams/14-DeeperNetwork) - 致力于构建真正的去中心化因特网和安全网关。它旨在为每个家庭带来更好的互联网体验，并成为用户通往 Web 3.0 应用的入口。
 - [SkypePass](https://github.com/ParityAsia/hackathon-2021-spring/blob/main/teams/30-SkyePass) - 去中心化身份驗証 及 密碼管理工具
 - [Web3 Games](https://github.com/ParityAsia/hackathon-2021-spring/blob/main/teams/01-Web3Games) - 去中心化数字游戏集成平台，致力于为区块链 WEB3 游戏生态提供各种解决方案，为区块链游戏开发者提供了免费的开发工具和服务。
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+.container{
+    width: 100%;
+}
+.contant{
+    width: 100%;
+    /* display: inline-block;*/
+    /* margin: 20px;  */
+    white-space: nowrap; 
+    overflow: scroll;
+}
+.flexcontent{
+    /* width: 100%; */
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.title{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.name1{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px;
+}
+/* .inputout{
+    width: 100%;
+    margin-right: 20px;
+    margin-bottom: 20px;
+} */
+.name2{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px;
+    margin-bottom: 10px;
+}
+.inputout{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center; 
+    align-items: center;
+    margin-left: 10px;
+}
+.inputout input{
+    width: 100%;
+    font-size: 12px;
+    border: 0;
+    border-bottom: 2px solid rgb(218, 214, 214);
+}
+.sessioninput{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center; 
+    align-items: center;
+    margin-left: 10px;
+}
+.timeIcon{
+    width: 20px;
+    height: 20px;
+}
+.sessioninput input{
+    flex: 1;
+    font-size: 12px;
+    /* margin-left: 20px; */
+    /* margin-right: 20px; */
+    /* justify-content: center;
+    align-content: center; */
+    border: 0;
+    border-bottom: 2px solid rgb(218, 214, 214);
+}
+.checkinputcontent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.checkinputline{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+}
+.checkboxleft{
+    width: 50%;
+    /* font-size: 24px; */
+    align-items: flex-start;
+}
+.sitezone{
+    width: 100%;
+    /* font-size: 24px; */
+}
+.checkboxright input{
+    width: auto;
+    font-size: 12px;
+    border: 0;
+    border-bottom: 2px solid rgb(218, 214, 214);
+}
+
+.selltimeinput{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-items: center; 
+    align-items: center;
+    margin-left: 10px;
+}
+
+.selltimeinput input{
+    flex: 1;
+    font-size: 12px;
+    /* margin-left: 20px; */
+    /* margin-right: 20px; */
+    /* justify-content: center;
+    align-content: center; */
+    border: 0;
+    border-bottom: 2px solid rgb(218, 214, 214);
+}
+
+.savebtngroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 12px;
+}

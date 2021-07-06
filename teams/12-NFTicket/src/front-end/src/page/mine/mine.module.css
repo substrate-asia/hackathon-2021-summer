@@ -1,0 +1,69 @@
+.body{
+    width: 100%;
+    background-color: #E5E5E5;
+}
+.fillet{
+    width: 60px;
+    height: 60px;
+    border:1px solid #000;
+    border-radius:30px;
+    text-align: center;
+    margin:0 auto
+}
+.topText{
+    font-size: 34px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+}
+.topHeader{
+    width: 100%;
+    height: 112px;
+    padding-top: 24px ;
+    background-color: #fff;
+    text-align:center
+}
+.iconEdit{
+    width: 13px;
+    height: 13px;
+    margin-left: 4px;
+}
+.address{
+    margin-top: 11px;
+}
+.otherView{
+    margin-top: 9px;
+    width: 100%;
+    background-color: #fff;
+
+}
+.iconWallets{
+    width: 24px;
+    height: 24px;
+    margin-left: 29px;
+    margin-top: 25px;
+}
+.textLable{
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 25px;
+    margin-top: 26px;
+    width: 70%;
+}
+.myItem{
+   display: flex;
+   justify-content: start;
+}
+.rightArrow{
+    width: 9px;
+    height: 15px;
+    margin-top: 28px;
+}
+.dotLine{
+    width: 100%;
+    height: 1px;
+    margin-left: 78px;
+    margin-top: 20px;
+    background-color: #f6f6f6;
+}

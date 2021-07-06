@@ -57,6 +57,6 @@ TODO
 - Kaiweicai (https://github.com/kaiweicai)
 - Renfenyi (https://github.com/renfengyi)
 - Hutu1st (https://github.com/hutu1st)
-- arrom
+- arrom (https://github.com/shenzhen-arrom)
 - Adorine
 - Ezio

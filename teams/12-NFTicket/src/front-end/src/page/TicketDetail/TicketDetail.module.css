@@ -1,0 +1,136 @@
+.detail{
+    width: 100%;
+    height: 100%;
+    margin:0 auto;
+    text-align: center;
+}
+
+.detailOutLine{
+    margin: 25px;
+    padding: 20px;
+    border: 2px solid #000000;
+    border-radius: 25px;
+}
+
+.detailImg{
+    max-width: 100%;
+    margin: 5px;
+    padding: 5px;
+}
+.detailImg img{
+    width: 100%;
+}
+.detailView{
+    width: 100%;
+    white-space: nowrap; 
+    overflow: scroll;
+}
+.removeMargin{
+    margin: 0;
+    
+}
+.eventName{
+    width: 100%;
+    margin-left: 40px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    text-align: start;
+}
+.ticketDesc{
+    margin-left: 40px;
+    margin-bottom: 14px;
+}
+.labelText{
+    font-size: 13px;
+    color: #979797;
+    margin-bottom: 8px;
+}
+.descText{
+    margin-top: 8px;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+.ewmImg{
+    width: 90px;
+    height: 90px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.leftArrow{
+    width: 17px;
+    height: 29px;
+}
+.rightArrow{
+    width: 17px;
+    height: 29px;
+    
+}
+.showEwm{
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+}
+
+.dottedLine{
+    height:1px; 
+    width:100%; 
+    border-bottom:1px dashed #000;
+}
+.dottedLineGroup{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.dottedLineLeft{
+    width: 25px;
+    height: 50px;
+    border-left: 1px solid #ffffff;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-right: 2.5px solid #000000;
+    border-radius: 0 40px 40px 0;
+    background-color: rgb(255, 255, 255);
+    margin-left: -22.5px;
+    margin-top: -280px;
+}
+
+.dottedLineRight{
+    width: 25px;
+    height: 50px;
+    border-right: 1px solid #ffffff;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-left: 2.5px solid #000000;
+    border-radius: 40px 0px 0px 40px;
+    background-color: rgb(255, 255, 255);
+    margin-right: -22.5px;
+    margin-top: -280px;
+}
+
+.dottedLineBoxGroup{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.dottedLineBoxLeft{
+    
+    width: 3px;
+    height: 48px;
+    background-color: rgb(255, 255, 255);
+    margin-left: -23.5px;
+    margin-top: -280px;
+}
+
+.dottedLineBoxRight{
+    
+    width: 3px;
+    height: 48px;
+    background-color: rgb(255, 255, 255);
+    margin-right: -23.5px;
+    margin-top: -280px;
+}
