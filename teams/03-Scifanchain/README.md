@@ -37,9 +37,7 @@
 - 协同创作，工作量证明
 - 上链存证，创造性解决版权保护与内容分享的矛盾
 
-### logo和文化
-
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/logo_two.png" alt="logo"/>
+### 文化
 
 - 多元融合。科学与艺术、创意与实践、线上与线下、中心化平台与分布式应用、Rust与Python、人文与AI……海纳百川，取长补短，兼容并收，美美与共。
 - 全球视野。我们认为创造无国界，人类是一个命运共同体，这颗星球应当像一个大家庭一样团结起来，共同创造前所未有的灿烂文明。
@@ -47,50 +45,47 @@
 
 ## 黑客松期间计划完成的事项
 
-**整体架构图和黑客松期间功能的流程图**
-
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/sfc_struct.png" alt="struct"/>
-<img src="https://github.com/scifanchain/hackathon-2021-summer/blob/main/teams/03-Scifanchain/docs/sfc_flow.png" alt="flow"/>
-
 **区块链端**
 
 - `pallet-nft`
 
-  - [ ] NFT 创建及数据结构定义
-  - [ ] NFT 转帐函数
-  - [ ] NFT 销毁函数
+  - [X] NFT 创建及数据结构定义
+  - [X] NFT 转帐函数
+  - [X] NFT 销毁函数
 
 - `pallet-poe`
 
-  - [ ] POE 创建存证函数
-  - [ ] POE 修改存证
-  - [ ] POE 撤消/销毁存证
+  - [X] POE 创建存证函数
+  - [X] POE 修改存证
+  - [X] POE 撤消/销毁存证
 
 **服务端**
 
-- api
+- 应用层API接口
 
-| 完成进度 | 模块 | 功能说明 | 测试覆盖 
+为Client客户端提供数据和应用逻辑。位于scr/api文件目录下，运行于Python虚拟环境。
+
+站点：https://api.scifanchian.com
+
+| 完成进度 | 模块 | 功能说明 | 备注
 | --- | --- | --- | ---
-| 30% | Story | 人物、地点和事件等各类故事元素的CRUD | 0%
-| 20% | Era | 星旋宇宙纪元系统 | 0%
-| 10% | Auth | 用户鉴权系统 | 0%
-| 15% | History | 数据演进过程记录及版本控制 | 0%
-| 10% | CORS | 跨源资源共享 | 0%
+| :clock130: 60% | Story | 人物、地点和事件等各类故事元素的CRUD | 0%
+| :clock130: 40% | Era | 星旋宇宙纪元系统 | 0%
+| :heavy_check_mark: 100% | OAuth2 | 配合JWF实现前后端用户鉴权系统 | 0%
+| :heavy_check_mark: 100% | Alembic数据迁移管理 | 数据演进过程记录及版本控制 | 0%
+| :heavy_check_mark: 100% | CORSMiddleware | 跨域资源共享，作用域可控调用 | 0%
+| :heavy_check_mark: 100% | Docs | 用户文档中心  | 访问：https://docs.scifanchain.com
+| :heavy_check_mark: 100% | Blog | 团队博客 | 访问：https://blog.scifanchain.com
 
 **客户端**
 
-- web端
-  - [ ] 赛凡链官网
-  - [ ] 团队博客
-  - [ ] 用户文档中心 
+站点：https://scifanchain.com
 
-- Dapp (react)
-  - [ ] 用户注册/登录相关功能
-  - [ ] 文本创作流程
-  - [ ] 文本借用/引用流程
-  - [ ] 用户钱包
-  - [ ] 交易查询
+- [X] 用户注册/登录相关功能
+- [X] 文本创作流程
+- [X] 文本借用/引用流程
+- [X] 用户钱包
+- [X] 交易查询
 
 
 ## 黑客松期间所完成的事项 (7月5日初审前提交)
