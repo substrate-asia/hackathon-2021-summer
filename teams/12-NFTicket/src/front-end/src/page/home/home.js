@@ -17,6 +17,9 @@ import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 
 
+//polkadot
+import { ApiPromise,WsProvider } from '@polkadot/api';
+
 
 
 
@@ -96,18 +99,123 @@ class Home extends Component {
         location: "Location details",
         startTime: "Start time"
       }],
-      showToast: false
+      showToast: false,
+      genesisHash:''//polkadot
     };
    
   };
 
-  componentDidMount() {
+  async componentDidMount() {
 
     const tokendata = "mytoken";
     //actions
     this.props.actions.setToken(tokendata);
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
+
+    //调用NFTMart区块链测试网
+    const provider = new WsProvider('wss://test-chain.bcdata.top');
+    const types = {
+      Properties: 'u8',
+      NFTMetadata: 'Vec<u8>',
+      BlockNumber: 'u32',
+      BlockNumberOf: 'BlockNumber',
+      BlockNumberFor: 'BlockNumber',
+      GlobalId: 'u64',
+      CurrencyId: 'u32',
+      CurrencyIdOf: 'CurrencyId',
+      Amount: 'i128',
+      AmountOf: 'Amount',
+      CategoryId: 'u32',
+      CategoryIdOf: 'CategoryId',
+      ClassId: 'u32',
+      ClassIdOf: 'ClassId',
+      TokenId: 'u64',
+      TokenIdOf: 'TokenId',
+
+      OrmlAccountData: {
+        free: 'Balance',
+        reserved: 'Balance',
+        frozen: 'Balance',
+      },
+
+      OrmlBalanceLock: {
+        amount: 'Balance',
+        id: 'LockIdentifier'
+      },
+
+      ClassInfoOf: {
+        metadata: 'NFTMetadata',
+        totalIssuance: 'Compact<TokenId>',
+        owner: 'AccountId',
+        data: 'ClassData'
+      },
+
+      ClassData: {
+        deposit: 'Compact<Balance>',
+        properties: 'Properties',
+        name: 'Vec<u8>',
+        description: 'Vec<u8>',
+        createBlock: 'Compact<BlockNumberOf>'
+      },
+
+      TokenInfoOf: {
+        metadata: 'NFTMetadata',
+        data: 'TokenData',
+        quantity: 'Compact<TokenId>',
+      },
+
+      TokenData: {
+        deposit: 'Compact<Balance>',
+        createBlock: 'Compact<BlockNumberOf>',
+        royalty: 'bool',
+        creator: 'AccountId',
+        royalty_beneficiary: 'AccountId',
+      },
+
+      AccountToken: {
+        quantity: 'Compact<TokenId>',
+        reserved: 'Compact<TokenId>',
+      },
+
+      CategoryData: {
+        metadata: 'NFTMetadata',
+        nftCount: 'Compact<Balance>'
+      },
+
+      OrderItem: {
+        classId: 'Compact<ClassId>',
+        tokenId: 'Compact<TokenId>',
+        quantity: 'Compact<TokenId>',
+      },
+
+      OrderOf: {
+        currencyId: 'Compact<CurrencyId>',
+        deposit: 'Compact<Balance>',
+        price: 'Compact<Balance>',
+        deadline: 'Compact<BlockNumberOf>',
+        categoryId: 'Compact<CategoryId>',
+        items: 'Vec<OrderItem>',
+      },
+
+      OfferOf: {
+        currencyId: 'Compact<CurrencyId>',
+        price: 'Compact<Balance>',
+        deadline: 'Compact<BlockNumberOf>',
+        categoryId: 'Compact<CategoryId>',
+        items: 'Vec<OrderItem>',
+      },
+    };
+
+    const api = await ApiPromise.create({provider, types});
+    const [chain, nodeName, nodeVersion] = await Promise.all([
+      api.rpc.system.chain(),
+      api.rpc.system.name(),
+      api.rpc.system.version()
+    ]);
+    console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+    
+    this.setState({genesisHash:api.genesisHash.toHex()});
   }
   componentWillMount() {
     setTimeout(() => {

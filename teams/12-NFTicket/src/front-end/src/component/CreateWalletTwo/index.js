@@ -10,22 +10,44 @@ import { setShowmodaltwoAction,setAccountokmodalAction } from '../../store/actio
 function CreateWalletTwo(props) {
     const dispatch = useDispatch();
 
-    // const [words,setWords] = useState([]);
-    let  [selectWords,setSelectWords] = useState([]);
     const mnemonic=localStorage.getItem("words")
-    var  words;
+    var  keywords;
     if(mnemonic!=null&&mnemonic.length>0){
-        words=mnemonic.trim().split(' ')
+        keywords=mnemonic.trim().split(' ')
+        keywords.sort();  
     }
-    words.sort();  
-    function handleClick(item,index) {
+   
+
+    const  [selectWords,setSelectWords] = useState([]);
+
+    const  [words,setWords] = useState(keywords);
+
+   
+    const addText = (item) =>{
         //选中的进数组
-        selectWords ={
-            ...selectWords,
-            item
+        setSelectWords([ ...selectWords,
+            item])
+        //移除一个元素
+        let newWords = words.filter(name =>{
+            return name!==item
+        })
+        setWords(newWords)
+    }
+    {/** 助记词的顺序是否一致 */}
+    const checkMnemonic = () =>{
+          {/*** 判断顺序是否是一样的 */}
+        const oriWords=mnemonic.trim().split(' ')
+        console.log("原来的助记词",oriWords)
+        console.log("选择的单词",selectWords)
+        if(JSON.stringify(oriWords)==JSON.stringify(selectWords)){
+            dispatch(setShowmodaltwoAction(false))
+            dispatch(setAccountokmodalAction(true))
+            console.log("助记词的顺序有问题....")
+            {/** 头部显示地址 */}
+        }else{
+           {/*** 选择错误时的处理 */}
+           console.log("助记词的顺序有问题....")
         }
-        setSelectWords(selectWords)
-        words.splice(index,1)
     }
     return (
         <div className={styles.accbody}>
@@ -42,29 +64,28 @@ function CreateWalletTwo(props) {
                 <div className={styles.flexaccountformtextarea}>
                     <div className={styles.flexaccountformtextareacon}>
                         {/* seed */}
+                        <div className={styles.seedwordspanel}>
                         {
                             selectWords?(selectWords.map((item,i)=>{
                                 return <span key={i}>{item}</span>
                             })):null
                         
                         }
+                        </div>
                     </div>
                 </div>
                 <div className={styles.seedwords}>
                     <div className={styles.seedwordspanel}>
                     {
-                        words.map((item,i)=>{
-                            return <span key={i} onClick={() => handleClick(item,i)}>{item}</span>
-                        })
+                       words? (words.map((item,i)=>{
+                            return <span key={i} onClick={addText.bind(this,item)}>{item}</span>
+                        })):null
                     }
                     </div>
                 </div>
                 <div className={styles.flexaccountformbtn}>
                     <button className={styles.flexaccountbtn}
-                    onClick={()=>{
-                        dispatch(setShowmodaltwoAction(false))
-                        dispatch(setAccountokmodalAction(true))
-                    }}>Confirm</button>
+                    onClick={checkMnemonic.bind(this)}>Confirm</button>
                 </div>
                 </div>
             </div>
