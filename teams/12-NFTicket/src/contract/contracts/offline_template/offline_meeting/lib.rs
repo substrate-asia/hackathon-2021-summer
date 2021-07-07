@@ -452,9 +452,12 @@ use ink_env::call::FromAccountId;
 		6. 添加检票记录 check_records ，返回 true
 		7. 触发事件 ticket_checked
 		*/
-		pub fn check_ticket(&mut self, ticket: (u128, u128), timestamp: u128, hash: Vec<u8>) -> bool {
+		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,hash: Vec<u8>) -> bool {
 			if self.is_owner_or_inspector() {
 				// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap
+				todo!("使用hash验证签名数据!");
+				// 检查时间戳和当前区块时间戳间隔是否在N分钟以内
+				// let now = Self::env().current_time();
 			}
 			true
 		}
