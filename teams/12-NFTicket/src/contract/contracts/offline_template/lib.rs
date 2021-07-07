@@ -12,6 +12,7 @@ mod localmeeting {
     use ink_env::call::FromAccountId;
     use stub::MainStub;
     use ink_prelude::vec::Vec;
+    use ink_prelude::format;
     #[ink(storage)]
     pub struct Localmeeting {
         controller: AccountId,   // 主合约地址
@@ -119,7 +120,9 @@ mod localmeeting {
                 let caller = Self::env().caller();
                 let income = Self::env().transferred_balance();
                 // let total_balance:Balance = Self::env().balance();
+                ink_env::debug_message(&format!("-------------------------self.meeting_seq {:?}", self.meeting_seq));
                 self.meeting_seq=self.meeting_seq.checked_add(1).unwrap();
+                ink_env::debug_message(&format!("-------------------------after add one self.meeting_seq {:?}", self.meeting_seq));
                 let salt = self.meeting_seq.to_le_bytes();
                 let meeting_id = self.meeting_seq;
                 let template_addr = self.get_self();
