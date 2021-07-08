@@ -423,15 +423,6 @@ mod nfticket {
             return Ok(ticket_nft)
         }
 
-        /// 验证用户传入的消息签名是否合法,需要调用extend的功能进行验证.
-		#[ink(message)]
-		pub fn test_validate(&self,user:AccountId,class_id:u32,token_id:u64,msg:Vec<u8>,hash: Vec<u8>)->bool{
-			// fn validate(account_id:AccountId,signature:Vec<u8>,msg:Vec<u8>) -> bool;
-			let validate:bool = self.env().extension()
-                .validate(user,hash,msg);
-            return validate;
-		}
-
         /// 开始收费门票.
         // #[ink(message, payable)]
         // pub fn buy_ticket(&mut self, ticker: Hash, template_hash: Hash,maker:AccountId) -> Result<bool> {

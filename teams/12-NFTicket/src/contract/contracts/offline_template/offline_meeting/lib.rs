@@ -1,17 +1,17 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 use ink_lang as ink;
 pub use offline_meeting::*;
+pub use nftmart_contract::*;
 /*
  活动合约
  1. 由活动模板合约创建，每个模板匹配一个活动合约
  2. 每个活动会独立部署一个合约(实例);
  3. 所有合约的操作都是通过活动合约实现；
 */
-#[ink::contract]
+#[ink::contract(env = CustomEnvironment)]
 pub mod offline_meeting {
-
-use ink_env::call::FromAccountId;
-	use ink_env::DefaultEnvironment;
+	use super::*;
+	use ink_env::call::FromAccountId;
 	use ink_lang::ToAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
@@ -486,6 +486,15 @@ use ink_env::call::FromAccountId;
 		*/
 		pub fn withdraw(&mut self, to: AccountId, amount: Balance) {
 			// todo 与 online meeting 一致
+		}
+
+		/// 验证用户传入的消息签名是否合法,需要调用extend的功能进行验证.
+		#[ink(message)]
+		pub fn test_validate(&self,user:AccountId,class_id:u32,token_id:u64,msg:Vec<u8>,hash: Vec<u8>)->bool{
+			// fn validate(account_id:AccountId,signature:Vec<u8>,msg:Vec<u8>) -> bool;
+			let validate:bool = self.env().extension()
+                .validate(user,hash,msg);
+            return validate;
 		}
 	}
 }

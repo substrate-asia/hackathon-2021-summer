@@ -18,6 +18,7 @@ scale-info = { version = "0.6.0", default-features = false, features = ["derive"
 
 primitives = { version = "0.1.0", path = "../../primitives", default-features = false}
 stub = { version = "0.1.0", path = "../../stub", default-features = false, features = ["ink-as-dependency"] }
+nftmart-contract = { version = "0.1.0", path = "../../nftmart-contract", default-features = false}
 [lib]
 name = "offline_meeting"
 path = "lib.rs"
@@ -38,5 +39,6 @@ std = [
     "scale-info/std",
     "primitives/std",
     "stub/std",
+    "nftmart-contract/std",
 ]
 ink-as-dependency = []
