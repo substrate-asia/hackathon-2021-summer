@@ -15,11 +15,26 @@ cryptoWaitReady().then(() => {
     // load all available addresses and accounts
     // keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
     // additional initialization here, including rendering
-    const mnemonic = mnemonicGenerate(12);
+
+    let mnemonic = null;
+    //检查存没存助记词
+    if(localStorage.hasOwnProperty('words')){
+        //取出来
+        mnemonic=localStorage.getItem("words")
+        if(mnemonic!=null&&mnemonic.length>0){
+            words=mnemonic.trim().split(' ')
+            console.log("已经存过助记词:",words)
+        }
+    }
+    else
+    {
+        //新生成助记词
+        mnemonic = mnemonicGenerate(12);
   
-    if(mnemonic!=null&&mnemonic.length>0){
-        words=mnemonic.trim().split(' ')
-        console.log("助记词:",words)
+        if(mnemonic!=null&&mnemonic.length>0){
+            words=mnemonic.trim().split(' ')
+            console.log("新生成助记词:",words)
+        }
     }
     //存储助记词
     localStorage.setItem('words', mnemonic);

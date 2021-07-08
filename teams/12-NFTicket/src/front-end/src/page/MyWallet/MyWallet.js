@@ -50,7 +50,6 @@ class MyWallet extends Component {
 
 //获取最新的store里的状态，通过this.props获取
 const mapStateToProps = (state) => {
-    console.log(state.app);
     return {
         app: state.app
     }

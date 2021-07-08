@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
 //action
-import { setTokenAction, setUsernameAction, setBottomstatusAction, setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction } from '../../store/action/App';
+import { setTokenAction, setUsernameAction, setBottomstatusAction, 
+  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction,setShowalertAction } from '../../store/action/App';
 
 
 import './home.css';
@@ -15,6 +16,7 @@ import TopBar from '../../component/TopBar';
 import CreateWalletOne from '../../component/CreateWalletOne';
 import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
+import NAlert from '../../component/Alert';
 
 
 //polkadot
@@ -348,6 +350,11 @@ class Home extends Component {
           style={{ height: "" + window.innerHeight + "px" }}>
           {/* 输入钱包助记词---弹窗 */}
           <CreateWalletOK ></CreateWalletOK>
+        </div>
+
+        <div className={this.props.app.showalert?'showalertmodal':'hidealertmodal'}
+        style={{ height: "" + window.innerHeight + "px" }}>
+          <NAlert msg="助记词顺序有问题"></NAlert>
         </div>
       </div>
     );
