@@ -1,19 +1,5 @@
 import {setTokenKey,setUsernameKey,setBottomstatusKey,setShowmodalKey,setShowmodaltwoKey,setAccountokmodalKey} from "../Type";
 
-import keyring from '@polkadot/ui-keyring';
-import { cryptoWaitReady ,mnemonicGenerate } from '@polkadot/util-crypto';
-
-cryptoWaitReady().then(() => {
-    // load all available addresses and accounts
-    keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
-    // additional initialization here, including rendering
-    const mnemonic = mnemonicGenerate(12);
-    const { pair, json } = keyring.addUri(mnemonic, 'myStr0ngP@ssworD', { name: 'mnemonic acc' });
-    //存储助记词
-    localStorage.setItem('words', mnemonic);
-    // console.log("--->"+JSON.stringify(json))
-  
-  });
 
 const app = {
     token:"",
@@ -21,7 +7,7 @@ const app = {
     bottomstatus:false,
     showmodal:false,
     showmodaltwo:false,
-    showaccountok:false
+    showaccountok:false,
 }
 
 //Reducer

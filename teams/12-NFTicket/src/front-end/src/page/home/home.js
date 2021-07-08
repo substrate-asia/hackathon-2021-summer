@@ -341,13 +341,13 @@ class Home extends Component {
         <div className={this.props.app.showmodaltwo ? 'showmodaltwo' : 'hidemodaltwo'}
           style={{ height: "" + window.innerHeight + "px" }}>
           {/* 输入钱包助记词---弹窗 */}
-          <CreateWalletTwo words={this.state.words}></CreateWalletTwo>
+          <CreateWalletTwo ></CreateWalletTwo>
         </div>
 
         <div className={this.props.app.showaccountok ? 'showaccountokmodal' : 'hideaccountokmodal'}
           style={{ height: "" + window.innerHeight + "px" }}>
           {/* 输入钱包助记词---弹窗 */}
-          <CreateWalletOK words={this.state.words}></CreateWalletOK>
+          <CreateWalletOK ></CreateWalletOK>
         </div>
       </div>
     );

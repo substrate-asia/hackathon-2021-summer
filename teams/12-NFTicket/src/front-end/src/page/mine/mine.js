@@ -17,8 +17,17 @@ class mine extends Component {
   componentDidMount() {
     this.props.actions.setBottomstatus(false);
 }
-
   render() {
+    const address = localStorage.getItem("nft-address")
+    var accountId="";
+    if(address!=null){
+      var pre=address.substr(0,4);
+      var end = address.substr(address.length-4,4)
+      accountId = pre+"...."+end
+    }else{
+      accountId="nft-ticket"
+    }
+   
     return (
       <div className={styles.body}>
         <SearchBar className={styles.searchBar} placeholder="Search" maxLength={8} />
@@ -28,7 +37,7 @@ class mine extends Component {
             <span className={styles.topText}>A</span>
           </div>
           <div className={styles.address}>
-            <span>0x4234....1e45</span>
+            <span>{accountId}</span>
             <img src={edit} className={styles.iconEdit}></img>
           </div>
         </div>

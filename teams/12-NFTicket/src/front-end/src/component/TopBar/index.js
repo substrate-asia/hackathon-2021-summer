@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal,Flex, SearchBar, WhiteSpace, Popover, NavBar, Icon } from 'antd-mobile'
+import { Modal, Flex, SearchBar, WhiteSpace, Popover, NavBar, Icon } from 'antd-mobile'
 import img1 from '../../images/icon.png'
 import wallet from '../../images/icon_wallet.png'
 import search from '../../images/search.png'
@@ -23,25 +23,26 @@ class TopBar extends Component {
     state = {
         visible: false,
         selected: '',
-        show:false,
+        show: false,
     };
     onSelect = (opt) => {
-        console.log("topbar--"+opt.props.value);
+        console.log("topbar--" + opt.props.value);
         this.setState({
             visible: false,
             selected: opt.props.value,
         });
         //点击事件的处理
-        if(opt.props.value=="create"){
+        if (opt.props.value == "create") {
             this.props.actions.setShowModal(true)
         }
     };
 
-    showModalAlert=()=>{
+    showModalAlert = () => {
         console.log(111111);
     };
 
-    handleCancel = (show)=>{
+
+    handleCancel = (show) => {
         this.setState({
             show
         });
@@ -52,12 +53,44 @@ class TopBar extends Component {
             visible,
         });
     };
+    changeIconOrAddress = (show) => {
+        const address = localStorage.getItem("nft-address")
+        var pre=""
+        var end =""
+        if(address!=null){
+             pre=address.substr(0,4);
+             end = address.substr(address.length-4,4)
+            console.log(address)
+            return (<div className={styles.rightText}>
+                <span onClick={() => {
+                    this.props.actions.setShowModal(true)
+                }}>
+                    {
+                        pre+"...."+end
+                    }
+                    </span>
+            </div>)
+        }else{
+            return show?(<div className={styles.rightText}>
+                <span onClick={() => {
+                    this.props.actions.setShowModal(true)
+                }}>
+                    {
+                        pre+"...."+end
+                    }
+                    </span>
+            </div>):(<img src={wallet} className={styles.walletIcon}></img>)
+        }
+       
+      
+    };
 
     render() {
+        var flag = this.props.app.showaccountok
         return (
             <div className={styles.content}>
                 <SearchBar className={styles.searchBar} placeholder="Search" maxLength={8} />
-                <WhiteSpace className={styles.whiteSpace}/>
+                <WhiteSpace className={styles.whiteSpace} />
                 {/**
                  * 导航栏
                  */}
@@ -67,7 +100,9 @@ class TopBar extends Component {
                         <Popover mask
                             overlayClassName="fortest"
                             overlayStyle={{ color: 'currentColor' }}
-                            visible={this.state.visible}
+                            visible={
+                                this.state.visible
+                            }
                             overlay={[
                                 (<Item key="4" value="create" data-seed="logId">create</Item>),
                                 (<Item key="5" value="import" style={{ whiteSpace: 'nowrap' }}>import</Item>),
@@ -87,13 +122,8 @@ class TopBar extends Component {
                                 alignItems: 'center',
                             }}
                             >
-                                <div className={styles.accountInfoRight} >
-                                    <img src={wallet} className={styles.walletIcon}></img>
-                                    <div className={styles.rightText}>
-                                        <span onClick={() => {
-                                            this.props.actions.setShowModal(true)
-                                        }}>0x4234...1e45</span>
-                                    </div>
+                                <div className={styles.accountInfoRight} > 
+                                    {this.changeIconOrAddress(flag)}
                                 </div>
                             </div>
                         </Popover>

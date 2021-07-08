@@ -9,20 +9,16 @@ import { setShowmodaltwoAction,setAccountokmodalAction } from '../../store/actio
 // 生成钱包助记词
 function CreateWalletTwo(props) {
     const dispatch = useDispatch();
-
-    const mnemonic=localStorage.getItem("words")
     var  keywords;
-    if(mnemonic!=null&&mnemonic.length>0){
-        keywords=mnemonic.trim().split(' ')
-        keywords.sort();  
-    }
+    // useEffect(()=>{
+    //     console.log("是否执行.......")
+    //     
+    //     // console.log("是否执行.......",keywords)
+    // });
    
-
     const  [selectWords,setSelectWords] = useState([]);
 
-    const  [words,setWords] = useState(keywords);
-
-   
+    const  [words,setWords] = useState([]);
     const addText = (item) =>{
         //选中的进数组
         setSelectWords([ ...selectWords,
@@ -33,16 +29,26 @@ function CreateWalletTwo(props) {
         })
         setWords(newWords)
     }
+    useEffect(()=>{
+        const mnemonic=localStorage.getItem("words")
+        if(mnemonic!=null&&mnemonic.length>0){
+            keywords=mnemonic.trim().split(' ')
+            console.log(keywords)
+            keywords.sort();  
+            console.log(keywords)
+            setWords(keywords)
+        }
+    },[])
+   
     {/** 助记词的顺序是否一致 */}
     const checkMnemonic = () =>{
-          {/*** 判断顺序是否是一样的 */}
+        const mnemonic=localStorage.getItem("words")
         const oriWords=mnemonic.trim().split(' ')
         console.log("原来的助记词",oriWords)
         console.log("选择的单词",selectWords)
         if(JSON.stringify(oriWords)==JSON.stringify(selectWords)){
             dispatch(setShowmodaltwoAction(false))
             dispatch(setAccountokmodalAction(true))
-            console.log("助记词的顺序有问题....")
             {/** 头部显示地址 */}
         }else{
            {/*** 选择错误时的处理 */}
@@ -69,7 +75,6 @@ function CreateWalletTwo(props) {
                             selectWords?(selectWords.map((item,i)=>{
                                 return <span key={i}>{item}</span>
                             })):null
-                        
                         }
                         </div>
                     </div>
