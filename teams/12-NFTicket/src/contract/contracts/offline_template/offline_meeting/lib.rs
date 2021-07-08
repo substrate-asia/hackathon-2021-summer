@@ -21,7 +21,8 @@ pub mod offline_meeting {
 		Lazy,
 	};
 	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
-	use stub::MainStub;
+	use scale::Encode;
+use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
 
 	const BASE_PERCENT: u128 = 10000;
@@ -454,14 +455,30 @@ pub mod offline_meeting {
 		7. 触发事件 ticket_checked
 		*/
 		#[ink(message)]
-		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,msg:Vec<u8>,hash: Vec<u8>) -> bool {
-			if self.is_owner_or_inspector() {
-				// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap
-				todo!("使用hash验证签名数据!");
-				// 检查时间戳和当前区块时间戳间隔是否在N分钟以内
-				// let now = Self::env().current_time();
-			}
+		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,time_stamp:Timestamp,msg:Vec<u8>,hash: Vec<u8>) -> bool {
+			assert!(self.is_owner_or_inspector(),"用户不是所有者,或者不是验票员!");
+				
+			// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap,确保二维码里面的这几个参数一定是该用户签名的,不是伪造的.
+			let encode_data = scale::Encode::encode(&(class_id,token_id));
+			assert!(self.test_validate(user,encode_data, hash),"用户数据验证失败!");
+			//检查用户是否拥有对应的ticker.确保该用户对ticker的所有权
+			assert!(self.user_NFT_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).is_some(),"用户ticker不存在");
+			// 验证时间不会超出太久,以免别人拿着泄露的hash的二维码再次进行验票
+			// let now = Self::env().current_time();
+			// assert!(time_stamp - now > 20,"验票时间超时");
+			// 6. 添加检票记录 check_records ，返回 true
+			// 7. 触发事件 ticket_checked
+
 			true
+		}
+
+		/// 验证用户传入的消息签名是否合法,需要调用extend的功能进行验证.
+		#[ink(message)]
+		pub fn test_validate(&self,user:AccountId,msg:Vec<u8>,hash: Vec<u8>)->bool{
+			// fn validate(account_id:AccountId,signature:Vec<u8>,msg:Vec<u8>) -> bool;
+			let validate:bool = self.env().extension()
+                .validate(user,hash,msg);
+            return validate;
 		}
 
 		/// 确保调用者是owner或者是设置的验票员
@@ -488,13 +505,5 @@ pub mod offline_meeting {
 			// todo 与 online meeting 一致
 		}
 
-		/// 验证用户传入的消息签名是否合法,需要调用extend的功能进行验证.
-		#[ink(message)]
-		pub fn test_validate(&self,user:AccountId,class_id:u32,token_id:u64,msg:Vec<u8>,hash: Vec<u8>)->bool{
-			// fn validate(account_id:AccountId,signature:Vec<u8>,msg:Vec<u8>) -> bool;
-			let validate:bool = self.env().extension()
-                .validate(user,hash,msg);
-            return validate;
-		}
 	}
 }
