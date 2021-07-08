@@ -38,6 +38,18 @@
     display: none;
 }
 
+.showalertmodal{
+    display: block;
+    position: fixed;
+    top: 0;
+    z-index: 2999;
+    width: 100%;
+}
+
+.hidealertmodal{
+    display: none;
+}
+
 .sub-title {
     color: #888;
     font-size: 14px;

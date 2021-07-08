@@ -17,8 +17,6 @@ class BottomTab extends Component{
 
     setCurrentIndex(index) {
         this.setState({current:index});
-        
-        console.log("----",this.props.app.bottomstatus);
     }
 
     render(){
@@ -61,8 +59,6 @@ class BottomTab extends Component{
 }
 
 const mapStateToProps = (state)=>{
-    console.log("bottombottombottombottombottombottom")
-    console.log(state.app);
     return {
         app:state.app
     }

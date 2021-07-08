@@ -1,4 +1,5 @@
-import {setTokenKey,setUsernameKey,setBottomstatusKey,setShowmodalKey,setShowmodaltwoKey,setAccountokmodalKey} from "../Type";
+import {setTokenKey,setUsernameKey,setBottomstatusKey,setShowmodalKey,
+    setShowmodaltwoKey,setAccountokmodalKey,setShowalertKey} from "../Type";
 
 
 
@@ -40,6 +41,13 @@ export function setShowmodaltwoAction(data){
 export function setAccountokmodalAction(data){
     return {
         type:setAccountokmodalKey,
+        value:data
+    }
+}
+
+export function setShowalertAction(data){
+    return {
+        type:setShowalertKey,
         value:data
     }
 }
