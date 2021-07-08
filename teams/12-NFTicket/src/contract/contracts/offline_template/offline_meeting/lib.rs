@@ -291,19 +291,20 @@ use ink_env::call::FromAccountId;
 			//     .expect("something wrong");
 
 			// 调用主合约的购票方法,并将抽成比例转给主合约.
+			// let ticketNft:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
 			use ink_lang::ForwardCallMut;
-			let ticketNft:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
+			let ticket_nft:TicketNft = self.main_stub.call_mut()
 				.buy_ticket(caller,ticket.clone())
 				.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
 				.fire()
 				.unwrap().unwrap();
-				ink_env::debug_message(&format!("-------------------------income {:?}", ticketNft));
+				ink_env::debug_message(&format!("-------------------------income {:?}", ticket_nft));
 			// 存储用户购买的ticketNFT存储到链上,key:用户的AccountId,value:ticketNft
 			if let Some(nft_tree_map)=self.user_NFT_ticket_map.get_mut(&caller){
-				nft_tree_map.insert((ticketNft._class_id,ticketNft.token_id), ticketNft);
+				nft_tree_map.insert((ticket_nft._class_id,ticket_nft.token_id), ticket_nft);
 			}else{
 				let mut nft_tree_map = BTreeMap::<(u32,u64),TicketNft>::default();
-				nft_tree_map.insert((ticketNft._class_id,ticketNft.token_id), ticketNft);
+				nft_tree_map.insert((ticket_nft._class_id,ticket_nft.token_id), ticket_nft);
 				self.user_NFT_ticket_map.insert(caller, nft_tree_map);
 			}
 			true
@@ -452,7 +453,8 @@ use ink_env::call::FromAccountId;
 		6. 添加检票记录 check_records ，返回 true
 		7. 触发事件 ticket_checked
 		*/
-		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,hash: Vec<u8>) -> bool {
+		#[ink(message)]
+		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,msg:Vec<u8>,hash: Vec<u8>) -> bool {
 			if self.is_owner_or_inspector() {
 				// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap
 				todo!("使用hash验证签名数据!");

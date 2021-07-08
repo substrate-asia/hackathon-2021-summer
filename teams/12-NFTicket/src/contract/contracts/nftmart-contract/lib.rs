@@ -1,6 +1,6 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_env::Environment;
+use ink_env::{AccountId, Environment};
 use ink_lang as ink;
 use ink_prelude::vec::Vec;
 pub use contract_types::*;
@@ -115,4 +115,8 @@ pub trait NFTMart {
     fn tokens(class_id: ClassId, token_id: TokenId) -> Option<ContractTokenInfo<
         Metadata, Quantity, Balance, BlockNumber, ink_env::AccountId,
     >>;
+
+    /// 验证用户的签名是否正确.
+    #[ink(extension = 1101, handle_status = false, returns_result = false)]
+    fn validate(account_id:AccountId,signature:Vec<u8>,msg:Vec<u8>) -> bool;
 }
