@@ -6,21 +6,35 @@ import {useDispatch} from 'react-redux';
 import { setShowmodalAction,setShowmodaltwoAction } from '../../store/action/App';
 
 
+import { Keyring } from '@polkadot/keyring'
+import { cryptoWaitReady ,mnemonicGenerate } from '@polkadot/util-crypto';
+
+const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
+var  words;
+cryptoWaitReady().then(() => {
+    // load all available addresses and accounts
+    // keyring.loadAll({ ss58Format: 42, type: 'sr25519' });
+    // additional initialization here, including rendering
+    const mnemonic = mnemonicGenerate(12);
+  
+    if(mnemonic!=null&&mnemonic.length>0){
+        words=mnemonic.trim().split(' ')
+        console.log("助记词:",words)
+    }
+    //存储助记词
+    localStorage.setItem('words', mnemonic);
+    const pair= keyring.createFromUri(mnemonic, { name: 'sz-arrom' }); 
+    localStorage.setItem('nft-address', pair.address);
+  
+  });
 
 
 // 生成钱包助记词
 function CreateWalletOne(_props) {
     const dispatch = useDispatch();
-    const mnemonic=localStorage.getItem("words")
-    var  words;
-    if(mnemonic!=null&&mnemonic.length>0){
-        words=mnemonic.trim().split(' ')
-        console.log("助记词:",words)
-        console.log("xujie>>>>>",words)
-    }else{
-        words=_props.words
+    if(words==null){
+        words= _props.words
     }
-
     return (
         <div className={styles.accbody}>
             {/* mask */}
@@ -55,12 +69,8 @@ function CreateWalletOne(_props) {
                 <div className={styles.flexaccountformbtn}>
                     <button className={styles.flexaccountbtn}
                     onClick={()=>{
-
                         dispatch(setShowmodalAction(false))
                         dispatch(setShowmodaltwoAction(true))
-
-
-
                     }}>Continue</button>
                 </div>
                 </div>

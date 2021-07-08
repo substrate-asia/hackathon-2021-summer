@@ -6,3 +6,4 @@ export const setBottomstatusKey = "SET_BOTTOM_STATUS";
 export const setShowmodalKey = "SET_SHOWMODAL_STATUS";
 export const setShowmodaltwoKey = "SET_SHOWMODALTWO_STATUS";
 export const setAccountokmodalKey = "SET_ACCOUNTOKMODAL_STATUS";
+
