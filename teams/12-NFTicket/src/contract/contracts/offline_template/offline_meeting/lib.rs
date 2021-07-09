@@ -11,7 +11,7 @@ pub use nftmart_contract::*;
 #[ink::contract(env = CustomEnvironment)]
 pub mod offline_meeting {
 	use super::*;
-	use ink_env::call::FromAccountId;
+	use ink_env::{call::FromAccountId, emit_event};
 	use ink_lang::ToAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
@@ -50,6 +50,21 @@ pub mod offline_meeting {
 	pub struct InspectorRemoved {
 		#[ink(topic)]
 		inspector: AccountId,
+	}
+
+	/// 验票成功 时间
+	#[ink(event)]
+	pub struct InspectorValidateTicket {
+		#[ink(topic)]
+		inspector: AccountId, // 检票人
+		#[ink(topic)]
+		timestamp: u64,       // 检票时间戳
+		#[ink(topic)]
+		block: u128,           // 检票记录区块
+		#[ink(topic)]
+		class_id:u32,			//票的类型
+		#[ink(topic)]
+		ticket_id:u64,			
 	}
 
 	// 场地区域设置，name 区域名称，rows:有多少排，cols: 每排多少座
@@ -104,16 +119,17 @@ pub mod offline_meeting {
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
 	struct CheckRecord {
-		inspectors: AccountId, // 检票人
-		timestamp: u128,       // 检票时间戳
+		inspector: AccountId, // 检票人
+		timestamp: u64,       // 检票时间戳
 		block: u128,           // 检票记录区块
 	}
-	impl Default for CheckRecord {
-		fn default() -> CheckRecord {
+
+	impl CheckRecord {
+		pub fn new(inspector:AccountId,timestamp:u64,block:u128) -> CheckRecord {
 			CheckRecord {
-				inspectors: Default::default(),
-				timestamp: Default::default(),
-				block: Default::default(),
+				inspector,
+				timestamp,
+				block,
 			}
 		}
 	}
@@ -153,7 +169,7 @@ pub mod offline_meeting {
 		// 用户参与后会产生的数据
 		tickets: StorageMap<(u128, u128), (u8, u8, u8)>, // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
-		check_records: StorageMap<(u128, u128), Vec<CheckRecord>>, // 检票记录：
+		check_record_map: StorageMap<(u128, u128), Vec<CheckRecord>>, // 检票记录：
 		user_NFT_ticket_map:StorageMap<AccountId,BTreeMap<(u32,u64),TicketNft>>,	//	用户购买的票产生的NFT存储.StorageMap<用户id,BTreeMap<(classid,ticketid),TicketNft>>
 	}
 
@@ -186,7 +202,7 @@ pub mod offline_meeting {
 				seats_status_map: Default::default(),
 				tickets: Default::default(),
 				inspectors: Default::default(),
-				check_records: Default::default(),
+				check_record_map: Default::default(),
 				max_zone_id: Default::default(),
 				ticket_id: Default::default(),
 				nfticket_main_fee: 100u32,
@@ -458,6 +474,7 @@ pub mod offline_meeting {
 		#[ink(message)]
 		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,time_stamp:u64,msg:Vec<u8>,hash: Vec<u8>) -> bool {
 			assert!(self.is_owner_or_inspector(),"用户不是所有者,或者不是验票员!");
+			let caller = Self::env().caller();
 			let mut encode_data = class_id.to_string();
 
 			encode_data.push_str(&token_id.to_string());
@@ -473,8 +490,25 @@ pub mod offline_meeting {
 			let now:u64 = Self::env().block_timestamp();
 			assert!(time_stamp - now > 10*60*1000,"验票时间超时");
 			// 6. 添加检票记录 check_records ，返回 true
+			let block = Self::env().block();
+			let check_record = CheckRecord::new(caller,now,block);
+			let my_record_vec= self.check_record_map.get(&(class_id,token_id));
+			match my_record_vec {
+				Some(record_vec)=>record_vec.push(check_record),
+				None=>{
+					let v = vec!(check_record);
+					self.check_record_map.insert((class_id,token_id), v);
+				}
+			}
+			
 			// 7. 触发事件 ticket_checked
-
+			Slef::env().emit_event(InspectorValidateTicket{
+			    inspector:caller,
+			    timestamp,
+			    block,
+			    class_id,
+			    ticket_id,
+			});
 			true
 		}
 
