@@ -483,5 +483,36 @@ mod nfticket {
         fn ensure_owner(&self) {
             assert_eq!(self.owner, self.env().caller(), "not owner");
         }
+
+        pub fn test_block_time(&self)->u64{
+			let now:u64 = Self::env().block_timestamp();
+            ink_env::debug_message(&format!("now is{}",now));
+			now
+		}
+    }
+
+    #[cfg(not(feature = "ink-experimental-engine"))]
+    #[cfg(test)]
+    mod tests {
+        use std::ops::Add;
+
+        /// Imports all the definitions from the outer scope so we can use them here.
+        use super::*;
+
+        type Event = <Meeting as ::ink_lang::BaseEvent>::Type;
+
+        use ink_lang as ink;
+
+        /// The default constructor does its job.
+        #[ink::test]
+        fn new_works() {
+            let mut s =12u32.to_string();
+            s.push_str("rhs");
+			s.push_str("abc");
+            let encode_data = 12u32.to_string().add(&18u64.to_string()).add(&18u32.to_string());
+            // Constructor works.
+            let meeting = NftTicket::new();
+			meeting.test_block_time();
+        }
     }
 }

@@ -22,8 +22,9 @@ pub mod offline_meeting {
 	};
 	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
 	use scale::Encode;
-use stub::MainStub;
+	use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
+	use ink_prelude::string::ToString;
 
 	const BASE_PERCENT: u128 = 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
@@ -455,17 +456,22 @@ use stub::MainStub;
 		7. 触发事件 ticket_checked
 		*/
 		#[ink(message)]
-		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,time_stamp:Timestamp,msg:Vec<u8>,hash: Vec<u8>) -> bool {
+		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,time_stamp:u64,msg:Vec<u8>,hash: Vec<u8>) -> bool {
 			assert!(self.is_owner_or_inspector(),"用户不是所有者,或者不是验票员!");
-				
+			let mut encode_data = class_id.to_string();
+
+			encode_data.push_str(&token_id.to_string());
+			encode_data.push_str(&time_stamp.to_string());
+			
+			let encode_data = encode_data.as_bytes().to_vec();
 			// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap,确保二维码里面的这几个参数一定是该用户签名的,不是伪造的.
-			let encode_data = scale::Encode::encode(&(class_id,token_id));
+			// let encode_data = scale::Encode::encode(&(class_id,token_id,time_stamp));
 			assert!(self.test_validate(user,encode_data, hash),"用户数据验证失败!");
 			//检查用户是否拥有对应的ticker.确保该用户对ticker的所有权
 			assert!(self.user_NFT_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).is_some(),"用户ticker不存在");
 			// 验证时间不会超出太久,以免别人拿着泄露的hash的二维码再次进行验票
-			// let now = Self::env().current_time();
-			// assert!(time_stamp - now > 20,"验票时间超时");
+			let now:u64 = Self::env().block_timestamp();
+			assert!(time_stamp - now > 10*60*1000,"验票时间超时");
 			// 6. 添加检票记录 check_records ，返回 true
 			// 7. 触发事件 ticket_checked
 
@@ -479,6 +485,12 @@ use stub::MainStub;
 			let validate:bool = self.env().extension()
                 .validate(user,hash,msg);
             return validate;
+		}
+
+		#[ink(message)]
+		pub fn test_just(&self)->u64{
+			let now:u64 = Self::env().block_timestamp();
+			now
 		}
 
 		/// 确保调用者是owner或者是设置的验票员
@@ -506,4 +518,36 @@ use stub::MainStub;
 		}
 
 	}
+
+    // #[cfg(not(feature = "ink-experimental-engine"))]
+    // #[cfg(test)]
+    // mod tests {
+    //     /// Imports all the definitions from the outer scope so we can use them here.
+    //     use super::*;
+
+    //     type Event = <Meeting as ::ink_lang::BaseEvent>::Type;
+
+    //     use ink_lang as ink;
+
+    //     /// The default constructor does its job.
+    //     #[ink::test]
+    //     fn new_works() {
+	// 		let main_stub = FromAccountId::from_account_id(AccountId::from([0x01; 32]));
+    //         // Constructor works.
+    //         let meeting = Meeting::new(1,vec![79,80],vec![79,80],vec![79,80],vec![79,80],
+	// 			0,
+	// 			0,
+	// 			0,
+	// 			0,
+	// 			AccountId::from([0x01; 32]),
+	// 			AccountId::from([0x01; 32]),
+	// 			main_stub).endowment(1)
+	// 			.code_hash(Default::default())
+	// 			.salt_bytes(&[])
+	// 			.instantiate()
+	// 			.expect("fail");
+	// 		meeting.test_block_time();
+    //     }
+    // }
+
 }
