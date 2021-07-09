@@ -1,4 +1,5 @@
-import {setTokenKey,setUsernameKey,setBottomstatusKey,setShowmodalKey,setShowmodaltwoKey,setAccountokmodalKey} from "../Type";
+import {setTokenKey,setUsernameKey,setBottomstatusKey,
+    setShowmodalKey,setShowmodaltwoKey,setAccountokmodalKey,setShowalertKey} from "../Type";
 
 
 const app = {
@@ -8,6 +9,7 @@ const app = {
     showmodal:false,
     showmodaltwo:false,
     showaccountok:false,
+    showalert:false
 }
 
 //Reducer
@@ -54,6 +56,14 @@ const configReducer = function(state = app,action){
             return {
                 ...state,
                 showaccountok:action.value,
+            }
+        }
+
+        //Alert
+        case setShowalertKey:{
+            return {
+                ...state,
+                showalert:action.value,
             }
         }
 

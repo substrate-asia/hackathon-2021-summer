@@ -12,3 +12,4 @@
 .vscode
 build
 teams/12-NFTicket/src/contract/package-lock.json
+teams/12-NFTicket/src/contract/contracts/Cargo.lock

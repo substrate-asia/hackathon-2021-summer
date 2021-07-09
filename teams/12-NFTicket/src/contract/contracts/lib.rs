@@ -32,7 +32,6 @@ mod nfticket {
     use primitives::TemplateStatus;
     use primitives::Ticket;
     use primitives::{Meeting, MeetingError};
-    use stub::MainStub;
     use ink_prelude::vec;
 
     const min_ticket_fee: u128 = 100u128;
@@ -400,7 +399,8 @@ mod nfticket {
             //查询调用者是否是来自合约.
             if let Some(_) = self.meeting_map.get(&caller) {
                 let calss_id = self.classid_map.get(&_ticket.meeting).unwrap();
-                
+                // fn proxy_mint(creator: &ink_env::AccountId,to: &ink_env::AccountId,class_id: ClassId,metadata: Metadata,quantity: Quantity,charge_royalty: Option<bool>,) 
+                // -> (ink_env::AccountId, ink_env::AccountId, ClassId, TokenId, Quantity);
                 let (_class_owner, _ticket_owner, _class_id, token_id, quantity) = self.env().extension()
                 .proxy_mint(&creator,&_ticket.buyer, *calss_id, vec![1], 1,Some(false))
                 .map_err(|_|MeetingError::NftCallerError)?;

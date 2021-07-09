@@ -1,17 +1,17 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 use ink_lang as ink;
 pub use offline_meeting::*;
+pub use nftmart_contract::*;
 /*
  活动合约
  1. 由活动模板合约创建，每个模板匹配一个活动合约
  2. 每个活动会独立部署一个合约(实例);
  3. 所有合约的操作都是通过活动合约实现；
 */
-#[ink::contract]
+#[ink::contract(env = CustomEnvironment)]
 pub mod offline_meeting {
-
-use ink_env::call::FromAccountId;
-	use ink_env::DefaultEnvironment;
+	use super::*;
+	use ink_env::call::FromAccountId;
 	use ink_lang::ToAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
@@ -21,7 +21,8 @@ use ink_env::call::FromAccountId;
 		Lazy,
 	};
 	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
-	use stub::MainStub;
+	use scale::Encode;
+use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
 
 	const BASE_PERCENT: u128 = 10000;
@@ -291,19 +292,20 @@ use ink_env::call::FromAccountId;
 			//     .expect("something wrong");
 
 			// 调用主合约的购票方法,并将抽成比例转给主合约.
+			// let ticketNft:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
 			use ink_lang::ForwardCallMut;
-			let ticketNft:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
+			let ticket_nft:TicketNft = self.main_stub.call_mut()
 				.buy_ticket(caller,ticket.clone())
 				.transferred_value(nfticket_fee) // 加上了调用 payable 的方法的时候，提供transfer
 				.fire()
 				.unwrap().unwrap();
-				ink_env::debug_message(&format!("-------------------------income {:?}", ticketNft));
+				ink_env::debug_message(&format!("-------------------------income {:?}", ticket_nft));
 			// 存储用户购买的ticketNFT存储到链上,key:用户的AccountId,value:ticketNft
 			if let Some(nft_tree_map)=self.user_NFT_ticket_map.get_mut(&caller){
-				nft_tree_map.insert((ticketNft._class_id,ticketNft.token_id), ticketNft);
+				nft_tree_map.insert((ticket_nft._class_id,ticket_nft.token_id), ticket_nft);
 			}else{
 				let mut nft_tree_map = BTreeMap::<(u32,u64),TicketNft>::default();
-				nft_tree_map.insert((ticketNft._class_id,ticketNft.token_id), ticketNft);
+				nft_tree_map.insert((ticket_nft._class_id,ticket_nft.token_id), ticket_nft);
 				self.user_NFT_ticket_map.insert(caller, nft_tree_map);
 			}
 			true
@@ -452,14 +454,31 @@ use ink_env::call::FromAccountId;
 		6. 添加检票记录 check_records ，返回 true
 		7. 触发事件 ticket_checked
 		*/
-		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,hash: Vec<u8>) -> bool {
-			if self.is_owner_or_inspector() {
-				// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap
-				todo!("使用hash验证签名数据!");
-				// 检查时间戳和当前区块时间戳间隔是否在N分钟以内
-				// let now = Self::env().current_time();
-			}
+		#[ink(message)]
+		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,time_stamp:Timestamp,msg:Vec<u8>,hash: Vec<u8>) -> bool {
+			assert!(self.is_owner_or_inspector(),"用户不是所有者,或者不是验票员!");
+				
+			// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap,确保二维码里面的这几个参数一定是该用户签名的,不是伪造的.
+			let encode_data = scale::Encode::encode(&(class_id,token_id));
+			assert!(self.test_validate(user,encode_data, hash),"用户数据验证失败!");
+			//检查用户是否拥有对应的ticker.确保该用户对ticker的所有权
+			assert!(self.user_NFT_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).is_some(),"用户ticker不存在");
+			// 验证时间不会超出太久,以免别人拿着泄露的hash的二维码再次进行验票
+			// let now = Self::env().current_time();
+			// assert!(time_stamp - now > 20,"验票时间超时");
+			// 6. 添加检票记录 check_records ，返回 true
+			// 7. 触发事件 ticket_checked
+
 			true
+		}
+
+		/// 验证用户传入的消息签名是否合法,需要调用extend的功能进行验证.
+		#[ink(message)]
+		pub fn test_validate(&self,user:AccountId,msg:Vec<u8>,hash: Vec<u8>)->bool{
+			// fn validate(account_id:AccountId,signature:Vec<u8>,msg:Vec<u8>) -> bool;
+			let validate:bool = self.env().extension()
+                .validate(user,hash,msg);
+            return validate;
 		}
 
 		/// 确保调用者是owner或者是设置的验票员
@@ -485,5 +504,6 @@ use ink_env::call::FromAccountId;
 		pub fn withdraw(&mut self, to: AccountId, amount: Balance) {
 			// todo 与 online meeting 一致
 		}
+
 	}
 }

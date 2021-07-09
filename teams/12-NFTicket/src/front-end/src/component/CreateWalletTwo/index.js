@@ -3,7 +3,8 @@ import styles from './index.module.css'
 import {useDispatch} from 'react-redux';
 
 //action
-import { setShowmodaltwoAction,setAccountokmodalAction } from '../../store/action/App';
+import { setShowmodaltwoAction,setAccountokmodalAction,setShowalertAction } from '../../store/action/App';
+
 
 
 // 生成钱包助记词
@@ -29,6 +30,7 @@ function CreateWalletTwo(props) {
         })
         setWords(newWords)
     }
+
     useEffect(()=>{
         const mnemonic=localStorage.getItem("words")
         if(mnemonic!=null&&mnemonic.length>0){
@@ -52,7 +54,19 @@ function CreateWalletTwo(props) {
             {/** 头部显示地址 */}
         }else{
            {/*** 选择错误时的处理 */}
-           console.log("助记词的顺序有问题....")
+            dispatch(setShowalertAction(true))
+            setTimeout(()=>{
+                dispatch(setShowalertAction(false))
+                //选中的为空
+                setSelectWords([])
+                //下面的seed
+                const _mnemonic=localStorage.getItem("words")
+                if(_mnemonic!=null&&_mnemonic.length>0){
+                    keywords=_mnemonic.trim().split(' ')
+                    keywords.sort()
+                    setWords(keywords)
+                }
+            },3000)
         }
     }
     return (
