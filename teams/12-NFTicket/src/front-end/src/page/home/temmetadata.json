@@ -1,0 +1,323 @@
+{
+    "metadataVersion": "0.1.0",
+    "source": {
+      "hash": "0x928f73f469f200cab5c9c4c8e629f488e81e5af6fb7236e781b671889dec5588",
+      "language": "ink! 3.0.0-rc3",
+      "compiler": "rustc 1.55.0-nightly"
+    },
+    "contract": {
+      "name": "offline_template",
+      "version": "0.1.0",
+      "authors": [
+        "[your_name] <[your_email]>"
+      ]
+    },
+    "spec": {
+      "constructors": [
+        {
+          "args": [
+            {
+              "name": "controller",
+              "type": {
+                "displayName": [
+                  "AccountId"
+                ],
+                "type": 1
+              }
+            }
+          ],
+          "docs": [],
+          "name": [
+            "new"
+          ],
+          "selector": "0x9bae9d5e"
+        }
+      ],
+      "docs": [
+        "\n活动模板合约\n1. 创建活动，部署活动合约，并将创建的活动条件到主合\n2. 不同活动模板，因为相应的活动不同，创建的方法也会不同；\n"
+      ],
+      "events": [],
+      "messages": [
+        {
+          "args": [],
+          "docs": [],
+          "mutates": false,
+          "name": [
+            "get_controller"
+          ],
+          "payable": false,
+          "returnType": {
+            "displayName": [
+              "AccountId"
+            ],
+            "type": 1
+          },
+          "selector": "0x0abf0e97"
+        },
+        {
+          "args": [
+            {
+              "name": "new_onwer",
+              "type": {
+                "displayName": [
+                  "AccountId"
+                ],
+                "type": 1
+              }
+            }
+          ],
+          "docs": [],
+          "mutates": true,
+          "name": [
+            "set_controller"
+          ],
+          "payable": false,
+          "returnType": {
+            "displayName": [
+              "bool"
+            ],
+            "type": 6
+          },
+          "selector": "0xc5e161ea"
+        },
+        {
+          "args": [
+            {
+              "name": "name",
+              "type": {
+                "displayName": [
+                  "Vec"
+                ],
+                "type": 7
+              }
+            },
+            {
+              "name": "desc",
+              "type": {
+                "displayName": [
+                  "Vec"
+                ],
+                "type": 7
+              }
+            },
+            {
+              "name": "poster",
+              "type": {
+                "displayName": [
+                  "Vec"
+                ],
+                "type": 7
+              }
+            },
+            {
+              "name": "uri",
+              "type": {
+                "displayName": [
+                  "Vec"
+                ],
+                "type": 7
+              }
+            },
+            {
+              "name": "start_time",
+              "type": {
+                "displayName": [
+                  "u64"
+                ],
+                "type": 4
+              }
+            },
+            {
+              "name": "end_time",
+              "type": {
+                "displayName": [
+                  "u64"
+                ],
+                "type": 4
+              }
+            },
+            {
+              "name": "start_sale_time",
+              "type": {
+                "displayName": [
+                  "u64"
+                ],
+                "type": 4
+              }
+            },
+            {
+              "name": "end_sale_time",
+              "type": {
+                "displayName": [
+                  "u64"
+                ],
+                "type": 4
+              }
+            },
+            {
+              "name": "meet_code_hash",
+              "type": {
+                "displayName": [
+                  "Hash"
+                ],
+                "type": 8
+              }
+            },
+            {
+              "name": "main_stub_able",
+              "type": {
+                "displayName": [
+                  "MainStub"
+                ],
+                "type": 9
+              }
+            }
+          ],
+          "docs": [],
+          "mutates": true,
+          "name": [
+            "create_meeting"
+          ],
+          "payable": true,
+          "returnType": {
+            "displayName": [
+              "AccountId"
+            ],
+            "type": 1
+          },
+          "selector": "0xee5999da"
+        }
+      ]
+    },
+    "storage": {
+      "struct": {
+        "fields": [
+          {
+            "layout": {
+              "cell": {
+                "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "ty": 1
+              }
+            },
+            "name": "controller"
+          },
+          {
+            "layout": {
+              "cell": {
+                "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+                "ty": 1
+              }
+            },
+            "name": "owner"
+          },
+          {
+            "layout": {
+              "cell": {
+                "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
+                "ty": 4
+              }
+            },
+            "name": "fee_ratio"
+          },
+          {
+            "layout": {
+              "cell": {
+                "key": "0x0300000000000000000000000000000000000000000000000000000000000000",
+                "ty": 5
+              }
+            },
+            "name": "meeting_seq"
+          }
+        ]
+      }
+    },
+    "types": [
+      {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 2,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "AccountId"
+        ]
+      },
+      {
+        "def": {
+          "array": {
+            "len": 32,
+            "type": 3
+          }
+        }
+      },
+      {
+        "def": {
+          "primitive": "u8"
+        }
+      },
+      {
+        "def": {
+          "primitive": "u64"
+        }
+      },
+      {
+        "def": {
+          "primitive": "u32"
+        }
+      },
+      {
+        "def": {
+          "primitive": "bool"
+        }
+      },
+      {
+        "def": {
+          "sequence": {
+            "type": 3
+          }
+        }
+      },
+      {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 2,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "Hash"
+        ]
+      },
+      {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "name": "account_id",
+                "type": 1,
+                "typeName": "AccountId"
+              }
+            ]
+          }
+        },
+        "path": [
+          "stub",
+          "stub",
+          "MainStub"
+        ]
+      }
+    ]
+  }

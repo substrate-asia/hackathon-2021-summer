@@ -41,6 +41,7 @@ cryptoWaitReady().then(() => {
     //存储助记词
     localStorage.setItem('words', mnemonic);
     const pair= keyring.createFromUri(mnemonic, { name: 'sz-arrom' }); 
+    localStorage.setItem('nft-pair', pair);
     localStorage.setItem('nft-address', blake2AsHex(pair.address));
   
   });
