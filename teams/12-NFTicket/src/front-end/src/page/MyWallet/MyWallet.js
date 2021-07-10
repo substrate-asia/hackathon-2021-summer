@@ -9,10 +9,22 @@ import { setTokenAction, setUsernameAction, setBottomstatusAction } from '../../
 
 import RecordView from '../../component/RecordView/RecordView';
 
+import { ApiPromise, WsProvider } from '@polkadot/api'
+
 class MyWallet extends Component {
 
-    componentDidMount() {
+    state = {
+        testhash:''
+    }
+
+    async componentDidMount() {
         this.props.actions.setBottomstatus(true);
+        const wsProvider = new WsProvider('wss://test-chain.bcdata.top')
+        const api = await ApiPromise.create({ provider: wsProvider });
+        this.setState({
+            testhash:api.genesisHash.toHex()
+        })
+
     }
     render() {
         return (
@@ -24,7 +36,7 @@ class MyWallet extends Component {
                     </div>
                     <span className={styles.totalLable}>Total asset</span>
                     <div className={styles.moneyLable}>
-                        <span >1000NMT</span>
+                        <span >{this.state.testhash}NMT</span>
                     </div>
                     <div className={styles.totalLable}>
                         <span >≈</span>

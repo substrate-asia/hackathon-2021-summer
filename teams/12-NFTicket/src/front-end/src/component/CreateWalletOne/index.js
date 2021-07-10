@@ -11,7 +11,7 @@ import { cryptoWaitReady ,mnemonicGenerate } from '@polkadot/util-crypto';
 
 const { blake2AsHex } = require('@polkadot/util-crypto');
 
-const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
+const keyring = new Keyring({ type: 'sr25519', ss58Format: 42 });
 var  words;
 cryptoWaitReady().then(() => {
     // load all available addresses and accounts
@@ -41,7 +41,8 @@ cryptoWaitReady().then(() => {
     //存储助记词
     localStorage.setItem('words', mnemonic);
     const pair= keyring.createFromUri(mnemonic, { name: 'sz-arrom' }); 
-    localStorage.setItem('nft-address', blake2AsHex(pair.address));
+    localStorage.setItem('nft-address-hex', blake2AsHex(pair.address));
+    localStorage.setItem('nft-address', pair.address);
   
   });
 

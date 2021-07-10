@@ -17,13 +17,11 @@ import CreateWalletOne from '../../component/CreateWalletOne';
 import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 import NAlert from '../../component/Alert';
+import {ABI} from '../../page/Utils'
 
 
 //polkadot
 import { ApiPromise,WsProvider } from '@polkadot/api';
-
-
-
 
 const alert = Modal.alert;
 const data = [
@@ -216,6 +214,9 @@ class Home extends Component {
       api.rpc.system.version()
     ]);
     console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+
+    const { nonce, data: balance } = await api.query.system.account('5FTxYMDsAvjpVXA2rfjoeZeAuZq9yqYNnbVC4EnACutJ9tHH');
+    console.log(` balance of ${balance.free} and a nonce of ${nonce}`)
     
     this.setState({genesisHash:api.genesisHash.toHex()});
   }
