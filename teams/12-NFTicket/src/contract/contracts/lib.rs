@@ -251,7 +251,7 @@ mod nfticket {
         6. 添加活动信息
         7. 触发事件 meeting_added
         */
-        /// 创建活动,返回值nft classId,返回值可以不予理会
+        /// 创建活动,返回值nft classId,返回值可以不予理会,
         #[ink(message)]
         pub fn add_meeting(
             &mut self,
@@ -268,6 +268,7 @@ mod nfticket {
         ) -> Result<u32,MeetingError >{
             let mut my_class_id:ClassId = 0u32;
             let caller = Self::env().caller();
+            // TODO 判断只能模板合约调用
             // 判断是否重复
             if self.meeting_map.contains_key(&meeting_addr) {
                 ink_env::debug_message(&format!("-------------------------add meeting meeting_addr {:?}", meeting_addr));
@@ -484,6 +485,7 @@ mod nfticket {
             assert_eq!(self.owner, self.env().caller(), "not owner");
         }
 
+        #[ink(message)]
         pub fn test_block_time(&self)->u64{
 			let now:u64 = Self::env().block_timestamp();
             ink_env::debug_message(&format!("now is{}",now));
