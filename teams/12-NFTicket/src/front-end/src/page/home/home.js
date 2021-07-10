@@ -276,6 +276,43 @@ class Home extends Component {
       //   }
       // });
 
+      //OK Template合约--(createMeeting)/
+      // (name: Vec<u8>, 
+      // desc: Vec<u8>, 
+      // poster: Vec<u8>, 
+      // uri: Vec<u8>, 
+      // startTime: u64, 
+      // endTime: u64, 
+      // startSaleTime: u64, 
+      // endSaleTime: u64, 
+      // meetCodeHash: Hash, 
+      // mainStubAble: MainStub),携带参数（tx）
+      const name = '第一个活动';
+      const desc = '第一个活动的描述';
+      const poster = '第一个创建人';
+      const uri = 'www.baidu.com';
+      const startTime = 1625910132;
+      const endTime = 1628588532;
+      const startSaleTime = 1625910132;
+      const endSaleTime = 1628588532;
+      //会议hash(必须32字节)
+      const meetCodeHash = 'DdYfnXdfpwCmNmNsLZmHGXGKi3GDbET1yUZx9qFcGiwVSNu';
+      //新生成助记词(mainStubAble是keyring生成的pair，而不是address)
+      const mnemonic = mnemonicGenerate(12);
+      const mainStubAble = keyring.createFromUri(mnemonic, { name: 'testarrom1' });
+      
+      await tem_contract.tx.createMeeting(
+        { value, gasLimit },name,desc,poster,uri,startTime,endTime,startSaleTime,endSaleTime,meetCodeHash,mainStubAble
+      )
+      .signAndSend(alicePair, (result) => {
+        if (result.status.isInBlock) {
+          console.log('正在提交到链上');
+        } else if (result.status.isFinalized) {
+          console.log('交易确认');
+          console.log(result.toHuman())
+        }
+      });
+
 
     }  
 
