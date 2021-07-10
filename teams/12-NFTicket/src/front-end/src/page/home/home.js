@@ -22,7 +22,19 @@ import {ABI} from '../../page/Utils'
 
 //polkadot
 import { ApiPromise,WsProvider } from '@polkadot/api';
+import { ContractPromise } from '@polkadot/api-contract';
 
+<<<<<<< HEAD
+=======
+import tem_abi from './temmetadata.json'
+import { stringToU8a, u8aToHex } from '@polkadot/util';
+import { Keyring } from '@polkadot/keyring'
+import { mnemonicGenerate,blake2AsHex } from '@polkadot/util-crypto';
+
+const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
+const message = stringToU8a('this is a message');
+
+>>>>>>> 779dc0be7115b4a61edc6aab02cc938a7096399c
 const alert = Modal.alert;
 const data = [
   {
@@ -106,7 +118,7 @@ class Home extends Component {
   };
 
   async componentDidMount() {
-
+    console.log("DidMount");
     const tokendata = "mytoken";
     //actions
     this.props.actions.setToken(tokendata);
@@ -213,14 +225,108 @@ class Home extends Component {
       api.rpc.system.name(),
       api.rpc.system.version()
     ]);
+    
     console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
 
     const { nonce, data: balance } = await api.query.system.account('5FTxYMDsAvjpVXA2rfjoeZeAuZq9yqYNnbVC4EnACutJ9tHH');
     console.log(` balance of ${balance.free} and a nonce of ${nonce}`)
     
-    this.setState({genesisHash:api.genesisHash.toHex()});
+    if(api!=null){
+      await this.getTem_Contract(api)
+    }
   }
+
+  async getTem_Contract(api){
+    //合约
+    this.setState({genesisHash:api.genesisHash.toHex()});
+    const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
+    //模板合约abi
+    //const tem_abi = tem_abi;
+    //模板合约address
+    const tem_address = "616NAETbUcyfGAo7LmkbmhU8RYLNTNpCGbBXNtW8M7cPUwas";
+    const tem_contract = new ContractPromise(api,tem_abi,tem_address);
+    //createMeeting (name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, startTime: u64, endTime: u64, startSaleTime: u64, endSaleTime: u64, meetCodeHash: Hash, mainStubAble: MainStub)
+    if(localStorage.hasOwnProperty('nft-pair')){
+      //取出来
+      const pair = localStorage.getItem("nft-pair")
+      {
+        //新生成助记词
+        const mnemonic = mnemonicGenerate(12);
+  
+        if(mnemonic!=null&&mnemonic.length>0){
+            const testpair= keyring.createFromUri(mnemonic, { name: 'test-arrom' }); 
+            console.log("testpair-->"+JSON.stringify(testpair.address))
+        }
+    }
+
+      const alicePair = keyring.addFromUri('//Alice');
+      console.log("Alice pair-->"+JSON.stringify(alicePair.address))
+      const value = 0;
+      const gasLimit =-1;//不限制gas
+
+      //OK Template合约--(getController)/不需要携带参数用（query）
+      // const { gasConsumed, result, output }  = await tem_contract.query
+      //     .getController(alicePair.address,{value,gasLimit})
+      // console.log(result.toHuman());
+      // console.log(output.toHuman());
+
+      //OK Template合约--(setController)/toaddress--要设置的新的地址,携带参数（tx）
+      // const toaddress = 'DdYfnXdfpwCmNmNsLZmHGXGKi3GDbET1yUZx9qFcGiwVSNu';
+      // await tem_contract.tx
+      // .setController({ value, gasLimit }, toaddress)
+      // .signAndSend(alicePair, (result) => {
+      //   if (result.status.isInBlock) {
+      //     console.log('正在提交到链上');
+      //   } else if (result.status.isFinalized) {
+      //     console.log('交易确认');
+      //     console.log(result.toHuman())
+      //   }
+      // });
+
+      //OK Template合约--(createMeeting)/
+      // (name: Vec<u8>, 
+      // desc: Vec<u8>, 
+      // poster: Vec<u8>, 
+      // uri: Vec<u8>, 
+      // startTime: u64, 
+      // endTime: u64, 
+      // startSaleTime: u64, 
+      // endSaleTime: u64, 
+      // meetCodeHash: Hash, 
+      // mainStubAble: MainStub),携带参数（tx）
+      const name = '第一个活动';
+      const desc = '第一个活动的描述';
+      const poster = '第一个创建人';
+      const uri = 'www.baidu.com';
+      const startTime = 1625910132;
+      const endTime = 1628588532;
+      const startSaleTime = 1625910132;
+      const endSaleTime = 1628588532;
+      //会议hash(必须32字节)
+      const meetCodeHash = 'DdYfnXdfpwCmNmNsLZmHGXGKi3GDbET1yUZx9qFcGiwVSNu';
+      //新生成助记词(mainStubAble是keyring生成的pair，而不是address)
+      const mnemonic = mnemonicGenerate(12);
+      const mainStubAble = keyring.createFromUri(mnemonic, { name: 'testarrom1' });
+      
+      await tem_contract.tx.createMeeting(
+        { value, gasLimit },name,desc,poster,uri,startTime,endTime,startSaleTime,endSaleTime,meetCodeHash,mainStubAble
+      )
+      .signAndSend(alicePair, (result) => {
+        if (result.status.isInBlock) {
+          console.log('正在提交到链上');
+        } else if (result.status.isFinalized) {
+          console.log('交易确认');
+          console.log(result.toHuman())
+        }
+      });
+
+
+    }  
+
+  }
+
   componentWillMount() {
+    console.log("WillMount");
     setTimeout(() => {
       this.rData = genData();
       this.setState({

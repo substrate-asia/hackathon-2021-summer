@@ -126,7 +126,8 @@ mod localmeeting {
                 let salt = self.meeting_seq.to_le_bytes();
                 let meeting_id = self.meeting_seq;
                 let template_addr = self.get_self();
-                let new_meeting = offline_meeting::Meeting::new(meeting_id,name.clone(), desc.clone(), poster.clone(), uri.clone(), start_time, end_time, start_sale_time, end_sale_time,self.controller, template_addr,main_stub_able)
+                let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
+                let new_meeting = offline_meeting::Meeting::new(meeting_id,name.clone(), desc.clone(), poster.clone(), uri.clone(), start_time, end_time, start_sale_time, end_sale_time,self.controller, template_addr,main_contract.clone())
                                 .endowment(income)
                                 .code_hash(meet_code_hash)
                                 .salt_bytes(salt)
@@ -135,7 +136,7 @@ mod localmeeting {
                 let meeting_addr = new_meeting.get_self();
                 // 调用主合约 add_meeting
                 // 调用主合约,注册活动.
-			let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
+                
             let class_id = main_contract.add_meeting(meeting_addr,caller, name, desc, poster, uri, start_time, end_time, start_sale_time, end_sale_time).unwrap();
             meeting_addr
         }

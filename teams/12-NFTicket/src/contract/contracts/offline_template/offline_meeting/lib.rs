@@ -11,7 +11,7 @@ pub use nftmart_contract::*;
 #[ink::contract(env = CustomEnvironment)]
 pub mod offline_meeting {
 	use super::*;
-	use ink_env::call::FromAccountId;
+	use ink_env::{call::FromAccountId, emit_event};
 	use ink_lang::ToAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
@@ -22,8 +22,9 @@ pub mod offline_meeting {
 	};
 	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
 	use scale::Encode;
-use stub::MainStub;
+	use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
+	use ink_prelude::string::ToString;
 
 	const BASE_PERCENT: u128 = 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
@@ -49,6 +50,21 @@ use stub::MainStub;
 	pub struct InspectorRemoved {
 		#[ink(topic)]
 		inspector: AccountId,
+	}
+
+	/// 验票成功 时间
+	#[ink(event)]
+	pub struct InspectorValidateTicket {
+		#[ink(topic)]
+		inspector: AccountId, // 检票人
+		#[ink(topic)]
+		timestamp: u64,       // 检票时间戳
+		#[ink(topic)]
+		block: u128,           // 检票记录区块
+		#[ink(topic)]
+		class_id:u32,			//票的类型
+		#[ink(topic)]
+		ticket_id:u64,			
 	}
 
 	// 场地区域设置，name 区域名称，rows:有多少排，cols: 每排多少座
@@ -103,16 +119,17 @@ use stub::MainStub;
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
 	struct CheckRecord {
-		inspectors: AccountId, // 检票人
-		timestamp: u128,       // 检票时间戳
+		inspector: AccountId, // 检票人
+		timestamp: u64,       // 检票时间戳
 		block: u128,           // 检票记录区块
 	}
-	impl Default for CheckRecord {
-		fn default() -> CheckRecord {
+
+	impl CheckRecord {
+		pub fn new(inspector:AccountId,timestamp:u64,block:u128) -> CheckRecord {
 			CheckRecord {
-				inspectors: Default::default(),
-				timestamp: Default::default(),
-				block: Default::default(),
+				inspector,
+				timestamp,
+				block,
 			}
 		}
 	}
@@ -152,7 +169,7 @@ use stub::MainStub;
 		// 用户参与后会产生的数据
 		tickets: StorageMap<(u128, u128), (u8, u8, u8)>, // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
-		check_records: StorageMap<(u128, u128), Vec<CheckRecord>>, // 检票记录：
+		check_record_map: StorageMap<(u128, u128), Vec<CheckRecord>>, // 检票记录：
 		user_NFT_ticket_map:StorageMap<AccountId,BTreeMap<(u32,u64),TicketNft>>,	//	用户购买的票产生的NFT存储.StorageMap<用户id,BTreeMap<(classid,ticketid),TicketNft>>
 	}
 
@@ -185,7 +202,7 @@ use stub::MainStub;
 				seats_status_map: Default::default(),
 				tickets: Default::default(),
 				inspectors: Default::default(),
-				check_records: Default::default(),
+				check_record_map: Default::default(),
 				max_zone_id: Default::default(),
 				ticket_id: Default::default(),
 				nfticket_main_fee: 100u32,
@@ -455,20 +472,43 @@ use stub::MainStub;
 		7. 触发事件 ticket_checked
 		*/
 		#[ink(message)]
-		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,time_stamp:Timestamp,msg:Vec<u8>,hash: Vec<u8>) -> bool {
+		pub fn check_ticket(&mut self,user:AccountId,class_id:u32,token_id:u64,time_stamp:u64,msg:Vec<u8>,hash: Vec<u8>) -> bool {
 			assert!(self.is_owner_or_inspector(),"用户不是所有者,或者不是验票员!");
-				
+			let caller = Self::env().caller();
+			let mut encode_data = class_id.to_string();
+
+			encode_data.push_str(&token_id.to_string());
+			encode_data.push_str(&time_stamp.to_string());
+			
+			let encode_data = encode_data.as_bytes().to_vec();
 			// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap,确保二维码里面的这几个参数一定是该用户签名的,不是伪造的.
-			let encode_data = scale::Encode::encode(&(class_id,token_id));
+			// let encode_data = scale::Encode::encode(&(class_id,token_id,time_stamp));
 			assert!(self.test_validate(user,encode_data, hash),"用户数据验证失败!");
 			//检查用户是否拥有对应的ticker.确保该用户对ticker的所有权
 			assert!(self.user_NFT_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).is_some(),"用户ticker不存在");
 			// 验证时间不会超出太久,以免别人拿着泄露的hash的二维码再次进行验票
-			// let now = Self::env().current_time();
-			// assert!(time_stamp - now > 20,"验票时间超时");
+			let now:u64 = Self::env().block_timestamp();
+			assert!(time_stamp - now > 10*60*1000,"验票时间超时");
 			// 6. 添加检票记录 check_records ，返回 true
+			let block = Self::env().block();
+			let check_record = CheckRecord::new(caller,now,block);
+			let my_record_vec= self.check_record_map.get(&(class_id,token_id));
+			match my_record_vec {
+				Some(record_vec)=>record_vec.push(check_record),
+				None=>{
+					let v = vec!(check_record);
+					self.check_record_map.insert((class_id,token_id), v);
+				}
+			}
+			
 			// 7. 触发事件 ticket_checked
-
+			Slef::env().emit_event(InspectorValidateTicket{
+			    inspector:caller,
+			    timestamp,
+			    block,
+			    class_id,
+			    ticket_id,
+			});
 			true
 		}
 
@@ -479,6 +519,12 @@ use stub::MainStub;
 			let validate:bool = self.env().extension()
                 .validate(user,hash,msg);
             return validate;
+		}
+
+		#[ink(message)]
+		pub fn test_just(&self)->u64{
+			let now:u64 = Self::env().block_timestamp();
+			now
 		}
 
 		/// 确保调用者是owner或者是设置的验票员
@@ -506,4 +552,36 @@ use stub::MainStub;
 		}
 
 	}
+
+    // #[cfg(not(feature = "ink-experimental-engine"))]
+    // #[cfg(test)]
+    // mod tests {
+    //     /// Imports all the definitions from the outer scope so we can use them here.
+    //     use super::*;
+
+    //     type Event = <Meeting as ::ink_lang::BaseEvent>::Type;
+
+    //     use ink_lang as ink;
+
+    //     /// The default constructor does its job.
+    //     #[ink::test]
+    //     fn new_works() {
+	// 		let main_stub = FromAccountId::from_account_id(AccountId::from([0x01; 32]));
+    //         // Constructor works.
+    //         let meeting = Meeting::new(1,vec![79,80],vec![79,80],vec![79,80],vec![79,80],
+	// 			0,
+	// 			0,
+	// 			0,
+	// 			0,
+	// 			AccountId::from([0x01; 32]),
+	// 			AccountId::from([0x01; 32]),
+	// 			main_stub).endowment(1)
+	// 			.code_hash(Default::default())
+	// 			.salt_bytes(&[])
+	// 			.instantiate()
+	// 			.expect("fail");
+	// 		meeting.test_block_time();
+    //     }
+    // }
+
 }

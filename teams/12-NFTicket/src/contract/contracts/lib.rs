@@ -251,7 +251,7 @@ mod nfticket {
         6. 添加活动信息
         7. 触发事件 meeting_added
         */
-        /// 创建活动,返回值nft classId,返回值可以不予理会
+        /// 创建活动,返回值nft classId,返回值可以不予理会,
         #[ink(message)]
         pub fn add_meeting(
             &mut self,
@@ -268,6 +268,7 @@ mod nfticket {
         ) -> Result<u32,MeetingError >{
             let mut my_class_id:ClassId = 0u32;
             let caller = Self::env().caller();
+            // TODO 判断只能模板合约调用
             // 判断是否重复
             if self.meeting_map.contains_key(&meeting_addr) {
                 ink_env::debug_message(&format!("-------------------------add meeting meeting_addr {:?}", meeting_addr));
@@ -482,6 +483,38 @@ mod nfticket {
         /// Panic if `owner` is not an owner,
         fn ensure_owner(&self) {
             assert_eq!(self.owner, self.env().caller(), "not owner");
+        }
+
+        #[ink(message)]
+        pub fn test_block_time(&self)->u64{
+			let now:u64 = Self::env().block_timestamp();
+            ink_env::debug_message(&format!("now is{}",now));
+			now
+		}
+    }
+
+    #[cfg(not(feature = "ink-experimental-engine"))]
+    #[cfg(test)]
+    mod tests {
+        use std::ops::Add;
+
+        /// Imports all the definitions from the outer scope so we can use them here.
+        use super::*;
+
+        type Event = <Meeting as ::ink_lang::BaseEvent>::Type;
+
+        use ink_lang as ink;
+
+        /// The default constructor does its job.
+        #[ink::test]
+        fn new_works() {
+            let mut s =12u32.to_string();
+            s.push_str("rhs");
+			s.push_str("abc");
+            let encode_data = 12u32.to_string().add(&18u64.to_string()).add(&18u32.to_string());
+            // Constructor works.
+            let meeting = NftTicket::new();
+			meeting.test_block_time();
         }
     }
 }
