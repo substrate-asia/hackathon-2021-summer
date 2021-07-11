@@ -23,6 +23,7 @@ import NAlert from '../../component/Alert';
 import { ApiPromise,WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
 
+
 import tem_abi from './temmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
@@ -223,6 +224,9 @@ class Home extends Component {
     ]);
     
     console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+
+    const { nonce, data: balance } = await api.query.system.account('5FTxYMDsAvjpVXA2rfjoeZeAuZq9yqYNnbVC4EnACutJ9tHH');
+    console.log(` balance of ${balance.free} and a nonce of ${nonce}`)
     
     if(api!=null){
       await this.getTem_Contract(api)

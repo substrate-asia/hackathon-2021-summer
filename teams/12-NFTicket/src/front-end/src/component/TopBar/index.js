@@ -54,7 +54,8 @@ class TopBar extends Component {
         });
     };
     changeIconOrAddress = (show) => {
-        const address = localStorage.getItem("nft-address")
+        const address = localStorage.getItem("nft-address-hex")
+
         var pre=""
         var end =""
         if(address!=null){

@@ -18,7 +18,7 @@ class mine extends Component {
     this.props.actions.setBottomstatus(false);
 }
   render() {
-    const address = localStorage.getItem("nft-address")
+    const address = localStorage.getItem("nft-address-hex")
     var accountId="";
     if(address!=null){
       var pre=address.substr(0,4);
