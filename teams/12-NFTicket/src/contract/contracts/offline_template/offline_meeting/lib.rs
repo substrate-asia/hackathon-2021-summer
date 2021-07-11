@@ -25,6 +25,7 @@ pub mod offline_meeting {
 	use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
 	use ink_prelude::string::ToString;
+	use ink_prelude::vec;
 
 	const BASE_PERCENT: u128 = 10000;
 	// 定价方式，Uniform 统一定价，Partition 分区定价
@@ -52,19 +53,12 @@ pub mod offline_meeting {
 		inspector: AccountId,
 	}
 
-	/// 验票成功 时间
 	#[ink(event)]
 	pub struct InspectorValidateTicket {
 		#[ink(topic)]
 		inspector: AccountId, // 检票人
 		#[ink(topic)]
-		timestamp: u64,       // 检票时间戳
-		#[ink(topic)]
-		block: u128,           // 检票记录区块
-		#[ink(topic)]
-		class_id:u32,			//票的类型
-		#[ink(topic)]
-		ticket_id:u64,			
+		timestamp: (u64,u128,u32,u64),      // 检票时间戳,检票记录区块,票的类型,
 	}
 
 	// 场地区域设置，name 区域名称，rows:有多少排，cols: 每排多少座
@@ -118,7 +112,7 @@ pub mod offline_meeting {
 		feature = "std",
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
-	struct CheckRecord {
+	pub struct CheckRecord {
 		inspector: AccountId, // 检票人
 		timestamp: u64,       // 检票时间戳
 		block: u128,           // 检票记录区块
@@ -169,7 +163,7 @@ pub mod offline_meeting {
 		// 用户参与后会产生的数据
 		tickets: StorageMap<(u128, u128), (u8, u8, u8)>, // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
-		check_record_map: StorageMap<(u128, u128), Vec<CheckRecord>>, // 检票记录：
+		check_record_map: StorageMap<(u32, u64), Vec<CheckRecord>>, // 检票记录：
 		user_NFT_ticket_map:StorageMap<AccountId,BTreeMap<(u32,u64),TicketNft>>,	//	用户购买的票产生的NFT存储.StorageMap<用户id,BTreeMap<(classid,ticketid),TicketNft>>
 	}
 
@@ -335,7 +329,8 @@ pub mod offline_meeting {
 		}
 
 		/// 得到某个区域的票价
-		fn get_ticket_price(&self, zone_id: u32, seat_id: (u32, u32)) -> Option<Balance> {
+		#[ink(message)]
+		pub fn get_ticket_price(&self, zone_id: u32, seat_id: (u32, u32)) -> Option<Balance> {
 			ink_env::debug_message("=========================get_ticket_price entrance!!!");
 			//TODO 确保这个位置是有效的.
 			//TODO 获取这个位置的票价
@@ -447,7 +442,9 @@ pub mod offline_meeting {
 		2. 需要检查是否已经存在了
 		3. 触发时间 inspector_added
 		*/
+		#[ink(message)]
 		pub fn add_inspector(&mut self, inspector: AccountId) {
+			self.ensure_owner();
 			self.inspectors.insert(inspector, true);
 		}
 
@@ -457,7 +454,9 @@ pub mod offline_meeting {
 		2. 需要检查是否存在
 		3. 触发事件 inspector_removed
 		*/
+		#[ink(message)]
 		pub fn remove_inspector(&mut self, inspector: AccountId) {
+			self.ensure_owner();
 			self.inspectors.take(&inspector);
 		}
 
@@ -490,9 +489,10 @@ pub mod offline_meeting {
 			let now:u64 = Self::env().block_timestamp();
 			assert!(time_stamp - now > 10*60*1000,"验票时间超时");
 			// 6. 添加检票记录 check_records ，返回 true
-			let block = Self::env().block();
+			// let block = Self::env().current_block();
+			let block = 1024;
 			let check_record = CheckRecord::new(caller,now,block);
-			let my_record_vec= self.check_record_map.get(&(class_id,token_id));
+			let my_record_vec= self.check_record_map.get_mut(&(class_id,token_id));
 			match my_record_vec {
 				Some(record_vec)=>record_vec.push(check_record),
 				None=>{
@@ -502,12 +502,9 @@ pub mod offline_meeting {
 			}
 			
 			// 7. 触发事件 ticket_checked
-			Slef::env().emit_event(InspectorValidateTicket{
+			Self::env().emit_event(InspectorValidateTicket{
 			    inspector:caller,
-			    timestamp,
-			    block,
-			    class_id,
-			    ticket_id,
+			    timestamp:(time_stamp,block,class_id,token_id),
 			});
 			true
 		}
@@ -535,21 +532,25 @@ pub mod offline_meeting {
 			is_owner | is_respector
 		}
 
-		/**
-		返回所有的门票检票记录
-		*/
-		pub fn get_check_records(&self, ticket: (u128, u128)) {
-			// todo 与 online meeting 一致
+		/// 返回所有的门票检票记录
+		#[ink(message)]
+		pub fn get_check_records(&self, class_id:u32,ticket_id:u64)->Vec<CheckRecord> {
+			self.check_record_map.get(&(class_id,ticket_id)).unwrap().to_vec()
 		}
 
-		/**
-		提取门票收入
-		1. 只能由 owner 调用
-		2.
-		*/
-		pub fn withdraw(&mut self, to: AccountId, amount: Balance) {
-			// todo 与 online meeting 一致
+		/// 提取门票收入
+		/// 只能由 owner 调用
+		#[ink(message)]
+		pub fn withdraw(&mut self, to: AccountId, amount: Balance)->bool {
+			self.ensure_owner();
+			Self::env().transfer(to,amount);
+			true
 		}
+
+		/// Panic if `owner` is not an owner,
+        fn ensure_owner(&self) {
+            assert_eq!(self.owner, self.env().caller(), "not owner");
+        }
 
 	}
 
