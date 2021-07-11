@@ -17,15 +17,13 @@ import CreateWalletOne from '../../component/CreateWalletOne';
 import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 import NAlert from '../../component/Alert';
-import {ABI} from '../../page/Utils'
 
 
 //polkadot
 import { ApiPromise,WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
 
-<<<<<<< HEAD
-=======
+
 import tem_abi from './temmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
@@ -34,7 +32,6 @@ import { mnemonicGenerate,blake2AsHex } from '@polkadot/util-crypto';
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
 const message = stringToU8a('this is a message');
 
->>>>>>> 779dc0be7115b4a61edc6aab02cc938a7096399c
 const alert = Modal.alert;
 const data = [
   {
