@@ -94,13 +94,13 @@ pub mod offline_meeting {
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
 	enum SeatStatus {
-		Disabled,
-		Empty,
-		Sealed,
+		Disabled, //
+		Empty,  // 空值,未出售
+		Sealed,// 已出售
 	}
 	impl Default for SeatStatus {
 		fn default() -> SeatStatus {
-			SeatStatus::Empty
+			SeatStatus::Disabled
 		}
 	}
 
@@ -335,6 +335,13 @@ pub mod offline_meeting {
 			//TODO 确保这个位置是有效的.
 			//TODO 获取这个位置的票价
 			return Some(20000000000u128.into());
+		}
+
+		/// 获取某个位置状态是否可用.
+		#[ink(message)]
+		pub fn get_seat_status(&self, zone_id: u32, seat_id: (u32, u32))->SeatStatus{
+			let zone_seat=(zone_id,seat_id.0,seat_id.1);
+			self.seats_status_map.get(&zone_seat).unwrap_or_default();
 		}
 
 		/// 标记这个位置已经卖出.

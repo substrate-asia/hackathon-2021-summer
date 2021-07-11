@@ -106,17 +106,15 @@ mod localmeeting {
 
         // }
 
-        // /**
         // 创建会议活动
         // 1. 部署一个活动合约，传入主合约地址等参数，获得合约地址
         // 2. 调用主合约的 add_meeting 接口，添加活动；
         // 3. 返回活动合约地址
-        // */
         #[ink(message,payable)]
         pub fn create_meeting(&mut self, 
             name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, 
             start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,
-            meet_code_hash: Hash, main_stub_able:MainStub ) -> AccountId{
+            meet_code_hash: Hash) -> AccountId{
                 let caller = Self::env().caller();
                 let income = Self::env().transferred_balance();
                 // let total_balance:Balance = Self::env().balance();
@@ -127,7 +125,8 @@ mod localmeeting {
                 let meeting_id = self.meeting_seq;
                 let template_addr = self.get_self();
                 let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
-                let new_meeting = offline_meeting::Meeting::new(meeting_id,name.clone(), desc.clone(), poster.clone(), uri.clone(), start_time, end_time, start_sale_time, end_sale_time,self.controller, template_addr,main_contract.clone())
+                let new_meeting = offline_meeting::Meeting::new(meeting_id,name.clone(), desc.clone(), poster.clone(), uri.clone(), 
+                start_time, end_time, start_sale_time, end_sale_time,self.controller, template_addr,main_contract.clone())
                                 .endowment(income)
                                 .code_hash(meet_code_hash)
                                 .salt_bytes(salt)
