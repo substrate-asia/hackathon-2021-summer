@@ -9,22 +9,22 @@ import { setTokenAction, setUsernameAction, setBottomstatusAction } from '../../
 
 import RecordView from '../../component/RecordView/RecordView';
 
-import { ApiPromise, WsProvider } from '@polkadot/api'
+import {initPolkadotApi,getBalance} from '../../api/polka'
+
 
 class MyWallet extends Component {
 
-    state = {
-        testhash:''
+    state={
+        account:"0MNMT"
     }
-
-    async componentDidMount() {
-        this.props.actions.setBottomstatus(true);
-        const wsProvider = new WsProvider('wss://test-chain.bcdata.top')
-        const api = await ApiPromise.create({ provider: wsProvider });
-        this.setState({
-            testhash:api.genesisHash.toHex()
+     componentDidMount() {
+        initPolkadotApi( async () =>{
+            const res =await getBalance('65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB')
+            console.log("xujie:",res.free)
+            this.setState({
+                account:res.free
+            })
         })
-
     }
     render() {
         return (
@@ -36,7 +36,7 @@ class MyWallet extends Component {
                     </div>
                     <span className={styles.totalLable}>Total asset</span>
                     <div className={styles.moneyLable}>
-                        <span >{this.state.testhash}NMT</span>
+                        <span >{this.state.account}</span>
                     </div>
                     <div className={styles.totalLable}>
                         <span >≈</span>

@@ -215,7 +215,6 @@ class Home extends Component {
         items: 'Vec<OrderItem>',
       },
     };
-
     const api = await ApiPromise.create({provider, types});
     const [chain, nodeName, nodeVersion] = await Promise.all([
       api.rpc.system.chain(),

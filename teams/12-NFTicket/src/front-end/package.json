@@ -21,6 +21,7 @@
     "react-scroll": "^1.8.2",
     "reactjs-iscroll": "^0.3.2",
     "redux": "^4.1.0",
+    "rekv": "^1.2.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

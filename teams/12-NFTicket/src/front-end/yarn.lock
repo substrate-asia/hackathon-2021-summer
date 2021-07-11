@@ -3082,9 +3082,9 @@ bindings@^1.3.0, bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  resolved "git+ssh://git@github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
@@ -9258,6 +9258,10 @@ regjsparser@^0.6.4:
   resolved "https://registry.npm.taobao.org/regjsparser/download/regjsparser-0.6.9.tgz"
   dependencies:
     jsesc "~0.5.0"
+
+rekv@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.nlark.com/rekv/download/rekv-1.2.2.tgz#211f7e579e3f5f4a7a91e935f8a2753b8b8c8d37"
 
 relateurl@^0.2.7:
   version "0.2.7"
