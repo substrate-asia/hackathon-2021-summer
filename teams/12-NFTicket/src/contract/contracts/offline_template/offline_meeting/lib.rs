@@ -15,11 +15,7 @@ pub mod offline_meeting {
 	use ink_lang::ToAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
-	use ink_storage::{
-		collections::HashMap as StorageMap,
-		traits::{PackedLayout, SpreadLayout},
-		Lazy,
-	};
+	use ink_storage::{Lazy, collections::{HashMap as StorageMap, hashmap::Keys}, traits::{PackedLayout, SpreadLayout}};
 	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
 	use scale::Encode;
 	use stub::MainStub;
@@ -58,7 +54,7 @@ pub mod offline_meeting {
 		#[ink(topic)]
 		inspector: AccountId, // 检票人
 		#[ink(topic)]
-		timestamp: (u64,u128,u32,u64),      // 检票时间戳,检票记录区块,票的类型,
+		timestamp: (u64,u32,u32,u64),      // 检票时间戳,检票记录区块,票的类型,
 	}
 
 	// 场地区域设置，name 区域名称，rows:有多少排，cols: 每排多少座
@@ -93,7 +89,7 @@ pub mod offline_meeting {
 		feature = "std",
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
-	enum SeatStatus {
+	pub enum SeatStatus {
 		Disabled, //
 		Empty,  // 空值,未出售
 		Sealed,// 已出售
@@ -115,11 +111,11 @@ pub mod offline_meeting {
 	pub struct CheckRecord {
 		inspector: AccountId, // 检票人
 		timestamp: u64,       // 检票时间戳
-		block: u128,           // 检票记录区块
+		block: u32,           // 检票记录区块
 	}
 
 	impl CheckRecord {
-		pub fn new(inspector:AccountId,timestamp:u64,block:u128) -> CheckRecord {
+		pub fn new(inspector:AccountId,timestamp:u64,block:u32) -> CheckRecord {
 			CheckRecord {
 				inspector,
 				timestamp,
@@ -179,10 +175,10 @@ pub mod offline_meeting {
 			end_time: u64,
 			start_sale_time: u64,
 			end_sale_time: u64,
-			controller: AccountId,
 			template: AccountId,
 			main_stub_able: MainStub,
 		) -> Self {
+			// TODO 会议的创建是模板创建的,这里的owener需要通过模板传过来,否则env.caller是模板合约.
 			let caller = Self::env().caller();
 			let meeting = Self {
 				// controller: controller,
@@ -231,6 +227,7 @@ pub mod offline_meeting {
 			self.owner = new_owner;
 		}
 
+		#[ink(message)]
 		pub fn get_owner(&self) -> AccountId {
 			self.owner
 		}
@@ -341,7 +338,8 @@ pub mod offline_meeting {
 		#[ink(message)]
 		pub fn get_seat_status(&self, zone_id: u32, seat_id: (u32, u32))->SeatStatus{
 			let zone_seat=(zone_id,seat_id.0,seat_id.1);
-			self.seats_status_map.get(&zone_seat).unwrap_or_default();
+			let my_status = self.seats_status_map.get(&zone_seat).unwrap().clone();
+			my_status
 		}
 
 		/// 标记这个位置已经卖出.
@@ -443,17 +441,22 @@ pub mod offline_meeting {
 			true
 		}
 
-		/**
-		添加验票员
-		1. 只能由 owner 调用
-		2. 需要检查是否已经存在了
-		3. 触发时间 inspector_added
-		*/
+		/// 添加验票员
+		/// 1. 只能由 owner 调用
+		/// 2. 需要检查是否已经存在了
+		/// 3. 触发时间 inspector_added
 		#[ink(message)]
 		pub fn add_inspector(&mut self, inspector: AccountId) {
 			self.ensure_owner();
 			self.inspectors.insert(inspector, true);
 		}
+
+		/// 查询验票员
+		#[ink(message)]
+		pub fn get_inspector(&self) ->Vec<AccountId>{
+			self.inspectors.keys().map(|i|i.clone()).collect()
+		}
+
 
 		/**
 		移除验票员
@@ -496,8 +499,8 @@ pub mod offline_meeting {
 			let now:u64 = Self::env().block_timestamp();
 			assert!(time_stamp - now > 10*60*1000,"验票时间超时");
 			// 6. 添加检票记录 check_records ，返回 true
-			// let block = Self::env().current_block();
-			let block = 1024;
+			let block = Self::env().block_number();
+			// let block = 1024;
 			let check_record = CheckRecord::new(caller,now,block);
 			let my_record_vec= self.check_record_map.get_mut(&(class_id,token_id));
 			match my_record_vec {
@@ -526,9 +529,10 @@ pub mod offline_meeting {
 		}
 
 		#[ink(message)]
-		pub fn test_just(&self)->u64{
+		pub fn test_just(&self)->(u64,u32){
+			let block = Self::env().block_number();
 			let now:u64 = Self::env().block_timestamp();
-			now
+			(now,block)
 		}
 
 		/// 确保调用者是owner或者是设置的验票员
@@ -542,7 +546,7 @@ pub mod offline_meeting {
 		/// 返回所有的门票检票记录
 		#[ink(message)]
 		pub fn get_check_records(&self, class_id:u32,ticket_id:u64)->Vec<CheckRecord> {
-			self.check_record_map.get(&(class_id,ticket_id)).unwrap().to_vec()
+			self.check_record_map.get(&(class_id,ticket_id)).unwrap().clone()
 		}
 
 		/// 提取门票收入
@@ -550,7 +554,7 @@ pub mod offline_meeting {
 		#[ink(message)]
 		pub fn withdraw(&mut self, to: AccountId, amount: Balance)->bool {
 			self.ensure_owner();
-			Self::env().transfer(to,amount);
+			Self::env().transfer(to,amount).unwrap();
 			true
 		}
 

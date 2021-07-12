@@ -8,20 +8,24 @@ use ink_lang as ink;
 2. 不同活动模板，因为相应的活动不同，创建的方法也会不同；
 */
 #[ink::contract]
-mod localmeeting {
+mod off_template {
     use ink_env::call::FromAccountId;
     use stub::MainStub;
     use ink_prelude::vec::Vec;
     use ink_prelude::format;
+    use ink_storage::{
+        collections::{HashMap as StorageHashMap, },
+    };
     #[ink(storage)]
-    pub struct Localmeeting {
+    pub struct OfflineTemplate {
         controller: AccountId,   // 主合约地址
         owner: AccountId,   // 所有者
         fee_ratio: u64,     // 按票价提取多少比例作为服务费，不过服务费不能低于 min_ticket_fee
         meeting_seq:u32,
+        meeting_code_map:StorageHashMap<Vec<u8>,Hash>,
     }
 
-    impl Localmeeting {
+    impl OfflineTemplate {
         #[ink(constructor)]
         pub fn new(controller: AccountId) -> Self {
             let caller = Self::env().caller();
@@ -30,6 +34,7 @@ mod localmeeting {
                 owner: caller,
                 fee_ratio:Default::default(),
                 meeting_seq:Default::default(),
+                meeting_code_map:Default::default(),
             }
         }
 
@@ -52,59 +57,23 @@ mod localmeeting {
             assert_eq!(self.owner, self.env().caller(), "not owner");
         }
 
+        /// 返回控制人账号
+        #[ink(message)]
+        pub fn get_owner(&self) -> AccountId {
+			self.owner
+        }
 
-		// /**
-        // 创建会议活动
-        // 1. 部署一个活动合约，传入主合约地址等参数，获得合约地址
-        // 2. 调用主合约的 add_meeting 接口，添加活动；
-        // 3. 返回活动合约地址
-        // */
-        // pub fn create_meeting(&mut self,
-		// 			name: Vec<u8>,
-		// 			desc: Vec<u8>,
-		// 			poster: Vec<u8>,
-		// 			uri: Vec<u8>,
-		// 			start_time: u64,
-		// 			end_time: u64,
-		// 			start_sale_time: u64,
-		// 			end_sale_time: u64) -> AccountId{
-		// 			//todo
-        // }
-        // /**
-        // Owner转移相关方法，可以活动模板的控制人
-        // 1. 验证操作人是否 owner;
-        // */
-        // #[ink(message)]
-        // pub fn transfer_owner(&mut self, new_owner: AccountId){
-		// 			self.owner = new_owner;
-        // }
+        // 增加会议的hash_code
+        #[ink(message)]
+        pub fn add_meeting_code_hash(&mut self,name:Vec<u8>, meeting_code_hash:Hash)->bool{
+            self.meeting_code_map.insert(name, meeting_code_hash);
+            true
+        }
 
-		// 		 /**
-        // 返回控制人账号
-        // */
-        // pub fn get_owner(&self) -> AccountId {
-		// 			self.owner
-        // }
-
-        // /**
-        // 设置服务费比例
-        // 1. 必须是 owner 才可以修改
-        // */
-        // pub fn set_fee_ratio(&mut self, fee_ratio: u64){
-		// 			self.fee_ratio=fee_ratio;
-        // }
-
-        // /**
-        // 返回服务费比例
-        // */
-        // pub fn get_fee_rate(&self)->u64{
-		// 	self.fee_ratio
-        // }
-
-        
-        // pub fn create_meeting(&mut self, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64) -> AccountId{
-
-        // }
+        #[ink(message)]
+        pub fn get_meeting_code_hash(&self)->Vec<(Vec<u8>,Hash)>{
+            self.meeting_code_map.iter().map(|(k, v)|(k.clone(),v.clone())).collect()
+        }
 
         // 创建会议活动
         // 1. 部署一个活动合约，传入主合约地址等参数，获得合约地址
@@ -113,8 +82,7 @@ mod localmeeting {
         #[ink(message,payable)]
         pub fn create_meeting(&mut self, 
             name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, 
-            start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,
-            meet_code_hash: Hash) -> AccountId{
+            start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,template_index_name:Vec<u8>,) -> AccountId{
                 let caller = Self::env().caller();
                 let income = Self::env().transferred_balance();
                 // let total_balance:Balance = Self::env().balance();
@@ -125,8 +93,9 @@ mod localmeeting {
                 let meeting_id = self.meeting_seq;
                 let template_addr = self.get_self();
                 let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
+                let meet_code_hash:Hash = self.meeting_code_map.get(&template_index_name).unwrap().clone();
                 let new_meeting = offline_meeting::Meeting::new(meeting_id,name.clone(), desc.clone(), poster.clone(), uri.clone(), 
-                start_time, end_time, start_sale_time, end_sale_time,self.controller, template_addr,main_contract.clone())
+                start_time, end_time, start_sale_time, end_sale_time, template_addr,main_contract.clone())
                                 .endowment(income)
                                 .code_hash(meet_code_hash)
                                 .salt_bytes(salt)
@@ -145,13 +114,6 @@ mod localmeeting {
         }
 
 
-
-        // /**
-        // 返回控制人账号
-        // */
-        // pub fn get_owner(&self) -> AccountId {
-
-        // }
 
         // /**
         // 设置服务费比例
