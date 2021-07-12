@@ -25,12 +25,15 @@ import NAlert from '../../component/Alert';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
 
-
+//合约abi
 import tem_abi from './temmetadata.json'
 import main_abi from './mainmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
 import { mnemonicGenerate, blake2AsHex } from '@polkadot/util-crypto';
+import { stringToU8a, u8aToHex,hexToU8a, isHex } from '@polkadot/util';
+import { Keyring,decodeAddress, encodeAddress } from '@polkadot/keyring'
+import { mnemonicGenerate,blake2AsHex } from '@polkadot/util-crypto';
 
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
 const message = stringToU8a('this is a message');
@@ -241,6 +244,8 @@ class Home extends Component {
     //模板合约address
     const tem_address = "616NAETbUcyfGAo7LmkbmhU8RYLNTNpCGbBXNtW8M7cPUwas";
     const tem_contract = new ContractPromise(api, tem_abi, tem_address);
+    const tem_address = "5zhxV2hQQibEQ85q6ZCe6XLKeL3u3sHLqfYv875SYAYjhsYC";
+    const tem_contract = new ContractPromise(api,tem_abi,tem_address);
     //createMeeting (name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, startTime: u64, endTime: u64, startSaleTime: u64, endSaleTime: u64, meetCodeHash: Hash, mainStubAble: MainStub)
     if (localStorage.hasOwnProperty('nft-pair')) {
       //取出来
@@ -317,7 +322,86 @@ class Home extends Component {
         });
 
 
-    }
+    // }
+      // const name = '第一个活动';
+      // const desc = '第一个活动的描述';
+      // const poster = '第一个创建人';
+      // const uri = 'www.baidu.com';
+      // const startTime = 1625910132;
+      // const endTime = 1628588532;
+      // const startSaleTime = 1625910132;
+      // const endSaleTime = 1628588532;
+      // //线下会议hash(必须32字节)0xa14ad4f877a7f110ef03bb1ed0c5dc4324ede59ec204000bceb65c1efe7c2903
+      // const meetCodeHash = '0xa14ad4f877a7f110ef03bb1ed0c5dc4324ede59ec204000bceb65c1efe7c2903';
+      // //主合约地址:6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ
+      // const mainAddress = '6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ';
+      // const mainStubAble = u8aToHex(keyring.decodeAddress(mainAddress));
+      // console.log("decodeAddress--"+mainStubAble+"///"+JSON.stringify(api.query.assets));
+      // value = 100n;
+      // gasLimit=3000n * 1000000n;
+      // await tem_contract.tx.createMeeting(
+      //  { value, gasLimit },name,desc,poster,uri,startTime,endTime,startSaleTime,endSaleTime,meetCodeHash,mainStubAble
+      // )
+      // .signAndSend(alicePair, (result) => {
+      //   if (result.status.isInBlock) {
+      //     console.log('正在提交到链上');
+      //   } else if (result.status.isFinalized) {
+      //     console.log('交易确认');
+      //     console.log(result.toHuman())
+      //   }
+      // });
+
+
+      //主合约调用
+      {
+        //OK Main合约--(addMeeting)(
+        //   meetingAddr: AccountId, 
+        // creator: AccountId, 
+        // name: Vec<u8>, 
+        // desc: Vec<u8>, 
+        // poster: Vec<u8>, 
+        // uri: Vec<u8>, 
+        // startTime: u64, 
+        // endTime: u64, 
+        // startSaleTime: u64, 
+        // endSaleTime: u64)
+        // /携带参数（tx）
+        const meetingAddr = alicePair.address;
+        const creator = alicePair.address;
+        const name = '第一个活动';
+        const desc = '第一个活动的描述';
+        const poster = '第一个创建人';
+        const uri = 'www.baidu.com';
+        const startTime = 1625910132;
+        const endTime = 1628588532;
+        const startSaleTime = 1625910132;
+        const endSaleTime = 1628588532;
+        //主合约abi
+        //const main_abi = main_abi;
+        //主合约地址:6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ
+        const main_address = '6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ';
+        const main_contract = new ContractPromise(api,main_abi,main_address);
+        await main_contract.tx
+        .addMeeting({ value, gasLimit }, meetingAddr,
+          creator,
+          name,
+          desc,
+          poster,
+          uri,
+          startTime,
+          endTime,
+          startSaleTime,
+          endSaleTime )
+        .signAndSend(alicePair, (result) => {
+          if (result.status.isInBlock) {
+            console.log('主合约addMeeting--正在提交到链上');
+          } else if (result.status.isFinalized) {
+            console.log('主合约addMeeting--交易确认');
+            console.log(result.toHuman())
+          }
+        });
+      }
+    }  
 
   }
   /**
