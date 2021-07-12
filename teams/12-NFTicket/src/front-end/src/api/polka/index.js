@@ -11,6 +11,7 @@ let api = null;
 let initializing = false;
 
 const ss58Format = 50;
+const keyring = new Keyring({ type: 'sr25519', ss58Format });
 
 export const initPolkadotApi = (cb) => {
     if (initializing) return;
@@ -35,7 +36,14 @@ export const getTimestamp = async () => {
 };
 // get address balance
 export const getBalance = async (address) => {
-    const { nonce, data: balance } = await api.query.system.account(address);
+    const  { nonce, data: balance }= await api.query.system.account(address);
     // store.setState({ nonce, balance: balance.toHuman() });
-    return balance.toHuman();
+    return balance.toHuman()
 };
+//监听余额的变化
+export const regBalanceEvent = async (address,cb) => {
+    const unsub = await api.query.system.account(address,({nonce,data:balance}) =>{
+        if(cb) cb(balance.toHuman())
+    });
+}
+  
