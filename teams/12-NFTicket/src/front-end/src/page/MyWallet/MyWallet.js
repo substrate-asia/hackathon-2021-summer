@@ -9,7 +9,7 @@ import { setTokenAction, setUsernameAction, setBottomstatusAction } from '../../
 
 import RecordView from '../../component/RecordView/RecordView';
 
-import {initPolkadotApi,getBalance,regBalanceEvent} from '../../api/polka'
+import {initPolkadotApi,getBalance,regBalanceEvent,regEvent} from '../../api/polka'
 
 
 class MyWallet extends Component {
@@ -30,7 +30,7 @@ class MyWallet extends Component {
                     account:res.free
                 })
             }
-           
+            regEvent()
         })
     }
     render() {

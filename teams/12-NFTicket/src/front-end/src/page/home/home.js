@@ -1,13 +1,15 @@
 import React, { Component, button } from 'react';
-import { ListView ,Modal} from 'antd-mobile';
+import { ListView, Modal } from 'antd-mobile';
 // import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
 //action
-import { setTokenAction, setUsernameAction, setBottomstatusAction, 
-  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction,setShowalertAction } from '../../store/action/App';
+import {
+  setTokenAction, setUsernameAction, setBottomstatusAction,
+  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction, setShowalertAction
+} from '../../store/action/App';
 
 
 import './home.css';
@@ -20,14 +22,15 @@ import NAlert from '../../component/Alert';
 
 
 //polkadot
-import { ApiPromise,WsProvider } from '@polkadot/api';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
 
 
 import tem_abi from './temmetadata.json'
+import main_abi from './mainmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
-import { mnemonicGenerate,blake2AsHex } from '@polkadot/util-crypto';
+import { mnemonicGenerate, blake2AsHex } from '@polkadot/util-crypto';
 
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
 const message = stringToU8a('this is a message');
@@ -63,7 +66,7 @@ function genData(pIndex = 0) {
 }
 
 class Home extends Component {
-  
+
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
@@ -109,9 +112,9 @@ class Home extends Component {
         startTime: "Start time"
       }],
       showToast: false,
-      genesisHash:''//polkadot
+      genesisHash: ''//polkadot
     };
-   
+
   };
 
   async componentDidMount() {
@@ -215,46 +218,47 @@ class Home extends Component {
         items: 'Vec<OrderItem>',
       },
     };
-    const api = await ApiPromise.create({provider, types});
+    const api = await ApiPromise.create({ provider, types });
     const [chain, nodeName, nodeVersion] = await Promise.all([
       api.rpc.system.chain(),
       api.rpc.system.name(),
       api.rpc.system.version()
     ]);
-    
+
     console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
-    if(api!=null){
-      await this.getTem_Contract(api)
+    if (api != null) {
+      // await this.getTem_Contract(api)
+      await this.getAllMeeting(api)
     }
   }
 
-  async getTem_Contract(api){
+  async getTem_Contract(api) {
     //合约
-    this.setState({genesisHash:api.genesisHash.toHex()});
+    this.setState({ genesisHash: api.genesisHash.toHex() });
     const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
     //模板合约abi
     //const tem_abi = tem_abi;
     //模板合约address
     const tem_address = "616NAETbUcyfGAo7LmkbmhU8RYLNTNpCGbBXNtW8M7cPUwas";
-    const tem_contract = new ContractPromise(api,tem_abi,tem_address);
+    const tem_contract = new ContractPromise(api, tem_abi, tem_address);
     //createMeeting (name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, startTime: u64, endTime: u64, startSaleTime: u64, endSaleTime: u64, meetCodeHash: Hash, mainStubAble: MainStub)
-    if(localStorage.hasOwnProperty('nft-pair')){
+    if (localStorage.hasOwnProperty('nft-pair')) {
       //取出来
       const pair = localStorage.getItem("nft-pair")
       {
         //新生成助记词
         const mnemonic = mnemonicGenerate(12);
-  
-        if(mnemonic!=null&&mnemonic.length>0){
-            const testpair= keyring.createFromUri(mnemonic, { name: 'test-arrom' }); 
-            console.log("testpair-->"+JSON.stringify(testpair.address))
+
+        if (mnemonic != null && mnemonic.length > 0) {
+          const testpair = keyring.createFromUri(mnemonic, { name: 'test-arrom' });
+          console.log("testpair-->" + JSON.stringify(testpair.address))
         }
-    }
+      }
 
       const alicePair = keyring.addFromUri('//Alice');
-      console.log("Alice pair-->"+JSON.stringify(alicePair.address))
+      console.log("Alice pair-->" + JSON.stringify(alicePair.address))
       const value = 0;
-      const gasLimit =-1;//不限制gas
+      const gasLimit = -1;//不限制gas
 
       //OK Template合约--(getController)/不需要携带参数用（query）
       // const { gasConsumed, result, output }  = await tem_contract.query
@@ -299,23 +303,47 @@ class Home extends Component {
       //新生成助记词(mainStubAble是keyring生成的pair，而不是address)
       const mnemonic = mnemonicGenerate(12);
       const mainStubAble = keyring.createFromUri(mnemonic, { name: 'testarrom1' });
-      
+
       await tem_contract.tx.createMeeting(
-        { value, gasLimit },name,desc,poster,uri,startTime,endTime,startSaleTime,endSaleTime,meetCodeHash,mainStubAble
+        { value, gasLimit }, name, desc, poster, uri, startTime, endTime, startSaleTime, endSaleTime, meetCodeHash, mainStubAble
       )
-      .signAndSend(alicePair, (result) => {
-        if (result.status.isInBlock) {
-          console.log('正在提交到链上');
-        } else if (result.status.isFinalized) {
-          console.log('交易确认');
-          console.log(result.toHuman())
-        }
-      });
+        .signAndSend(alicePair, (result) => {
+          if (result.status.isInBlock) {
+            console.log('正在提交到链上');
+          } else if (result.status.isFinalized) {
+            console.log('交易确认');
+            console.log(result.toHuman())
+          }
+        });
 
 
-    }  
+    }
 
   }
+  /**
+   * 获取所有的会议
+   */
+  async getAllMeeting(api) {
+    console.log("getAllMeeting---start")
+    const value = 0;
+    const gasLimit = -1;//不限制gas
+    const alicePair = keyring.addFromUri('//Alice');
+    console.log("Alice pair-->" + JSON.stringify(alicePair.address))
+
+    const main_address = "6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ"
+
+    const main_contract = new ContractPromise(api, main_abi, main_address);
+
+    const { result, output } = await main_contract.query.getAllMeeting(alicePair.address, { value, gasLimit });
+    if (result.isOk) {
+      // should output 123 as per our initial set (output here is an i32)
+      console.log('Success', output.toHuman());
+    } else {
+      console.error('Error', result.asErr);
+    }
+  }
+
+
 
   componentWillMount() {
     console.log("WillMount");
@@ -451,8 +479,8 @@ class Home extends Component {
           <CreateWalletOK ></CreateWalletOK>
         </div>
 
-        <div className={this.props.app.showalert?'showalertmodal':'hidealertmodal'}
-        style={{ height: "" + window.innerHeight + "px" }}>
+        <div className={this.props.app.showalert ? 'showalertmodal' : 'hidealertmodal'}
+          style={{ height: "" + window.innerHeight + "px" }}>
           <NAlert msg="助记词顺序有问题"></NAlert>
         </div>
       </div>
