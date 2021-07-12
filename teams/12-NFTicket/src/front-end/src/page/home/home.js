@@ -36,23 +36,7 @@ const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
 const message = stringToU8a('this is a message');
 
 const alert = Modal.alert;
-const data = [
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
-    title: 'Title',
-    des: '描述',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
-    title: 'Title',
-    des: '描述',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
-    title: 'Title',
-    des: '描述',
-  },
-];
+
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
@@ -62,6 +46,7 @@ function genData(pIndex = 0) {
     const ii = (pIndex * NUM_ROWS) + i;
     dataBlob[`${ii}`] = `row - ${ii}`;
   }
+  console.log("长度:",dataBlob)
   return dataBlob;
 }
 
@@ -89,28 +74,6 @@ class Home extends Component {
       ],
       dataSource,
       isLoading: true,
-      dataList: [{
-        flag: "A",
-        createMonth: "12",
-        desc: "Description",
-        enentName: "Event Name",
-        location: "Location details",
-        startTime: "Start time"
-      }, {
-        flag: "A",
-        createMonth: "12",
-        desc: "Description",
-        enentName: "Event Name",
-        location: "Location details",
-        startTime: "Start time"
-      }, {
-        flag: "A",
-        createMonth: "12",
-        desc: "Description",
-        enentName: "Event Name",
-        location: "Location details",
-        startTime: "Start time"
-      }],
       showToast: false,
       genesisHash: ''//polkadot
     };
@@ -419,22 +382,16 @@ class Home extends Component {
     if (result.isOk) {
       // should output 123 as per our initial set (output here is an i32)
       console.log('Success', output.toHuman());
+      setTimeout(() => {
+        this.rData = output.toHuman();
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(this.rData),
+          isLoading: false,
+        });
+      }, 200);
     } else {
       console.error('Error', result.asErr);
     }
-  }
-
-
-
-  componentWillMount() {
-    console.log("WillMount");
-    setTimeout(() => {
-      this.rData = genData();
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.rData),
-        isLoading: false,
-      });
-    }, 600);
   }
 
   componentWillUnmount() {
@@ -469,12 +426,10 @@ class Home extends Component {
         }}
       />
     );
-    let index = data.length - 1;
+ 
+  
     const row = (rowData, sectionID, rowID) => {
-      if (index < 0) {
-        index = data.length - 1;
-      }
-      const obj = data[index--];
+
       const imageHeight = window.innerWidth - 30 - 30;
       return (
         <div key={rowID} className='card-content'
@@ -489,7 +444,7 @@ class Home extends Component {
               backgroundColor: "#ffffff",
               display: 'flex'
             }}>
-              <span className="top-text">A</span>
+              <span className="top-text">B</span>
             </div>
             <div className='top-time-group'>
               <div className='top-time-1'>12</div>
@@ -498,10 +453,10 @@ class Home extends Component {
           </div>
           <div className='bottom-container'>
             <div>
-              <div style={{ marginBottom: '8px', textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Description</div>
-              <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>Event Name</div>
-              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Location details</span></div>
-              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/time.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Start time</span></div>
+              <div style={{ marginBottom: '8px', textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.desc}</div>
+              <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>{rowData.name}</div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.meeting_addr}</span></div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/time.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.start_time}</span></div>
             </div>
           </div>
         </div>
