@@ -431,13 +431,19 @@ class Home extends Component {
     const row = (rowData, sectionID, rowID) => {
 
       const imageHeight = window.innerWidth - 30 - 30;
+      // var data= JSON.stringify(rowData)
+      // var path=`/Home/activityDetail/${data}`
+      var path={
+         pathname:'/Home/activityDetail',
+         state:rowData
+      }
       return (
         <div key={rowID} className='card-content'
           style={{
             backgroundImage: "url('./images/cardimg.png')",
             backgroundRepeat: 'no-repeat',
             height: '' + imageHeight + 'px',
-          }} onClick={() => this.props.history.push('/Home/activityDetail')}>
+          }} onClick={() => this.props.history.push(path)}>
           <div className="top-container">
             <div className='top-name' style={{
               borderRadius: '50px', width: '50px', height: '50px',
