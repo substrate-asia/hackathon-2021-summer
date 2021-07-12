@@ -31,9 +31,6 @@ import main_abi from './mainmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
 import { mnemonicGenerate, blake2AsHex } from '@polkadot/util-crypto';
-import { stringToU8a, u8aToHex,hexToU8a, isHex } from '@polkadot/util';
-import { Keyring,decodeAddress, encodeAddress } from '@polkadot/keyring'
-import { mnemonicGenerate,blake2AsHex } from '@polkadot/util-crypto';
 
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
 const message = stringToU8a('this is a message');
@@ -244,8 +241,8 @@ class Home extends Component {
     //模板合约address
     const tem_address = "616NAETbUcyfGAo7LmkbmhU8RYLNTNpCGbBXNtW8M7cPUwas";
     const tem_contract = new ContractPromise(api, tem_abi, tem_address);
-    const tem_address = "5zhxV2hQQibEQ85q6ZCe6XLKeL3u3sHLqfYv875SYAYjhsYC";
-    const tem_contract = new ContractPromise(api,tem_abi,tem_address);
+    // const tem_address = "5zhxV2hQQibEQ85q6ZCe6XLKeL3u3sHLqfYv875SYAYjhsYC";
+    // const tem_contract = new ContractPromise(api,tem_abi,tem_address);
     //createMeeting (name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, startTime: u64, endTime: u64, startSaleTime: u64, endSaleTime: u64, meetCodeHash: Hash, mainStubAble: MainStub)
     if (localStorage.hasOwnProperty('nft-pair')) {
       //取出来
