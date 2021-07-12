@@ -1,13 +1,15 @@
 import React, { Component, button } from 'react';
-import { ListView ,Modal} from 'antd-mobile';
+import { ListView, Modal } from 'antd-mobile';
 // import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 
 //action
-import { setTokenAction, setUsernameAction, setBottomstatusAction, 
-  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction,setShowalertAction } from '../../store/action/App';
+import {
+  setTokenAction, setUsernameAction, setBottomstatusAction,
+  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction, setShowalertAction
+} from '../../store/action/App';
 
 
 import './home.css';
@@ -20,36 +22,21 @@ import NAlert from '../../component/Alert';
 
 
 //polkadot
-import { ApiPromise,WsProvider } from '@polkadot/api';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
 
-
+//合约abi
 import tem_abi from './temmetadata.json'
+import main_abi from './mainmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
-import { mnemonicGenerate,blake2AsHex } from '@polkadot/util-crypto';
+import { mnemonicGenerate, blake2AsHex } from '@polkadot/util-crypto';
 
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
 const message = stringToU8a('this is a message');
 
 const alert = Modal.alert;
-const data = [
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
-    title: 'Title',
-    des: '描述',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
-    title: 'Title',
-    des: '描述',
-  },
-  {
-    img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
-    title: 'Title',
-    des: '描述',
-  },
-];
+
 const NUM_ROWS = 20;
 let pageIndex = 0;
 
@@ -59,11 +46,12 @@ function genData(pIndex = 0) {
     const ii = (pIndex * NUM_ROWS) + i;
     dataBlob[`${ii}`] = `row - ${ii}`;
   }
+  console.log("长度:",dataBlob)
   return dataBlob;
 }
 
 class Home extends Component {
-  
+
   constructor(props) {
     super(props);
     const dataSource = new ListView.DataSource({
@@ -86,32 +74,10 @@ class Home extends Component {
       ],
       dataSource,
       isLoading: true,
-      dataList: [{
-        flag: "A",
-        createMonth: "12",
-        desc: "Description",
-        enentName: "Event Name",
-        location: "Location details",
-        startTime: "Start time"
-      }, {
-        flag: "A",
-        createMonth: "12",
-        desc: "Description",
-        enentName: "Event Name",
-        location: "Location details",
-        startTime: "Start time"
-      }, {
-        flag: "A",
-        createMonth: "12",
-        desc: "Description",
-        enentName: "Event Name",
-        location: "Location details",
-        startTime: "Start time"
-      }],
       showToast: false,
-      genesisHash:''//polkadot
+      genesisHash: ''//polkadot
     };
-   
+
   };
 
   async componentDidMount() {
@@ -215,50 +181,49 @@ class Home extends Component {
         items: 'Vec<OrderItem>',
       },
     };
-    const api = await ApiPromise.create({provider, types});
+    const api = await ApiPromise.create({ provider, types });
     const [chain, nodeName, nodeVersion] = await Promise.all([
       api.rpc.system.chain(),
       api.rpc.system.name(),
       api.rpc.system.version()
     ]);
-    
-    console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
 
-    const { nonce, data: balance } = await api.query.system.account('5FTxYMDsAvjpVXA2rfjoeZeAuZq9yqYNnbVC4EnACutJ9tHH');
-    console.log(` balance of ${balance.free} and a nonce of ${nonce}`)
-    
-    if(api!=null){
-      await this.getTem_Contract(api)
+    console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+    if (api != null) {
+      // await this.getTem_Contract(api)
+      await this.getAllMeeting(api)
     }
   }
 
-  async getTem_Contract(api){
+  async getTem_Contract(api) {
     //合约
-    this.setState({genesisHash:api.genesisHash.toHex()});
+    this.setState({ genesisHash: api.genesisHash.toHex() });
     const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
     //模板合约abi
     //const tem_abi = tem_abi;
     //模板合约address
     const tem_address = "616NAETbUcyfGAo7LmkbmhU8RYLNTNpCGbBXNtW8M7cPUwas";
-    const tem_contract = new ContractPromise(api,tem_abi,tem_address);
+    const tem_contract = new ContractPromise(api, tem_abi, tem_address);
+    // const tem_address = "5zhxV2hQQibEQ85q6ZCe6XLKeL3u3sHLqfYv875SYAYjhsYC";
+    // const tem_contract = new ContractPromise(api,tem_abi,tem_address);
     //createMeeting (name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, startTime: u64, endTime: u64, startSaleTime: u64, endSaleTime: u64, meetCodeHash: Hash, mainStubAble: MainStub)
-    if(localStorage.hasOwnProperty('nft-pair')){
+    if (localStorage.hasOwnProperty('nft-pair')) {
       //取出来
       const pair = localStorage.getItem("nft-pair")
       {
         //新生成助记词
         const mnemonic = mnemonicGenerate(12);
-  
-        if(mnemonic!=null&&mnemonic.length>0){
-            const testpair= keyring.createFromUri(mnemonic, { name: 'test-arrom' }); 
-            console.log("testpair-->"+JSON.stringify(testpair.address))
+
+        if (mnemonic != null && mnemonic.length > 0) {
+          const testpair = keyring.createFromUri(mnemonic, { name: 'test-arrom' });
+          console.log("testpair-->" + JSON.stringify(testpair.address))
         }
-    }
+      }
 
       const alicePair = keyring.addFromUri('//Alice');
-      console.log("Alice pair-->"+JSON.stringify(alicePair.address))
+      console.log("Alice pair-->" + JSON.stringify(alicePair.address))
       const value = 0;
-      const gasLimit =-1;//不限制gas
+      const gasLimit = -1;//不限制gas
 
       //OK Template合约--(getController)/不需要携带参数用（query）
       // const { gasConsumed, result, output }  = await tem_contract.query
@@ -303,33 +268,130 @@ class Home extends Component {
       //新生成助记词(mainStubAble是keyring生成的pair，而不是address)
       const mnemonic = mnemonicGenerate(12);
       const mainStubAble = keyring.createFromUri(mnemonic, { name: 'testarrom1' });
-      
+
       await tem_contract.tx.createMeeting(
-        { value, gasLimit },name,desc,poster,uri,startTime,endTime,startSaleTime,endSaleTime,meetCodeHash,mainStubAble
+        { value, gasLimit }, name, desc, poster, uri, startTime, endTime, startSaleTime, endSaleTime, meetCodeHash, mainStubAble
       )
-      .signAndSend(alicePair, (result) => {
-        if (result.status.isInBlock) {
-          console.log('正在提交到链上');
-        } else if (result.status.isFinalized) {
-          console.log('交易确认');
-          console.log(result.toHuman())
-        }
-      });
+        .signAndSend(alicePair, (result) => {
+          if (result.status.isInBlock) {
+            console.log('正在提交到链上');
+          } else if (result.status.isFinalized) {
+            console.log('交易确认');
+            console.log(result.toHuman())
+          }
+        });
 
 
+    // }
+      // const name = '第一个活动';
+      // const desc = '第一个活动的描述';
+      // const poster = '第一个创建人';
+      // const uri = 'www.baidu.com';
+      // const startTime = 1625910132;
+      // const endTime = 1628588532;
+      // const startSaleTime = 1625910132;
+      // const endSaleTime = 1628588532;
+      // //线下会议hash(必须32字节)0xa14ad4f877a7f110ef03bb1ed0c5dc4324ede59ec204000bceb65c1efe7c2903
+      // const meetCodeHash = '0xa14ad4f877a7f110ef03bb1ed0c5dc4324ede59ec204000bceb65c1efe7c2903';
+      // //主合约地址:6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ
+      // const mainAddress = '6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ';
+      // const mainStubAble = u8aToHex(keyring.decodeAddress(mainAddress));
+      // console.log("decodeAddress--"+mainStubAble+"///"+JSON.stringify(api.query.assets));
+      // value = 100n;
+      // gasLimit=3000n * 1000000n;
+      // await tem_contract.tx.createMeeting(
+      //  { value, gasLimit },name,desc,poster,uri,startTime,endTime,startSaleTime,endSaleTime,meetCodeHash,mainStubAble
+      // )
+      // .signAndSend(alicePair, (result) => {
+      //   if (result.status.isInBlock) {
+      //     console.log('正在提交到链上');
+      //   } else if (result.status.isFinalized) {
+      //     console.log('交易确认');
+      //     console.log(result.toHuman())
+      //   }
+      // });
+
+
+      //主合约调用
+      {
+        //OK Main合约--(addMeeting)(
+        //   meetingAddr: AccountId, 
+        // creator: AccountId, 
+        // name: Vec<u8>, 
+        // desc: Vec<u8>, 
+        // poster: Vec<u8>, 
+        // uri: Vec<u8>, 
+        // startTime: u64, 
+        // endTime: u64, 
+        // startSaleTime: u64, 
+        // endSaleTime: u64)
+        // /携带参数（tx）
+        const meetingAddr = alicePair.address;
+        const creator = alicePair.address;
+        const name = '第一个活动';
+        const desc = '第一个活动的描述';
+        const poster = '第一个创建人';
+        const uri = 'www.baidu.com';
+        const startTime = 1625910132;
+        const endTime = 1628588532;
+        const startSaleTime = 1625910132;
+        const endSaleTime = 1628588532;
+        //主合约abi
+        //const main_abi = main_abi;
+        //主合约地址:6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ
+        const main_address = '6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ';
+        const main_contract = new ContractPromise(api,main_abi,main_address);
+        await main_contract.tx
+        .addMeeting({ value, gasLimit }, meetingAddr,
+          creator,
+          name,
+          desc,
+          poster,
+          uri,
+          startTime,
+          endTime,
+          startSaleTime,
+          endSaleTime )
+        .signAndSend(alicePair, (result) => {
+          if (result.status.isInBlock) {
+            console.log('主合约addMeeting--正在提交到链上');
+          } else if (result.status.isFinalized) {
+            console.log('主合约addMeeting--交易确认');
+            console.log(result.toHuman())
+          }
+        });
+      }
     }  
 
   }
+  /**
+   * 获取所有的会议
+   */
+  async getAllMeeting(api) {
+    console.log("getAllMeeting---start")
+    const value = 0;
+    const gasLimit = -1;//不限制gas
+    const alicePair = keyring.addFromUri('//Alice');
+    console.log("Alice pair-->" + JSON.stringify(alicePair.address))
 
-  componentWillMount() {
-    console.log("WillMount");
-    setTimeout(() => {
-      this.rData = genData();
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.rData),
-        isLoading: false,
-      });
-    }, 600);
+    const main_address = "6555P4ummgGtrsjrR2UL6oHWUaWQ7jC7pV2HZEXbnF3F89WQ"
+
+    const main_contract = new ContractPromise(api, main_abi, main_address);
+
+    const { result, output } = await main_contract.query.getAllMeeting(alicePair.address, { value, gasLimit });
+    if (result.isOk) {
+      // should output 123 as per our initial set (output here is an i32)
+      console.log('Success', output.toHuman());
+      setTimeout(() => {
+        this.rData = output.toHuman();
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(this.rData),
+          isLoading: false,
+        });
+      }, 200);
+    } else {
+      console.error('Error', result.asErr);
+    }
   }
 
   componentWillUnmount() {
@@ -364,12 +426,10 @@ class Home extends Component {
         }}
       />
     );
-    let index = data.length - 1;
+ 
+  
     const row = (rowData, sectionID, rowID) => {
-      if (index < 0) {
-        index = data.length - 1;
-      }
-      const obj = data[index--];
+
       const imageHeight = window.innerWidth - 30 - 30;
       return (
         <div key={rowID} className='card-content'
@@ -384,7 +444,7 @@ class Home extends Component {
               backgroundColor: "#ffffff",
               display: 'flex'
             }}>
-              <span className="top-text">A</span>
+              <span className="top-text">B</span>
             </div>
             <div className='top-time-group'>
               <div className='top-time-1'>12</div>
@@ -393,10 +453,10 @@ class Home extends Component {
           </div>
           <div className='bottom-container'>
             <div>
-              <div style={{ marginBottom: '8px', textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Description</div>
-              <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>Event Name</div>
-              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Location details</span></div>
-              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/time.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>Start time</span></div>
+              <div style={{ marginBottom: '8px', textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.desc}</div>
+              <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>{rowData.name}</div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.meeting_addr}</span></div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/time.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.start_time}</span></div>
             </div>
           </div>
         </div>
@@ -455,8 +515,8 @@ class Home extends Component {
           <CreateWalletOK ></CreateWalletOK>
         </div>
 
-        <div className={this.props.app.showalert?'showalertmodal':'hidealertmodal'}
-        style={{ height: "" + window.innerHeight + "px" }}>
+        <div className={this.props.app.showalert ? 'showalertmodal' : 'hidealertmodal'}
+          style={{ height: "" + window.innerHeight + "px" }}>
           <NAlert msg="助记词顺序有问题"></NAlert>
         </div>
       </div>
