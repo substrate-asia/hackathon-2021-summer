@@ -98,7 +98,7 @@ mod off_template {
                 let mut main_contract: MainStub = FromAccountId::from_account_id(self.controller);
                 let meet_code_hash:Hash = self.meeting_code_map.get(&template_index_name).unwrap().clone();
                 let new_meeting = offline_meeting::Meeting::new(meeting_id,name.clone(), desc.clone(), poster.clone(), uri.clone(), 
-                start_time, end_time, start_sale_time, end_sale_time, template_addr,main_contract.clone())
+                start_time, end_time, start_sale_time, end_sale_time, template_addr,main_contract.clone(),caller)
                                 .endowment(income)
                                 .code_hash(meet_code_hash)
                                 .salt_bytes(salt)

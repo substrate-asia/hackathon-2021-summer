@@ -68,9 +68,20 @@ pub mod offline_meeting {
 	struct Zone {
 		// 场地区域设置
 		name: Vec<u8>, // 区域名称
-		rows: u8,      // 行
-		cols: u8,      // 列
+		rows: u32,      // 行
+		cols: u32,      // 列
 	}
+
+	impl Zone{
+		fn new(name: Vec<u8>,rows: u32,cols: u32 )->Zone{
+			Zone{
+				name,
+				rows,
+				cols,
+			}
+		}
+	}
+
 	impl Default for Zone {
 		fn default() -> Zone {
 			Zone {
@@ -90,7 +101,7 @@ pub mod offline_meeting {
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
 	pub enum SeatStatus {
-		Disabled, //
+		Disabled, //关闭,该位置保留
 		Empty,  // 空值,未出售
 		Sealed,// 已出售
 	}
@@ -177,13 +188,14 @@ pub mod offline_meeting {
 			end_sale_time: u64,
 			template: AccountId,
 			main_stub_able: MainStub,
+			owner:AccountId,
 		) -> Self {
 			// TODO 会议的创建是模板创建的,这里的owener需要通过模板传过来,否则env.caller是模板合约.
 			let caller = Self::env().caller();
 			let meeting = Self {
 				// controller: controller,
 				template: template,
-				owner: caller,
+				owner,
 				local_address: Default::default(),
 				zones: Default::default(),
 				price_type: Default::default(),
@@ -291,14 +303,6 @@ pub mod offline_meeting {
 			// .fire()
 			// .map_err(|_| Error::TransactionFailed);
 
-			//调用主合约
-			// use ink_lang::ForwardCallMut;
-			// <&mut MainStub>::call_mut(&mut self.controller)
-			//     .buy_ticket(ticket.clone())
-			//     .transferred_value(100) // 加上了调用 payable 的方法的时候，提供transfer
-			//     .fire()
-			//     .expect("something wrong");
-
 			// 调用主合约的购票方法,并将抽成比例转给主合约.
 			// let ticketNft:TicketNft = <&mut MainStub>::call_mut(&mut *self.main_stub)
 			use ink_lang::ForwardCallMut;
@@ -319,10 +323,19 @@ pub mod offline_meeting {
 			true
 		}
 
+		/// 获取用户的NFT编号
 		#[ink(message)]
 		pub fn get_user_nft_ticket(&self)->BTreeMap<(u32,u64),TicketNft>{
 			let caller = Self::env().caller();
 			self.user_NFT_ticket_map.get(&caller).unwrap().clone()
+		}
+
+		/// 增加某个区域
+		#[ink(message)]
+		pub fn add_zone(&self, zone_id: u32, name:Vec<u8>,rows:u32,cols: u32) -> bool {
+			let zone=Zone::new(name,rows,cols);
+			self.zones.insert(zone_id, zone);
+			true
 		}
 
 		/// 得到某个区域的票价
