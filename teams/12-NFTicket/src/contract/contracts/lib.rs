@@ -265,6 +265,8 @@ mod nfticket {
             end_time: u64,
             start_sale_time: u64,
             end_sale_time: u64,
+            publisher:Vec<u8>,//会议发起者
+            min_price:u128,     //最低价
         ) -> Result<u32,MeetingError >{
             let mut my_class_id:ClassId = 0u32;
             let caller = Self::env().caller();
@@ -285,6 +287,8 @@ mod nfticket {
                     start_sale_time,
                     end_sale_time,
                     status:primitives::MeetingStatus::Active,
+                    publisher,//会议发起者
+                    min_price,//最低价
                 };
                 self.meeting_map.insert(meeting_addr, meeting);
                 ink_env::debug_message(&format!("-------------------------create_class name:{:?},desc:{:?}", name.clone(),desc.clone()));
@@ -357,7 +361,11 @@ mod nfticket {
         5. 更新成功，返回 true
         */
         #[ink(message)]
-        pub fn modify_meeting(&mut self, meeting_addr:AccountId, name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64)->bool{
+        pub fn modify_meeting(&mut self, meeting_addr:AccountId, name: Vec<u8>, desc: Vec<u8>, 
+            poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,
+            publisher:Vec<u8>,
+            min_price:u128,
+        )->bool{
             self.ensure_owner();
             let caller = Self::env().caller();
             let my_meeting = Meeting {
@@ -371,6 +379,8 @@ mod nfticket {
                 start_sale_time,
                 end_sale_time,
                 status:primitives::MeetingStatus::Active,
+                publisher,
+                min_price,
             };
             self.meeting_map.insert(meeting_addr, my_meeting);
             Self::env().emit_event(MeetingModified {

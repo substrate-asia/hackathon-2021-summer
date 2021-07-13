@@ -82,7 +82,10 @@ mod off_template {
         #[ink(message,payable)]
         pub fn create_meeting(&mut self, 
             name: Vec<u8>, desc: Vec<u8>, poster: Vec<u8>, uri: Vec<u8>, 
-            start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,template_index_name:Vec<u8>,) -> AccountId{
+            start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,template_index_name:Vec<u8>,
+            publisher:Vec<u8>,//会议发起者
+            min_price:u128,     //最低价
+        ) -> AccountId{
                 let caller = Self::env().caller();
                 let income = Self::env().transferred_balance();
                 // let total_balance:Balance = Self::env().balance();
@@ -105,7 +108,10 @@ mod off_template {
                 // 调用主合约 add_meeting
                 // 调用主合约,注册活动.
                 
-            let class_id = main_contract.add_meeting(meeting_addr,caller, name, desc, poster, uri, start_time, end_time, start_sale_time, end_sale_time).unwrap();
+            let class_id = main_contract.add_meeting(meeting_addr,caller, name, desc, poster, uri, 
+                start_time, end_time, start_sale_time, end_sale_time,
+                publisher,min_price,
+            ).unwrap();
             meeting_addr
         }
 

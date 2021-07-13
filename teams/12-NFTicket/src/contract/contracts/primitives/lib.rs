@@ -113,6 +113,8 @@ pub struct Meeting {
     pub start_sale_time: u64,
     pub end_sale_time: u64,
     pub status: MeetingStatus,
+    pub publisher:Vec<u8>,//会议发起者
+    pub min_price:u128,     //最低价
 }
 
 impl Ticket {

@@ -45,6 +45,8 @@ mod stub {
             end_time: u64,
             start_sale_time: u64,
             end_sale_time: u64,
+            publisher:Vec<u8>,//会议发起者
+            min_price:u128,     //最低价
         ) -> Result<u32,MeetingError >{
             unimplemented!()
         }
