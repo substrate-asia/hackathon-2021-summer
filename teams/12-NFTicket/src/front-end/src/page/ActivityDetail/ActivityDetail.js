@@ -18,16 +18,24 @@ import { setBottomstatusAction } from '../../store/action/App';
 
 class ActivityDetail extends Component {
 
+   
+
     componentDidMount() {
         const wrapper = document.querySelector('.wrapper')
         // const scroll = new BScroll(wrapper, { click: true, scrollY: true })
 
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
+       
+
     }
 
     
     render() {
+        var data= this.props.location.state
+        // console.log("xujie:",data)
+        var {name,desc,meeting_addr,poster,start_time} = data
+     
         //搜索框高度
         const searchbarHeight = 45;
         //空白区域高度
@@ -50,18 +58,18 @@ class ActivityDetail extends Component {
                             </div>
                             {/** 活动名称 */}
                             <div className={styles.shareName}>
-                                <span className={styles.detailName}>Event Name</span>
+                                <span className={styles.detailName}>{name}</span>
                                 <img src={share} className={styles.shareIcon}></img>
                             </div>
                             {/** 地址 */}
                             <div className={styles.addressView}>
                                 <img src={address} className={styles.addressIcon}></img>
-                                <span className={styles.addressText}>Location detail</span>
+                                <span className={styles.addressText}>{meeting_addr}</span>
                             </div>
                             {/** 日期*/}
                             <div className={styles.addressView}>
                                 <img src={time} className={styles.timeIcon}></img>
-                                <span className={styles.timeText}>Date + start time</span>
+                                <span className={styles.timeText}>{start_time}</span>
                             </div>
                             {/** 金额*/}
                             <div className={styles.priceView}>
@@ -82,7 +90,7 @@ class ActivityDetail extends Component {
                             <span className={styles.actionName}>Discription</span>
                             <div className={styles.descContent}>
                                 <span className={styles.descInfo}>
-                                Taylor Alison Swift (born December 13, 1989) is an 
+                                {/* Taylor Alison Swift (born December 13, 1989) is an 
                                 American singer-songwriter. Her narrative lyricism, 
                                 which often takes inspiration from her personal life 
                                 and experiences, has received widespread critical 
@@ -103,8 +111,8 @@ class ActivityDetail extends Component {
                                 (RIAA). Swift's third studio album, Speak Now (2010), 
                                 blended country-pop with elements of rock and 
                                 featured the top-ten singles "Mine" and "Back to 
-                                December".
-
+                                December". */}
+                                  {desc}
                                 </span>
                             </div>
                             {/** 购买按钮 */}

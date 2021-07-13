@@ -1,323 +1,575 @@
 {
-    "metadataVersion": "0.1.0",
-    "source": {
-      "hash": "0x928f73f469f200cab5c9c4c8e629f488e81e5af6fb7236e781b671889dec5588",
-      "language": "ink! 3.0.0-rc3",
-      "compiler": "rustc 1.55.0-nightly"
-    },
-    "contract": {
-      "name": "offline_template",
-      "version": "0.1.0",
-      "authors": [
-        "[your_name] <[your_email]>"
-      ]
-    },
-    "spec": {
-      "constructors": [
-        {
-          "args": [
-            {
-              "name": "controller",
-              "type": {
-                "displayName": [
-                  "AccountId"
-                ],
-                "type": 1
-              }
+  "metadataVersion": "0.1.0",
+  "source": {
+    "hash": "0xbf3b29550c92918ada6826f169d471371fcb0f29dbe547cc32167968f5c825e3",
+    "language": "ink! 3.0.0-rc3",
+    "compiler": "rustc 1.55.0-nightly"
+  },
+  "contract": {
+    "name": "offline_template",
+    "version": "0.1.0",
+    "authors": [
+      "[your_name] <[your_email]>"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "name": "controller",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
             }
-          ],
-          "docs": [],
-          "name": [
-            "new"
-          ],
-          "selector": "0x9bae9d5e"
-        }
-      ],
-      "docs": [
-        "\n活动模板合约\n1. 创建活动，部署活动合约，并将创建的活动条件到主合\n2. 不同活动模板，因为相应的活动不同，创建的方法也会不同；\n"
-      ],
-      "events": [],
-      "messages": [
-        {
-          "args": [],
-          "docs": [],
-          "mutates": false,
-          "name": [
-            "get_controller"
-          ],
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "AccountId"
-            ],
-            "type": 1
-          },
-          "selector": "0x0abf0e97"
-        },
-        {
-          "args": [
-            {
-              "name": "new_onwer",
-              "type": {
-                "displayName": [
-                  "AccountId"
-                ],
-                "type": 1
-              }
-            }
-          ],
-          "docs": [],
-          "mutates": true,
-          "name": [
-            "set_controller"
-          ],
-          "payable": false,
-          "returnType": {
-            "displayName": [
-              "bool"
-            ],
-            "type": 6
-          },
-          "selector": "0xc5e161ea"
-        },
-        {
-          "args": [
-            {
-              "name": "name",
-              "type": {
-                "displayName": [
-                  "Vec"
-                ],
-                "type": 7
-              }
-            },
-            {
-              "name": "desc",
-              "type": {
-                "displayName": [
-                  "Vec"
-                ],
-                "type": 7
-              }
-            },
-            {
-              "name": "poster",
-              "type": {
-                "displayName": [
-                  "Vec"
-                ],
-                "type": 7
-              }
-            },
-            {
-              "name": "uri",
-              "type": {
-                "displayName": [
-                  "Vec"
-                ],
-                "type": 7
-              }
-            },
-            {
-              "name": "start_time",
-              "type": {
-                "displayName": [
-                  "u64"
-                ],
-                "type": 4
-              }
-            },
-            {
-              "name": "end_time",
-              "type": {
-                "displayName": [
-                  "u64"
-                ],
-                "type": 4
-              }
-            },
-            {
-              "name": "start_sale_time",
-              "type": {
-                "displayName": [
-                  "u64"
-                ],
-                "type": 4
-              }
-            },
-            {
-              "name": "end_sale_time",
-              "type": {
-                "displayName": [
-                  "u64"
-                ],
-                "type": 4
-              }
-            },
-            {
-              "name": "meet_code_hash",
-              "type": {
-                "displayName": [
-                  "Hash"
-                ],
-                "type": 8
-              }
-            },
-            {
-              "name": "main_stub_able",
-              "type": {
-                "displayName": [
-                  "MainStub"
-                ],
-                "type": 9
-              }
-            }
-          ],
-          "docs": [],
-          "mutates": true,
-          "name": [
-            "create_meeting"
-          ],
-          "payable": true,
-          "returnType": {
-            "displayName": [
-              "AccountId"
-            ],
-            "type": 1
-          },
-          "selector": "0xee5999da"
-        }
-      ]
-    },
-    "storage": {
-      "struct": {
-        "fields": [
-          {
-            "layout": {
-              "cell": {
-                "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                "ty": 1
-              }
-            },
-            "name": "controller"
-          },
-          {
-            "layout": {
-              "cell": {
-                "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
-                "ty": 1
-              }
-            },
-            "name": "owner"
-          },
-          {
-            "layout": {
-              "cell": {
-                "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
-                "ty": 4
-              }
-            },
-            "name": "fee_ratio"
-          },
-          {
-            "layout": {
-              "cell": {
-                "key": "0x0300000000000000000000000000000000000000000000000000000000000000",
-                "ty": 5
-              }
-            },
-            "name": "meeting_seq"
           }
-        ]
+        ],
+        "docs": [],
+        "name": [
+          "new"
+        ],
+        "selector": "0x9bae9d5e"
       }
-    },
-    "types": [
+    ],
+    "docs": [
+      "\n活动模板合约\n1. 创建活动，部署活动合约，并将创建的活动条件到主合\n2. 不同活动模板，因为相应的活动不同，创建的方法也会不同；\n"
+    ],
+    "events": [],
+    "messages": [
       {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "type": 2,
-                "typeName": "[u8; 32]"
-              }
-            ]
-          }
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_controller"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "AccountId"
+          ],
+          "type": 1
         },
-        "path": [
-          "ink_env",
-          "types",
-          "AccountId"
-        ]
+        "selector": "0x0abf0e97"
       },
       {
-        "def": {
-          "array": {
-            "len": 32,
-            "type": 3
+        "args": [
+          {
+            "name": "new_onwer",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
           }
-        }
-      },
-      {
-        "def": {
-          "primitive": "u8"
-        }
-      },
-      {
-        "def": {
-          "primitive": "u64"
-        }
-      },
-      {
-        "def": {
-          "primitive": "u32"
-        }
-      },
-      {
-        "def": {
-          "primitive": "bool"
-        }
-      },
-      {
-        "def": {
-          "sequence": {
-            "type": 3
-          }
-        }
-      },
-      {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "type": 2,
-                "typeName": "[u8; 32]"
-              }
-            ]
-          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "set_controller"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 12
         },
-        "path": [
-          "ink_env",
-          "types",
-          "Hash"
-        ]
+        "selector": "0xc5e161ea"
       },
       {
-        "def": {
-          "composite": {
-            "fields": [
-              {
-                "name": "account_id",
-                "type": 1,
-                "typeName": "AccountId"
-              }
-            ]
-          }
+        "args": [],
+        "docs": [
+          " 返回控制人账号"
+        ],
+        "mutates": false,
+        "name": [
+          "get_owner"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "AccountId"
+          ],
+          "type": 1
         },
-        "path": [
-          "stub",
-          "stub",
-          "MainStub"
-        ]
+        "selector": "0x07fcd0b1"
+      },
+      {
+        "args": [
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 8
+            }
+          },
+          {
+            "name": "meeting_code_hash",
+            "type": {
+              "displayName": [
+                "Hash"
+              ],
+              "type": 11
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "add_meeting_code_hash"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 12
+        },
+        "selector": "0x4c0bcebc"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_meeting_code_hash"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 13
+        },
+        "selector": "0x8b2443d8"
+      },
+      {
+        "args": [
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 8
+            }
+          },
+          {
+            "name": "desc",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 8
+            }
+          },
+          {
+            "name": "poster",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 8
+            }
+          },
+          {
+            "name": "uri",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 8
+            }
+          },
+          {
+            "name": "start_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "end_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "start_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "end_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "template_index_name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 8
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "create_meeting"
+        ],
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "AccountId"
+          ],
+          "type": 1
+        },
+        "selector": "0xee5999da"
       }
     ]
-  }
+  },
+  "storage": {
+    "struct": {
+      "fields": [
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "ty": 1
+            }
+          },
+          "name": "controller"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+              "ty": 1
+            }
+          },
+          "name": "owner"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
+              "ty": 4
+            }
+          },
+          "name": "fee_ratio"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0300000000000000000000000000000000000000000000000000000000000000",
+              "ty": 5
+            }
+          },
+          "name": "meeting_seq"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0400000000000000000000000000000000000000000000000000000000000000",
+                              "ty": 6
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0500000000000000000000000000000000000000000000000000000000000000",
+                                      "ty": 5
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0500000001000000000000000000000000000000000000000000000000000000",
+                                          "ty": 7
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0600000000000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0600000001000000000000000000000000000000000000000000000000000000",
+                          "ty": 10
+                        }
+                      },
+                      "offset": "0x0500000001000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "meeting_code_map"
+        }
+      ]
+    }
+  },
+  "types": [
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 2,
+              "typeName": "[u8; 32]"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_env",
+        "types",
+        "AccountId"
+      ]
+    },
+    {
+      "def": {
+        "array": {
+          "len": 32,
+          "type": 3
+        }
+      }
+    },
+    {
+      "def": {
+        "primitive": "u8"
+      }
+    },
+    {
+      "def": {
+        "primitive": "u64"
+      }
+    },
+    {
+      "def": {
+        "primitive": "u32"
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "last_vacant",
+              "type": 5,
+              "typeName": "Index"
+            },
+            {
+              "name": "len",
+              "type": 5,
+              "typeName": "u32"
+            },
+            {
+              "name": "len_entries",
+              "type": 5,
+              "typeName": "u32"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Header"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 9,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 8,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        8
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 3
+        }
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "next",
+              "type": 5,
+              "typeName": "Index"
+            },
+            {
+              "name": "prev",
+              "type": 5,
+              "typeName": "Index"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "VacantEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 11,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 5,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        11
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 2,
+              "typeName": "[u8; 32]"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_env",
+        "types",
+        "Hash"
+      ]
+    },
+    {
+      "def": {
+        "primitive": "bool"
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 14
+        }
+      }
+    },
+    {
+      "def": {
+        "tuple": [
+          8,
+          11
+        ]
+      }
+    }
+  ]
+}
