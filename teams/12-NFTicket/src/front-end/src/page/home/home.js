@@ -29,7 +29,6 @@ import { createType } from '@polkadot/types';
 //合约abi
 import tem_abi from './temmetadata.json'
 import main_abi from './mainmetadata.json'
-import { stringToU8a } from '@polkadot/util';
 import meeting_abi from './meetingmetadata.json'
 import test_abi from './testmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';

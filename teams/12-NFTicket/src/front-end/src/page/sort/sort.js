@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TopBar from '../../component/TopBar'
 import styles from './sort.module.css'
-import { Tabs, WhiteSpace, Badge,ListView } from 'antd-mobile';
+import { Tabs, WhiteSpace, Badge,ListView, Result } from 'antd-mobile';
 import TicketItem from '../../component/TicketItem'
 
 import {connect} from 'react-redux';
@@ -9,6 +9,9 @@ import {bindActionCreators} from "redux";
 
 //action
 import { setTokenAction,setUsernameAction,setBottomstatusAction } from '../../store/action/App';
+
+import {initPolkadotApi,getUserNftTicket} from '../../api/polka'
+
 
 const tabs = [
   { title: <Badge >Unchecked</Badge> },
@@ -52,6 +55,13 @@ class sort extends Component {
   componentDidMount(){
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
+    initPolkadotApi( async () =>{
+      getUserNftTicket((result) =>{
+        console.log("--------getUserNftTicket-----------")
+        console.log(result)
+        console.log("--------getUserNftTicket end-----------")
+     })
+  })
   }
   componentWillMount() {
     setTimeout(() => {
