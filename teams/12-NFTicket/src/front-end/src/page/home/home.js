@@ -53,7 +53,7 @@ let main_contract;
 //线下合约abi
 //const meeting_abi = meeting_abi;
 //线下合约address
-const meeting_address = "65QZRZGDWzrUEPZdYV4N5zyFwStxcpdxMUwZim1PmMMNFeyr";//"63QX3Uheqd8rsWCYWEKTNCcD91HKyRXWytDcreckWN5gRNoJ"
+const meeting_address = "6168ku86vLGFcWhkAavPUC98fqkGUvmDBAFS7F7kSFCc8YDU";//"63QX3Uheqd8rsWCYWEKTNCcD91HKyRXWytDcreckWN5gRNoJ"
 let meeting_contract;
 
 //测试合约
@@ -246,7 +246,7 @@ class Home extends Component {
       //测试模板合约创建会议
       await this.getTem_Contract(api)
       //测试线下会议购票
-      await this.test_addZone(api)
+      await this.meeting_BuyTicket(api)
     }
   }
 
@@ -423,25 +423,28 @@ class Home extends Component {
     }
   }
 
-  //线下会议:65QZRZGDWzrUEPZdYV4N5zyFwStxcpdxMUwZim1PmMMNFeyr
+  //线下会议:6168ku86vLGFcWhkAavPUC98fqkGUvmDBAFS7F7kSFCc8YDU
   async meeting_BuyTicket(api){
-    //buyTicket (zoneId: u32, seatId: (u32, u32))
-    console.log("购票-->")
-      const value = 3000n * 1000000n;
+    //getZoneById (zoneId: u8)
+    console.log("线下会议通过ID-->")
+      const value = 0;
       const gasLimit=300000n * 1000000n;
     const alicePair = keyring.addFromUri('//Alice');
     const zoneId = 0;
-    const seatId = (0,0);
-    await meeting_contract.tx
-        .buyTicket({ value, gasLimit }, zoneId,seatId)
-        .signAndSend(alicePair, (result) => {
-          if (result.status.isInBlock) {
-            console.log('线下购票--正在提交到链上');
-          } else if (result.status.isFinalized) {
-            console.log('线下购票--交易确认');
-            console.log(result.toHuman())
-          }
-        });
+    // await meeting_contract.tx
+    //     .getZoneById({ value, gasLimit }, zoneId)
+    //     .signAndSend(alicePair, (result) => {
+    //       if (result.status.isInBlock) {
+    //         console.log('线下会议通过ID--正在提交到链上');
+    //       } else if (result.status.isFinalized) {
+    //         console.log('线下会议通过ID--交易确认');
+    //         console.log(result.toHuman())
+    //       }
+    //     });
+          const { gasConsumed, result, output }  = await meeting_contract.query
+          .getZoneById(alicePair.address,{value,gasLimit}, zoneId)
+      console.log(result.toHuman());
+      console.log(output.toHuman());
   }
 
     //测试会议:5zxMDk9PjPc82Jue4AL6TWTMtAdR95j6bN5YQtdRCFcTKVyo
