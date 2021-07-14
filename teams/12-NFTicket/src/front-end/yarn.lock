@@ -1830,6 +1830,17 @@
     "@polkadot/types" "4.17.2-7"
     "@polkadot/util" "^6.11.1"
 
+"@polkadot/types@^4.17.2-7", "@polkadot/types@4.17.2-7":
+  "integrity" "sha512-Uvx02zNP97OOHw6G45ql9lCHOxqpeJUx9Jyldqkz2CkzW/oYWyIKhcAFZj9vbo6ebiWTrjQUGX+ycdeR8ze0Xg=="
+  "resolved" "https://registry.npmjs.org/@polkadot/types/-/types-4.17.2-7.tgz"
+  "version" "4.17.2-7"
+  dependencies:
+    "@babel/runtime" "^7.14.6"
+    "@polkadot/metadata" "4.17.2-7"
+    "@polkadot/util" "^6.11.1"
+    "@polkadot/util-crypto" "^6.11.1"
+    "@polkadot/x-rxjs" "^6.11.1"
+
 "@polkadot/types@4.17.1":
   "integrity" "sha1-QdQ2IdU4IO6TC6QDa/qLFs+Yym8="
   "resolved" "https://registry.nlark.com/@polkadot/types/download/@polkadot/types-4.17.1.tgz"
@@ -1837,17 +1848,6 @@
   dependencies:
     "@babel/runtime" "^7.14.6"
     "@polkadot/metadata" "4.17.1"
-    "@polkadot/util" "^6.11.1"
-    "@polkadot/util-crypto" "^6.11.1"
-    "@polkadot/x-rxjs" "^6.11.1"
-
-"@polkadot/types@4.17.2-7":
-  "integrity" "sha512-Uvx02zNP97OOHw6G45ql9lCHOxqpeJUx9Jyldqkz2CkzW/oYWyIKhcAFZj9vbo6ebiWTrjQUGX+ycdeR8ze0Xg=="
-  "resolved" "https://registry.npmjs.org/@polkadot/types/-/types-4.17.2-7.tgz"
-  "version" "4.17.2-7"
-  dependencies:
-    "@babel/runtime" "^7.14.6"
-    "@polkadot/metadata" "4.17.2-7"
     "@polkadot/util" "^6.11.1"
     "@polkadot/util-crypto" "^6.11.1"
     "@polkadot/x-rxjs" "^6.11.1"
