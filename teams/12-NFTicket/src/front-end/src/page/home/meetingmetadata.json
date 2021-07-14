@@ -1,0 +1,2181 @@
+{
+  "metadataVersion": "0.1.0",
+  "source": {
+    "hash": "0x8c57741fba70107cc593be752ddfdb3e31007066d3807a03f8bb2365cac0585f",
+    "language": "ink! 3.0.0-rc3",
+    "compiler": "rustc 1.55.0-nightly"
+  },
+  "contract": {
+    "name": "offline_meeting",
+    "version": "0.1.0",
+    "authors": [
+      "[your_name] <[your_email]>"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "name": "meeting_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "desc",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "poster",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "uri",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "start_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "name": "end_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "name": "start_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "name": "end_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "name": "template",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "name": "main_stub_able",
+            "type": {
+              "displayName": [
+                "MainStub"
+              ],
+              "type": 34
+            }
+          },
+          {
+            "name": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [],
+        "name": [
+          "new"
+        ],
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "inspector",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [
+          " 移除验票员 事件"
+        ],
+        "name": "InspectorRemoved"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "inspector",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "timestamp",
+            "type": {
+              "displayName": [],
+              "type": 40
+            }
+          }
+        ],
+        "docs": [],
+        "name": "InspectorValidateTicket"
+      }
+    ],
+    "messages": [
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_self"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "AccountId"
+          ],
+          "type": 1
+        },
+        "selector": "0x41912906"
+      },
+      {
+        "args": [
+          {
+            "name": "new_owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [
+          "\n\t\t转移 owner\n\t\t1. 必须 owner 才可以调用\n\t\t"
+        ],
+        "mutates": true,
+        "name": [
+          "transfer_owner"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0xb412fc0c"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_owner"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "AccountId"
+          ],
+          "type": 1
+        },
+        "selector": "0x07fcd0b1"
+      },
+      {
+        "args": [
+          {
+            "name": "zone_id",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "name": "seat_id",
+            "type": {
+              "displayName": [],
+              "type": 35
+            }
+          }
+        ],
+        "docs": [
+          " 购买ticker,需要支付一定数量的币.",
+          " meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列"
+        ],
+        "mutates": true,
+        "name": [
+          "buy_ticket"
+        ],
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 19
+        },
+        "selector": "0xb1dc989b"
+      },
+      {
+        "args": [],
+        "docs": [
+          " 获取用户的NFT编号"
+        ],
+        "mutates": false,
+        "name": [
+          "get_user_nft_ticket"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "BTreeMap"
+          ],
+          "type": 30
+        },
+        "selector": "0x27d0899a"
+      },
+      {
+        "args": [
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "rows",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "cols",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "price",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 12
+            }
+          }
+        ],
+        "docs": [
+          "\n\t\t添加区域\n\t\t1. 需要 owner 设置\n\t\t2. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）\n\t\t3. 返回的是 zone 的ID\n\t\t"
+        ],
+        "mutates": true,
+        "name": [
+          "add_zone"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "u8"
+          ],
+          "type": 3
+        },
+        "selector": "0x1f47c9bc"
+      },
+      {
+        "args": [
+          {
+            "name": "zone_id",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "rows",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "cols",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "price",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 12
+            }
+          }
+        ],
+        "docs": [
+          "\n\t\t修改区域\n\t\t1. 需要 owner 设置\n\t\t2. zone_id 必须存在\n\t\t3. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）\n\t\t4. 返回的是 zone_id，zong_id 会自增\n\t\t"
+        ],
+        "mutates": true,
+        "name": [
+          "update_zone"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "u8"
+          ],
+          "type": 3
+        },
+        "selector": "0x33757744"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_zone"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 36
+        },
+        "selector": "0x506036d4"
+      },
+      {
+        "args": [
+          {
+            "name": "zone_id",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_zone_by_id"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Zone"
+          ],
+          "type": 11
+        },
+        "selector": "0xe77bb4ea"
+      },
+      {
+        "args": [
+          {
+            "name": "zone_id",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 3
+            }
+          }
+        ],
+        "docs": [
+          " 得到某个区域的票价"
+        ],
+        "mutates": false,
+        "name": [
+          "get_ticket_price"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Balance"
+          ],
+          "type": 12
+        },
+        "selector": "0xd64f7698"
+      },
+      {
+        "args": [
+          {
+            "name": "zone_id",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 3
+            }
+          },
+          {
+            "name": "rows",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "cols",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          }
+        ],
+        "docs": [
+          " 获取某个位置状态是否可用."
+        ],
+        "mutates": true,
+        "name": [
+          "get_update_seat_status"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "SeatStatus"
+          ],
+          "type": 16
+        },
+        "selector": "0x758455b4"
+      },
+      {
+        "args": [
+          {
+            "name": "inspector",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [
+          " 添加验票员",
+          " 1. 只能由 owner 调用",
+          " 2. 需要检查是否已经存在了",
+          " 3. 触发时间 inspector_added"
+        ],
+        "mutates": true,
+        "name": [
+          "add_inspector"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0x59001154"
+      },
+      {
+        "args": [],
+        "docs": [
+          " 查询验票员"
+        ],
+        "mutates": false,
+        "name": [
+          "get_inspector"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 38
+        },
+        "selector": "0xa6a979c6"
+      },
+      {
+        "args": [
+          {
+            "name": "inspector",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [
+          "\n\t\t移除验票员\n\t\t1. 只能由 owner 调用\n\t\t2. 需要检查是否存在\n\t\t3. 触发事件 inspector_removed\n\t\t"
+        ],
+        "mutates": true,
+        "name": [
+          "remove_inspector"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0x1213c16c"
+      },
+      {
+        "args": [
+          {
+            "name": "user",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "name": "class_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "token_id",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "name": "time_stamp",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 6
+            }
+          },
+          {
+            "name": "msg",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "hash",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [
+          "\n\t\t检票\n\t\t1. 只能由 owner 或者 inspector 调用\n\t\t2. 检查 NFT门票 是否有效；\n\t\t3. 检查时间戳和当前区块时间戳间隔是否在 N 分钟以内\n\t\t4. 获取 NFT门票当前的拥有账号\n\t\t5. 检测 NFT门票的class_ID、nft_id, 和 timestamp 的 hash值与 提供的hash是否匹配\n\t\t6. 添加检票记录 check_records ，返回 true\n\t\t7. 触发事件 ticket_checked\n\t\t"
+        ],
+        "mutates": true,
+        "name": [
+          "check_ticket"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 19
+        },
+        "selector": "0x07bb8a31"
+      },
+      {
+        "args": [
+          {
+            "name": "user",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "name": "msg",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          },
+          {
+            "name": "hash",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 5
+            }
+          }
+        ],
+        "docs": [
+          " 验证用户传入的消息签名是否合法,需要调用extend的功能进行验证."
+        ],
+        "mutates": false,
+        "name": [
+          "test_validate"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 19
+        },
+        "selector": "0x7b77a436"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "test_just"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [],
+          "type": 39
+        },
+        "selector": "0x9e9e6403"
+      },
+      {
+        "args": [
+          {
+            "name": "class_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 4
+            }
+          },
+          {
+            "name": "ticket_id",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 6
+            }
+          }
+        ],
+        "docs": [
+          " 返回所有的门票检票记录"
+        ],
+        "mutates": false,
+        "name": [
+          "get_check_records"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 27
+        },
+        "selector": "0x0772c5f4"
+      },
+      {
+        "args": [
+          {
+            "name": "to",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 1
+            }
+          },
+          {
+            "name": "amount",
+            "type": {
+              "displayName": [
+                "Balance"
+              ],
+              "type": 12
+            }
+          }
+        ],
+        "docs": [
+          " 提取门票收入",
+          " 只能由 owner 调用"
+        ],
+        "mutates": true,
+        "name": [
+          "withdraw"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 19
+        },
+        "selector": "0x410fcc9d"
+      }
+    ]
+  },
+  "storage": {
+    "struct": {
+      "fields": [
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "ty": 1
+            }
+          },
+          "name": "template"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+              "ty": 1
+            }
+          },
+          "name": "owner"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
+              "ty": 3
+            }
+          },
+          "name": "max_zone_id"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0300000000000000000000000000000000000000000000000000000000000000",
+              "ty": 4
+            }
+          },
+          "name": "ticket_id"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0400000000000000000000000000000000000000000000000000000000000000",
+              "ty": 4
+            }
+          },
+          "name": "nfticket_main_fee"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "cell": {
+                      "key": "0x0500000000000000000000000000000000000000000000000000000000000000",
+                      "ty": 1
+                    }
+                  },
+                  "name": "account_id"
+                }
+              ]
+            }
+          },
+          "name": "main_stub"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0600000000000000000000000000000000000000000000000000000000000000",
+              "ty": 4
+            }
+          },
+          "name": "meeting_id"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0700000000000000000000000000000000000000000000000000000000000000",
+              "ty": 5
+            }
+          },
+          "name": "name"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0800000000000000000000000000000000000000000000000000000000000000",
+              "ty": 5
+            }
+          },
+          "name": "desc"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0900000000000000000000000000000000000000000000000000000000000000",
+              "ty": 5
+            }
+          },
+          "name": "uri"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0a00000000000000000000000000000000000000000000000000000000000000",
+              "ty": 5
+            }
+          },
+          "name": "poster"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0b00000000000000000000000000000000000000000000000000000000000000",
+              "ty": 6
+            }
+          },
+          "name": "start_time"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0c00000000000000000000000000000000000000000000000000000000000000",
+              "ty": 6
+            }
+          },
+          "name": "end_time"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0d00000000000000000000000000000000000000000000000000000000000000",
+              "ty": 6
+            }
+          },
+          "name": "start_sale_time"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0e00000000000000000000000000000000000000000000000000000000000000",
+              "ty": 6
+            }
+          },
+          "name": "end_sale_time"
+        },
+        {
+          "layout": {
+            "enum": {
+              "dispatchKey": "0x0f00000000000000000000000000000000000000000000000000000000000000",
+              "variants": {
+                "0": {
+                  "fields": []
+                },
+                "1": {
+                  "fields": []
+                }
+              }
+            }
+          },
+          "name": "status"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x1000000000000000000000000000000000000000000000000000000000000000",
+              "ty": 5
+            }
+          },
+          "name": "local_address"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x1100000000000000000000000000000000000000000000000000000000000000",
+                              "ty": 7
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x1200000000000000000000000000000000000000000000000000000000000000",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x1200000001000000000000000000000000000000000000000000000000000000",
+                                          "ty": 8
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x1300000000000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x1300000001000000000000000000000000000000000000000000000000000000",
+                          "ty": 10
+                        }
+                      },
+                      "offset": "0x1200000001000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "zones"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x1300000001000000000000000000000000000000000000000000000000000000",
+              "ty": 12
+            }
+          },
+          "name": "price"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x1400000001000000000000000000000000000000000000000000000000000000",
+                              "ty": 7
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x1500000001000000000000000000000000000000000000000000000000000000",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x1500000002000000000000000000000000000000000000000000000000000000",
+                                          "ty": 13
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x1600000001000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x1600000002000000000000000000000000000000000000000000000000000000",
+                          "ty": 15
+                        }
+                      },
+                      "offset": "0x1500000002000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "seats_status_map"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x1600000002000000000000000000000000000000000000000000000000000000",
+                              "ty": 7
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x1700000002000000000000000000000000000000000000000000000000000000",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x1700000003000000000000000000000000000000000000000000000000000000",
+                                          "ty": 17
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x1800000002000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x1800000003000000000000000000000000000000000000000000000000000000",
+                          "ty": 18
+                        }
+                      },
+                      "offset": "0x1700000003000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "inspectors"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x1800000003000000000000000000000000000000000000000000000000000000",
+                              "ty": 7
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x1900000003000000000000000000000000000000000000000000000000000000",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x1900000004000000000000000000000000000000000000000000000000000000",
+                                          "ty": 20
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x1a00000003000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x1a00000004000000000000000000000000000000000000000000000000000000",
+                          "ty": 22
+                        }
+                      },
+                      "offset": "0x1900000004000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "tickets"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x1a00000004000000000000000000000000000000000000000000000000000000",
+                              "ty": 7
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x1b00000004000000000000000000000000000000000000000000000000000000",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x1b00000005000000000000000000000000000000000000000000000000000000",
+                                          "ty": 24
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x1c00000004000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x1c00000005000000000000000000000000000000000000000000000000000000",
+                          "ty": 26
+                        }
+                      },
+                      "offset": "0x1b00000005000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "check_record_map"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x1c00000005000000000000000000000000000000000000000000000000000000",
+                              "ty": 7
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x1d00000005000000000000000000000000000000000000000000000000000000",
+                                      "ty": 4
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x1d00000006000000000000000000000000000000000000000000000000000000",
+                                          "ty": 17
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x1e00000005000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x1e00000006000000000000000000000000000000000000000000000000000000",
+                          "ty": 29
+                        }
+                      },
+                      "offset": "0x1d00000006000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "user_NFT_ticket_map"
+        }
+      ]
+    }
+  },
+  "types": [
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 2,
+              "typeName": "[u8; 32]"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_env",
+        "types",
+        "AccountId"
+      ]
+    },
+    {
+      "def": {
+        "array": {
+          "len": 32,
+          "type": 3
+        }
+      }
+    },
+    {
+      "def": {
+        "primitive": "u8"
+      }
+    },
+    {
+      "def": {
+        "primitive": "u32"
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 3
+        }
+      }
+    },
+    {
+      "def": {
+        "primitive": "u64"
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "last_vacant",
+              "type": 4,
+              "typeName": "Index"
+            },
+            {
+              "name": "len",
+              "type": 4,
+              "typeName": "u32"
+            },
+            {
+              "name": "len_entries",
+              "type": 4,
+              "typeName": "u32"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Header"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 9,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 3,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        3
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "next",
+              "type": 4,
+              "typeName": "Index"
+            },
+            {
+              "name": "prev",
+              "type": 4,
+              "typeName": "Index"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "VacantEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 11,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 4,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        11
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "name",
+              "type": 5,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "rows",
+              "type": 4,
+              "typeName": "u32"
+            },
+            {
+              "name": "cols",
+              "type": 4,
+              "typeName": "u32"
+            },
+            {
+              "name": "price",
+              "type": 12,
+              "typeName": "Balance"
+            }
+          ]
+        }
+      },
+      "path": [
+        "offline_meeting",
+        "offline_meeting",
+        "Zone"
+      ]
+    },
+    {
+      "def": {
+        "primitive": "u128"
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 9,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 14,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        14
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          3,
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 16,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 4,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        16
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "discriminant": 0,
+              "name": "Disabled"
+            },
+            {
+              "discriminant": 1,
+              "name": "Empty"
+            },
+            {
+              "discriminant": 2,
+              "name": "Sealed"
+            }
+          ]
+        }
+      },
+      "path": [
+        "offline_meeting",
+        "offline_meeting",
+        "SeatStatus"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 9,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 1,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        1
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 19,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 4,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        19
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "primitive": "bool"
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 9,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 21,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        21
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          12,
+          12
+        ]
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 23,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 4,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        23
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          3,
+          3,
+          3
+        ]
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 9,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 25,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        25
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          4,
+          6
+        ]
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 27,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 4,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        27
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 28
+        }
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "inspector",
+              "type": 1,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "timestamp",
+              "type": 6,
+              "typeName": "u64"
+            },
+            {
+              "name": "block",
+              "type": 4,
+              "typeName": "u32"
+            }
+          ]
+        }
+      },
+      "path": [
+        "offline_meeting",
+        "offline_meeting",
+        "CheckRecord"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 30,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 4,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        30
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 33,
+              "typeName": "[(K, V)]"
+            }
+          ]
+        }
+      },
+      "params": [
+        31
+      ],
+      "path": [
+        "BTreeMap"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          25,
+          32
+        ]
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "_class_owner",
+              "type": 1,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "_ticket_owner",
+              "type": 1,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "_class_id",
+              "type": 4,
+              "typeName": "u32"
+            },
+            {
+              "name": "token_id",
+              "type": 6,
+              "typeName": "u64"
+            },
+            {
+              "name": "quantity",
+              "type": 6,
+              "typeName": "u64"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "TicketNft"
+      ]
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 31
+        }
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "account_id",
+              "type": 1,
+              "typeName": "AccountId"
+            }
+          ]
+        }
+      },
+      "path": [
+        "stub",
+        "stub",
+        "MainStub"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          4,
+          4
+        ]
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 37
+        }
+      }
+    },
+    {
+      "def": {
+        "tuple": [
+          3,
+          11
+        ]
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 1
+        }
+      }
+    },
+    {
+      "def": {
+        "tuple": [
+          6,
+          4
+        ]
+      }
+    },
+    {
+      "def": {
+        "tuple": [
+          6,
+          4,
+          4,
+          6
+        ]
+      }
+    }
+  ]
+}

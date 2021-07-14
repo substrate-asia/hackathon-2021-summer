@@ -24,11 +24,15 @@ import NAlert from '../../component/Alert';
 //polkadot
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ContractPromise } from '@polkadot/api-contract';
+import { createType } from '@polkadot/types';
 
 //合约abi
 import tem_abi from './temmetadata.json'
 import main_abi from './mainmetadata.json'
 import { stringToU8a } from '@polkadot/util';
+import meeting_abi from './meetingmetadata.json'
+import test_abi from './testmetadata.json'
+import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
 
 
@@ -46,6 +50,20 @@ let tem_contract;
 //主合约address
 const main_address = "629eniaUzqNLN1okBrmEbEpFY7TqzWcgi9ggquZRtVX6o1b3"
 let main_contract;
+
+//线下合约abi
+//const meeting_abi = meeting_abi;
+//线下合约address
+const meeting_address = "6168ku86vLGFcWhkAavPUC98fqkGUvmDBAFS7F7kSFCc8YDU";//"63QX3Uheqd8rsWCYWEKTNCcD91HKyRXWytDcreckWN5gRNoJ"
+let meeting_contract;
+
+//测试合约
+//addZone (name: Vec<u8>, rows: u32, cols: u32, price: Balance)
+//测试合约abi
+//const test_abi = test_abi;
+//测试合约address
+const test_address = "5zxMDk9PjPc82Jue4AL6TWTMtAdR95j6bN5YQtdRCFcTKVyo";
+let test_contract;
 
 
 const NUM_ROWS = 20;
@@ -191,8 +209,26 @@ class Home extends Component {
         categoryId: 'Compact<CategoryId>',
         items: 'Vec<OrderItem>',
       },
+
+      //Vec<(u8, Zone) Zone -- name: Vec<u8>, rows: u32, cols: u32, price: Balance
+      Zone:{
+        name:'Vec<u8>',
+        rows:'u32',
+        cols:'u32',
+        price:'Balance',
+      },
+
+      ZoneItem:{
+        zoneKeys:'u8',
+        zoneValues:'Zone',
+      },
+
+      ZoneOf:{
+        zoneItems:'Vec<ZoneItem>',
+      }
     };
     const api = await ApiPromise.create({ provider, types });
+
     const [chain, nodeName, nodeVersion] = await Promise.all([
       api.rpc.system.chain(),
       api.rpc.system.name(),
@@ -203,11 +239,15 @@ class Home extends Component {
     if (api != null) {
       tem_contract = new ContractPromise(api, tem_abi, tem_address);
       main_contract = new ContractPromise(api, main_abi, main_address);
+      meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+      test_contract = new ContractPromise(api, test_abi, test_address);
 
       //获取链上会议列表
       await this.getAllMeeting(api)
       //测试模板合约创建会议
       await this.getTem_Contract(api)
+      //测试线下会议购票
+      await this.meeting_BuyTicket(api)
     }
   }
 
@@ -252,28 +292,28 @@ class Home extends Component {
       // startSaleTime: u64, 
       // endSaleTime: u64, 
       // templateIndexName: Vec<u8>),携带参数（tx）
-      const name = '1';
-      const desc = '1';
-      const poster = '1';
-      const uri = '1';
-      const startTime = 1625910132;
-      const endTime = 1628588532;
-      const startSaleTime = 1625910132;
-      const endSaleTime = 1628588532;
-      const templateIndexName = '1';
-      value = 3000n * 1000000n;
-      gasLimit=3000n * 1000000n;
-      await tem_contract.tx.createMeeting(
-        { value, gasLimit }, name, desc, poster, uri, startTime, endTime, startSaleTime, endSaleTime, templateIndexName
-      )
-        .signAndSend(alicePair, (result) => {
-          if (result.status.isInBlock) {
-            console.log('正在提交到链上');
-          } else if (result.status.isFinalized) {
-            console.log('交易确认');
-            console.log(result.toHuman())
-          }
-        });
+      // const name = '1';
+      // const desc = '1';
+      // const poster = '1';
+      // const uri = '1';
+      // const startTime = 1625910132;
+      // const endTime = 1628588532;
+      // const startSaleTime = 1625910132;
+      // const endSaleTime = 1628588532;
+      // const templateIndexName = '1';
+      // value = 3000n * 1000000n;
+      // gasLimit=3000n * 1000000n;
+      // await tem_contract.tx.createMeeting(
+      //   { value, gasLimit }, name, desc, poster, uri, startTime, endTime, startSaleTime, endSaleTime, templateIndexName
+      // )
+      //   .signAndSend(alicePair, (result) => {
+      //     if (result.status.isInBlock) {
+      //       console.log('正在提交到链上');
+      //     } else if (result.status.isFinalized) {
+      //       console.log('交易确认');
+      //       console.log(result.toHuman())
+      //     }
+      //   });
 
 
     // }
@@ -382,6 +422,94 @@ class Home extends Component {
     } else {
       console.error('Error', result.asErr);
     }
+  }
+
+  //线下会议:6168ku86vLGFcWhkAavPUC98fqkGUvmDBAFS7F7kSFCc8YDU
+  async meeting_BuyTicket(api){
+    //getZoneById (zoneId: u8)
+    console.log("线下会议通过ID-->")
+      const value = 0;
+      const gasLimit=300000n * 1000000n;
+    const alicePair = keyring.addFromUri('//Alice');
+    const zoneId = 0;
+    // await meeting_contract.tx
+    //     .getZoneById({ value, gasLimit }, zoneId)
+    //     .signAndSend(alicePair, (result) => {
+    //       if (result.status.isInBlock) {
+    //         console.log('线下会议通过ID--正在提交到链上');
+    //       } else if (result.status.isFinalized) {
+    //         console.log('线下会议通过ID--交易确认');
+    //         console.log(result.toHuman())
+    //       }
+    //     });
+          const { gasConsumed, result, output }  = await meeting_contract.query
+          .getZoneById(alicePair.address,{value,gasLimit}, zoneId)
+      console.log(result.toHuman());
+      console.log(output.toHuman());
+  }
+
+    //测试会议:5zxMDk9PjPc82Jue4AL6TWTMtAdR95j6bN5YQtdRCFcTKVyo
+    async test_addZone(api){
+      //addZone (name: Vec<u8>, rows: u32, cols: u32, price: Balance)
+      console.log("测试添加购票-->")
+        const value = 3000n * 1000000n;
+        const gasLimit=300000n * 1000000n;
+      const alicePair = keyring.addFromUri('//Alice');
+      const name = '1';
+      const rows = 1;
+      const cols = 1;
+      const price = 1;
+      // await test_contract.tx
+      //     .addZone({ value, gasLimit }, name,rows,cols,price)
+      //     .signAndSend(alicePair, (result) => {
+      //       if (result.status.isInBlock) {
+      //         console.log('测试合约--正在提交到链上');
+      //       } else if (result.status.isFinalized) {
+      //         console.log('测试合约--交易确认');
+      //         console.log(result.toHuman())
+      //       }
+      //     });
+
+      //查询
+      const zoneItem = {        
+        name:'1',
+        rows:1,
+        cols:1,
+        price:1
+      }
+      const Zone  =  createType(api.registry,'Zone',zoneItem);
+      const ZoneOf = (1,zoneItem);
+      let ZoneOfs = createType(api.registry,'ZoneOf',ZoneOf);
+      
+      ZoneOfs = await test_contract.query.getZone(alicePair.address, { value, gasLimit });
+      console.log("result--",ZoneOfs);
+    }
+
+    
+  //addTemplate (templateAddr: AccountId, name: Vec<u8>, desc: Vec<u8>, uri: Vec<u8>, ratio: u128)
+  async addTemplate(api){
+    console.log("添加模板-->")
+    const value = 0;
+    const gasLimit = -1;
+    const alicePair = keyring.addFromUri('//Alice');
+    const name='1';
+    const desc='1';
+    const uri = '1';
+    const ratio=1;
+    await main_contract.tx
+        .addTemplate({ value, gasLimit }, tem_address,
+          name,
+          desc,
+          uri,
+          ratio )
+        .signAndSend(alicePair, (result) => {
+          if (result.status.isInBlock) {
+            console.log('添加--正在提交到链上');
+          } else if (result.status.isFinalized) {
+            console.log('添加--交易确认');
+            console.log(result.toHuman())
+          }
+        });
   }
 
   componentWillUnmount() {
