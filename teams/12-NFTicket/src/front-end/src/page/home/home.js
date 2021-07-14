@@ -1,5 +1,5 @@
-import React, { Component, button } from 'react';
-import { ListView, Modal } from 'antd-mobile';
+import React, { Component } from 'react';
+import { ListView } from 'antd-mobile';
 // import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import { bindActionCreators } from "redux";
 //action
 import {
   setTokenAction, setUsernameAction, setBottomstatusAction,
-  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction, setShowalertAction
+  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction
 } from '../../store/action/App';
 
 
@@ -29,14 +29,15 @@ import { createType } from '@polkadot/types';
 //合约abi
 import tem_abi from './temmetadata.json'
 import main_abi from './mainmetadata.json'
+import { stringToU8a } from '@polkadot/util';
 import meeting_abi from './meetingmetadata.json'
 import test_abi from './testmetadata.json'
 import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
-import { mnemonicGenerate, blake2AsHex } from '@polkadot/util-crypto';
+
 
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
-const message = stringToU8a('this is a message');
+// const message = stringToU8a('this is a message');
 
 //模板合约abi
 //const tem_abi = tem_abi;
@@ -53,7 +54,7 @@ let main_contract;
 //线下合约abi
 //const meeting_abi = meeting_abi;
 //线下合约address
-const meeting_address = "65QZRZGDWzrUEPZdYV4N5zyFwStxcpdxMUwZim1PmMMNFeyr";//"63QX3Uheqd8rsWCYWEKTNCcD91HKyRXWytDcreckWN5gRNoJ"
+const meeting_address = "6168ku86vLGFcWhkAavPUC98fqkGUvmDBAFS7F7kSFCc8YDU";//"63QX3Uheqd8rsWCYWEKTNCcD91HKyRXWytDcreckWN5gRNoJ"
 let meeting_contract;
 
 //测试合约
@@ -246,14 +247,14 @@ class Home extends Component {
       //测试模板合约创建会议
       await this.getTem_Contract(api)
       //测试线下会议购票
-      await this.test_addZone(api)
+      await this.meeting_BuyTicket(api)
     }
   }
 
   async getTem_Contract(api) {
     //合约
     this.setState({ genesisHash: api.genesisHash.toHex() });
-    const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
+    // const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
 
     if (localStorage.hasOwnProperty('nft-pair')) {
 
@@ -423,25 +424,28 @@ class Home extends Component {
     }
   }
 
-  //线下会议:65QZRZGDWzrUEPZdYV4N5zyFwStxcpdxMUwZim1PmMMNFeyr
+  //线下会议:6168ku86vLGFcWhkAavPUC98fqkGUvmDBAFS7F7kSFCc8YDU
   async meeting_BuyTicket(api){
-    //buyTicket (zoneId: u32, seatId: (u32, u32))
-    console.log("购票-->")
-      const value = 3000n * 1000000n;
+    //getZoneById (zoneId: u8)
+    console.log("线下会议通过ID-->")
+      const value = 0;
       const gasLimit=300000n * 1000000n;
     const alicePair = keyring.addFromUri('//Alice');
     const zoneId = 0;
-    const seatId = (0,0);
-    await meeting_contract.tx
-        .buyTicket({ value, gasLimit }, zoneId,seatId)
-        .signAndSend(alicePair, (result) => {
-          if (result.status.isInBlock) {
-            console.log('线下购票--正在提交到链上');
-          } else if (result.status.isFinalized) {
-            console.log('线下购票--交易确认');
-            console.log(result.toHuman())
-          }
-        });
+    // await meeting_contract.tx
+    //     .getZoneById({ value, gasLimit }, zoneId)
+    //     .signAndSend(alicePair, (result) => {
+    //       if (result.status.isInBlock) {
+    //         console.log('线下会议通过ID--正在提交到链上');
+    //       } else if (result.status.isFinalized) {
+    //         console.log('线下会议通过ID--交易确认');
+    //         console.log(result.toHuman())
+    //       }
+    //     });
+          const { gasConsumed, result, output }  = await meeting_contract.query
+          .getZoneById(alicePair.address,{value,gasLimit}, zoneId)
+      console.log(result.toHuman());
+      console.log(output.toHuman());
   }
 
     //测试会议:5zxMDk9PjPc82Jue4AL6TWTMtAdR95j6bN5YQtdRCFcTKVyo

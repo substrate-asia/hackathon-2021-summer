@@ -11,7 +11,6 @@ import { bindActionCreators } from "redux";
 
 //action
 import { setShowmodalAction } from '../../store/action/App';
-import { Button } from 'react-scroll'
 
 
 const Item = Popover.Item;

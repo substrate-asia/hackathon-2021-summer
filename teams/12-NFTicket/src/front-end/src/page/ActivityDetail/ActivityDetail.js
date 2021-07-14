@@ -34,7 +34,7 @@ class ActivityDetail extends Component {
     render() {
         var data= this.props.location.state
         // console.log("xujie:",data)
-        var {name,desc,meeting_addr,poster,start_time} = data
+        var {name,desc,meeting_addr,start_time} = data
      
         //搜索框高度
         const searchbarHeight = 45;
