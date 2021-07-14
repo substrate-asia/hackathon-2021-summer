@@ -1,5 +1,5 @@
-import React, { Component, button } from 'react';
-import { ListView, Modal } from 'antd-mobile';
+import React, { Component } from 'react';
+import { ListView } from 'antd-mobile';
 // import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import { bindActionCreators } from "redux";
 //action
 import {
   setTokenAction, setUsernameAction, setBottomstatusAction,
-  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction, setShowalertAction
+  setShowmodalAction, setShowmodaltwoAction, setAccountokmodalAction
 } from '../../store/action/App';
 
 
@@ -28,12 +28,12 @@ import { ContractPromise } from '@polkadot/api-contract';
 //合约abi
 import tem_abi from './temmetadata.json'
 import main_abi from './mainmetadata.json'
-import { stringToU8a, u8aToHex } from '@polkadot/util';
+import { stringToU8a } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
-import { mnemonicGenerate, blake2AsHex } from '@polkadot/util-crypto';
+
 
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
-const message = stringToU8a('this is a message');
+// const message = stringToU8a('this is a message');
 
 //模板合约abi
 //const tem_abi = tem_abi;
@@ -214,7 +214,7 @@ class Home extends Component {
   async getTem_Contract(api) {
     //合约
     this.setState({ genesisHash: api.genesisHash.toHex() });
-    const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
+    // const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
 
     if (localStorage.hasOwnProperty('nft-pair')) {
 
