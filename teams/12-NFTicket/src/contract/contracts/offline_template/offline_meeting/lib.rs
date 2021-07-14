@@ -24,23 +24,23 @@ pub mod offline_meeting {
 	use ink_prelude::vec;
 
 	const BASE_PERCENT: u128 = 10000;
-	// 定价方式，Uniform 统一定价，Partition 分区定价
-	#[derive(
-		Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
-	)]
-	#[cfg_attr(
-		feature = "std",
-		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
-	)]
-	enum PriceType {
-		Uniform,
-		Partition,
-	}
-	impl Default for PriceType {
-		fn default() -> PriceType {
-			PriceType::Uniform
-		}
-	}
+	// // 定价方式，Uniform 统一定价，Partition 分区定价
+	// #[derive(
+	// 	Debug, PartialEq, Eq, Clone, scale::Encode, scale::Decode, SpreadLayout, PackedLayout,
+	// )]
+	// #[cfg_attr(
+	// 	feature = "std",
+	// 	derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
+	// )]
+	// enum PriceType {
+	// 	Uniform,
+	// 	Partition,
+	// }
+	// impl Default for PriceType {
+	// 	fn default() -> PriceType {
+	// 		PriceType::Uniform
+	// 	}
+	// }
 
 	/// 移除验票员 事件
 	#[ink(event)]
@@ -65,31 +65,12 @@ pub mod offline_meeting {
 		feature = "std",
 		derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 	)]
-	struct Zone {
+	pub struct Zone {
 		// 场地区域设置
 		name: Vec<u8>, // 区域名称
-		rows: u32,      // 行
-		cols: u32,      // 列
-	}
-
-	impl Zone{
-		fn new(name: Vec<u8>,rows: u32,cols: u32 )->Zone{
-			Zone{
-				name,
-				rows,
-				cols,
-			}
-		}
-	}
-
-	impl Default for Zone {
-		fn default() -> Zone {
-			Zone {
-				name: Default::default(),
-				rows: Default::default(),
-				cols: Default::default(),
-			}
-		}
+		pub rows: u32,      // 行
+		pub cols: u32,      // 列
+		pub price:Balance,  //该区域的价格.
 	}
 
 	// 座位状态，Disabled 座位不可用；Empty 座位空闲；Ticket(u128, u128) 座位售出，里边两个数是售出NFT门票的 class_id 和 nft_id
@@ -161,10 +142,8 @@ pub mod offline_meeting {
 		// 活动配置参数
 		local_address: Vec<u8>,                      // 获取举办地址
 		zones: StorageMap<u8, Zone>,                 // 活动场地的分区配置，key 为分区的序号
-		price_type: PriceType,                       // 收费方式
 		price: Balance,                              // 收费方式=Uniform 时候生效
-		prices: StorageMap<u8, Balance>, //收费明细，收费方式=Partition时候看，生效；带个是 zone_id
-		seats_status_map: StorageMap<(u32, u32, u32), SeatStatus>, // 活动场地的不可用的座位，是由元组组成的key，元组元素为 分区序号，排号，座号。这样可以快速检测座位是否被禁用
+		seats_status_map: StorageMap<(u8, u32, u32), SeatStatus>, // 活动场地的不可用的座位，是由元组组成的key，元组元素为 分区序号，排号，座号。这样可以快速检测座位是否被禁用
 		inspectors: StorageMap<AccountId, bool>,     // 检票员
 
 		// 用户参与后会产生的数据
@@ -198,8 +177,6 @@ pub mod offline_meeting {
 				owner,
 				local_address: Default::default(),
 				zones: Default::default(),
-				price_type: Default::default(),
-				prices: Default::default(),
 				price: Default::default(),
 				seats_status_map: Default::default(),
 				tickets: Default::default(),
@@ -247,11 +224,11 @@ pub mod offline_meeting {
 		/// 购买ticker,需要支付一定数量的币.
 		/// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
 		#[ink(message, payable)]
-		pub fn buy_ticket(&mut self, zone_id: u32, seat_id: (u32, u32)) -> bool {
+		pub fn buy_ticket(&mut self, zone_id: u8, seat_id: (u32, u32)) -> bool {
 			ink_env::debug_message("=========================entrance!!!");
 			let caller = Self::env().caller();
 			let meeting_addr = Self::env().account_id();
-			let ticket_price: Balance = self.get_ticket_price(zone_id, seat_id).unwrap();
+			let ticket_price: Balance = self.get_ticket_price(zone_id);
 			ink_env::debug_message(&format!(
 				"-------------------------ticket_price {:?}",
 				ticket_price
@@ -330,33 +307,83 @@ pub mod offline_meeting {
 			self.user_NFT_ticket_map.get(&caller).unwrap().clone()
 		}
 
-		/// 增加某个区域
+		/**
+		添加区域
+		1. 需要 owner 设置
+		2. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
+		3. 返回的是 zone 的ID
+		*/
 		#[ink(message)]
-		pub fn add_zone(&self, zone_id: u32, name:Vec<u8>,rows:u32,cols: u32) -> bool {
-			let zone=Zone::new(name,rows,cols);
-			self.zones.insert(zone_id, zone);
-			true
+		pub fn add_zone(&mut self, name: Vec<u8>, rows: u32, cols: u32, price: Balance) -> u8 {
+			// self.ensure_owner();
+			let new_zone = Zone { name, rows, cols,price };
+			let zone_id = self.max_zone_id;
+			self.max_zone_id=self.max_zone_id.checked_add(1).unwrap();
+			self.zones.insert(zone_id, new_zone);
+			zone_id
+		}
+
+		/**
+		修改区域
+		1. 需要 owner 设置
+		2. zone_id 必须存在
+		3. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
+		4. 返回的是 zone_id，zong_id 会自增
+		*/
+		#[ink(message)]
+		pub fn update_zone(&mut self,zone_id: u8,name: Vec<u8>,rows: u32,cols: u32,price: Balance,) -> u8 {
+			self.ensure_owner();
+			let mut zone = self.zones.get_mut(&zone_id).expect("zone does not exists ");
+			zone.name = name;
+			zone.rows = rows;
+			zone.cols = cols;
+			zone.price=price;
+			zone_id
+		}
+
+		#[ink(message)]
+		pub fn get_zone(&self) -> Vec<(u8,Zone)> {
+			self.zones.iter().map(|(k,v)|(*k,v.clone())).collect()
+		}
+
+		#[ink(message)]
+		pub fn get_zone_by_id(&self,zone_id: u8) ->Zone {
+			self.zones.get(&zone_id).unwrap().clone()
 		}
 
 		/// 得到某个区域的票价
 		#[ink(message)]
-		pub fn get_ticket_price(&self, zone_id: u32, seat_id: (u32, u32)) -> Option<Balance> {
+		pub fn get_ticket_price(&self, zone_id: u8) -> Balance {
 			ink_env::debug_message("=========================get_ticket_price entrance!!!");
-			//TODO 确保这个位置是有效的.
-			//TODO 获取这个位置的票价
-			return Some(20000000000u128.into());
+			let zone_op = self.zones.get(&zone_id);
+			let price:Balance = match zone_op{
+				Some(zone)=>zone.price,
+				//用户可能忘记创建一个区域了.如果没有这个区域,则给一个默认价格,可以考虑给整个会议的单独价格.
+				None => 20000000000u128.into() 
+			};
+			price
 		}
 
 		/// 获取某个位置状态是否可用.
 		#[ink(message)]
-		pub fn get_seat_status(&self, zone_id: u32, seat_id: (u32, u32))->SeatStatus{
-			let zone_seat=(zone_id,seat_id.0,seat_id.1);
-			let my_status = self.seats_status_map.get(&zone_seat).unwrap().clone();
-			my_status
+		pub fn get_update_seat_status(&mut self, zone_id: u8, rows: u32,cols:u32)->SeatStatus{
+			// 首先需要确保这个位置是存在的.
+			let zone = self.zones.get(&zone_id).unwrap();
+			assert!(rows<=zone.rows&&cols<=zone.cols,"The seat posite is not exist!");
+			let zone_seat=(zone_id,rows,cols);
+			let my_status_opt = self.seats_status_map.get(&zone_seat);
+			match my_status_opt{
+				Some(status)=>status.clone(),
+				None=>{
+					let status = SeatStatus::Empty;
+					self.seats_status_map.insert(zone_seat, status.clone());
+					status
+				}
+			}
 		}
 
 		/// 标记这个位置已经卖出.
-		fn make_seat_sealed(&mut self, zone_id: u32, seat_id: (u32, u32)) ->bool {
+		fn make_seat_sealed(&mut self, zone_id: u8, seat_id: (u32, u32)) ->bool {
 			// let seat_id = seat_id.unwrap();
 			let zone_seat=(zone_id,seat_id.0,seat_id.1);
 			self.seats_status_map.get(&zone_seat);
@@ -372,57 +399,11 @@ pub mod offline_meeting {
 		2. 如果涉及到基础信息部分的更新，需要调用主合约更新；
 		3. 修改成功后，触发事件 meeting_modified
 		*/
-		pub fn modify_meeting(&mut self, local_address: Vec<u8>, price_type: PriceType) {
+		pub fn modify_meeting(&mut self, local_address: Vec<u8>) {
 			// todo
 		}
 
-		/**
-		添加区域
-		1. 需要 owner 设置
-		2. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
-		3. 返回的是 zone 的ID
-		*/
-		pub fn add_zone(&mut self, name: Vec<u8>, rows: u8, cols: u8, price: Balance) -> u8 {
-			let new_zone = Zone { name, rows, cols };
-			let zone_id = self.max_zone_id;
-			self.max_zone_id += 1;
-			self.zones.insert(zone_id, new_zone);
-
-			if let PriceType::Partition = self.price_type {
-				self.prices.insert(zone_id, price);
-			}
-
-			zone_id
-		}
-
-		/**
-		修改区域
-		1. 需要 owner 设置
-		2. zone_id 必须存在
-		3. 如果 PriceType 是 Partition 时，price 会自动忽略（但是必须传）
-		4. 返回的是 zone_id，zong_id 会自增
-		*/
-		pub fn update_zone(
-			&mut self,
-			zone_id: u8,
-			name: Vec<u8>,
-			rows: u8,
-			cols: u8,
-			price: Balance,
-		) -> u8 {
-			let zone = self.zones.get(&zone_id).expect("zone does not exists ");
-			let mut new_zone = zone.clone();
-			new_zone.name = name;
-			new_zone.rows = rows;
-			new_zone.cols = cols;
-			self.zones.insert(zone_id, new_zone);
-
-			if let PriceType::Partition = self.price_type {
-				self.prices.insert(zone_id, price);
-			}
-
-			zone_id
-		}
+		
 		/**
 		删除区域
 		1. 需要 owner 设置
@@ -432,7 +413,6 @@ pub mod offline_meeting {
 		pub fn remove_zone(&mut self, zone_id: &u8) -> bool {
 			let mut zone = self.zones.get(zone_id).expect("zone does not exists ");
 			self.zones.take(zone_id);
-			self.prices.take(zone_id);
 			true
 		}
 
@@ -442,7 +422,7 @@ pub mod offline_meeting {
 		 2. 所有未包含的座位都需要设置为可用
 		 3. 如果已经售出的，不允许修改
 		*/
-		pub fn set_disabled_seats(&mut self, seats: Vec<(u32, u32, u32)>) -> bool {
+		pub fn set_disabled_seats(&mut self, seats: Vec<(u8, u32, u32)>) -> bool {
 			for seat in &seats {
 				// todo 如果已经售出的，不允许修改 ?
 				let status = self.seats_status_map.get(seat).expect("seat does not exists. ");
@@ -586,26 +566,39 @@ pub mod offline_meeting {
 
     //     type Event = <Meeting as ::ink_lang::BaseEvent>::Type;
 
+    //     use ink_env::{DefaultEnvironment, call::{CreateBuilder, ExecutionInput, Selector, build_create}};
     //     use ink_lang as ink;
 
     //     /// The default constructor does its job.
     //     #[ink::test]
     //     fn new_works() {
 	// 		let main_stub = FromAccountId::from_account_id(AccountId::from([0x01; 32]));
+
+	// 		let mut meeting = Meeting::new(1,vec![79,80],vec![79,80],vec![79,80],vec![79,80],
+	// 			0,
+	// 			0,
+	// 			0,
+	// 			0,
+	// 			AccountId::from([0x01; 32]),
+	// 			main_stub,
+	// 			AccountId::from([0x01; 32]),);
+	// 		let m1 =meeting.instantiate();
     //         // Constructor works.
-    //         let meeting = Meeting::new(1,vec![79,80],vec![79,80],vec![79,80],vec![79,80],
-	// 			0,
-	// 			0,
-	// 			0,
-	// 			0,
-	// 			AccountId::from([0x01; 32]),
-	// 			AccountId::from([0x01; 32]),
-	// 			main_stub).endowment(1)
-	// 			.code_hash(Default::default())
-	// 			.salt_bytes(&[])
-	// 			.instantiate()
-	// 			.expect("fail");
-	// 		meeting.test_block_time();
+	// 		// let meeting: Meeting = build_create::<DefaultEnvironment, Meeting>()
+	// 		// 	.code_hash(Hash::from([0x42; 32]))
+	// 		// 	.gas_limit(4000)
+	// 		// 	.endowment(25)
+	// 		// 	.exec_input(
+	// 		// 		ExecutionInput::new(Selector::new([0xDE, 0xAD, 0xBE, 0xEF]))
+	// 		// 			.push_arg(42)
+	// 		// 			.push_arg(true)
+	// 		// 			.push_arg(&[0x10u8; 32])
+	// 		// 	)
+	// 		// 	.salt_bytes(&[0xDE, 0xAD, 0xBE, 0xEF])
+	// 		// 	.params()
+	// 		// 	.instantiate()
+	// 		// 	.unwrap();
+	// 		m1.add_zone(vec![79,80], 10, 20, 100000000000);
     //     }
     // }
 

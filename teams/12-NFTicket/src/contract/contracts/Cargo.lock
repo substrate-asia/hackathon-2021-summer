@@ -682,6 +682,7 @@ dependencies = [
  "ink_prelude",
  "ink_primitives",
  "ink_storage",
+ "nftmart-contract",
  "parity-scale-codec",
  "primitives",
  "scale-info",
