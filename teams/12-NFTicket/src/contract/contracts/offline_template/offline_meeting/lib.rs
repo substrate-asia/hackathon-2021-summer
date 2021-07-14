@@ -346,6 +346,11 @@ pub mod offline_meeting {
 			self.zones.iter().map(|(k,v)|(*k,v.clone())).collect()
 		}
 
+		#[ink(message)]
+		pub fn get_zone_by_id(&self,zone_id: u8) ->Zone {
+			self.zones.get(&zone_id).unwrap().clone()
+		}
+
 		/// 得到某个区域的票价
 		#[ink(message)]
 		pub fn get_ticket_price(&self, zone_id: u8) -> Balance {
