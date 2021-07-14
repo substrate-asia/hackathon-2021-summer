@@ -208,6 +208,8 @@ class Home extends Component {
       await this.getAllMeeting(api)
       //测试模板合约创建会议
       await this.getTem_Contract(api)
+      //测试购票
+      await this.addTemplate(api)
     }
   }
 
@@ -252,28 +254,28 @@ class Home extends Component {
       // startSaleTime: u64, 
       // endSaleTime: u64, 
       // templateIndexName: Vec<u8>),携带参数（tx）
-      const name = '1';
-      const desc = '1';
-      const poster = '1';
-      const uri = '1';
-      const startTime = 1625910132;
-      const endTime = 1628588532;
-      const startSaleTime = 1625910132;
-      const endSaleTime = 1628588532;
-      const templateIndexName = '1';
-      value = 3000n * 1000000n;
-      gasLimit=3000n * 1000000n;
-      await tem_contract.tx.createMeeting(
-        { value, gasLimit }, name, desc, poster, uri, startTime, endTime, startSaleTime, endSaleTime, templateIndexName
-      )
-        .signAndSend(alicePair, (result) => {
-          if (result.status.isInBlock) {
-            console.log('正在提交到链上');
-          } else if (result.status.isFinalized) {
-            console.log('交易确认');
-            console.log(result.toHuman())
-          }
-        });
+      // const name = '1';
+      // const desc = '1';
+      // const poster = '1';
+      // const uri = '1';
+      // const startTime = 1625910132;
+      // const endTime = 1628588532;
+      // const startSaleTime = 1625910132;
+      // const endSaleTime = 1628588532;
+      // const templateIndexName = '1';
+      // value = 3000n * 1000000n;
+      // gasLimit=3000n * 1000000n;
+      // await tem_contract.tx.createMeeting(
+      //   { value, gasLimit }, name, desc, poster, uri, startTime, endTime, startSaleTime, endSaleTime, templateIndexName
+      // )
+      //   .signAndSend(alicePair, (result) => {
+      //     if (result.status.isInBlock) {
+      //       console.log('正在提交到链上');
+      //     } else if (result.status.isFinalized) {
+      //       console.log('交易确认');
+      //       console.log(result.toHuman())
+      //     }
+      //   });
 
 
     // }
@@ -382,6 +384,62 @@ class Home extends Component {
     } else {
       console.error('Error', result.asErr);
     }
+  }
+
+  async buyTicket(api){
+    //buyTicket (creator: AccountId, ticket: Ticket)
+    console.log("购票-->")
+    const value = 0;
+    const gasLimit = -1;
+    const alicePair = keyring.addFromUri('//Alice');
+    const bobPair = keyring.addFromUri('//BOB');
+    const ticket = {
+      template_addr:tem_address,
+      meeting:tem_address,
+      hash:'1',
+      price:0,
+      zone_id:0,
+      seat_id:(0,0),
+      ticket_id:0,
+      buyer:bobPair.address
+    };
+    await main_contract.tx
+        .buyTicket({ value, gasLimit }, tem_address,
+          ticket )
+        .signAndSend(alicePair, (result) => {
+          if (result.status.isInBlock) {
+            console.log('购票--正在提交到链上');
+          } else if (result.status.isFinalized) {
+            console.log('购票--交易确认');
+            console.log(result.toHuman())
+          }
+        });
+  }
+
+  //addTemplate (templateAddr: AccountId, name: Vec<u8>, desc: Vec<u8>, uri: Vec<u8>, ratio: u128)
+  async addTemplate(api){
+    console.log("添加模板-->")
+    const value = 0;
+    const gasLimit = -1;
+    const alicePair = keyring.addFromUri('//Alice');
+    const name='1';
+    const desc='1';
+    const uri = '1';
+    const ratio=1;
+    await main_contract.tx
+        .addTemplate({ value, gasLimit }, tem_address,
+          name,
+          desc,
+          uri,
+          ratio )
+        .signAndSend(alicePair, (result) => {
+          if (result.status.isInBlock) {
+            console.log('添加--正在提交到链上');
+          } else if (result.status.isFinalized) {
+            console.log('添加--交易确认');
+            console.log(result.toHuman())
+          }
+        });
   }
 
   componentWillUnmount() {
