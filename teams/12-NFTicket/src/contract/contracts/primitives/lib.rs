@@ -34,7 +34,7 @@ pub struct Ticket {
     pub meeting: AccountId,       //活动地址
     hash: Vec<u8>,            //hash值
     price: u128,              //价格
-    zone_id: u32,             //区域.
+    zone_id: u8,             //区域.
     seat_id: (u32, u32),//座位号
     ticket_id:u32,              //票id
     pub buyer:AccountId,            //购买者
@@ -122,7 +122,7 @@ impl Ticket {
         template_addr: AccountId,
         meeting: AccountId,
         price: u128,
-        zone_id: u32,
+        zone_id: u8,
         seat_id: (u32, u32),
         ticket_id: u32,
         buyer:AccountId
