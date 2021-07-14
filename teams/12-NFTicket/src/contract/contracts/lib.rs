@@ -52,6 +52,7 @@ mod nfticket {
         template_map: StorageHashMap<AccountId, Template>,
         // 记录会议对应的classId
         classid_map:StorageHashMap<AccountId,ClassId>,
+        user_tickets: StorageHashMap<AccountId, Ticket>, // 用户拥有的门票.
     }
 
     /// 模板创建事件
@@ -118,7 +119,7 @@ mod nfticket {
                 meeting_map: Default::default(),
                 template_map: Default::default(),
                 classid_map: Default::default(),
-                
+                user_tickets:Default::default(),
             };
             instance
         }
@@ -330,6 +331,12 @@ mod nfticket {
         pub fn get_all_meeting(&self) -> Vec<Meeting> {
             self.meeting_map.values().map(|v|v.clone()).collect()
         }
+        
+        /// 返回用户的所有已经购买的票.
+        #[ink(message)]
+        pub fn get_user_all_ticket(&self) -> Vec<(AccountId,Ticket)> {
+            self.user_tickets.iter().map(|(k,v)|(k.clone(),v.clone())).collect()
+        }
 
 
         #[ink(message)]
@@ -399,6 +406,7 @@ mod nfticket {
         #[ink(message, payable)]
         pub fn buy_ticket(&mut self,creator:AccountId, _ticket: Ticket) -> Result<TicketNft,MeetingError> {
             ink_env::debug_message("-------------------------buy_ticket开始调用");
+            self.user_tickets.insert(creator, _ticket.clone());
             let mut ticket_nft:TicketNft = Default::default();
             // 1. 调用本合约，必须付费，并且必须大于等于 min_ticket_fee
             let main_fee: Balance = self.env().transferred_balance();

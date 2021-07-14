@@ -38,6 +38,26 @@ pub struct Ticket {
     seat_id: (u32, u32),//座位号
     ticket_id:u32,              //票id
     pub buyer:AccountId,            //购买者
+    status:TickedStatus,        //票的状态
+
+}
+
+/// 模板状态
+#[derive(Debug, Clone, PartialEq, Eq, scale::Encode, scale::Decode, SpreadLayout, PackedLayout)]
+#[cfg_attr(
+    feature = "std",
+    derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
+)]
+pub enum TickedStatus {
+    Checked, //已检票
+    Unchecked, //未检票
+    Refund,//已退票
+}
+
+impl Default for TickedStatus{
+    fn default() -> Self {
+        TickedStatus::Unchecked
+    }
 }
 
 /// 模板状态
@@ -147,6 +167,7 @@ impl Ticket {
             seat_id,
             ticket_id,
             buyer,
+            status:Default::default(),
         }
     }
 }

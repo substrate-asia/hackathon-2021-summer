@@ -16,7 +16,7 @@ pub mod offline_meeting {
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
 	use ink_storage::{Lazy, collections::{HashMap as StorageMap, hashmap::Keys}, traits::{PackedLayout, SpreadLayout}};
-	use primitives::{MeetingStatus, Ticket,MeetingError,TicketNft};
+	use primitives::{MeetingError, MeetingStatus, Ticket, TicketNft};
 	use scale::Encode;
 	use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
@@ -146,8 +146,6 @@ pub mod offline_meeting {
 		seats_status_map: StorageMap<(u8, u32, u32), SeatStatus>, // 活动场地的不可用的座位，是由元组组成的key，元组元素为 分区序号，排号，座号。这样可以快速检测座位是否被禁用
 		inspectors: StorageMap<AccountId, bool>,     // 检票员
 
-		// 用户参与后会产生的数据
-		tickets: StorageMap<(u128, u128), (u8, u8, u8)>, // 已经售出门票，由元组组成key,元组元素为 分区序号，排号，座号，值是门票NFT（包括集合ID和NFT ID）
 
 		check_record_map: StorageMap<(u32, u64), Vec<CheckRecord>>, // 检票记录：
 		user_NFT_ticket_map:StorageMap<AccountId,BTreeMap<(u32,u64),TicketNft>>,	//	用户购买的票产生的NFT存储.StorageMap<用户id,BTreeMap<(classid,ticketid),TicketNft>>
@@ -179,7 +177,6 @@ pub mod offline_meeting {
 				zones: Default::default(),
 				price: Default::default(),
 				seats_status_map: Default::default(),
-				tickets: Default::default(),
 				inspectors: Default::default(),
 				check_record_map: Default::default(),
 				max_zone_id: Default::default(),
@@ -224,7 +221,8 @@ pub mod offline_meeting {
 		/// 购买ticker,需要支付一定数量的币.
 		/// meeting_addr会议地址,zone_id区域ID,seat_id 第几排,第几列
 		#[ink(message, payable)]
-		pub fn buy_ticket(&mut self, zone_id: u8, seat_id: (u32, u32)) -> bool {
+		pub fn buy_ticket(&mut self, zone_id: u8, rows:u32, cols:u32) -> bool {
+			let seat_id=(rows,cols);
 			ink_env::debug_message("=========================entrance!!!");
 			let caller = Self::env().caller();
 			let meeting_addr = Self::env().account_id();
