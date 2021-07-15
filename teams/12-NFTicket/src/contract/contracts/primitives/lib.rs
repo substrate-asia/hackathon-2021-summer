@@ -36,9 +36,9 @@ pub struct Ticket {
     price: u128,              //价格
     zone_id: u8,             //区域.
     seat_id: (u32, u32),//座位号
-    ticket_id:u32,              //票id
+    pub ticket_id:u32,              //票id
     pub buyer:AccountId,            //购买者
-    status:TickedStatus,        //票的状态
+    pub status:TickedStatus,        //票的状态
 
 }
 
@@ -103,6 +103,8 @@ pub struct TicketNft {
     pub _class_id:u32, 
     pub token_id:u64, 
     pub quantity:u64,
+    pub ticket_id:u32,
+    pub meeting_addr:AccountId,
 }
 
 impl Default for TicketNft{
@@ -113,6 +115,8 @@ impl Default for TicketNft{
         _class_id:Default::default(),
         token_id:Default::default(),
         quantity:Default::default(),
+        ticket_id:Default::default(),
+        meeting_addr:Default::default(),
     }
     }
 }

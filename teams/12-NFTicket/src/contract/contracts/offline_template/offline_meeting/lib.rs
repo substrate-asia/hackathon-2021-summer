@@ -16,7 +16,7 @@ pub mod offline_meeting {
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
 	use ink_storage::{Lazy, collections::{HashMap as StorageMap, hashmap::Keys}, traits::{PackedLayout, SpreadLayout}};
-	use primitives::{MeetingError, MeetingStatus, Ticket, TicketNft};
+	use primitives::{MeetingError, MeetingStatus, TickedStatus, Ticket, TicketNft};
 	use scale::Encode;
 	use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
@@ -237,10 +237,8 @@ pub mod offline_meeting {
 			// 保证用户传送的金额必须大于票价
 			assert!(income >= ticket_price, "not enough money!");
 			// 生成ticke_id +1
-			let ticket_id = self
-				.ticket_id
-				.checked_add(1)
-				.expect("checked plus 1 error!");
+			self.ticket_id=self.ticket_id.checked_add(1).expect("checked plus 1 error!");
+			let ticket_id = self.ticket_id;
 			let ticket = Ticket::new(
 				self.template,
 				meeting_addr,
@@ -357,7 +355,7 @@ pub mod offline_meeting {
 			let price:Balance = match zone_op{
 				Some(zone)=>zone.price,
 				//用户可能忘记创建一个区域了.如果没有这个区域,则给一个默认价格,可以考虑给整个会议的单独价格.
-				None => 20000000000u128.into() 
+				None => 20_000_000u128.into() //大概是2NMT
 			};
 			price
 		}
@@ -484,8 +482,9 @@ pub mod offline_meeting {
 			// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap,确保二维码里面的这几个参数一定是该用户签名的,不是伪造的.
 			// let encode_data = scale::Encode::encode(&(class_id,token_id,time_stamp));
 			assert!(self.test_validate(user,encode_data, hash),"用户数据验证失败!");
+			let ticket_nft=self.user_NFT_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).unwrap();
 			//检查用户是否拥有对应的ticker.确保该用户对ticker的所有权
-			assert!(self.user_NFT_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).is_some(),"用户ticker不存在");
+			// assert!(ticket_nft.is_some(),"用户ticker不存在");
 			// 验证时间不会超出太久,以免别人拿着泄露的hash的二维码再次进行验票
 			let now:u64 = Self::env().block_timestamp();
 			assert!(time_stamp - now > 10*60*1000,"验票时间超时");
@@ -501,7 +500,9 @@ pub mod offline_meeting {
 					self.check_record_map.insert((class_id,token_id), v);
 				}
 			}
-			
+			let main_contract = &mut *self.main_stub;
+			main_contract.update_ticket_sell_status(user,ticket_nft.meeting_addr,ticket_nft.ticket_id,TickedStatus::Checked);
+			//修改
 			// 7. 触发事件 ticket_checked
 			Self::env().emit_event(InspectorValidateTicket{
 			    inspector:caller,

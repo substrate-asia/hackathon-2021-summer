@@ -6,7 +6,7 @@ use ink_lang as ink;
 #[ink::contract]
 mod stub {
     use ink_prelude::vec::Vec;
-    use primitives::{MeetingError, Ticket, TicketNft};
+    use primitives::{MeetingError, TickedStatus, Ticket, TicketNft};
 
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
@@ -19,7 +19,7 @@ mod stub {
     impl MainStub {
         
         #[ink(constructor)]
-        pub fn new(fee_taker: AccountId) -> Self {
+        pub fn new(_fee_taker: AccountId) -> Self {
             unimplemented!()
         }
 
@@ -35,18 +35,18 @@ mod stub {
         #[ink(message)]
         pub fn add_meeting(
             &mut self,
-            meeting_addr: AccountId,
-            creator:AccountId,
-            name: Vec<u8>,
-            desc: Vec<u8>,
-            poster: Vec<u8>,
-            uri: Vec<u8>,
-            start_time: u64,
-            end_time: u64,
-            start_sale_time: u64,
-            end_sale_time: u64,
-            publisher:Vec<u8>,//会议发起者
-            min_price:u128,     //最低价
+            _meeting_addr: AccountId,
+            _creator:AccountId,
+            _name: Vec<u8>,
+            _desc: Vec<u8>,
+            _poster: Vec<u8>,
+            _uri: Vec<u8>,
+            _start_time: u64,
+            _end_time: u64,
+            _start_sale_time: u64,
+            _end_sale_time: u64,
+            _publisher:Vec<u8>,//会议发起者
+            _min_price:u128,     //最低价
         ) -> Result<u32,MeetingError >{
             unimplemented!()
         }
@@ -61,12 +61,18 @@ mod stub {
         6. 触发事件： ticket_created
         */
         #[ink(message, payable)]
-        pub fn buy_ticket(&mut self,creator:AccountId, _ticket:Ticket,)->Result<TicketNft,MeetingError>{
+        pub fn buy_ticket(&mut self,_creator:AccountId, _ticket:Ticket,)->Result<TicketNft,MeetingError>{
             unimplemented!()
         }
 
         #[ink(message)]
         pub fn get_id(&self) -> u32 {
+            unimplemented!()
+        }
+
+        /// 修改ticket状态
+        #[ink(message)]
+        pub fn update_ticket_sell_status(&mut self,_user:AccountId,_meeting_addr: AccountId,_ticket_id:u32,_status:TickedStatus)->bool{
             unimplemented!()
         }
     }
