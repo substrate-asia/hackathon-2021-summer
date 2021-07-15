@@ -1,0 +1,2041 @@
+{
+  "metadataVersion": "0.1.0",
+  "source": {
+    "hash": "0x8fdbab062e477d2aeb56142ad1343595c10acec69ad395bad77a22d2ccde4c6d",
+    "language": "ink! 3.0.0-rc3",
+    "compiler": "rustc 1.55.0-nightly"
+  },
+  "contract": {
+    "name": "nfticket",
+    "version": "3.0.0-rc3",
+    "authors": [
+      "Parity Technologies <admin@parity.io>"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [],
+        "docs": [
+          "Creates a new ERC-20 contract with the specified initial supply."
+        ],
+        "name": [
+          "new"
+        ],
+        "selector": "0x9bae9d5e"
+      }
+    ],
+    "docs": [],
+    "events": [
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "template_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          }
+        ],
+        "docs": [
+          " 模板创建事件"
+        ],
+        "name": "TemplateAdded"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "template_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          }
+        ],
+        "docs": [
+          " 模板创建事件"
+        ],
+        "name": "TemplateModified"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "meeting_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "class_id",
+            "type": {
+              "displayName": [
+                "ClassId"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "docs": [
+          " 活动创建事件"
+        ],
+        "name": "MeetingAdded"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "meeting_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          }
+        ],
+        "docs": [
+          " 活动创建事件"
+        ],
+        "name": "MeetingModified"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "ticket",
+            "type": {
+              "displayName": [
+                "Ticket"
+              ],
+              "type": 31
+            }
+          }
+        ],
+        "docs": [
+          " 活动创建事件"
+        ],
+        "name": "TicketSelled"
+      },
+      {
+        "args": [
+          {
+            "docs": [],
+            "indexed": true,
+            "name": "owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "docs": [],
+            "indexed": false,
+            "name": "class_id",
+            "type": {
+              "displayName": [
+                "ClassId"
+              ],
+              "type": 2
+            }
+          }
+        ],
+        "docs": [],
+        "name": "CreateClassFromContract"
+      }
+    ],
+    "messages": [
+      {
+        "args": [
+          {
+            "name": "fee_rate",
+            "type": {
+              "displayName": [],
+              "type": 21
+            }
+          }
+        ],
+        "docs": [
+          " 更新费率"
+        ],
+        "mutates": true,
+        "name": [
+          "update_fee_rate"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 22
+        },
+        "selector": "0x8a268b92"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_fee_rate"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [],
+          "type": 21
+        },
+        "selector": "0xcf886b41"
+      },
+      {
+        "args": [
+          {
+            "name": "new_owner",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          }
+        ],
+        "docs": [
+          " Owner转移相关方法，可以更换主合约的控制人",
+          "验证操作人是否 owner;"
+        ],
+        "mutates": true,
+        "name": [
+          "owner_transfer"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 22
+        },
+        "selector": "0x70ac259e"
+      },
+      {
+        "args": [
+          {
+            "name": "template_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "desc",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "uri",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "ratio",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 10
+            }
+          }
+        ],
+        "docs": [
+          "\n        添加模板\n        1. 验证操作人是否 系统owner ;\n        2. 验证 address 是否有重复;\n        3. 调用模板合约的 get_controller 确认主控合约地址是将当前合约\n        4. 添加模板数据\n        5. 触发事件 template_added(AccountId, AccountId,)\n        "
+        ],
+        "mutates": true,
+        "name": [
+          "add_template"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 22
+        },
+        "selector": "0xc39c7d18"
+      },
+      {
+        "args": [
+          {
+            "name": "template_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "displayName": [
+                "TemplateStatus"
+              ],
+              "type": 19
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "set_template_status"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 22
+        },
+        "selector": "0x19b05713"
+      },
+      {
+        "args": [
+          {
+            "name": "template_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "desc",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "uri",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "ratio",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 10
+            }
+          }
+        ],
+        "docs": [
+          "\n        修改模板信息\n        1. 验证操作人是否系统 owner or 模板的 owner（需要通过 活动模板合约获取）\n        2. 验证模板是否有效\n        3. 触发事件 template_modified\n        "
+        ],
+        "mutates": true,
+        "name": [
+          "modify_template"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 22
+        },
+        "selector": "0xc00c9c69"
+      },
+      {
+        "args": [],
+        "docs": [
+          " 返回模板列表，可能需要考虑一套完整的方案，智能合约也许不能返回 hashMap"
+        ],
+        "mutates": false,
+        "name": [
+          "get_all_templates"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 23
+        },
+        "selector": "0xabf4bcd1"
+      },
+      {
+        "args": [
+          {
+            "name": "meeting_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "desc",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "poster",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "uri",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "start_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "end_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "start_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "end_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "publisher",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "min_price",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 10
+            }
+          }
+        ],
+        "docs": [
+          "\n        添加会议活动，仅限已登记并且处于激活状态的模板合约调用\n        1. 通过调用合约地址，确认是哪个模板\n        3. 确认活动地址是否重复，\n        4. 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止\n        5. 创建相应的 NFT 集合（调用 runtime 接口）\n        6. 添加活动信息\n        7. 触发事件 meeting_added\n        ",
+          " 创建活动,返回值nft classId,返回值可以不予理会,"
+        ],
+        "mutates": true,
+        "name": [
+          "add_meeting"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 24
+        },
+        "selector": "0x2dc5caaf"
+      },
+      {
+        "args": [
+          {
+            "name": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "metadata",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "description",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "properties",
+            "type": {
+              "displayName": [
+                "u8"
+              ],
+              "type": 6
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": true,
+        "name": [
+          "create_class"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 26
+        },
+        "selector": "0x34ffd3f0"
+      },
+      {
+        "args": [
+          {
+            "name": "class_id",
+            "type": {
+              "displayName": [
+                "ClassId"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "name": "token_id",
+            "type": {
+              "displayName": [
+                "TokenId"
+              ],
+              "type": 15
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "tokens"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [],
+          "type": 29
+        },
+        "selector": "0xa8b5b8ba"
+      },
+      {
+        "args": [],
+        "docs": [
+          " 返回活动列表"
+        ],
+        "mutates": false,
+        "name": [
+          "get_all_meeting"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 30
+        },
+        "selector": "0x1803c196"
+      },
+      {
+        "args": [
+          {
+            "name": "meeeting_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_class_id"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "u32"
+          ],
+          "type": 2
+        },
+        "selector": "0x280c0b50"
+      },
+      {
+        "args": [
+          {
+            "name": "meeting_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "displayName": [
+                "MeetingStatus"
+              ],
+              "type": 16
+            }
+          }
+        ],
+        "docs": [
+          "\n        修改活动状态，（仅限已登记的活动合约调用）\n        1. 通过调用合约地址，确认是哪个活动\n        2. 更新状态\n        3. 触发 meeting_status_changed 事件\n        4. 如果状态和先前状态一致，仍然返回 true ，只是不触发事件\n        "
+        ],
+        "mutates": true,
+        "name": [
+          "set_meeting_status"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 22
+        },
+        "selector": "0x17b7fb1d"
+      },
+      {
+        "args": [
+          {
+            "name": "meeting_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "desc",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "poster",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "uri",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "start_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "end_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "start_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "end_sale_time",
+            "type": {
+              "displayName": [
+                "u64"
+              ],
+              "type": 15
+            }
+          },
+          {
+            "name": "publisher",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 14
+            }
+          },
+          {
+            "name": "min_price",
+            "type": {
+              "displayName": [
+                "u128"
+              ],
+              "type": 10
+            }
+          }
+        ],
+        "docs": [
+          "\n        修改活动信息（ 仅 活动的 owner 可以调用 ）\n        1. 通过调用合约地址，确认活动\n        2. 需要验证:(1)名称必须有;(2)几个时间的合理性：开始时间必须比结束时间早，活动结束后，售卖应该停止\n        3. 更新信息；\n        4. 触发 meeting_modified 事件\n        5. 更新成功，返回 true\n        "
+        ],
+        "mutates": true,
+        "name": [
+          "modify_meeting"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 22
+        },
+        "selector": "0xeef1f1b6"
+      },
+      {
+        "args": [
+          {
+            "name": "creator",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "_ticket",
+            "type": {
+              "displayName": [
+                "Ticket"
+              ],
+              "type": 31
+            }
+          }
+        ],
+        "docs": [
+          "",
+          " 购买门票",
+          " 3. 通过调用的活动合约地址，知道是哪个活动，知道是哪个模板生成的，给相应的模板记分成收入；",
+          " 4. 调用 runtime 的 NFT 创建接口，创建门票 NFT，并将门票NFT发放给 buyer",
+          " 5. 返回创建的 class_id 和 NFT_ID的元组",
+          " 6. 触发事件： ticket_created"
+        ],
+        "mutates": true,
+        "name": [
+          "buy_ticket"
+        ],
+        "payable": true,
+        "returnType": {
+          "displayName": [
+            "Result"
+          ],
+          "type": 33
+        },
+        "selector": "0xb1dc989b"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "test_block_time"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "u64"
+          ],
+          "type": 15
+        },
+        "selector": "0x35ee161d"
+      }
+    ]
+  },
+  "storage": {
+    "struct": {
+      "fields": [
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                              "ty": 1
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0100000001000000000000000000000000000000000000000000000000000000",
+                                          "ty": 3
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0200000000000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0200000001000000000000000000000000000000000000000000000000000000",
+                          "ty": 8
+                        }
+                      },
+                      "offset": "0x0100000001000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "template_hash_address_map"
+        },
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0200000001000000000000000000000000000000000000000000000000000000",
+              "ty": 9
+            }
+          },
+          "name": "owner"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "cell": {
+                      "key": "0x0300000001000000000000000000000000000000000000000000000000000000",
+                      "ty": 10
+                    }
+                  },
+                  "name": null
+                },
+                {
+                  "layout": {
+                    "cell": {
+                      "key": "0x0400000001000000000000000000000000000000000000000000000000000000",
+                      "ty": 10
+                    }
+                  },
+                  "name": null
+                }
+              ]
+            }
+          },
+          "name": "fee_rate"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0500000001000000000000000000000000000000000000000000000000000000",
+                              "ty": 1
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0600000001000000000000000000000000000000000000000000000000000000",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0600000002000000000000000000000000000000000000000000000000000000",
+                                          "ty": 11
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0700000001000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0700000002000000000000000000000000000000000000000000000000000000",
+                          "ty": 12
+                        }
+                      },
+                      "offset": "0x0600000002000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "meeting_map"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0700000002000000000000000000000000000000000000000000000000000000",
+                              "ty": 1
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0800000002000000000000000000000000000000000000000000000000000000",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0800000003000000000000000000000000000000000000000000000000000000",
+                                          "ty": 11
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0900000002000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0900000003000000000000000000000000000000000000000000000000000000",
+                          "ty": 17
+                        }
+                      },
+                      "offset": "0x0800000003000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "template_map"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0900000003000000000000000000000000000000000000000000000000000000",
+                              "ty": 1
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0a00000003000000000000000000000000000000000000000000000000000000",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0a00000004000000000000000000000000000000000000000000000000000000",
+                                          "ty": 11
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0b00000003000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0b00000004000000000000000000000000000000000000000000000000000000",
+                          "ty": 20
+                        }
+                      },
+                      "offset": "0x0a00000004000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "classid_map"
+        }
+      ]
+    }
+  },
+  "types": [
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "last_vacant",
+              "type": 2,
+              "typeName": "Index"
+            },
+            {
+              "name": "len",
+              "type": 2,
+              "typeName": "u32"
+            },
+            {
+              "name": "len_entries",
+              "type": 2,
+              "typeName": "u32"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Header"
+      ]
+    },
+    {
+      "def": {
+        "primitive": "u32"
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 7,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 4,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        4
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 5,
+              "typeName": "[u8; 32]"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_env",
+        "types",
+        "Hash"
+      ]
+    },
+    {
+      "def": {
+        "array": {
+          "len": 32,
+          "type": 6
+        }
+      }
+    },
+    {
+      "def": {
+        "primitive": "u8"
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "next",
+              "type": 2,
+              "typeName": "Index"
+            },
+            {
+              "name": "prev",
+              "type": 2,
+              "typeName": "Index"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "VacantEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 9,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 2,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        9
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 5,
+              "typeName": "[u8; 32]"
+            }
+          ]
+        }
+      },
+      "path": [
+        "ink_env",
+        "types",
+        "AccountId"
+      ]
+    },
+    {
+      "def": {
+        "primitive": "u128"
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 7,
+                  "typeName": "VacantEntry"
+                }
+              ],
+              "name": "Vacant"
+            },
+            {
+              "fields": [
+                {
+                  "type": 9,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Occupied"
+            }
+          ]
+        }
+      },
+      "params": [
+        9
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "stash",
+        "Entry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 13,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 2,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        13
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "meeting_addr",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "name",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "desc",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "poster",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "uri",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "start_time",
+              "type": 15,
+              "typeName": "u64"
+            },
+            {
+              "name": "end_time",
+              "type": 15,
+              "typeName": "u64"
+            },
+            {
+              "name": "start_sale_time",
+              "type": 15,
+              "typeName": "u64"
+            },
+            {
+              "name": "end_sale_time",
+              "type": 15,
+              "typeName": "u64"
+            },
+            {
+              "name": "status",
+              "type": 16,
+              "typeName": "MeetingStatus"
+            },
+            {
+              "name": "publisher",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "min_price",
+              "type": 10,
+              "typeName": "u128"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "Meeting"
+      ]
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 6
+        }
+      }
+    },
+    {
+      "def": {
+        "primitive": "u64"
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "discriminant": 0,
+              "name": "Active"
+            },
+            {
+              "discriminant": 1,
+              "name": "Stop"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "MeetingStatus"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 18,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 2,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        18
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "template_addr",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "name",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "desc",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "uri",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "ratio",
+              "type": 10,
+              "typeName": "u128"
+            },
+            {
+              "name": "status",
+              "type": 19,
+              "typeName": "TemplateStatus"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "Template"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "discriminant": 0,
+              "name": "Active"
+            },
+            {
+              "discriminant": 1,
+              "name": "Stop"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "TemplateStatus"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 2,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 2,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        2
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          10,
+          10
+        ]
+      }
+    },
+    {
+      "def": {
+        "primitive": "bool"
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 18
+        }
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 2,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Ok"
+            },
+            {
+              "fields": [
+                {
+                  "type": 25,
+                  "typeName": "E"
+                }
+              ],
+              "name": "Err"
+            }
+          ]
+        }
+      },
+      "params": [
+        2,
+        25
+      ],
+      "path": [
+        "Result"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "discriminant": 0,
+              "name": "NotOwner"
+            },
+            {
+              "discriminant": 1,
+              "name": "CallBuyTickerError"
+            },
+            {
+              "discriminant": 2,
+              "name": "TransferError"
+            },
+            {
+              "discriminant": 3,
+              "name": "NftCallerError"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "MeetingError"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 27,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Ok"
+            },
+            {
+              "fields": [
+                {
+                  "type": 28,
+                  "typeName": "E"
+                }
+              ],
+              "name": "Err"
+            }
+          ]
+        }
+      },
+      "params": [
+        27,
+        28
+      ],
+      "path": [
+        "Result"
+      ]
+    },
+    {
+      "def": {
+        "tuple": []
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "discriminant": 0,
+              "name": "Fail"
+            }
+          ]
+        }
+      },
+      "path": [
+        "nftmart_contract",
+        "NFTMartErr"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          14,
+          15,
+          2
+        ]
+      }
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 13
+        }
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "template_addr",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "meeting",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "hash",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "price",
+              "type": 10,
+              "typeName": "u128"
+            },
+            {
+              "name": "zone_id",
+              "type": 6,
+              "typeName": "u8"
+            },
+            {
+              "name": "seat_id",
+              "type": 32,
+              "typeName": "(u32, u32)"
+            },
+            {
+              "name": "ticket_id",
+              "type": 2,
+              "typeName": "u32"
+            },
+            {
+              "name": "buyer",
+              "type": 9,
+              "typeName": "AccountId"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "Ticket"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "fields": [
+                {
+                  "type": 34,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Ok"
+            },
+            {
+              "fields": [
+                {
+                  "type": 25,
+                  "typeName": "E"
+                }
+              ],
+              "name": "Err"
+            }
+          ]
+        }
+      },
+      "params": [
+        34,
+        25
+      ],
+      "path": [
+        "Result"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "_class_owner",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "_ticket_owner",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "_class_id",
+              "type": 2,
+              "typeName": "u32"
+            },
+            {
+              "name": "token_id",
+              "type": 15,
+              "typeName": "u64"
+            },
+            {
+              "name": "quantity",
+              "type": 15,
+              "typeName": "u64"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "TicketNft"
+      ]
+    }
+  ]
+}
