@@ -19,7 +19,8 @@ import {parseMoneyText} from '../../utils/formart.js'
 class ActivityDetail extends Component {
 
     state={
-        maxMoney:""
+        maxMoney:"",
+        zoom:[]
     }
 
     async componentDidMount() {
@@ -31,7 +32,6 @@ class ActivityDetail extends Component {
         getZone(meeting_addr,(result) =>{
             console.log("--------getZone-----------")
             //获取
-            // console.log(result)
             var max = result.reduce((obj1,obj2) =>{
                 return obj1[1].price > obj2[1].price ? obj1 :obj2
             })
@@ -39,16 +39,15 @@ class ActivityDetail extends Component {
             const {value}=parseMoneyText(moeny)
             this.setState(
                 {
-                    maxMoney:value.toString()
+                    maxMoney:value.toString(),
+                    zoom:result
                 }
             )
-            console.log()
             console.log("--------getZone end-----------")
         })
     }
     render() {
         const data= this.props.location.state
-        // console.log("xujie:",data)
         var {name,desc,meeting_addr,start_time} = data
         //搜索框高度
         const searchbarHeight = 45;
@@ -58,6 +57,14 @@ class ActivityDetail extends Component {
         const accountInfoHeight = 42;
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
         const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight;
+        var zoomList = this.state.zoom
+        var path={
+            pathname:'/Home/ConfirmVector',
+            state:{
+                data,
+                zoomList
+            }
+         }
 
         return (
             <div className={styles.activityDetail}>
@@ -104,33 +111,11 @@ class ActivityDetail extends Component {
                             <span className={styles.actionName}>Discription</span>
                             <div className={styles.descContent}>
                                 <span className={styles.descInfo}>
-                                {/* Taylor Alison Swift (born December 13, 1989) is an 
-                                American singer-songwriter. Her narrative lyricism, 
-                                which often takes inspiration from her personal life 
-                                and experiences, has received widespread critical 
-                                praise and media coverage.
-
-                                <div className={styles.contentline}></div>
-                                Born in West Reading, Pennsylvania, Swift relocated 
-                                to Nashville, Tennessee in 2004, to pursue a career 
-                                in country music. She broke into the country music 
-                                scene with her eponymous debut studio album in 
-                                2006, which included the singles "Teardrops on My 
-                                Guitar" and "Our Song". Swift rose to mainstream 
-                                prominence with her second studio album, Fearless 
-                                (2008), a country pop record with crossover appeal. 
-                                Aided by the top-five singles "Love Story" and "You 
-                                Belong with Me", Fearless was certified Diamond by 
-                                the Recording Industry Association of America 
-                                (RIAA). Swift's third studio album, Speak Now (2010), 
-                                blended country-pop with elements of rock and 
-                                featured the top-ten singles "Mine" and "Back to 
-                                December". */}
                                   {desc}
                                 </span>
                             </div>
                             {/** 购买按钮 */}
-                            <Button type="primary" className={styles.buyTicket} onClick={() => this.props.history.push('/Home/ConfirmVector')}>Buy Ticket</Button>
+                            <Button type="primary" className={styles.buyTicket} onClick={() => this.props.history.push(path)}>Buy Ticket</Button>
                         </div>
                     </div>
                 </Flex>

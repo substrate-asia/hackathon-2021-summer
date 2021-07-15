@@ -8,8 +8,10 @@ import site from '../../images/icon_site.png'
 import { Button,Flex } from 'antd-mobile'
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
+import {parseMoneyText} from '../../utils/formart.js'
 //action
 import { setBottomstatusAction } from '../../store/action/App';
+import {buyTicket} from '../../api/polka';
 
 class Payment extends Component {
 
@@ -17,8 +19,24 @@ class Payment extends Component {
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
     }
+
+    buyTickt= async(zoomId,rows,cols,price) =>{
+        console.log("点击了购买按钮",price)
+        buyTicket(zoomId,rows,cols,price,(result) =>{
+            console.log("-----Payment start------")
+            console.log(result);
+            this.props.history.push('/Sort')
+            console.log("-----Payment end------")
+        })
+    }
+
     render() {
-        
+        const { data ,max}= this.props.location.state
+        var {name,meeting_addr,start_time} = data
+        var userAddress=localStorage.getItem('nft-address-hex')
+        var moeny = max[1].price;
+        console.log(max)
+        const {value}=parseMoneyText(moeny)
         //搜索框高度
         const searchbarHeight = 45;
         //空白区域高度
@@ -37,40 +55,40 @@ class Payment extends Component {
                         <div className={styles.wrapperContent}>
                             
                             {/** 活动名称 */}
-                            <h1 className={styles.detailName}>Event Name</h1>
+                            <h1 className={styles.detailName}>{name}</h1>
                             {/** 地址 */}
                             <div className={styles.addressView}>
                                 <img src={address} className={styles.addressIcon}></img>
-                                <span className={styles.addressText}>Location detail</span>
+                                <span className={styles.addressText}>{meeting_addr}</span>
                             </div>
                             {/** 日期*/}
                             <div className={styles.addressView}>
                                 <img src={time} className={styles.timeIcon}></img>
-                                <span className={styles.timeText}>Date + start time</span>
+                                <span className={styles.timeText}>{start_time}</span>
                             </div>
                             <div className={styles.priceView}>
                                 <img src={user} className={styles.timeIcon}></img>
-                                <span className={styles.timeText}>Buyer's username</span>
+                                <span className={styles.timeText}>{userAddress}</span>
                             </div>
                             {/*** 票的信息 */}
                             <div className={styles.kuang}>
                                 <div className={styles.rowline}>
                                     <img src={site} alt="" className={styles.site}></img>
                                     <span className={styles.siteLable}>Row 5,17</span>
-                                    <span className={styles.sitePrice}>300 NMT</span>
+                                    <span className={styles.sitePrice}>{value.toString()} NMT</span>
                                 </div>
-                                <div className={styles.rowline}>
+                                {/* <div className={styles.rowline}>
                                     <img src={site} alt="" className={styles.site}></img>
                                     <span className={styles.siteLable}>Row 5,17</span>
                                     <span className={styles.sitePrice}>300 NMT</span>
-                                </div>
+                                </div> */}
                                 <div className={styles.dottedView}>
                                     <div className={styles.dottedLine}></div>
                                 </div>
                                 <div className={styles.ticketPriceView}>
                                     <span className={styles.priceLable}>Price</span>
                                     <div className={styles.unitLable}>
-                                        <span className={styles.unitLable1}>600</span>
+                                        <span className={styles.unitLable1}>{value.toString()}</span>
                                         <span className={styles.unitLable2}>NMT</span>
                                     </div>
                                 </div>
@@ -94,9 +112,9 @@ class Payment extends Component {
                     {/** 付款金额 */}
                     <div className={styles.paymentView}>
                         <span className={styles.totalLable}>Total:</span>
-                        <span className={styles.moneyLable}>600</span>
+                        <span className={styles.moneyLable}>{value.toString()}</span>
                         <span className={styles.unitLable}>NMT</span>
-                        <Button className={styles.payBtn}>Pay Now</Button>
+                        <Button className={styles.payBtn} onClick={() => this.buyTickt(max[0],max[1].rows,max[1].cols,max[1].price)}>Pay Now</Button>
                     </div>
                 </Flex>
 

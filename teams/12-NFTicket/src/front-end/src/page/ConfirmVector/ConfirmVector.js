@@ -10,13 +10,48 @@ import huangvector from '../../images/vector/HuangVector.png'
 import stage from '../../images/desk/Rectangle5.png'
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
+import {parseMoneyText} from '../../utils/formart.js'
 //action
 import { setBottomstatusAction } from '../../store/action/App';
 
 class ConfirmVector extends Component{
+
+    state={
+        maxMoney:"",
+    }
+
     componentDidMount() {
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
+        const {zoomList}= this.props.location.state
+        console.log("选座位的页面-----start------")
+        console.log(zoomList)
+        //找一个最大值
+        var max = zoomList.reduce((obj1,obj2) =>{
+            return obj1[1].price > obj2[1].price ? obj1 :obj2
+        })
+        var moeny = max[1].price;
+        const {value}=parseMoneyText(moeny)
+        this.setState({
+            maxMoney:value.toString()
+        })
+        console.log()
+    }
+    
+    comfirmTicket=() =>{
+        //
+        const { data ,zoomList}= this.props.location.state
+        var max = zoomList.reduce((obj1,obj2) =>{
+            return obj1[1].price > obj2[1].price ? obj1 :obj2
+        })
+        var path={
+            pathname:'/Home/Payment',
+            state:{
+                data,
+                max
+            }
+         }
+        this.props.history.push(path)
     }
     render() {
         
@@ -29,7 +64,8 @@ class ConfirmVector extends Component{
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
         const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight;
 
-
+        const { data }= this.props.location.state
+        var {name,start_time} = data
         var str1=[];
         for(let i=0;i<12;i++){
             str1.push(<img src={hongvector} onClick={()=>{alert("360")}}/>)
@@ -59,10 +95,10 @@ class ConfirmVector extends Component{
                     <div className={styles.contant}>
                     <WhiteSpace/>
                     <div className={styles.flexcontent}>
-                        <div className={styles.title}><span>Event Name</span></div>
+                        <div className={styles.title}><span>{name}</span></div>
                         <div className={styles.title2}>
                             <img src={time} className={styles.timeIcon}></img>
-                            <span className={styles.timeText}>Date + Start time</span>
+                            <span className={styles.timeText}>{start_time}</span>
                         </div>
                         {/* 四种座位 */}
                         <div className={styles.vector4}>
@@ -170,15 +206,15 @@ class ConfirmVector extends Component{
                 </div>
                 <div className={styles.bottomconfirm}>
                     <div className={styles.bottomleft}>
-                        <div className={styles.bottomleftspan1}><span>0</span></div>
+                        <div className={styles.bottomleftspan1}><span>{this.state.maxMoney}</span></div>
                         <div className={styles.bottomleftspan2}><span>NMT</span></div>
-                        <div className={styles.bottomleftspan3}><span>0</span></div>
+                        <div className={styles.bottomleftspan3}><span>1</span></div>
                         <div className={styles.bottomleftspan4}><span>ticket</span></div>
                     </div>
                     <div className={styles.bottomright}>
                         {/** 确认按钮 */}
                         <Button type="primary" inline size="small"
-                            onClick={() => this.props.history.push('/Home/Payment')}
+                            onClick={() => this.comfirmTicket()}
                             style={{ borderRadius:'30px',width:'128px',height:'31px',margin: '20px' }}>
                             Confirm
                         </Button>

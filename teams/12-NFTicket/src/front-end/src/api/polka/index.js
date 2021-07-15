@@ -169,5 +169,37 @@ export const getZone = async (address,cb) =>{
   }
 }
 
+//买票
+export const buyTicket = async (mZoneId,mRows,mCols,mPrice,cb) =>{
+  console.log("buyTicket---start")
+  var money=mPrice.replace(/,/g, '')
+  console.log(money)
+  const value = money;//价钱不够会报(13个0(对应合约里的price)--Contract trapped during execution.)
+  const gasLimit=-1;//300000n * 1000000n;//gas不够会报(The executed contract exhausted its gas limit.)
+  const alicePair = keyring.addFromUri('//Alice');
+  const zoneId = mZoneId;
+  const rows=mRows;
+  const cols=mCols;
+  const seatId = (rows,cols);
+  let params = [];
+  params.push(zoneId,seatId)
+  meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+  await meeting_contract.tx
+  .buyTicket({ gasLimit,value },
+    ...params)
+  .signAndSend(alicePair, (result) => {
+    if (result.status.isInBlock) {
+      console.log('线下会议测试买票 buyTicket- ->--正在提交到链上');
+    } else if (result.status.isFinalized) {
+      console.log('线下会议测试买票 buyTicket- ->--交易确认');
+      if(cb) cb(result.toHuman())
+      console.log(result.toHuman())
+    }
+  });
+
+
+
+
+}
 
 
