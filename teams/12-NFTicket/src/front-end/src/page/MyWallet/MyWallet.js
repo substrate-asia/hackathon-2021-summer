@@ -9,7 +9,7 @@ import { setTokenAction, setUsernameAction, setBottomstatusAction } from '../../
 
 import RecordView from '../../component/RecordView/RecordView';
 
-import {initPolkadotApi,getBalance,regBalanceEvent,regEvent} from '../../api/polka'
+import {initPolkadotApi,getBalance,regBalanceEvent} from '../../api/polka'
 
 
 class MyWallet extends Component {
@@ -20,6 +20,7 @@ class MyWallet extends Component {
      componentDidMount() {
         initPolkadotApi( async () =>{
             const res =await getBalance(localStorage.getItem("nft-address"))
+            console.log("xujie:::::::>>>>>",res)
             if(res!=null){
                 regBalanceEvent(localStorage.getItem("nft-address"),(mAccount) =>{
                    this.setState({
@@ -30,7 +31,6 @@ class MyWallet extends Component {
                     account:res.free
                 })
             }
-            regEvent()
         })
     }
     render() {

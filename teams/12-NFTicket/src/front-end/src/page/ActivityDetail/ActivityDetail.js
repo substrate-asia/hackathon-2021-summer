@@ -14,26 +14,37 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 //action
 import { setBottomstatusAction } from '../../store/action/App';
-import {initPolkadotApi,getZone} from '../../api/polka'
-
+import {getZone} from '../../api/polka'
+import {parseMoneyText} from '../../utils/formart.js'
 class ActivityDetail extends Component {
 
-   
-   
+    state={
+        maxMoney:""
+    }
 
-    componentDidMount() {
+    async componentDidMount() {
         const wrapper = document.querySelector('.wrapper')
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
         const data= this.props.location.state
         var {meeting_addr} = data
-        initPolkadotApi( async () =>{
-           getZone(meeting_addr,(result) =>{
+        getZone(meeting_addr,(result) =>{
             console.log("--------getZone-----------")
-            console.log(result)
+            //获取
+            // console.log(result)
+            var max = result.reduce((obj1,obj2) =>{
+                return obj1[1].price > obj2[1].price ? obj1 :obj2
+            })
+            var moeny = max[1].price;
+            const {value}=parseMoneyText(moeny)
+            this.setState(
+                {
+                    maxMoney:value.toString()
+                }
+            )
+            console.log()
             console.log("--------getZone end-----------")
-           })
-          })
+        })
     }
     render() {
         const data= this.props.location.state
@@ -77,7 +88,7 @@ class ActivityDetail extends Component {
                             {/** 金额*/}
                             <div className={styles.priceView}>
                                 <img src={price} className={styles.timeIcon}></img>
-                                <span className={styles.priceText}>180-360</span>
+                                <span className={styles.priceText}>0-{this.state.maxMoney}</span>
                                 <span className={styles.priceUnitText}>NMT</span>
                             </div>
                             {/** 活动的主办单位信息 */}
