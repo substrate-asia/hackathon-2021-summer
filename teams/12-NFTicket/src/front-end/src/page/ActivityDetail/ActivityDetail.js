@@ -14,28 +14,31 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 //action
 import { setBottomstatusAction } from '../../store/action/App';
-
+import {initPolkadotApi,getZone} from '../../api/polka'
 
 class ActivityDetail extends Component {
 
    
+   
 
     componentDidMount() {
         const wrapper = document.querySelector('.wrapper')
-        // const scroll = new BScroll(wrapper, { click: true, scrollY: true })
-
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
-       
-
+        const data= this.props.location.state
+        var {meeting_addr} = data
+        initPolkadotApi( async () =>{
+           getZone(meeting_addr,(result) =>{
+            console.log("--------getZone-----------")
+            console.log(result)
+            console.log("--------getZone end-----------")
+           })
+          })
     }
-
-    
     render() {
-        var data= this.props.location.state
+        const data= this.props.location.state
         // console.log("xujie:",data)
         var {name,desc,meeting_addr,start_time} = data
-     
         //搜索框高度
         const searchbarHeight = 45;
         //空白区域高度

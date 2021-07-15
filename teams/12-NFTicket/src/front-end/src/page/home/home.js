@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ListView } from 'antd-mobile';
-// import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -31,8 +30,10 @@ import tem_abi from './temmetadata.json'
 import main_abi from './mainmetadata.json'
 import meeting_abi from './meetingmetadata.json'
 import test_abi from './testmetadata.json'
-import { stringToU8a, u8aToHex } from '@polkadot/util';
 import { Keyring } from '@polkadot/keyring'
+
+
+import {initPolkadotApi,getAllMeeting} from '../../api/polka'
 
 
 const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
@@ -115,139 +116,154 @@ class Home extends Component {
     this.props.actions.setToken(tokendata);
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
+    //获取链上会议列表
+    initPolkadotApi( async () =>{
+      getAllMeeting((result) =>{
+        console.log("--------getAllMeeting-----------")
+        setTimeout(() => {
+          this.rData = result;
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(this.rData),
+            isLoading: false,
+          });
+        }, 200);
+        console.log("--------getAllMeeting end-----------")
+     })
+    })
+
 
     //调用NFTMart区块链测试网
-    const provider = new WsProvider('wss://test-chain.bcdata.top');
-    const types = {
-      Properties: 'u8',
-      NFTMetadata: 'Vec<u8>',
-      BlockNumber: 'u32',
-      BlockNumberOf: 'BlockNumber',
-      BlockNumberFor: 'BlockNumber',
-      GlobalId: 'u64',
-      CurrencyId: 'u32',
-      CurrencyIdOf: 'CurrencyId',
-      Amount: 'i128',
-      AmountOf: 'Amount',
-      CategoryId: 'u32',
-      CategoryIdOf: 'CategoryId',
-      ClassId: 'u32',
-      ClassIdOf: 'ClassId',
-      TokenId: 'u64',
-      TokenIdOf: 'TokenId',
+    // const provider = new WsProvider('wss://test-chain.bcdata.top');
+    // const types = {
+    //   Properties: 'u8',
+    //   NFTMetadata: 'Vec<u8>',
+    //   BlockNumber: 'u32',
+    //   BlockNumberOf: 'BlockNumber',
+    //   BlockNumberFor: 'BlockNumber',
+    //   GlobalId: 'u64',
+    //   CurrencyId: 'u32',
+    //   CurrencyIdOf: 'CurrencyId',
+    //   Amount: 'i128',
+    //   AmountOf: 'Amount',
+    //   CategoryId: 'u32',
+    //   CategoryIdOf: 'CategoryId',
+    //   ClassId: 'u32',
+    //   ClassIdOf: 'ClassId',
+    //   TokenId: 'u64',
+    //   TokenIdOf: 'TokenId',
 
-      OrmlAccountData: {
-        free: 'Balance',
-        reserved: 'Balance',
-        frozen: 'Balance',
-      },
+    //   OrmlAccountData: {
+    //     free: 'Balance',
+    //     reserved: 'Balance',
+    //     frozen: 'Balance',
+    //   },
 
-      OrmlBalanceLock: {
-        amount: 'Balance',
-        id: 'LockIdentifier'
-      },
+    //   OrmlBalanceLock: {
+    //     amount: 'Balance',
+    //     id: 'LockIdentifier'
+    //   },
 
-      ClassInfoOf: {
-        metadata: 'NFTMetadata',
-        totalIssuance: 'Compact<TokenId>',
-        owner: 'AccountId',
-        data: 'ClassData'
-      },
+    //   ClassInfoOf: {
+    //     metadata: 'NFTMetadata',
+    //     totalIssuance: 'Compact<TokenId>',
+    //     owner: 'AccountId',
+    //     data: 'ClassData'
+    //   },
 
-      ClassData: {
-        deposit: 'Compact<Balance>',
-        properties: 'Properties',
-        name: 'Vec<u8>',
-        description: 'Vec<u8>',
-        createBlock: 'Compact<BlockNumberOf>'
-      },
+    //   ClassData: {
+    //     deposit: 'Compact<Balance>',
+    //     properties: 'Properties',
+    //     name: 'Vec<u8>',
+    //     description: 'Vec<u8>',
+    //     createBlock: 'Compact<BlockNumberOf>'
+    //   },
 
-      TokenInfoOf: {
-        metadata: 'NFTMetadata',
-        data: 'TokenData',
-        quantity: 'Compact<TokenId>',
-      },
+    //   TokenInfoOf: {
+    //     metadata: 'NFTMetadata',
+    //     data: 'TokenData',
+    //     quantity: 'Compact<TokenId>',
+    //   },
 
-      TokenData: {
-        deposit: 'Compact<Balance>',
-        createBlock: 'Compact<BlockNumberOf>',
-        royalty: 'bool',
-        creator: 'AccountId',
-        royalty_beneficiary: 'AccountId',
-      },
+    //   TokenData: {
+    //     deposit: 'Compact<Balance>',
+    //     createBlock: 'Compact<BlockNumberOf>',
+    //     royalty: 'bool',
+    //     creator: 'AccountId',
+    //     royalty_beneficiary: 'AccountId',
+    //   },
 
-      AccountToken: {
-        quantity: 'Compact<TokenId>',
-        reserved: 'Compact<TokenId>',
-      },
+    //   AccountToken: {
+    //     quantity: 'Compact<TokenId>',
+    //     reserved: 'Compact<TokenId>',
+    //   },
 
-      CategoryData: {
-        metadata: 'NFTMetadata',
-        nftCount: 'Compact<Balance>'
-      },
+    //   CategoryData: {
+    //     metadata: 'NFTMetadata',
+    //     nftCount: 'Compact<Balance>'
+    //   },
 
-      OrderItem: {
-        classId: 'Compact<ClassId>',
-        tokenId: 'Compact<TokenId>',
-        quantity: 'Compact<TokenId>',
-      },
+    //   OrderItem: {
+    //     classId: 'Compact<ClassId>',
+    //     tokenId: 'Compact<TokenId>',
+    //     quantity: 'Compact<TokenId>',
+    //   },
 
-      OrderOf: {
-        currencyId: 'Compact<CurrencyId>',
-        deposit: 'Compact<Balance>',
-        price: 'Compact<Balance>',
-        deadline: 'Compact<BlockNumberOf>',
-        categoryId: 'Compact<CategoryId>',
-        items: 'Vec<OrderItem>',
-      },
+    //   OrderOf: {
+    //     currencyId: 'Compact<CurrencyId>',
+    //     deposit: 'Compact<Balance>',
+    //     price: 'Compact<Balance>',
+    //     deadline: 'Compact<BlockNumberOf>',
+    //     categoryId: 'Compact<CategoryId>',
+    //     items: 'Vec<OrderItem>',
+    //   },
 
-      OfferOf: {
-        currencyId: 'Compact<CurrencyId>',
-        price: 'Compact<Balance>',
-        deadline: 'Compact<BlockNumberOf>',
-        categoryId: 'Compact<CategoryId>',
-        items: 'Vec<OrderItem>',
-      },
+    //   OfferOf: {
+    //     currencyId: 'Compact<CurrencyId>',
+    //     price: 'Compact<Balance>',
+    //     deadline: 'Compact<BlockNumberOf>',
+    //     categoryId: 'Compact<CategoryId>',
+    //     items: 'Vec<OrderItem>',
+    //   },
 
-      //Vec<(u8, Zone) Zone -- name: Vec<u8>, rows: u32, cols: u32, price: Balance
-      Zone:{
-        name:'Vec<u8>',
-        rows:'u32',
-        cols:'u32',
-        price:'Balance',
-      },
+    //   //Vec<(u8, Zone) Zone -- name: Vec<u8>, rows: u32, cols: u32, price: Balance
+    //   Zone:{
+    //     name:'Vec<u8>',
+    //     rows:'u32',
+    //     cols:'u32',
+    //     price:'Balance',
+    //   },
 
-      ZoneItem:{
-        zoneKeys:'u8',
-        zoneValues:'Zone',
-      },
+    //   ZoneItem:{
+    //     zoneKeys:'u8',
+    //     zoneValues:'Zone',
+    //   },
 
-      ZoneOf:{
-        zoneItems:'Vec<ZoneItem>',
-      }
-    };
-    const api = await ApiPromise.create({ provider, types });
+    //   ZoneOf:{
+    //     zoneItems:'Vec<ZoneItem>',
+    //   }
+    // };
+    // const api = await ApiPromise.create({ provider, types });
 
-    const [chain, nodeName, nodeVersion] = await Promise.all([
-      api.rpc.system.chain(),
-      api.rpc.system.name(),
-      api.rpc.system.version()
-    ]);
+    // // const [chain, nodeName, nodeVersion] = await Promise.all([
+    // //   api.rpc.system.chain(),
+    // //   api.rpc.system.name(),
+    // //   api.rpc.system.version()
+    // // ]);
 
-    console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
-    if (api != null) {
-      tem_contract = new ContractPromise(api, tem_abi, tem_address);
-      main_contract = new ContractPromise(api, main_abi, main_address);
-      meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
-      test_contract = new ContractPromise(api, test_abi, test_address);
+    // // console.log(`You are connected to chain ${chain} using ${nodeName} v${nodeVersion}`);
+    // if (api != null) {
+    //   tem_contract = new ContractPromise(api, tem_abi, tem_address);
+    //   main_contract = new ContractPromise(api, main_abi, main_address);
+    //   meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+    //   test_contract = new ContractPromise(api, test_abi, test_address);
 
-      //获取链上会议列表
-      await this.getAllMeeting(api)
-      //测试模板合约创建会议
-      await this.getTem_Contract(api)
-      //测试线下会议购票
-      await this.meeting_BuyTicket(api)
-    }
+      
+    //   //测试模板合约创建会议
+    //   await this.getTem_Contract(api)
+    //   //测试线下会议购票
+    //   await this.meeting_BuyTicket(api)
+    // }
+  
   }
 
   async getTem_Contract(api) {
@@ -396,31 +412,6 @@ class Home extends Component {
       }
     }  
 
-  }
-  /**
-   * 获取所有的会议
-   */
-  async getAllMeeting(api) {
-    console.log("getAllMeeting---start")
-    const value = 0;
-    const gasLimit = -1;//不限制gas
-    const alicePair = keyring.addFromUri('//Alice');
-    console.log("Alice pair-->" + JSON.stringify(alicePair.address))
-
-    const { result, output } = await main_contract.query.getAllMeeting(alicePair.address, { value, gasLimit });
-    if (result.isOk) {
-      // should output 123 as per our initial set (output here is an i32)
-      console.log('Success', output.toHuman());
-      setTimeout(() => {
-        this.rData = output.toHuman();
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(this.rData),
-          isLoading: false,
-        });
-      }, 200);
-    } else {
-      console.error('Error', result.asErr);
-    }
   }
 
   //线下会议:6168ku86vLGFcWhkAavPUC98fqkGUvmDBAFS7F7kSFCc8YDU
