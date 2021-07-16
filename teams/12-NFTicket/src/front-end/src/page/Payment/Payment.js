@@ -32,7 +32,7 @@ class Payment extends Component {
 
     render() {
         const { data ,max}= this.props.location.state
-        var {name,meeting_addr,start_time} = data
+        var {name,address,start_time} = data
         var userAddress=localStorage.getItem('nft-address-hex')
         var moeny = max[1].price;
         console.log(max)
@@ -59,7 +59,7 @@ class Payment extends Component {
                             {/** 地址 */}
                             <div className={styles.addressView}>
                                 <img src={address} className={styles.addressIcon}></img>
-                                <span className={styles.addressText}>{meeting_addr}</span>
+                                <span className={styles.addressText}>{address}</span>
                             </div>
                             {/** 日期*/}
                             <div className={styles.addressView}>

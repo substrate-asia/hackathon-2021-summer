@@ -20,6 +20,10 @@ import CreateWalletOK from '../../component/CreateWalletOK';
 import NAlert from '../../component/Alert';
 
 import {initPolkadotApi,getAllMeeting} from '../../api/polka'
+import img1 from '../../images/big_1.png'
+import img2 from '../../images/big_2.png'
+import img3 from '../../images/big_3.png'
+
 
 
 const NUM_ROWS = 20;
@@ -72,6 +76,12 @@ class Home extends Component {
     initPolkadotApi( async () =>{
       getAllMeeting((result) =>{
         console.log("--------getAllMeeting-----------")
+        //添加模拟数据
+        result = [
+          {"desc":"K-pop, short for Korean popular music, is a genre of music originating in South Korea as part of South Korean culture.[1] It is influenced by styles and genres from around the world, such as pop, experimental, rock, jazz, gospel, hip hop, R&amp;B, reggae, electronic dance, folk, country, and classical on top of its traditional Korean music roots. The more modern form of the genre emerged with the formation of one of the earliest K-pop groups, the boy band Seo Taiji and Boys, in 1992. Their experimentation with different styles and genres of music and integration of foreign musical elements helped reshape and modernize South Korea's contemporary music scene.","name":"Kpop All Night","address":"Modern Sky Lab","start_time":"20:30 (UTC+8)","sponsorFrist":"T","month":"AUG","day":21,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Ty","poster":"3"},
+          {"desc":"The Weeknd","name":"Livestream","address":"Online","start_time":"12:00 (UTC+8)","sponsorFrist":"H","month":"SEP","day":25,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Hy","poster":"1"},
+          {"desc":"Tanya Schultz","name":"Candy Utopia","address":"Modern SkyLab","start_time":"10:00 (UTC+8)","sponsorFrist":"C","month":"OCT","day":12,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Cy","poster":"2"}
+        ]
         setTimeout(() => {
           console.log(result)
           this.rData = result;
@@ -139,10 +149,19 @@ class Home extends Component {
          pathname:'/Home/activityDetail',
          state:rowData
       }
+      var imgPath;
+      if(rowData.poster==1){
+        imgPath= img1
+      }else if(rowData.poster==2){
+        imgPath= img2
+      }else{
+        imgPath= img3
+      }
+      console.log('url地址',imgPath)
       return (
         <div key={rowID} className='card-content'
           style={{
-            backgroundImage: "url('./images/cardimg.png')",
+            backgroundImage:`url(${imgPath})`,
             backgroundRepeat: 'no-repeat',
             height: '' + imageHeight + 'px',
           }} onClick={() => this.props.history.push(path)}>
@@ -152,18 +171,20 @@ class Home extends Component {
               backgroundColor: "#ffffff",
               display: 'flex'
             }}>
-              <span className="top-text">B</span>
+              <span className="top-text">{rowData.sponsorFrist}</span>
             </div>
             <div className='top-time-group'>
-              <div className='top-time-1'>12</div>
-              <div className='top-time-2'>Nav</div>
+              <div className='top-time-1'>{rowData.day}</div>
+              <div className='top-time-2'>{rowData.month}</div>
             </div>
           </div>
           <div className='bottom-container'>
             <div>
-              <div style={{ marginBottom: '8px', textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.desc}</div>
+              <div  className='meeting_bg' >
+                {rowData.desc}
+                </div>
               <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>{rowData.name}</div>
-              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.meeting_addr}</span></div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.address}</span></div>
               <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/time.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.start_time}</span></div>
             </div>
           </div>
