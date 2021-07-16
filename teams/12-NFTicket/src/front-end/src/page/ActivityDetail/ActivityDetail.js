@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import TopBar from '../../component/TopBar'
 import styles from './ActivityDetail.module.css'
-import bg from '../../images/icon_detail.png'
 import share from '../../images/icon_share.png'
 import address from '../../images/icon_address.png'
 import time from '../../images/icon_time.png'
@@ -16,6 +15,10 @@ import {bindActionCreators} from "redux";
 import { setBottomstatusAction } from '../../store/action/App';
 import {getZone} from '../../api/polka'
 import {parseMoneyText} from '../../utils/formart.js'
+import img1 from '../../images/big_1.png'
+import img2 from '../../images/big_2.png'
+import img3 from '../../images/big_3.png'
+
 class ActivityDetail extends Component {
 
     state={
@@ -48,7 +51,7 @@ class ActivityDetail extends Component {
     }
     render() {
         const data= this.props.location.state
-        var {name,desc,meeting_addr,start_time} = data
+        var {name,desc,address,start_time,sponsorFrist,sponsor,poster} = data
         //搜索框高度
         const searchbarHeight = 45;
         //空白区域高度
@@ -65,6 +68,14 @@ class ActivityDetail extends Component {
                 zoomList
             }
          }
+         var imgPath;
+         if(poster==1){
+           imgPath= img1
+         }else if(poster==2){
+           imgPath= img2
+         }else{
+           imgPath= img3
+         }
 
         return (
             <div className={styles.activityDetail}>
@@ -75,7 +86,7 @@ class ActivityDetail extends Component {
                             {/** 活动图片 */}
 
                             <div className={styles.activityBg}>
-                                <img src={bg} alt=""></img>
+                                <img src={imgPath} alt=""></img>
                             </div>
                             {/** 活动名称 */}
                             <div className={styles.shareName}>
@@ -85,7 +96,7 @@ class ActivityDetail extends Component {
                             {/** 地址 */}
                             <div className={styles.addressView}>
                                 <img src={address} className={styles.addressIcon}></img>
-                                <span className={styles.addressText}>{meeting_addr}</span>
+                                <span className={styles.addressText}>{address}</span>
                             </div>
                             {/** 日期*/}
                             <div className={styles.addressView}>
@@ -102,9 +113,9 @@ class ActivityDetail extends Component {
                             <span className={styles.actionName}>Sponsor</span>
                             <div className={styles.actionView}>
                                 <div className={styles.fillet}>
-                                    <span className={styles.topText}>A</span>
+                                    <span className={styles.topText}>{sponsorFrist}</span>
                                 </div>
-                                <span className={styles.actionAuth}> Adorine</span>
+                                <span className={styles.actionAuth}> {sponsor}</span>
 
                             </div>
                             {/** 活动的描述信息 */}

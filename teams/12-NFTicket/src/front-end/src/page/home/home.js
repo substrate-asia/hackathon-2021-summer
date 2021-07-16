@@ -19,42 +19,11 @@ import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 import NAlert from '../../component/Alert';
 
-
-//polkadot
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import { ContractPromise } from '@polkadot/api-contract';
-import { createType } from '@polkadot/types';
-
-//合约abi
-import tem_abi from './template.json'
-import main_abi from './main.json'
-import meeting_abi from './offlinemeeting.json'
-import { Keyring } from '@polkadot/keyring'
-
-
 import {initPolkadotApi,getAllMeeting} from '../../api/polka'
+import img1 from '../../images/big_1.png'
+import img2 from '../../images/big_2.png'
+import img3 from '../../images/big_3.png'
 
-
-const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
-// const message = stringToU8a('this is a message');
-
-//模板合约abi
-//const tem_abi = tem_abi;
-//模板合约address
-const tem_address = "646A7ShZiSuPrb9m3nDtcrEDFcAVQaRZhw6SGpdwq6pivLoD";
-let tem_contract;
-
-//主合约abi
-//const main_abi = main_abi;
-//主合约address
-const main_address = "626nT4jAQU9PfA4Bdt8HcnK5v3q2jJHsJeURKAKV5rg7LRPn"
-let main_contract;
-
-//线下合约abi
-//const meeting_abi = meeting_abi;
-//线下合约address
-const meeting_address = "64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4";
-let meeting_contract;
 
 
 const NUM_ROWS = 20;
@@ -95,7 +64,6 @@ class Home extends Component {
       dataSource,
       isLoading: true,
       showToast: false,
-      genesisHash: ''//polkadot
     };
 
   };
@@ -108,7 +76,14 @@ class Home extends Component {
     initPolkadotApi( async () =>{
       getAllMeeting((result) =>{
         console.log("--------getAllMeeting-----------")
+        //添加模拟数据
+        result = [
+          {"desc":"K-pop, short for Korean popular music, is a genre of music originating in South Korea as part of South Korean culture.[1] It is influenced by styles and genres from around the world, such as pop, experimental, rock, jazz, gospel, hip hop, R&amp;B, reggae, electronic dance, folk, country, and classical on top of its traditional Korean music roots. The more modern form of the genre emerged with the formation of one of the earliest K-pop groups, the boy band Seo Taiji and Boys, in 1992. Their experimentation with different styles and genres of music and integration of foreign musical elements helped reshape and modernize South Korea's contemporary music scene.","name":"Kpop All Night","address":"Modern Sky Lab","start_time":"20:30 (UTC+8)","sponsorFrist":"T","month":"AUG","day":21,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Ty","poster":"3"},
+          {"desc":"The Weeknd","name":"Livestream","address":"Online","start_time":"12:00 (UTC+8)","sponsorFrist":"H","month":"SEP","day":25,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Hy","poster":"1"},
+          {"desc":"Tanya Schultz","name":"Candy Utopia","address":"Modern SkyLab","start_time":"10:00 (UTC+8)","sponsorFrist":"C","month":"OCT","day":12,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Cy","poster":"2"}
+        ]
         setTimeout(() => {
+          console.log(result)
           this.rData = result;
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.rData),
@@ -118,37 +93,20 @@ class Home extends Component {
         console.log("--------getAllMeeting end-----------")
      })
     })
-  
   }
-
-  async getTem_Contract(api) {
-    //合约
-    this.setState({ genesisHash: api.genesisHash.toHex() });
-    // const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
-
-    if (localStorage.hasOwnProperty('nft-pair')) {
-
-      const alicePair = keyring.addFromUri('//Alice');
-      console.log("Alice pair-->" + JSON.stringify(alicePair.address))
-      let value = 0;
-      let gasLimit = -1;//不限制gas
-    }  
-
-  }
-
-  //线下会议:64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4
-  async meeting_BuyTicket(api){
-    //getZoneById (zoneId: u8)
-    console.log("线下会议通过ID获取Zone-->")
-      const value = 0;
-      const gasLimit=-1;
-    const alicePair = keyring.addFromUri('//Alice');
-    const zoneId = 0;
-          const { gasConsumed, result, output }  = await meeting_contract.query
-          .getZoneById(alicePair.address,{value,gasLimit}, zoneId)
-      console.log("线下会议通过ID获取Zone-->",result.toHuman());
-      console.log("线下会议通过ID获取Zone-->",output.toHuman());
-  }
+  // //线下会议:64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4
+  // async meeting_BuyTicket(api){
+  //   //getZoneById (zoneId: u8)
+  //   console.log("线下会议通过ID获取Zone-->")
+  //     const value = 0;
+  //     const gasLimit=-1;
+  //   const alicePair = keyring.addFromUri('//Alice');
+  //   const zoneId = 0;
+  //         const { gasConsumed, result, output }  = await meeting_contract.query
+  //         .getZoneById(alicePair.address,{value,gasLimit}, zoneId)
+  //     console.log("线下会议通过ID获取Zone-->",result.toHuman());
+  //     console.log("线下会议通过ID获取Zone-->",output.toHuman());
+  // }
 
   componentWillUnmount() {
     this.props.actions.setShowModal(false);
@@ -187,16 +145,23 @@ class Home extends Component {
     const row = (rowData, sectionID, rowID) => {
 
       const imageHeight = window.innerWidth - 30 - 30;
-      // var data= JSON.stringify(rowData)
-      // var path=`/Home/activityDetail/${data}`
       var path={
          pathname:'/Home/activityDetail',
          state:rowData
       }
+      var imgPath;
+      if(rowData.poster==1){
+        imgPath= img1
+      }else if(rowData.poster==2){
+        imgPath= img2
+      }else{
+        imgPath= img3
+      }
+      console.log('url地址',imgPath)
       return (
         <div key={rowID} className='card-content'
           style={{
-            backgroundImage: "url('./images/cardimg.png')",
+            backgroundImage:`url(${imgPath})`,
             backgroundRepeat: 'no-repeat',
             height: '' + imageHeight + 'px',
           }} onClick={() => this.props.history.push(path)}>
@@ -206,18 +171,20 @@ class Home extends Component {
               backgroundColor: "#ffffff",
               display: 'flex'
             }}>
-              <span className="top-text">B</span>
+              <span className="top-text">{rowData.sponsorFrist}</span>
             </div>
             <div className='top-time-group'>
-              <div className='top-time-1'>12</div>
-              <div className='top-time-2'>Nav</div>
+              <div className='top-time-1'>{rowData.day}</div>
+              <div className='top-time-2'>{rowData.month}</div>
             </div>
           </div>
           <div className='bottom-container'>
             <div>
-              <div style={{ marginBottom: '8px', textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.desc}</div>
+              <div  className='meeting_bg' >
+                {rowData.desc}
+                </div>
               <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>{rowData.name}</div>
-              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.meeting_addr}</span></div>
+              <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/location.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.address}</span></div>
               <div style={{ display: 'flex' }}><div><img style={{ margin: '0px 5px 5px 0px', width: '15px', height: '15px' }} src='./images/time.png'></img></div><span style={{ textShadow: '#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0' }}>{rowData.start_time}</span></div>
             </div>
           </div>

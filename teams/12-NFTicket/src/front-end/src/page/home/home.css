@@ -193,3 +193,10 @@
     border: 2px solid;
     border-radius: 35px;
 }
+.meeting_bg{
+    marginBottom: 8px;
+    textShadow:#fff 1px 0 0,#fff 0 1px 0,#fff -1px 0 0,#fff 0 -1px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
