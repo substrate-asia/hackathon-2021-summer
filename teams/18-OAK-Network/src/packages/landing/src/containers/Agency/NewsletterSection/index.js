@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from 'common/components/Box';
-import Heading from 'common/components/Heading';
 import Input from 'common/components/Input';
 import Button from 'common/components/Button';
 import Container from 'common/components/UI/Container';

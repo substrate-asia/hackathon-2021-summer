@@ -42,6 +42,7 @@ const ProjectSectionWrapper = styled.section`
     transition: box-shadow 0.3s ease;
     .icon__wrapper {
       position: relative;
+      border: 1px solid rgb(221, 221, 221);
       background: linear-gradient(
         -60deg,
         rgba(241, 39, 17, 0.7),

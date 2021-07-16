@@ -1,16 +1,29 @@
+import cloudbase from '@cloudbase/js-sdk';
 
 class BackEnd {
-  async initialize () {
-    const cloudbase = (await import('@cloudbase/js-sdk')).default;
-    const app = cloudbase.init({
+  async initialize() {
+    this.app = cloudbase.init({
       env: 'quadratic-funding-1edc914e16f235',
-      region: 'ap-guangzhou'
+      region: 'ap-guangzhou',
     });
-    this.db = app.database();
+    this.db = this.app.database();
   }
 
-  async getProjects () {
-    const result = await this.db.collection("projects").get();
+  getDatabase = () => {
+    return this.db;
+  };
+
+  getApp = () => {
+    return this.app;
+  };
+
+  login = async () => {
+    const auth = this.getApp().auth();
+    await auth.anonymousAuthProvider().signIn();
+  };
+
+  async getProjects() {
+    const result = await this.getDatabase().collection('projects').get();
     return result.data;
   }
 }

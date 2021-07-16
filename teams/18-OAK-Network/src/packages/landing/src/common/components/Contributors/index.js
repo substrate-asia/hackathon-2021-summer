@@ -11,18 +11,12 @@ const { oak } = config;
 const Contributors = ({ contributions, ...props }) => {
   return (
     <ContributorsStyle {...props}>
-      {_.map(contributions, (item) => {
+      {_.map(contributions, (contribution) => {
         return (
-          <div
-            style={{
-              margin: '30px',
-              padding: '20px',
-              border: '1px solid #f1f4f6',
-            }}
-          >
-            <span>Account: {ellipsisAddress(item.account_id)}</span>
-            <span style={{ marginLeft: '100px' }}>
-              Value: {unitToNumber(item.value)} {oak.symbol}
+          <div key={contribution.account_id} className="contribution-row">
+            <span>Account: {ellipsisAddress(contribution.account_id)}</span>
+            <span className="contribution-value">
+              Value: {unitToNumber(contribution.value)} {oak.symbol}
             </span>
           </div>
         );

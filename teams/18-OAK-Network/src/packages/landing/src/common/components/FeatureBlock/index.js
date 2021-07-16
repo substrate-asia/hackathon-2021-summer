@@ -53,7 +53,6 @@ const FeatureBlock = ({
           <ContentWrapper className="content__wrapper" {...contentStyle}>
             <Project project={project} Icon={Icon} />
           </ContentWrapper>
-          {additionalContent}
         </Fragment>
       ) : (
         ''

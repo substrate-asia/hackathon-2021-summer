@@ -34,6 +34,11 @@ const FooterArea = styled.footer`
       color: $buttonHoverColor;
     }
   }
+
+  .menu-link {
+    color: white;
+    cursor: pointer;
+  }
 `;
 
 export const WidgetArea = styled.div`

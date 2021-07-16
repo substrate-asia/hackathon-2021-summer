@@ -468,21 +468,22 @@ export const footer = {
       icon: chat,
       title: 'Join the Community',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiusmod tempor incididunt labore dolore.',
+        'To learn more about OAK Network, please check out our Github, and follow our news on Medium and Twitter.',
     },
     {
       id: 2,
       icon: group,
-      title: 'Join in Chat Community',
+      title: 'Join in Chats',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiusmod tempor incididunt labore dolore.',
+        'Enagage with thousands of community members in our OAK Discord Channel, or WeChat Chinese groups.',
     },
     {
       id: 3,
       icon: github,
       title: 'Github Access',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiusmod tempor incididunt labore dolore.',
+        'The best way to get updated with our development status is to check out our Github repositories.',
+      link: 'https://github.com/OAK-Foundation/quadratic-funding-webapp',
     },
   ],
   logo: footerLogo,
@@ -516,12 +517,12 @@ export const footer = {
   socialMedia: [
     {
       name: 'twitter',
-      link: 'https://twitter.com/OAKSubstrate',
+      link: 'https://twitter.com/oak_network',
       icon: faTwitter,
     },
     {
       name: 'discord',
-      link: 'https://discord.gg/xKKq5AXV',
+      link: 'https://discord.gg/7W9UDvsbwh',
       icon: faDiscord,
     },
     {
@@ -531,7 +532,6 @@ export const footer = {
     },
     {
       name: 'telegram',
-      link: '',
       icon: faTelegram,
     },
     {
@@ -551,7 +551,7 @@ export const footer = {
     },
     {
       name: 'email',
-      link: 'https://twitter.com/OAKSubstrate',
+      link: 'contact@oak.tech',
       icon: faEnvelopeSquare,
     },
   ],

@@ -7,16 +7,18 @@ const MatchingWrapper = styled.section`
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  color: rgb(110, 115, 121);
 
   .block {
     display: flex;
     flex-direction: column;
   }
 
-  .matcing {
-    border: 2px solid rgba(237, 237, 240);
-    border-radius: 20px;
-    padding: 20px;
+  .basic-info {
+    padding: 36px;
+    box-shadow: rgb(38 78 118 / 10%) 0px 6px 50px;
   }
 
   .mr-30 {
@@ -29,26 +31,16 @@ const MatchingWrapper = styled.section`
   }
 
   .title {
-    font-size: 2.5rem;
-    align-self: center;
+    color: rgb(15, 33, 55);
+    font-size: 2.2rem;
+    line-height: 44px;
+    font-weight: 700;
+    margin-bottom: 27px;
   }
 
   .count-down-text {
     margin-top: 20px;
-    font-size: 1.5rem;
-    align-self: center;
-  }
-
-  .contribute-info {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .contribute {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-top: 30px;
+    margin-bottom: 36px;
   }
 
   .total {
@@ -67,19 +59,10 @@ const MatchingWrapper = styled.section`
     background-color: #d1397c;
   }
 
-  .participate {
-    margin-top: 30px;
-    display: flex;
-    justify-content: flex-end;
-  }
-
   .carousell {
-    display: flex;
     background-color: rgba(237, 237, 240);
-    height: 300px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+    height: 500px;
+    width: 100%;
   }
 
   .create-project {

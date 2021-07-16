@@ -1,8 +1,5 @@
-const { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
-const { cryptoWaitReady } = require('@polkadot/util-crypto');
-const _ = require('lodash');
-
-const config = require('./config');
+import _ from 'lodash';
+import { getWeb3Api } from 'common/utils';
 
 class QuadraticFunding {
   constructor() {
@@ -11,16 +8,7 @@ class QuadraticFunding {
 
   // Initial the Polkadot.js api promise
   async init() {
-    if (_.isEmpty(this.api)) {
-      const { endpoint, types } = config;
-      const wsProvider = new WsProvider(endpoint);
-      const api = await ApiPromise.create({
-        provider: wsProvider,
-        types,
-      });
-      console.log('QuadraticFunding.init, api: ', api);
-      this.api = api;
-    }
+    this.api = await getWeb3Api();
   }
 
   // Storage Module

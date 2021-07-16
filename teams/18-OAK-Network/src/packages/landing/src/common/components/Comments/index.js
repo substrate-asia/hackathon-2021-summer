@@ -1,95 +1,112 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import Button from 'common/components/Button';
 import CommentsStyle from './comments.style';
 import Comment from '../Comment';
+import backend from '../../backend';
+import notificationHelper from '../../../common/utils/notification.helper';
+import reduxHelper from '../../../redux/helper';
 
 const Comments = ({
+  projectIndex: projectIndexStr,
+  voteRecords,
+  projectRecords,
+  account,
   ...props
 }) => {
-  const { projectIndex: projectIndexStr } = props;
   const projectIndex = parseInt(projectIndexStr);
 
   const [comments, setComments] = useState([]);
   const [textareaValue, setTextareaValue] = useState('');
 
   const getComments = async () => {
-    const cloudbase = (await import('@cloudbase/js-sdk')).default;
-    const app = cloudbase.init({
-      env: 'quadratic-funding-1edc914e16f235',
-      region: 'ap-guangzhou'
+    const projects = _.filter(projectRecords, (projectRecord) => {
+      return projectRecord.index === projectIndex;
     });
 
-    const db = app.database();
-    const result = await db.collection("projects")
-      .where({ index: projectIndex })
-      .get();
-
-    console.log('getComments, result: ', result);
-    
-    const projects = result.data;
     if (projects.length === 1) {
       const project = projects[0];
       setComments(project.comments);
     }
-  }
+  };
 
-  useEffect(getComments, []);
+  useEffect(getComments, [projectRecords]);
 
   const onCommentClicked = async () => {
-    console.log('onCommentClicked');
-    const cloudbase = (await import('@cloudbase/js-sdk')).default;
-    const app = cloudbase.init({
-      env: 'quadratic-funding-1edc914e16f235',
-      region: 'ap-guangzhou'
-    });
+    if (_.isEmpty(account)) {
+      notificationHelper.showNoWalletNotification();
+      return;
+    }
 
-    const result = await app.callFunction({
+    const app = backend.getApp();
+    await app.callFunction({
       name: 'comment',
       data: {
-        address: props.account,
+        address: account,
         comment: textareaValue,
         projectIndex,
-      }
+      },
     });
 
     setTextareaValue('');
 
-    getComments();
-  }
+    reduxHelper.getProjects();
+  };
 
   const getCommentList = (comments) => {
     const comnentList = _.map(_.clone(comments).reverse(), (comment) => {
-      return (<Comment key={comment.timestamp} comment={comment} ></Comment>);
+      const voteAmount = _.reduce(
+        voteRecords,
+        (prev, vote) => {
+          if (
+            vote.address === comment.user &&
+            vote.projectIndex === projectIndex
+          ) {
+            return prev + vote.amount;
+          }
+        },
+        0
+      );
+      return (
+        <Comment
+          key={comment.timestamp}
+          comment={comment}
+          voteAmount={voteAmount}
+        ></Comment>
+      );
     });
-    console.log('getCommentList, comments: ', comments);
     return comnentList;
-  }
+  };
 
   const handleTextareaChange = (e) => {
     setTextareaValue(e.target.value);
-  }
+  };
 
   return (
-    <CommentsStyle
-      {...props}
-    >
+    <CommentsStyle {...props}>
       <div className="content-div">
-        <textarea className="comment-input" value={textareaValue} onChange={handleTextareaChange}></textarea>
-        <Button title="Leave a comment" className="leave-comment" onClick={onCommentClicked}></Button>
+        <textarea
+          className="comment-input"
+          value={textareaValue}
+          onChange={handleTextareaChange}
+        ></textarea>
+        <Button
+          title="Leave a comment"
+          className="leave-comment"
+          onClick={onCommentClicked}
+        ></Button>
       </div>
 
-      <div className="content-div">
-        {getCommentList(comments)}
-      </div>
+      <div className="content-div">{getCommentList(comments)}</div>
     </CommentsStyle>
   );
 };
 
 const mapStateToProps = (state) => ({
   account: state.account,
+  projectRecords: state.projects,
 });
 
 export default connect(mapStateToProps)(Comments);

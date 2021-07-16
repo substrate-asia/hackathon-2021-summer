@@ -1,8 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSlidersH, faSearch } from '@fortawesome/pro-light-svg-icons';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import Identicon from '@polkadot/react-identicon';
+
+import _ from 'lodash';
+import { Row, Col, Spin, Select } from 'antd';
 import Box from 'common/components/Box';
 import Button from 'common/components/Button';
 import Input from 'common/components/Input';
@@ -12,8 +15,8 @@ import Heading from 'common/components/Heading';
 import Text from 'common/components/Text';
 import { PolkadotContext } from 'common/contexts/PolkadotContext';
 import ProjectSectionWrapper from './projectSection.style';
-import _ from 'lodash';
-import { Spin, Select } from 'antd';
+
+const SECOND_PER_BLOCK = 3;
 
 const { Option } = Select;
 
@@ -34,6 +37,17 @@ const ProjectSection = ({
   const [rounds, setRounds] = useState([]);
   const [roundId, setRoundId] = useState(null);
   const [roundTitle, setRoundTitle] = useState('There are no active rounds');
+
+  const convertBlocksToTimeText = (blockNumbers) => {
+    const secondsInBlocks = blockNumbers * SECOND_PER_BLOCK;
+    const days = Math.floor(secondsInBlocks / 86400); // 60* 60 * 24
+    const hours = Math.floor(secondsInBlocks / 3600) - days * 24;
+    const minutes = Math.floor(secondsInBlocks / 60) - (days * 24 + hours) * 60;
+    const seconds = secondsInBlocks - ((days * 24 + hours) * 60 + minutes) * 60;
+    let timeText = `${days} days ${hours} hours ${minutes} minutes ${seconds} seseconds`;
+
+    return timeText;
+  };
 
   useEffect(() => {
     if (!_.isEmpty(polkadotContext)) {
@@ -92,15 +106,15 @@ const ProjectSection = ({
       const endBlockNumber = Number(activeRound.end.replaceAll(',', ''));
       if (blockNumber >= startBlockNumber && blockNumber <= endBlockNumber) {
         setRoundTitle(
-          `Countdown to the end of this round(#${activeRound.id + 1}) ${
+          `Round #${activeRound.id + 1} ends in ${convertBlocksToTimeText(
             endBlockNumber - blockNumber
-          } blocks`
+          )}`
         );
       } else if (blockNumber < startBlockNumber) {
         setRoundTitle(
-          `Countdown to the start of this round(#${activeRound.id + 1}) ${
+          `Round #${activeRound.id + 1} will start in ${convertBlocksToTimeText(
             startBlockNumber - blockNumber
-          } blocks`
+          )}`
         );
       } else if (!_.isEmpty(nextRound)) {
         const nextStartBlockNumber = Number(
@@ -108,12 +122,14 @@ const ProjectSection = ({
         );
         if (blockNumber < nextStartBlockNumber) {
           setRoundTitle(
-            `Countdown to the next round(#${nextRound.id + 1}) ${
+            `Round #${
+              activeRound.id + 1
+            } will start in ${convertBlocksToTimeText(
               nextStartBlockNumber - blockNumber
-            } blocks`
+            )}`
           );
         } else {
-          setRoundTitle(`This round(#${activeRound.id + 1}) is ended`);
+          setRoundTitle(`Round #${activeRound.id + 1} is ended`);
         }
       }
     }
@@ -174,22 +190,38 @@ const ProjectSection = ({
               </div>
             )}
 
-            <Box className="row" {...row}>
+            <Row {...row} gutter={36}>
               {roundProjects.map((project, index) => {
                 return (
-                  <Box className="col" {...col} key={`project-${index}`}>
+                  <Col
+                    {...col}
+                    span={8}
+                    key={`project-${index}`}
+                    style={{ marginBottom: '36px' }}
+                  >
                     <FeatureBlock
-                      icon={<i className="flaticon-atom" />}
+                      style={{
+                        border: '1px solid rgb(241, 244, 246)',
+                        borderRadius: 5,
+                        transition: 'all 0.3s ease 0s',
+                      }}
+                      icon={
+                        <Identicon
+                          value={project.owner}
+                          size={75}
+                          theme="polkadot"
+                        />
+                      }
                       wrapperStyle={blockWrapperStyle}
                       iconStyle={iconStyle}
                       contentStyle={contentStyle}
                       project={{ ...project, roundId }}
                       title={project.name}
                     />
-                  </Box>
+                  </Col>
                 );
               })}
-            </Box>
+            </Row>
           </>
         )}
       </Container>
@@ -226,15 +258,10 @@ ProjectSection.defaultProps = {
     mb: '0',
   },
   // feature row default style
-  row: {
-    flexBox: true,
-    flexWrap: 'wrap',
-  },
+  row: {},
   // feature col default style
   col: {
     width: [1, 1 / 2, 1 / 2, 1 / 3],
-    borderLeft: '1px solid #f1f4f6',
-    borderBottom: '1px solid #f1f4f6',
   },
   // feature block wrapper default style
   blockWrapperStyle: {
@@ -242,18 +269,13 @@ ProjectSection.defaultProps = {
   },
   // feature icon default style
   iconStyle: {
-    width: '84px',
-    height: '84px',
-    m: '0 auto',
+    width: '75px',
+    height: '75px',
     borderRadius: '50%',
-    bg: '#93d26e',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '36px',
-    color: '#ffffff',
     overflow: 'hidden',
-    mb: '30px',
   },
   // feature content default style
   contentStyle: {

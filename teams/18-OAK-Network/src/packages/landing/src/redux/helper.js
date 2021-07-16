@@ -1,7 +1,7 @@
-import { createStore } from 'redux'
-import backend from '../common/backend'
-import actions from './actions'
-import reducers from './reducers'
+import { createStore } from 'redux';
+import backend from '../common/backend';
+import actions from './actions';
+import reducers from './reducers';
 
 class ReduxHelper {
   getStore() {
@@ -13,7 +13,6 @@ class ReduxHelper {
 
   async getProjects() {
     const projects = await backend.getProjects();
-    console.log('projects: ', projects);
     this.store.dispatch(actions.setProjects(projects));
   }
 }
