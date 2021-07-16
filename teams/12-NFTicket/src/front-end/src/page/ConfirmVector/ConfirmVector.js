@@ -4,6 +4,7 @@ import styles from './ConfirmVector.module.css'
 import { Button,Flex,WhiteSpace } from 'antd-mobile'
 import time from '../../images/icon_time.png'
 import hongvector from '../../images/vector/HongVector.png'
+import lvvector from '../../images/vector/LvVector.png'
 import zivector from '../../images/vector/ZiVector.png'
 import chengvector from '../../images/vector/ChengVector.png'
 import huangvector from '../../images/vector/HuangVector.png'
@@ -14,10 +15,34 @@ import {parseMoneyText} from '../../utils/formart.js'
 //action
 import { setBottomstatusAction } from '../../store/action/App';
 
+
+
+var str1=[];
+var str2=[];
+var str3=[];
+var str4=[];
+var str1_state=[];
+var str2_state=[];
+var str3_state=[];
+var str4_state=[];
 class ConfirmVector extends Component{
 
     state={
+        money:0,
         maxMoney:"",
+        count:0,
+        str1_state:0,
+        str2_state:0,
+        str3_state:0,
+        str4_state:0,
+        str5_state:0,
+        str6_state:0,
+        str7_state:0,
+        str8_state:0,
+        str9_state:0,
+        str10_state:0,
+        str11_state:0,
+        str12_state:0,
     }
 
     componentDidMount() {
@@ -35,7 +60,177 @@ class ConfirmVector extends Component{
         this.setState({
             maxMoney:value.toString()
         })
+        this.setState({
+            money:0
+        })
         console.log()
+
+        for(let i=0;i<12;i++){
+            if(i==5){
+                str1.push(<img src={this.state.str5_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(i)}} />)
+                str1_state.push(1)
+            }
+            else if(i==6){
+                str1.push(<img src={this.state.str6_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(i)}} />)
+                str1_state.push(1)
+            }
+            else{
+                str1.push(<img src={hongvector} onClick={()=>{this.clickhonese(i)}} />)
+                str1_state.push(0)
+            }
+        }
+
+        for(let i=0;i<12;i++){
+            str2.push(<img src={zivector} onClick={()=>{}} />)
+            str2_state.push(0)
+        }
+
+        for(let i=0;i<12;i++){
+            str3.push(<img src={chengvector} onClick={()=>{}} />)
+            str3_state.push(0)
+        }
+
+        for(let i=0;i<12;i++){
+            str4.push(<img src={huangvector} onClick={()=>{}} />)
+            str4_state.push(0)
+        }
+    }
+
+    clickhonese=(index)=>{
+        switch(index){
+            case 1:
+                if(this.state.str1_state==0){
+                    this.setState({str1_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str1_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 2:
+                if(this.state.str2_state==0){
+                    this.setState({str2_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str2_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 3:
+                if(this.state.str3_state==0){
+                    this.setState({str3_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str3_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 4:
+                if(this.state.str4_state==0){
+                    this.setState({str4_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str4_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 5:
+                if(this.state.str5_state==0){
+                    this.setState({str5_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str5_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 6:
+                if(this.state.str6_state==0){
+                    this.setState({str6_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str6_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 7:
+                if(this.state.str7_state==0){
+                    this.setState({str7_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str7_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 8:
+                if(this.state.str8_state==0){
+                    this.setState({str8_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str8_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 9:
+                if(this.state.str9_state==0){
+                    this.setState({str9_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str9_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 10:
+                if(this.state.str10_state==0){
+                    this.setState({str10_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str10_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 11:
+                if(this.state.str11_state==0){
+                    this.setState({str11_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str11_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+            case 12:
+                if(this.state.str12_state==0){
+                    this.setState({str12_state:1})
+                    this.setState({count:this.state.count+1})
+                    this.setState({money:this.state.money+360})
+                }else{
+                    this.setState({str12_state:0})
+                    this.setState({count:this.state.count-1})
+                    this.setState({money:this.state.money-360})
+                }
+                break;
+        }
     }
     
     comfirmTicket=() =>{
@@ -44,11 +239,13 @@ class ConfirmVector extends Component{
         var max = zoomList.reduce((obj1,obj2) =>{
             return obj1[1].price > obj2[1].price ? obj1 :obj2
         })
+        var money = this.state.money
         var path={
             pathname:'/Home/Payment',
             state:{
                 data,
-                max
+                max,
+                money
             }
          }
         this.props.history.push(path)
@@ -66,25 +263,7 @@ class ConfirmVector extends Component{
 
         const { data }= this.props.location.state
         var {name,start_time} = data
-        var str1=[];
-        for(let i=0;i<12;i++){
-            str1.push(<img src={hongvector} onClick={()=>{alert("360")}}/>)
-        }
 
-        var str2=[];
-        for(let i=0;i<18;i++){
-            str2.push(<img src={zivector} onClick={()=>{alert("300")}}/>)
-        }
-
-        var str3=[];
-        for(let i=0;i<18;i++){
-            str3.push(<img src={chengvector} onClick={()=>{alert("240")}}/>)
-        }
-
-        var str4=[];
-        for(let i=0;i<18;i++){
-            str4.push(<img src={huangvector} onClick={()=>{alert("180")}}/>)
-        }
         
 
         return (
@@ -137,7 +316,18 @@ class ConfirmVector extends Component{
                             <div style={{width:'100%',height:'20px'}}></div>
                             <div className={styles.no1_vector}>
                                 <div className={styles.onevector}>
-                                    {str1}
+                                    <img key={1} src={this.state.str1_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(1)}} />
+                                    <img key={2} src={this.state.str2_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(2)}} />
+                                    <img key={3} src={this.state.str3_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(3)}} />
+                                    <img key={4} src={this.state.str4_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(4)}} />
+                                    <img key={5} src={this.state.str5_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(5)}} />
+                                    <img key={6} src={this.state.str6_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(6)}} />
+                                    <img key={7} src={this.state.str7_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(7)}} />
+                                    <img key={8} src={this.state.str8_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(8)}} />
+                                    <img key={9} src={this.state.str9_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(9)}} />
+                                    <img key={10} src={this.state.str10_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(10)}} />
+                                    <img key={11} src={this.state.str11_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(11)}} />
+                                    <img key={12} src={this.state.str12_state==0?hongvector:lvvector} onClick={()=>{this.clickhonese(12)}} />
                                 </div>
                                 <div className={styles.onevector}>
                                     {str1}
@@ -179,7 +369,7 @@ class ConfirmVector extends Component{
                             </div>
 
                             <div style={{width:'100%',height:'20px'}}></div>
-                            
+
                             <div className={styles.no4_vector}>
                                 <div className={styles.onevector}>
                                     {str4}
@@ -206,9 +396,9 @@ class ConfirmVector extends Component{
                 </div>
                 <div className={styles.bottomconfirm}>
                     <div className={styles.bottomleft}>
-                        <div className={styles.bottomleftspan1}><span>{this.state.maxMoney}</span></div>
+                        <div className={styles.bottomleftspan1}><span>{this.state.money}</span></div>
                         <div className={styles.bottomleftspan2}><span>NMT</span></div>
-                        <div className={styles.bottomleftspan3}><span>1</span></div>
+                        <div className={styles.bottomleftspan3}><span>{this.state.count}</span></div>
                         <div className={styles.bottomleftspan4}><span>ticket</span></div>
                     </div>
                     <div className={styles.bottomright}>

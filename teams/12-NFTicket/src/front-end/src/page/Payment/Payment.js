@@ -6,11 +6,12 @@ import time from '../../images/icon_time.png'
 import user from '../../images/icon_user.png'
 import site from '../../images/icon_site.png'
 import { Button,Flex } from 'antd-mobile'
-import {connect} from 'react-redux';
-import {bindActionCreators} from "redux";
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+
 import {parseMoneyText} from '../../utils/formart.js'
 //action
-import { setBottomstatusAction } from '../../store/action/App';
+import { setBottomstatusAction,setAccountokmodalAction } from '../../store/action/App';
 import {buyTicket} from '../../api/polka';
 
 class Payment extends Component {
@@ -31,10 +32,11 @@ class Payment extends Component {
     }
 
     render() {
-        const { data ,max}= this.props.location.state
+        const { data ,max,money}= this.props.location.state
         var {name,address,start_time} = data
         var userAddress=localStorage.getItem('nft-address-hex')
         var moeny = max[1].price;
+        // moeny = money
         console.log(max)
         const {value}=parseMoneyText(moeny)
         //搜索框高度
@@ -75,7 +77,8 @@ class Payment extends Component {
                                 <div className={styles.rowline}>
                                     <img src={site} alt="" className={styles.site}></img>
                                     <span className={styles.siteLable}>Row 5,17</span>
-                                    <span className={styles.sitePrice}>{value.toString()} NMT</span>
+                                    {/* <span className={styles.sitePrice}>{value.toString()} NMT</span> */}
+                                    <span className={styles.sitePrice}>{money} NMT</span>
                                 </div>
                                 {/* <div className={styles.rowline}>
                                     <img src={site} alt="" className={styles.site}></img>
@@ -88,7 +91,8 @@ class Payment extends Component {
                                 <div className={styles.ticketPriceView}>
                                     <span className={styles.priceLable}>Price</span>
                                     <div className={styles.unitLable}>
-                                        <span className={styles.unitLable1}>{value.toString()}</span>
+                                        <span className={styles.unitLable1}>{money}</span>
+                                        {/* <span className={styles.unitLable1}>{value.toString()}</span> */}
                                         <span className={styles.unitLable2}>NMT</span>
                                     </div>
                                 </div>
@@ -112,9 +116,18 @@ class Payment extends Component {
                     {/** 付款金额 */}
                     <div className={styles.paymentView}>
                         <span className={styles.totalLable}>Total:</span>
-                        <span className={styles.moneyLable}>{value.toString()}</span>
+                        <span className={styles.moneyLable}>{money.toString()}</span>
+                        {/* <span className={styles.moneyLable}>{value.toString()}</span> */}
                         <span className={styles.unitLable}>NMT</span>
-                        <Button className={styles.payBtn} onClick={() => this.buyTickt(max[0],max[1].rows,max[1].cols,max[1].price)}>Pay Now</Button>
+                        {/* TODO---点击Pay Now先不走链，假跳转 */}
+                        <Button className={styles.payBtn} onClick={() => {
+                                setTimeout(()=>{
+                                    this.props.history.push('/Home');
+                                    this.props.actions.setAccountOKModal(true);
+                                },1000)
+                            } }>Pay Now</Button>
+                        {/* 真实数据跳转 */}
+                        {/* <Button className={styles.payBtn} onClick={() => this.buyTickt(max[0],max[1].rows,max[1].cols,max[1].price)}>Pay Now</Button> */}
                     </div>
                 </Flex>
 
@@ -135,7 +148,8 @@ const mapStateToProps = (state)=>{
   const mapDispatchToProps = (dispatch)=>{
     return {
         actions:bindActionCreators({
-          setBottomstatus:setBottomstatusAction
+          setBottomstatus:setBottomstatusAction,
+          setAccountOKModal: setAccountokmodalAction
         },dispatch)
     }
   }

@@ -99,11 +99,12 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 8px;
 }
 .onevector img{
-    width: 14px;
-    height: 13px;
-    margin: 1px;
+    width: 19px;
+    height: 18px;
+    margin: 4px;
 }
 
 
