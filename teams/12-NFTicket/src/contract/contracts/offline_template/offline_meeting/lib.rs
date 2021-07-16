@@ -395,8 +395,33 @@ pub mod offline_meeting {
 		2. 如果涉及到基础信息部分的更新，需要调用主合约更新；
 		3. 修改成功后，触发事件 meeting_modified
 		*/
-		pub fn modify_meeting(&mut self, local_address: Vec<u8>) {
-			// todo
+		pub fn modify_meeting(&mut self, name: Option<Vec<u8>>, desc: Option<Vec<u8>>, 
+            poster: Option<Vec<u8>>, uri: Option<Vec<u8>>, start_time: Option<u64>, end_time: Option<u64>, start_sale_time: Option<u64>, end_sale_time: Option<u64>,
+            ) {
+			if let Some(t)=name{
+				self.name = t;
+			}
+			if let Some(t)=desc{
+				self.desc = t;
+			}
+			if let Some(t)=poster{
+				self.poster = t;
+			}
+			if let Some(t)=uri{
+				self.uri = t;
+			}
+			if let Some(t)=start_time{
+				self.start_time = t;
+			}
+			if let Some(t)=end_time{
+				self.end_time = t;
+			}
+			if let Some(t)=start_sale_time{
+				self.start_sale_time = t;
+			}
+			if let Some(t)=end_sale_time{
+				self.end_sale_time = t;
+			}
 		}
 
 		
@@ -521,7 +546,7 @@ pub mod offline_meeting {
 		}
 
 		#[ink(message)]
-		pub fn test_just(&self)->(u64,u32){
+		pub fn get_timestamp_block(&self)->(u64,u32){
 			let block = Self::env().block_number();
 			let now:u64 = Self::env().block_timestamp();
 			(now,block)

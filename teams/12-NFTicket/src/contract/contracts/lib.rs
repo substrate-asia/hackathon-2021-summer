@@ -148,6 +148,11 @@ mod nfticket {
             return true;
         }
 
+        #[ink(message)]
+        pub fn get_owner(&self) -> AccountId {
+            self.owner
+        }
+
         /**
         添加模板
         1. 验证操作人是否 系统owner ;
@@ -376,28 +381,45 @@ mod nfticket {
         5. 更新成功，返回 true
         */
         #[ink(message)]
-        pub fn modify_meeting(&mut self, meeting_addr:AccountId, name: Vec<u8>, desc: Vec<u8>, 
-            poster: Vec<u8>, uri: Vec<u8>, start_time: u64, end_time: u64, start_sale_time: u64, end_sale_time: u64,
-            publisher:Vec<u8>,
-            min_price:u128,
+        pub fn modify_meeting(&mut self, meeting_addr:AccountId, name: Option<Vec<u8>>, desc: Option<Vec<u8>>, 
+            poster: Option<Vec<u8>>, uri: Option<Vec<u8>>, start_time: Option<u64>, end_time: Option<u64>, start_sale_time: Option<u64>, end_sale_time: Option<u64>,
+            publisher:Option<Vec<u8>>,
+            min_price:Option<u128>,
         )->bool{
             self.ensure_owner();
             let caller = Self::env().caller();
-            let my_meeting = Meeting {
-                meeting_addr,
-                name,
-                desc,
-                poster,
-                uri,
-                start_time,
-                end_time,
-                start_sale_time,
-                end_sale_time,
-                status:primitives::MeetingStatus::Active,
-                publisher,
-                min_price,
-            };
-            self.meeting_map.insert(meeting_addr, my_meeting);
+            let my_meeting = self.meeting_map.get_mut(&meeting_addr).unwrap();
+            if let Some(t)=name{
+				my_meeting.name = t;
+			}
+            if let Some(t)=desc{
+				my_meeting.desc = t;
+			}
+            if let Some(t)=poster{
+				my_meeting.poster = t;
+			}
+            if let Some(t)=uri{
+				my_meeting.uri = t;
+			}
+            if let Some(t)=start_time{
+				my_meeting.start_time = t;
+			}
+            if let Some(t)=end_time{
+				my_meeting.end_time = t;
+			}
+            if let Some(t)=start_sale_time{
+				my_meeting.start_sale_time = t;
+			}
+            if let Some(t)=end_sale_time{
+				my_meeting.end_sale_time = t;
+			}
+            if let Some(t)=publisher{
+				my_meeting.publisher = t;
+			}
+            if let Some(t)=min_price{
+				my_meeting.min_price = t;
+			}
+            
             Self::env().emit_event(MeetingModified {
                 meeting_addr: meeting_addr,
                 creator: caller,
@@ -506,6 +528,20 @@ mod nfticket {
             // Constructor works.
             let meeting = NftTicket::new();
 			meeting.test_block_time();
+        }
+
+        #[ink::test]
+        fn test_modify_meeting() {
+            let account1=AccountId::from([0x01; 32]);
+            // Constructor works.
+            let mut meeting = NftTicket::new();
+			meeting.add_meeting(account1, account1, "name".as_bytes().to_vec(), "你好,我是一个小偷".as_bytes().to_vec(), "poster".as_bytes().to_vec(),
+             "uri".as_bytes().to_vec(), 1, 1, 1, 1, "publisher".as_bytes().to_vec(), 1).expect("add meeting error");
+            let m1 = meeting.meeting_map.get(&account1).unwrap();
+            println!("m1 is {:?}",m1);
+            meeting.modify_meeting(account1, Some("namf1".as_bytes().to_vec()), None, None, None, None, None, None, None, None, None);
+            let m2 = String::from_utf8(meeting.meeting_map.get(&account1).unwrap().desc.clone()).unwrap();
+            println!("m2 is {:?}",m2);
         }
     }
 }
