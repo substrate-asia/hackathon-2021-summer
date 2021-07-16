@@ -4,6 +4,8 @@ import TopBar from '../../component/TopBar'
 import styles from './CreateEvent.module.css';
 import time from '../../images/icon_time.png'
 import downArrow from '../../images/down_arrow.png'
+import del from '../../images/icon_del.png'
+import add from '../../images/icon_add.png'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -91,7 +93,7 @@ class CreateEvent extends Component {
         const accountInfoHeight = 42;
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
         const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight;
-         const mShow= this.state.show
+        const mShow= this.state.show
         return (
             <div className={styles.container}>
                 <TopBar></TopBar>
@@ -144,6 +146,28 @@ class CreateEvent extends Component {
                                 <CheckboxItem key='3'>
                                     <span style={{ fontSize: '16px' }}>Site Zone</span>
                                 </CheckboxItem>
+                                <div>
+                                    <div>
+                                       <img src={del} alt="" className={styles.iconDel}></img>
+                                       <span className={styles.siteZoneLable}>A Zone</span>
+                                       <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                    </div>
+                                    <div>
+                                    <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
+                                    <span className={styles.rowAndSeats}>X</span>
+                                    <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
+                                    </div>
+                                    <div>
+                                       <img src={add} alt="" className={styles.iconDel}></img>
+                                       <span className={styles.siteZoneLable}>B Zone</span>
+                                       <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                    </div>
+                                    <div>
+                                    <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
+                                    <span className={styles.rowAndSeats}>X</span>
+                                    <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {/* Selling Time */}

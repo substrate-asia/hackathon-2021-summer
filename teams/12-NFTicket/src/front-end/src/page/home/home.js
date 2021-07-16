@@ -73,6 +73,7 @@ class Home extends Component {
       getAllMeeting((result) =>{
         console.log("--------getAllMeeting-----------")
         setTimeout(() => {
+          console.log(result)
           this.rData = result;
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(this.rData),
