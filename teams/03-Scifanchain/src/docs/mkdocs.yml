@@ -1,0 +1,14 @@
+site_name: 赛凡链文档
+nav:
+    - 首页: index.md
+    - 成为创作者: 成为创作者.md
+    - 成为验证人: 成为验证人.md
+    - 发展路线图: 发展路线图.md
+    - 白皮书: 白皮书.md
+    - 技术手册: 技术手册.md
+    - 贡献文档: 贡献文档.md
+copyright: Copyright &copy; 2021 <a href="http://docs.scifanchain.com">赛凡链</a>.
+theme: 
+  name: 'cosmo'
+
+dev_addr: '127.0.0.1:9000'

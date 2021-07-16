@@ -1,0 +1,866 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1,maximum-scale=1">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta content="telephone=no" name="format-detection" />
+		<title>P2PWorld</title>
+		<!-- <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css"> -->
+		<link rel="stylesheet" href="css/frozen.css">
+		<link rel="stylesheet" href="css/mescroll.min.css">
+		<link rel="stylesheet" type="text/css" href="main.css" />
+		<style type="text/css">
+			.search-bar .search-input {
+				color: #ff6600
+			}
+		</style>
+		<script src="js/vue.min.js"></script>
+		<!-- <script src="js/eruda.js"></script>
+		<script>
+			eruda.init();
+		</script> -->
+		<script src="./jquery.min.js"></script>
+		<script src="./qrcode.min.js"></script>
+
+		<script src="js/mescroll.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<script type="text/javascript">
+			var qrcode_newApp = null;
+
+
+			$(document).ready(function() {
+				var mescroll = new MeScroll("mescroll", {
+					down: {
+						auto: false, //是否在初始化完毕之后自动执行下拉回调callback; 默认true
+						callback: () => {
+							try {
+								reload_followers()
+							} catch (e) {
+
+							}
+							setTimeout(mescroll.endSuccess.bind(mescroll), 1000)
+						} //下拉刷新的回调
+					}
+				});
+
+				var account = window.havorld.jsCallAndroidReadByKey("account_address"); //账户是不是存在
+				var mnemonic = window.havorld.jsCallAndroidReadByKey("account_mnemonic"); //账户密钥
+				console.log("11111111111");
+				if (account == "") {
+					if (mnemonic == "") {
+						dialog("账户还不存在需要创建账户！");
+					} else {
+						dialog("发现新导入账户，正在初始化！");
+					}
+				}
+
+
+				var spreadinfo = window.havorld.jsCallAndroidReadByKey("spreadinfo"); //推荐人是否存在？
+				var spreadAddrFind = window.havorld.jsCallAndroidReadByKey("spreadAddrFind");
+
+
+
+				//console.log("11111111111222");
+				if (spreadinfo != "") {
+					//console.log("11111111111333");
+					$("#spreadSpan").text(spreadinfo);
+				} else if (spreadAddrFind != "") {
+					//console.log("11111111111444");
+					$("#spreadSpan").text(spreadAddrFind);
+				} else {
+					//console.log("1111111111555");
+					showLostSpread();
+				}
+
+
+				var followers = window.havorld.jsCallAndroidReadByKey("followers");
+				//$("#followersSpan").text(followers);
+
+
+
+				qrcode_newApp = new QRCode(document.getElementById("newAppDiv"), {
+					width: 180,
+					height: 180,
+					correctLevel: QRCode.CorrectLevel.M
+				});
+
+
+
+				/*  实现推荐人自动直充。。优先级不高
+            //dialog("0000:"+ spread);
+             if(spread==""){
+                 //show("推荐人不存在，请扫描推荐人的二维码或输入推荐人的ID！");
+                 var posibleSpreadList = window.havorld.jsCallAndroidReadByKey("posibleSpreadList");
+
+                 if(posibleSpreadList==""){
+                     var BOOTURLLIST = window.havorld.jsCallAndroidReadByKey("BOOTURLLIST");
+                     var url  = BOOTURLLIST + "/getSpread";
+                     $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: {},
+                        dataType : "json",
+                        success:function(data){
+                            if(data.code="200"){
+                                if(data.spreedlist.size>0){
+                                    window.havorld.jsCallAndroid("posibleSpreadList", data.spreedlist);
+                                    posibleSpreadList = data.spreedlist;
+                                }else{
+
+                                }
+
+                            }else{
+                                //试下一个url
+                            }
+                        },
+                        complete:function(){
+                        },
+                        error:function(){
+                            //试下一个url
+                        }
+				     });
+
+                 };
+
+                 if(posibleSpreadList==""){
+                    //dialog("找不到你的推荐人，请重新扫描推荐二维码以获取你的推荐人。（如果你是程序员，你的app是从github下载的，你可以不设置你的推荐人）");
+                    showLostSpread();
+                    //这里先实现，再扫描。。
+                 }else{
+                    //让用户选择一个推荐人。。。
+                    dialog("你的推荐人可能是：" +posibleSpreadList + "。。请选择！");
+                    //判断推荐人有没有人给传过账，如果没有，他是没有收账经验，我们在这会推荐推荐人的推荐为你的推荐人
+                 }
+                //dialog("推荐人不存在，请扫描推荐人的二维码或输入推荐人的ID！");
+             }
+
+             */
+			});
+
+			function dialog(content, showRight) {
+				app.showRight = showRight;
+				app.loading = false;
+				app.dialogContent = content;
+				app.dialogShow = true;
+			}
+
+			function loading() {
+				app.loading = true;
+				app.dialogContent = '正在上传...';
+				app.dialogShow = true;
+			}
+
+			function endLoading() {
+				app.loading = false;
+				app.dialogShow = false;
+			}
+		</script>
+
+		<script type="text/javascript">
+			function event_block(type, body) {
+				console.log("main.html receive event_block：" + type + "  " + body);
+				if (type == "spreadinfo" && body != "") {
+					console.log(body);
+					var myjson = JSON.parse(body);
+					if (myjson.last_height > 0) {
+						$("#spreadSpan").text(myjson.from);
+						hideLostSpread();
+
+					}
+
+				}
+
+				var DOT_DECIMAL_PLACES2 = 1000000000000000n;
+				if (type == "followers") {
+					//$("#followersSpan").text(body);
+					const bodyData = JSON.parse(body);
+					let totalEarnings = BigInt("0");
+					for (const item of bodyData) {
+						item.score =  BigInt(item.score)/DOT_DECIMAL_PLACES2;
+						totalEarnings += item.score;
+					}
+					app.totalEarnings = totalEarnings*6n/10n;
+					app.recommendList = bodyData;
+					// $('#followersDiv').text(bodyData.length > 0 ? body: '');
+				}
+
+
+				if (type == "spreadUrlfoud") {
+					console.log(body);
+					var url = body;
+
+					var addrspread = getQueryString("addrspread", url);
+					var addr = getQueryString("addr", url);
+					var new3rdAppFile = getQueryString("r", url); //推荐的app
+					addrspread = (addrspread == null || addrspread == "") ? addr : addrspread;
+					var new3rdAppCid = "";
+
+					if (new3rdAppFile != null && new3rdAppFile != "") {
+						var url2 = url.substring(url.indexOf("ipfs/"));
+						var reg2 = new RegExp("^ipfs/([^&]*)(/|$)", "i");
+						var r = url2.match(reg2);
+						//console.log("RegExp result" + r[1]);
+						var new3rdAppCid = r[1];
+
+						// dialog(addrspread + "推荐的APP下载：" + url);
+						dialog('您的私有频道有待下载的应用', true)
+					}
+					//var new3rdJson = '{"cid":"'+new3rdAppCid+'",  "file":"'+new3rdAppFile+'",  "addrspread":"'+addrspread+'"}';
+					//console.log("new3rdJson:" + new3rdJson);
+					//window.havorld.jsCallAndroidEventBlock('new3rdApp', new3rdJson);
+				}
+
+			};
+
+			function task_callback(id, type, param, result) {
+				console.log("main.html receive task_callback:type:" + type + "  " + param + "  " + result);
+
+				if (type == "followers") {
+					var followers = result;
+					window.havorld.jsCallAndroid("followers", followers); //task不保存，由调用者保存
+					window.havorld.jsCallAndroidEventBlock("followers", followers);
+					//$("#followersSpan").text(followers);
+				}
+
+				if (type == "spread_return") {
+					dialog(result);
+				}
+
+				if (type == "spreadinfo") {
+					var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+
+					if (param != addr) {
+						var myjson = JSON.parse(result);
+						if (myjson.last_height > 0) {
+							$("#spreadSpan").text(myjson.from);
+							hideLostSpread();
+						}
+					} else {
+
+					}
+				}
+
+			};
+
+
+
+
+
+			function reload_followers() {
+				var account = window.havorld.jsCallAndroidReadByKey("account_address"); //账户是不是存在
+				window.havorld.jsCallAndroidRunTask("", "followers", account, "0");
+
+			};
+
+
+			function spread_return() {
+				//var account = window.havorld.jsCallAndroidReadByKey("account_address");//账户是不是存在
+				window.havorld.jsCallAndroidRunTask("", "spread_return", "", "0");
+
+			};
+
+			function invest() {
+				dialog('敬请期待！');
+			}
+		</script>
+
+
+		<script type="text/javascript">
+			var privateKey = 'PrivateChannelApps';
+			
+			function show_spread() {
+				hideNewApp();
+				hideUploadApp();
+				$("#spread_div").show();
+				$("#trade_div").hide();
+				$("#app_div").hide();
+			};
+
+			function show_trade() {
+				hideNewApp();
+				hideUploadApp();
+				$("#spread_div").hide();
+				$("#trade_div").show();
+				$("#app_div").hide();
+
+			};
+
+			function show_app() {
+				$("#spread_div").hide();
+				$("#trade_div").hide();
+				hideNewApp();
+				//hideUploadApp();
+			};
+
+
+			function showLostSpread() {
+				$("#showLostSpread").show();
+
+			};
+
+			function hideLostSpread() {
+				$("#showLostSpread").hide();
+			}
+
+/*
+			function showNewApp(appCid, filename) {
+				var spreadinfo = window.havorld.jsCallAndroidReadByKey("spreadinfo");
+				var spreadAddrFind = window.havorld.jsCallAndroidReadByKey("spreadAddrFind");
+				var urlbase = "https://gateway.originprotocol.com/ipfs/" + appCid + "/";
+				if (spreadinfo != "") {
+					// 有推荐过人，下载链接只带自身钱包地址
+					var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+					var qrcodestr = urlbase + "?addr=" + addr + "&r=" + filename;
+					// $("#qrurltest").text(qrcodestr);
+					qrcode_newApp.makeCode(qrcodestr);
+
+					$("#showNewApp").show();
+					$("#app_div").hide();
+				} else if (spreadAddrFind != "") {
+					// 没有推荐过人，下载链接带上推荐人的钱包地址
+					var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+					var qrcodestr = urlbase + "?addr=" + addr + "&addrspread=" + spreadAddrFind + "&r=" + filename;
+					// $("#qrurltest").text(qrcodestr);
+					qrcode_newApp.makeCode(qrcodestr);
+
+					$("#showNewApp").show();
+					$("#app_div").hide();
+				} else {
+					dialog('请先找到您的推荐人！');
+				}
+
+			}
+*/
+			function hideNewApp() {
+				$("#showNewApp").hide();
+				$("#app_div").show();
+			}
+
+			function showUploadAPP(appPath) {
+				console.log('打开上传apk弹窗：', appPath);
+				app.uploadAppPath = appPath
+				app.uploadAppShow = true;
+			}
+
+			function hideUploadApp() {
+				app.uploadAppShow = false
+			}
+
+			function nativeUploadCompletion(appUploadJson_) {
+				console.log('nativeUploadCompletion：', appUploadJson_);
+				var appUploadJson = JSON.parse(appUploadJson_);
+				var appCode = appUploadJson.appCode;
+				var apkfileName = appUploadJson.apkfileName;
+				console.log('nativeUploadCompletion  appCode：', appCode);
+				endLoading()
+				if (!appCode || appCode === 'null' || appCode == "") {
+					dialog('应用上传IPFS矿机失败失败，请稍后重试！')
+					return
+				}
+				hideUploadApp()
+				let privateApps = window.havorld.jsCallAndroidReadByKey(privateKey);
+				if (privateApps) {
+					privateApps = JSON.parse(privateApps) || []
+				} else {
+					privateApps = []
+				}
+				const privateApp = {
+					appCode,
+					apkfileName : apkfileName,
+					mainTitle: app.uploadAppTitle,
+					subTitle: app.uploadAppSubTitle,
+					reason: app.uploadAppReason
+				}
+				app.privateApps.push(privateApp)
+				privateApps.push(privateApp)
+				window.havorld.jsCallAndroid(privateKey, JSON.stringify(privateApps))
+				
+				const papps = window.havorld.jsCallAndroidReadByKey(privateKey)
+				// dialog(`存储的privateApps：${papps}`)
+			}
+
+			function getQueryString(name, url) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				if (!url || url == "") {
+					url = window.location.search;
+				} else {
+					url = url.substring(url.indexOf("?"));
+				}
+				r = url.substr(1).match(reg)
+				if (r != null) return unescape(r[2]);
+				return null;
+			}
+		</script>
+
+
+	</head>
+	<body>
+		<div id="app" class="container">
+			<div id="mescroll" class="main-wrapper mescroll">
+				<div id="spread_div" class="main-content" style="display: none;">
+					<!-- <div id="followersDiv" style="color: red; font-weight: bold;">
+						followers
+					</div> -->
+					<div class="commission module_container">
+						<div class="cc_detail">
+							<div>
+								<div id="tuijianjiangli">
+									-
+								</div>
+								<div class="tjjl">
+									推荐奖励
+								</div>
+							</div>
+							<div>
+								<div id="diyajiangli">
+									-
+								</div>
+								<div class="dyjl">
+									抵押奖励
+								</div>
+							</div>
+							<div>
+								<div id="jiedianjiangli">
+									-
+								</div>
+								<div class="jdjl">
+									节点奖励
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="module_container module_margin">
+						<div class="flex-row">
+							<div class="tint_square"></div>
+							<div id="spread"> 我的推荐人： <span id="spreadSpan">-</span> </div>
+						</div>
+						<div id="showLostSpread" style="display:none;">找不到你的推荐人，请重新扫描推荐二维码以获取你的推荐人。
+							<br />注：推荐人制度在纯点对点世界里，不但是传播的方式，也是点不对世界APP不被盗版APP危害的关键所在，保证软件APP不被盗版危害（具体见白皮书）
+							<br />（如果你是程序员，你的app是从github下载的，你可以不设置你的推荐人）
+							<!-- 放到secritry里去 <a href="javascript:scanaddr();">sacan</a>-->
+						</div>
+						<div id="showNotScaned" style="display:none;">由于你的推荐人，本身没有转账等经历，无法承担对你安全使用该app需求。所以指定推荐人的推荐人，作为你的推荐人。
+						</div>
+					</div>
+
+					<div class="module_container no_padding module_margin">
+						<!-- <div class="flex-row">
+							<div class="tint_square"></div>
+							<div>推荐列表
+							</div>
+						</div> -->
+						<!-- <a href="javascript:reload_followers();">刷新</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="javascript:spread_return();">提现</a> -->
+						<div class="ui-tab module_margin">
+							<ul class="ui-tab-nav">
+								<li :class="{ current: tabIndex === 0}" @click="switchTabIndex(0)"><span>推荐</span></li>
+								<li :class="{ current: tabIndex === 1}" @click="switchTabIndex(1)"><span>抵押</span></li>
+								<li :class="{ current: tabIndex === 2}" @click="switchTabIndex(2)"><span>节点</span></li>
+							</ul>
+							<ul class="ui-tab-content sr_detail_body" :style="{ marginLeft: (tabIndex * -100) + '%' }" style="width:300%">
+								<li v-if="recommendList.length > 0">
+									<div class="recommend_earnings">
+										<span>可提现估算：{{ totalEarnings }}币</span><a href="#">（规则?）</a>
+										<button class="ui-btn ui-btn-primary" style="min-width: 45px;" onclick="spread_return()">提现</button>
+									</div>
+									<table class="followers_list ui-table ui-border-tb">
+										<thead>
+											<tr style="background-color: #00a5e0; color: white; font-weight: bold;">
+												<th>时间</th>
+												<th>钱包地址</th>
+												<th>积分</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr v-for="item in recommendList">
+												<td>{{ item.time || '-' }}</td>
+												<td>{{ addrBrief(item.user) }}</td>
+												<td class="table_money">{{ item.score }}</td>
+											</tr>
+										</tbody>
+									</table>
+								</li>
+								<li v-else class="will_done">
+									您还没有推荐别人
+								</li>
+								<li class="will_done">敬请期待</li>
+								<li class="will_done">敬请期待</li>
+							</ul>
+						</div>
+						<!--<span id="followersSpan">-</span> -->
+					</div>
+					<!-- <div>
+						我的推荐收益：。。。。<a href="">对收益进行提现</a>
+					</div>
+					<br />
+					<br /> -->
+					<div class="module_container module_margin explain">
+						说明：BT世界为去中化的软件提供去中心化认证去中心化的传播。
+						（BT世界没有下载不到的APP）
+						（进入议会的人，必需宣誓不危害他人：比如赌博、吸毒、！）
+						中心化共享APP激励平台！
+					</div>
+
+				</div>
+
+
+				<div id="trade_div" class="main-content" style="display: none;">
+
+					<div class="module_container">
+						<div class="ui-tab">
+							<ul class="ui-tab-nav">
+								<li :class="{ current: tabIndexPublic === 0}" @click="switchTabIndexPublic(0)"><span>推荐</span></li>
+								<li :class="{ current: tabIndexPublic === 1}" @click="switchTabIndexPublic(1)"><span>视频</span></li>
+								<li :class="{ current: tabIndexPublic === 2}" @click="switchTabIndexPublic(2)"><span>+</span></li>
+							</ul>
+							<ul class="ui-tab-content sr_detail_body" :style="{ marginLeft: (tabIndexPublic * -100) + '%' }" style="width:300%">
+								<li v-if="recommendList.length > 0">
+									<ul>
+										<li class="flex-row">
+											<div class="app_item">
+												Web3应用先锋队技术白皮--传播即挖矿--发布
+												<div class="item_margin earnings">
+													推荐部收益：xxxx币。
+												</div>
+												<div class="flex-row flex-around item_margin">
+												</div>
+												<!-- <a href="">推它</a> -->
+												<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+												<!-- <a href="">投资它</a> -->
+											</div>
+											<div>
+												<button class="ui-btn ui-btn-primary">详细</button><br/>
+												<button class="ui-btn">推它</button>
+											</div>
+										</li>
+										<li class="flex-row">
+											<div class="app_item">
+												Web3应用先锋队报名参加并区得波卡应用黑客松比赛。
+												<div class="item_margin earnings">
+													推荐部收益：xxxx币。
+												</div>
+												<div class="flex-row flex-around item_margin">
+												</div>
+											</div>
+											<div>
+												<button class="ui-btn ui-btn-primary">详细</button><br/>
+												<button class="ui-btn">推它</button>
+											</div>
+										</li>
+										<li class="flex-row">
+											<div class="app_item">
+												Web3应用先锋队报，传播即挖矿Demo发布！
+												<div class="item_margin earnings">
+													推荐部收益：xxxx币。
+												</div>
+												<div class="flex-row flex-around item_margin">
+												</div>
+											</div>
+											<div>
+												<button class="ui-btn ui-btn-primary">详细</button><br/>
+												<button class="ui-btn">推它</button>
+											</div>
+										</li>
+									</ul>
+								</li>
+								<li v-else >
+									您还没有推荐别人
+								</li>
+								<li>
+									<iframe width="280" height="158" src="https://emb.d.tube/#!//('files':('ipfs':('vid':('240':'QmXD9AoNhBQptcsDGPn2Z6oVjKmxQ1yWsygY3L4GQbnTGZ','480':'Qmc8vctjTNkJHNtAGmPd1m2hF6XKP9hrZ2EzaxcoAGaeNr','src':'QmfFRNvmDUcyxbbZwHEtwgopKizVrhr6EYDymknBbDV3gs'),'img':('118':'QmbZiQCsBnn4wY67LD35hTgQXqHcBFNg3vsKwCdjwcY7FQ','360':'QmQE88uVuigcJ3b9zPavD6dpvqt3EhRg54PLxFjL15cBuT','spr':'QmVW7NpBpTRjZfcJc2hr44YHE11Vuw5nDgujKJD2Ue2J8n'),'gw':'https:!!player.d.tube')),'dur':'55','nsfw':0,'oc':0,'thumbnailUrl':'https:!!snap1.d.tube!ipfs!QmbZiQCsBnn4wY67LD35hTgQXqHcBFNg3vsKwCdjwcY7FQ')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+									<iframe width="280" height="158" src="https://emb.d.tube/#!//('files':('ipfs':('vid':('240':'QmXD9AoNhBQptcsDGPn2Z6oVjKmxQ1yWsygY3L4GQbnTGZ','480':'Qmc8vctjTNkJHNtAGmPd1m2hF6XKP9hrZ2EzaxcoAGaeNr','src':'QmfFRNvmDUcyxbbZwHEtwgopKizVrhr6EYDymknBbDV3gs'),'img':('118':'QmbZiQCsBnn4wY67LD35hTgQXqHcBFNg3vsKwCdjwcY7FQ','360':'QmQE88uVuigcJ3b9zPavD6dpvqt3EhRg54PLxFjL15cBuT','spr':'QmVW7NpBpTRjZfcJc2hr44YHE11Vuw5nDgujKJD2Ue2J8n'),'gw':'https:!!player.d.tube')),'dur':'55','nsfw':0,'oc':0,'thumbnailUrl':'https:!!snap1.d.tube!ipfs!QmbZiQCsBnn4wY67LD35hTgQXqHcBFNg3vsKwCdjwcY7FQ')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+									<iframe width="280" height="158" src="https://emb.d.tube/#!//('files':('ipfs':('vid':('240':'QmXD9AoNhBQptcsDGPn2Z6oVjKmxQ1yWsygY3L4GQbnTGZ','480':'Qmc8vctjTNkJHNtAGmPd1m2hF6XKP9hrZ2EzaxcoAGaeNr','src':'QmfFRNvmDUcyxbbZwHEtwgopKizVrhr6EYDymknBbDV3gs'),'img':('118':'QmbZiQCsBnn4wY67LD35hTgQXqHcBFNg3vsKwCdjwcY7FQ','360':'QmQE88uVuigcJ3b9zPavD6dpvqt3EhRg54PLxFjL15cBuT','spr':'QmVW7NpBpTRjZfcJc2hr44YHE11Vuw5nDgujKJD2Ue2J8n'),'gw':'https:!!player.d.tube')),'dur':'55','nsfw':0,'oc':0,'thumbnailUrl':'https:!!snap1.d.tube!ipfs!QmbZiQCsBnn4wY67LD35hTgQXqHcBFNg3vsKwCdjwcY7FQ')" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+								</li>
+								<li>敬请期待</li>
+							</ul>
+						</div>
+						<!--<span id="followersSpan">-</span> -->
+					</div>
+
+					<div class="module_container module_margin explain">
+						说明：根据当时法律进行过滤显示
+					</div>
+
+				</div>
+
+
+
+				<div id="app_div" class="main-content">
+
+					<div class="module_container module_margin">
+						<div class="flex-row app_header">
+							<div class="tint_square"></div>
+							我关注的
+						</div>
+						<ul v-if="privateApps.length > 0">
+							<li class="flex-row" v-for="privateApp in privateApps">
+								<div class="app_item">
+									{{ privateApp.mainTitle }}
+									<br/>
+									{{ privateApp.reason }}
+									<div class="item_margin earnings">
+										推荐部收益：xxxx币。
+									</div>
+									<div class="flex-row flex-around item_margin" style="float:left;">
+										总担保:23K￥|24H交易:2K￥<a onclick="invest()">详情</a>
+									</div>
+									<!-- <a href="javascript:showNewApp('QmdKx3WTevSd8iKo8YxZq4AsewxkjA9vSGKn51ozDkJgrn', '12_base.apk');">推它</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href="">投资它</a> -->
+								</div>
+								<div>
+									<button class="ui-btn ui-btn-primary" @click="installNewApp(privateApp.appCode, privateApp.apkfileName)">安装</button>
+									<br/>
+									<button @click="showNewApp(privateApp.appCode, privateApp.apkfileName)" class="ui-btn">推它</button>
+								</div>
+							</li>
+						</ul>
+						<li v-else class="will_done">您还没有添加</li>
+					</div>
+
+					<div class="module_container">
+						<div class="flex-row app_header">
+							<div class="tint_square"></div>
+							公共频道
+						</div>
+						<ul>
+							<li class="flex-row">
+								<div class="app_item">
+									VPN共享，用区块链共享VPN，可以进群，交换第三方沟通工具私聊！
+									<div class="item_margin earnings">
+										推荐部收益：xxxx币。
+									</div>
+									<div class="flex-row flex-around item_margin">
+									</div>
+									<!-- <a href="">推它</a> -->
+									<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+									<!-- <a href="">投资它</a> -->
+								</div>
+								<div>
+									<button class="ui-btn ui-btn-primary">安装</button><br/>
+									<button class="ui-btn">推它</button>
+								</div>
+							</li>
+							<li class="flex-row">
+								<div class="app_item">
+									IPFS是新一代的BT，BT看二次元小说尽在此APP！
+									<a href="">点此下载APP</a>
+									<div class="item_margin earnings">
+										推荐部收益：xxxx币。
+									</div>
+									<div class="flex-row flex-around item_margin">
+									</div>
+								</div>
+								<div>
+									<button class="ui-btn ui-btn-primary">安装</button><br/>
+									<button class="ui-btn">推它</button>
+								</div>
+							</li>
+							<li class="flex-row">
+								<div class="app_item">
+									IPFS是新一代的BT，BT看各种美剧，二次元尽在新BT（ipfs)！
+									<a href="">此为电脑软件-windows版本</a>
+									<div class="item_margin earnings">
+										推荐部收益：xxxx币。
+									</div>
+									<div class="flex-row flex-around item_margin">
+									</div>
+								</div>
+								<div>
+									<button class="ui-btn ui-btn-primary" @click="openNewSite('http://188.131.177.130:9902/video.html', '')">浏览</button>
+									<button class="ui-btn">推它</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+					<div class="module_container module_margin explain">
+						说明：APP发布规则，任何人都可以发布。支持者每天都会得到一次抽奖的机会。奖金为（所有支持的资金-所有反对资金）*日利息。
+						中将率说明：前10名是前100名的1倍，前100名是前1000名的1位。。以些类推。。。。
+					</div>
+					<!-- <a href="javascript:dialog('开发中');">+推荐应用+</a><br /><br /> -->
+					<button class="fixed_bottom ui-btn-lg ui-btn-primary" onclick="dialog('请返回桌面长按需要分享的应用点击分享选择当前应用进行分享')">推荐新应用</button>
+				</div>
+
+				<div id="showNewApp" style="display: none;">
+					<!-- <a href="javascript:hideNewApp();">关闭</a>&nbsp; -->
+					<!-- <button onclick="hideNewApp()" class="ui-btn">关闭</button> -->
+					<div class="back_btn" onclick="hideNewApp()"></div>
+					<p class="main_title">超越WEB极限，打开P2P新世界</p>
+					<p class="sub_title">美好生活，来源最靓的你</p>
+					<div id="newAppDiv"></div>
+					<span id="qrurltest">推荐理由：这是一个可以带你好好生活的APP，这是一个可以带你好好生活的APP，这是一个可以带你好好生活的APP</span>
+					<button class="download_btn ui-btn-lg ui-btn-primary">立即下载</button>
+				</div>
+			</div>
+
+
+			<div class="ui-dialog upload_app" :class="{ show: uploadAppShow }">
+				<div class="ui-dialog-cnt">
+					<div class="back_btn" onclick="hideUploadApp()"></div>
+					<div class="ui-dialog-bd">
+						<div class="apk_name">
+							{{ uploadAppPath }}
+						</div>
+						<div class="ui-form ui-border-t">
+							<div class="ui-form-item ui-border-b">
+								<label>
+									标题：
+								</label>
+								<input id="receiver_addr" class="zz_input" type="text" v-model="uploadAppTitle" placeholder="输入标题">
+							</div>
+							<div class="ui-form-item ui-border-b">
+								<label>
+									副标题：
+								</label>
+								<input class="zz_input" type="text" v-model="uploadAppSubTitle" placeholder="输入副标题">
+							</div>
+							<div class="ui-form-item ui-border-b" style="height: 100px;">
+								<label>
+									推荐理由：
+								</label>
+								<textarea class="zz_input" name="content" v-model="uploadAppReason" placeholder="输入推荐理由(必填)" rows="3" maxlength="500" max="500"></textarea>
+								<!-- <input class="zz_input" type="text" v-model="uploadAppReason" placeholder="输入推荐理由(必填)"> -->
+							</div>
+						</div>
+
+						<button @click="uploadApp" class="ui-btn-lg ui-btn-primary">
+							立即上传到P2P网络
+						</button>
+
+					</div>
+				</div>
+			</div>
+			<div class="ui-dialog" :class="{ show: dialogShow }">
+				<div class="ui-dialog-cnt">
+					<div class="ui-dialog-bd">
+						<h3 v-if="!loading">提示</h3>
+						<img v-else width="30" src="loading.gif" />
+						<p>{{ dialogContent }}</p>
+					</div>
+					<div class="ui-dialog-ft" v-if="!loading">
+						<button type="button" data-role="button" @click="dialogSure">确定</button>
+						<button v-if="showRight" type="button" data-role="button" onclick="">下载</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			var app = new Vue({
+				el: '#app',
+				data: {
+					tabIndex: 0,
+					tabIndexPublic: 0,
+					showRight: false,
+					loading: false,
+					dialogShow: false,
+					dialogContent: '',
+					uploadAppPath: '',
+					uploadAppTitle: '',
+					uploadAppSubTitle: '',
+					uploadAppReason: '',
+					uploadAppShow: false,
+					totalEarnings: '-',
+					recommendList: [],
+					isShowLoading: false,
+					privateApps: []
+				},
+				mounted() {
+					this.refreshPrivateApps()
+				},
+				methods: {
+					switchTabIndex: function(index) {
+						this.tabIndex = index;
+					},
+					switchTabIndexPublic: function(index) {
+						this.tabIndexPublic = index;
+					},
+					covertTime: function(time) {
+						const t = new Date(time);
+						const result = moment(t).format('YYYY-MM-DD HH:mm:ss');
+						return result;
+					},
+					addrBrief: function(addr) {
+						return  addr.substring(0, 12) + '......' + addr.substring(40);
+
+					},
+					dialogSure: function() {
+						this.dialogShow = false;
+					},
+					uploadApp: function() {
+						if (!this.uploadAppReason) {
+							dialog('推荐理由必填！')
+							return;
+						}
+						if (this.uploadAppReason.length < 10 || this.uploadAppReason > 300) {
+							dialog('推荐理由需10-300字符~')
+							return;
+						}
+						loading()
+						window.havorld.updaApkFile(this.uploadAppPath, this.uploadAppTitle, this.uploadAppSubTitle, this.uploadAppReason)
+					},
+					refreshPrivateApps: function() {
+						try {
+							let privateApps = window.havorld.jsCallAndroidReadByKey(privateKey);
+							this.privateApps = privateApps ? JSON.parse(privateApps) : [];
+						} catch (e) {
+
+						}
+					},
+					showNewApp: function(appCid, apkfileName) {
+
+						console.log("11111111111111111");
+
+						var spreadinfo = window.havorld.jsCallAndroidReadByKey("spreadinfo");
+						var spreadAddrFind = window.havorld.jsCallAndroidReadByKey("spreadAddrFind");
+						//var urlbase = "https://gateway.originprotocol.com/ipfs/" + appCid + "/";
+						var urlbase = "http://211.159.227.141:8081/ipfs/" + appCid + "/";
+						if (spreadinfo != "") {
+							// 有推荐过人，下载链接只带自身钱包地址
+							var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+							var fulladdr = urlbase + "?addr=" + addr + "&r=" + apkfileName;
+							window.location = fulladdr;
+							console.log(fulladdr);
+
+						} else if (spreadAddrFind != "") {
+							// 没有推荐过人，下载链接带上推荐人的钱包地址
+							var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+							var fulladdr = urlbase + "?addr=" + addr + "&addrspread=" + spreadAddrFind + "&r=" + apkfileName;
+							window.location = fulladdr;
+							console.log(fulladdr);
+
+
+						} else {
+							console.log("2222222");
+							dialog('请先找到您的推荐人！');
+						}
+
+						//window.location = `http://211.159.227.141:8081/ipfs/${code}/`
+						// window.location = `http://211.159.227.141:8081/ipfs/QmU2ypqP57Uu9wgHTPZbPZUwPG5rh9YmFhJDHfHZXDJK5p/`
+
+					},
+					installNewApp: function(code, apkfileName) {
+						// window.location = `http://211.159.227.141:8081/ipfs/QmU2ypqP57Uu9wgHTPZbPZUwPG5rh9YmFhJDHfHZXDJK5p/app.zip`
+						window.location = `http://211.159.227.141:8081/ipfs/${code}/` + apkfileName;
+					},
+					openNewSite: function(url, code) {
+						window.havorld.jsCallAndroidOpenNewSite(url, code);
+					}
+
+
+
+				}
+			})
+		</script>
+	</body>
+</html>

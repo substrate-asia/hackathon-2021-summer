@@ -1,0 +1,37 @@
+/* Template Name: Destrin
+   Author: Themesdesign
+   Version: 1.0.0
+   File Description: Main Css file of the template
+*/
+
+/****************************************\
+
+01.general
+02.helper
+03.components
+04.menu
+05.home
+06.sevices
+07.features
+08.testimonial
+09.pricing
+10.contact
+11.footer
+12.responsive
+
+*****************************************/
+
+
+@import "variables";
+@import "general";
+@import "helper";
+@import "components";
+@import "menu";
+@import "home";
+@import "services";
+@import "features";
+@import "testimonial";
+@import "pricing";
+@import "contact";
+@import "footer";
+@import "responsive";

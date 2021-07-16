@@ -1,0 +1,53 @@
+.custom-modal {
+  .modal-content {
+    border: none;
+    border-radius: 1.2rem;
+  }
+  .modal-body {
+    padding: 1.2rem;
+  }
+  .modal-h-line {
+    height: 1px;
+    background: #F6F7F9;
+    margin: 1rem -1.2rem;
+  }
+}
+
+.tip-modal {
+  .input-group-box {
+    font-size: 0.8rem;
+    margin-bottom: 1.2rem;
+    input {
+      flex: 1;
+      border: none;
+      background: rgba(246, 247, 249, 1);
+      height: 2.4rem;
+      padding: 0.4rem 0.8rem;
+      box-sizing: border-box;
+      border-radius: 0.8rem;
+      width: 100%;
+    }
+    input::placeholder {
+      color: #BDBFC2;
+    }
+    .input-bg {
+      background: rgba(246, 247, 249, 1);
+      border-radius: 0.8rem;
+      span {
+        padding: 0 .8rem;
+      }
+    }
+    span {
+      display: inline-block;
+      white-space: nowrap;
+    }
+  }
+  .label {
+    text-align: left;
+    margin-bottom: .4rem;
+    font-size: .8rem;
+    line-height: .8rem;
+    font-weight: 500;
+  }
+
+}

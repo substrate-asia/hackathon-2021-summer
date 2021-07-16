@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+	<meta charset="utf-8">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="css/frozen.css">
+		<link rel="stylesheet" type="text/css" href="./security.css" />
+		<script src="./jquery.min.js"></script>
+		<script src="./qrcode.min.js"></script>
+		<!-- <script src="js/eruda.js"></script>
+		<script>
+			eruda.init();
+		</script> -->
+		<script type="text/javascript">
+			var qrcode_security1 = null;
+			var qrcode_security2 = null;
+
+
+
+			function refreshUI() {
+				var spreadinfo = window.havorld.jsCallAndroidReadByKey("spreadinfo");
+				var spreadAddrFind = window.havorld.jsCallAndroidReadByKey("spreadAddrFind");
+				var appCid = window.havorld.jsCallAndroidReadByKey("appCid");
+				console.log('^&*Y&**(*(appCid:))', appCid);
+				$('#appCid').text(appCid);
+				//var urlbase = "http://188.131.177.130:8080/ipfs/"+appCid+"/";
+				var urlbase = "https://gateway.originprotocol.com/ipfs/" + appCid + "/";
+				console.log("11111111111111111111111111111111111111:" + spreadinfo);
+				console.log("11111111111111111111111111111111111122:" + spreadAddrFind);
+
+
+				if (spreadinfo != "") {
+					var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+					var qrcodestr = urlbase + "?addr=" + addr;
+					console.log("11111111111111111111111111111111111123:" + qrcodestr);
+					$("#qrurltest").text(qrcodestr);
+					qrcode_security2.makeCode(qrcodestr);
+					//showQrcode(qrcode_security2, qrcodestr, addr, "");
+					$("#beSpreadDiv").show();
+					$("#findSpreadDiv").hide();
+					$("#noSpreadDiv").hide();
+					console.log("11111111111111111111111111111111111124:" + qrcodestr);
+
+				} else if (spreadAddrFind != "") {
+					var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+					var qrcodestr = urlbase + "?addr=" + addr + "&addrspread=" + spreadAddrFind;
+					console.log("11111111111111111111111111111111111125:" + qrcodestr);
+					$("#qrurltest").text(qrcodestr);
+					//showQrcode(qrcode_security1, qrcodestr, addr, spreadAddrFind);
+					qrcode_security1.makeCode(qrcodestr);
+					$("#beSpreadDiv").hide();
+					$("#findSpreadDiv").show();
+					$("#noSpreadDiv").hide();
+				} else {
+					$("#beSpreadDiv").hide();
+					$("#findSpreadDiv").hide();
+					$("#noSpreadDiv").show();
+				}
+
+
+
+			}
+
+			$(document).ready(function() {
+				qrcode_security1 = new QRCode(document.getElementById("qrcodeDiv1"), {
+					width: 180,
+					height: 180,
+					correctLevel: QRCode.CorrectLevel.M
+				});
+				qrcode_security2 = new QRCode(document.getElementById("qrcodeDiv2"), {
+					width: 160,
+					height: 160,
+					correctLevel: QRCode.CorrectLevel.M
+				});
+
+				refreshUI();
+
+			});
+		</script>
+
+		<script type="text/javascript">
+			// 获取URL地址参数
+			function getQueryString(name, url) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				if (!url || url == "") {
+					url = window.location.search;
+				} else {
+					url = url.substring(url.indexOf("?"));
+				}
+				r = url.substr(1).match(reg)
+				if (r != null) return unescape(r[2]);
+				return null;
+			}
+
+			function scanaddr() {
+				var aa = window.havorld.jsCallAndroidScanQrcode("spread"); //完成扫描后， BrowserActivity.java 会调用 invokeJS_newEvent("spreadUrlfoud", result);//
+				//然后这里我们就需要处理  event_block  里 的 spreadUrlfoud  这个消息。
+
+
+			};
+
+			//扫描后，通过event_block  里 的 spreadUrlfoud ，会进入这里，这是真正处理  刚才扫描结果的
+			function setSpread(result) {
+
+				var addrspread = getQueryString("addrspread", result);
+				var addr = getQueryString("addr", result);
+				console.log("secutiry.html:" + result  +"   addr:"+addr);
+				if( addr == null || addr == ""){
+					console.log("secutiry.html:" + result  +"   addr:"+addr);
+					alert("非正确格式二维码："+result);//feng  这是一个bug, 这个弹框没出来。
+					return;
+				}
+				if (addrspread != null) { //如果带有addrspread， 是告诉我们这个URL的发布者，自己还没有交易过
+					alert("由于你的推荐人，本身没有转账等经历，无法承担对你安全使用该app需求。所以指定推荐人的上级，作为你的推荐人。");
+					window.havorld.jsCallAndroid("spreadAddrScan", addr);
+					window.havorld.jsCallAndroidRunTask("", "spreadinfo", addrspread, "0");
+				} else if (addr != null) {
+					window.havorld.jsCallAndroidRunTask("", "spreadinfo", addr, "0");
+
+				}
+
+			}
+
+
+			function task_callback(id, type, param, result) {
+				console.log("security.html receive task_callback" + param + "  " + result);
+				if (type == "spreadinfo") {
+					var addr = window.havorld.jsCallAndroidReadByKey("account_address");
+					if (param != addr) { //应该都是能进入这里，但为了防止意外,还是做了这个判断
+						//		window.havorld.jsCallAndroid("spreadAddrFind", param);
+						var myjson = JSON.parse(result);
+						if (myjson.last_height > 0) {
+							window.havorld.jsCallAndroid("spreadAddrFind", param);
+							refreshUI();
+
+						} else {
+							alert("异常二维护码！！！！");
+						}
+					}
+					//if(type=="spreadinfo") 
+					//显示二维码。。。
+				}
+
+			};
+
+
+			function event_block(type, body) {
+				console.log("security.html receive event_block" + type + "  " + body);
+				if (type == "spreadinfo") {
+					console.log(body);
+					refreshUI();
+				}
+
+
+				if (type == "followers") {}
+
+				if (type == "appCid") {
+					refreshUI();
+				}
+				if (type == "spreadUrlfoud") {
+					setSpread(body);
+					refreshUI();
+				}
+
+			};
+		</script>
+
+	</head>
+
+	<body>
+		<!-- <div style="color: red; font-weight: bold;">
+			appCid：
+			<span id="appCid">
+			</span>			
+		</div> -->
+		
+		<div id="noSpreadDiv" style="display:none;">
+			你还没有找到推荐人。请再次扫描你下载该app的二维码，以获取推荐人信息。
+			<!-- <a href="javascript:scanaddr();">sacan</a> -->
+			<button onclick="scanaddr()" class="ui-btn">扫一扫</button>
+			<div class="explain">
+				（注意，推荐人制度是该app不被仿制恶意app危害的关键所在）
+			</div>
+		</div>
+		<!-- <div id="qrurltest"></div> -->
+
+		<div id="findSpreadDiv" style="display:none;">
+			<!--还有一种情况，就是程序员从github下载程序，这个流程怎么走，。。。这里先不考虑 -->
+			你已经找到你的推荐人，但你还不能成为别人的推荐人，你还没有与人交易的体验。
+			<div class="qrcode_area">				
+				推广与收款二维码
+				<div id="qrcodeDiv1"></div>
+			</div>
+			<!-- <div id="heightDiv"></div> -->
+		</div>
+
+
+		<div id="beSpreadDiv">
+			下载与收款或向对方提供连接节点地址
+			<div class="qrcode_area">
+				请对方扫此二维码
+				<!-- <div id="heightDiv"></div></br> -->
+				<div id="qrcodeDiv2"></div></br>
+			</div>
+		</div>
+
+	</body>
+
+</html>

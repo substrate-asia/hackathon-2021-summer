@@ -1,0 +1,267 @@
+//
+// menu.scss
+//
+
+.navbar-custom {
+  padding: 15px 0px;
+  width: 100%;
+  border-radius: 0px;
+  z-index: 999;
+  margin-bottom: 0px;
+  transition: all 0.5s ease-in-out;
+
+  .navbar-nav {
+    li {
+      a {
+        line-height: 26px;
+        color: rgba($white, 0.6);
+        font-size: 16px;
+        text-transform: capitalize;
+        transition: all 0.5s;
+        background-color: transparent !important;
+        padding: 15px 0;
+        margin: 0 10px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .nav-social {
+    a{
+      background: rgba($white, 0.1);
+      width: 36px;
+      height: 36px;
+      display: inline-block;
+      text-align: center;
+      border-radius: 50%;
+      transition: all 0.5s;
+     i{
+       font-size: 16px;
+       line-height: 36px;
+       color: rgba($white, 0.6) !important;
+       &:hover{
+         color: $white !important;
+       }
+     }
+    }
+   }
+
+}
+
+
+.sticky-wrapper {
+  position: absolute;
+  width: 100%;
+}
+
+
+.navbar-toggler {
+  font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  color: $dark;
+}
+
+
+
+
+.navbar-custom .navbar-nav li.active a,
+.navbar-custom .navbar-nav li a:hover,
+.navbar-custom .navbar-nav li a:active {
+  color: $white;
+}
+
+.navbar-toggle {
+  font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  color: $white;
+}
+
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover {
+  background-color: transparent;
+  border-color: #337ab7;
+}
+
+.navbar-custom {
+  .navbar-toggles {
+    padding: 0.25rem 0.75rem;
+    font-size: 18px;
+    background: 0 0;
+    border: 1px solid transparent;
+    color: $white;
+    outline: 0;
+  }
+
+  .navbar-toggles-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+  }
+}
+
+.menu-toggle {
+  padding: 4.5px 10px !important;
+}
+
+.menu-toggle {
+  span {
+    line-height: 27px;
+  }
+}
+
+.navbar-button {
+  margin-left: 20px;
+}
+
+.logo .logo-light {
+  display: inline-block;
+}
+
+.logo .logo-dark {
+  display: none;
+}
+
+.is-sticky .logo .logo-dark {
+  display: inline-block;
+}
+
+.is-sticky .logo .logo-light {
+  display: none;
+}
+
+/*---Navbar-White--*/
+.navbar-custom.navbar-white .navbar-nav li a,
+.navbar-custom.navbar-white .navbar-brand,
+.navbar-white .navbar-toggle {
+    color: $dark !important;
+}
+
+
+
+.navbar-custom.navbar-white .navbar-nav li.active a,
+.navbar-custom.navbar-white .navbar-nav li a:hover,
+.navbar-custom.navbar-white .navbar-nav li a:focus,
+.navbar-custom.navbar-white .navbar-nav li a:active{
+    color: $primary !important;
+    // position: relative;
+    // &:before{
+    // top: 0;
+    // position: absolute;
+    // left: 25%;
+    // width: 50%;
+    // height: 2px;
+    // background: $primary;
+    // transition: all 0.15s;
+    // content: '';
+    // }
+    // &:after{
+    // bottom: 0;
+    // position: absolute;
+    // left: 25%;
+    // width: 50%;
+    // height: 2px;
+    // background: $primary;
+    // transition: all 0.15s;
+    // content: '';
+    // }
+   
+}
+
+// nav-social
+
+
+.navbar-white{
+
+  .nav-social {
+    a{
+      background: rgba($primary, 0.1);
+      width: 36px;
+      height: 36px;
+      display: inline-block;
+      text-align: center;
+      border-radius: 50%;
+      transition: all 0.5s;
+     i{
+       font-size: 16px;
+       line-height: 36px;
+       color: $dark !important;
+       &:hover{
+         color: $primary !important;
+       }
+     }
+    }
+   }
+   
+
+}
+
+
+/*---NAVBAR STICKY--*/
+
+.is-sticky {
+  &.navbar-custom {
+    margin-top: 0px;
+    padding: 10px 0px;
+    box-shadow: 0px 3px 10px 0px rgba(38, 107, 193, 0.08);
+
+    &.sticky-dark {
+      background-color: $dark;
+    }
+  }
+
+  .navbar-nav {
+    li {
+      a {
+        color: $dark !important;
+      }
+    }
+  }
+
+  .nav-social {
+    a{
+      background: rgba($primary, 0.1);
+     
+     i{
+       color: $dark !important;
+       &:hover{
+         color: $primary !important;
+       }
+     }
+    }
+   }
+
+
+}
+
+
+
+.is-sticky .navbar-custom .navbar-nav li.active a,
+.is-sticky .navbar-custom .navbar-nav li a:hover,
+.is-sticky .navbar-custom .navbar-nav li a:active {
+  color: $primary !important;
+}
+
+.is-sticky .navbar-custom .navbar-toggles {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid transparent;
+  outline: 0;
+}
+
+.is-sticky .navbar-nav {
+  margin-top: 0px;
+}
+
+.is-sticky {
+  .navbar-custom {
+    margin-top: 0px;
+    padding: 10px 0px;
+    background-color: $white;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.035);
+  }
+
+
+}

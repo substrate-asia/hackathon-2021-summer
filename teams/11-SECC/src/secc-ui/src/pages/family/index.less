@@ -1,0 +1,257 @@
+
+.info-item {
+  height: 33px;
+  line-height: 33px;
+}
+.menu-item {
+  i {
+    font-size: 60px;
+    color: #108ee9;
+  }
+}
+.advice-list {
+  .am-list-content {
+    font-size: 14px !important;
+  }
+}
+/** 个人简介 **/
+.profile-wrapper {
+  padding: @common-padding;
+  height: 175px;
+  background: url("~@/assets/images/profile-cover.png");
+  background-size: cover;
+  .info-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    .info {
+      display: flex;
+      .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      .name-wrapper {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        margin-left: 15px;
+        .name {
+          font-size: 16px;
+          color: #ffffff;
+          height: 25px;
+          line-height: 25px;
+        }
+        .gender {
+          font-size: 14px;
+          height: 25px;
+          line-height: 25px;
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+    }
+    .action {
+      width: .8rem /* 30/37.5 */;
+      height: .8rem /* 30/37.5 */;
+      text-align: center;
+      color: #ffffff;
+      border: 1px solid #ffffff;
+      border-radius: 50%;
+      position: relative;
+      i.icon-add {
+        font-size: 20px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .icon-xiala {
+    font-size: 18px;
+    margin-left: 3px;
+    vertical-align: middle;
+  }
+}
+/** 健康状况 **/
+.health-status-wrapper {
+  padding: 0 @common-padding;
+  margin-top: -110px;
+  margin-bottom: 10px;
+  z-index: 2;
+  h2 {
+    font-size: 0.426667rem /* 16/37.5 */;
+    color: #ffffff;
+    text-align: left;
+  }
+  .data-list {
+    min-height: 100px;
+    border-radius: 3px;
+    background: #ffffff;
+    display: flex;
+    .list-item {
+      flex: 1;
+      max-width: 33.33%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+      padding-bottom: 10px;
+      position: relative;
+      padding: 10px;
+      & + .list-item {
+        &::before {
+          content: " ";
+          position: absolute;
+          background: #efeded;
+          left: 0;
+          top: 20px;
+          width: 2px;
+          bottom: 20px;
+        }
+      }
+      i {
+        font-size: 0.533333rem /* 20/37.5 */;
+        color: #55d4d8;
+      }
+      .title {
+        font-size: 0.32rem /* 12/37.5 */;
+        color: #666666;
+        margin: 10px 0;
+      }
+      .num {
+        font-size: 0.346667rem /* 13/37.5 */;
+        color: #222222;
+      }
+    }
+  }
+}
+
+.menu-list {
+  height: 112px;
+  padding: 0 15px;
+  display: flex;
+  margin-bottom: 10px;
+  .menu-item {
+    justify-content: space-between;
+    flex: 1;
+    border-radius: 6px;
+    position: relative;
+    + .menu-item {
+      margin-left: 10px;
+    }
+    &:nth-of-type(1) {
+      background: linear-gradient(-52deg, #f66417, #ffab53);
+    }
+    &:nth-of-type(2) {
+      background: linear-gradient(0deg, #00b7ad, #73fcd9);
+    }
+    &:nth-of-type(3) {
+      background: linear-gradient(0deg, #4189fe, #7ab4fe);
+    }
+    .title {
+      font-size: 0.373333rem /* 14/37.5 */;
+      font-family: PingFang SC;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #ffffff;
+      text-align: left;
+      padding-left: 8px;
+    }
+    .desc {
+      font-size: 0.32rem /* 12/37.5 */;
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: left;
+      padding-left: 8px;
+    }
+    img {
+      width: 1.28rem /* 48/37.5 */;
+      position: absolute;
+      right: 0px;
+      bottom: 0;
+    }
+  }
+}
+
+.health-advice-wrapper {
+  h2 {
+    color: #181818;
+    font-size: 0.426667rem /* 16/37.5 */;
+    text-align: left;
+    padding-left: @common-padding;
+  }
+  /** 高血压 **/
+  .hyper-tension-wrapper {
+    background: #ffffff;
+    margin: 13px @common-padding 0;
+    padding: 12px 10px;
+    border-radius: 3px;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+    p {
+      line-height: .48rem; /* 18/37.5 */
+      margin: 0;
+      text-align: left;
+      padding-left: 16px;
+      position: relative;
+      .index-wrapper {
+        position: absolute;
+        left: 0;
+        top: .08rem; /* 3/37.5 */
+        display: inline-block;
+        background: #04baae;
+        width: 0.293333rem; /* 11/37.5 */
+        height: 0.293333rem; /* 11/37.5 */
+        line-height: 0.293333rem /* 11/37.5 */;
+        border-radius: 50%;
+        text-align: center;
+        color: #ffffff;
+        font-size: 0.213333rem; /* 8/37.5 */
+      }
+      span {
+        font-size: 0.32rem /* 12/37.5 */;
+        &.title {
+          color: #222222;
+        }
+        &.desc {
+          color: #666666;
+        }
+      }
+      & + p {
+        margin-top: 0.24rem /* 9/37.5 */;
+      }
+    }
+  }
+  /** 糖尿病 **/
+  .dabetes-wrapper {
+    text-align: left;
+    padding: 0 @common-padding;
+    h3 {
+      margin: 0.266667rem /* 10/37.5 */ 0;
+      text-align: left;
+      color: #55b5eb;
+      font-size: 0.373333rem /* 14/37.5 */;
+    }
+    p {
+      margin: 0;
+      padding-left: 13px;
+      position: relative;
+      color: #666666;
+      font-size: 12px;
+      line-height: 0.48rem /* 18/37.5 */;
+      + p {
+        margin-top: 0.213333rem; /* 8/37.5 */
+      }
+      &::before {
+        content: " ";
+        position: absolute;
+        width: 0.12rem /* 4.5/37.5 */;
+        height: 0.12rem /* 4.5/37.5 */;
+        background: #55b5eb;
+        border-radius: 50%;
+        left: 3px;
+        top: 7px;
+      }
+    }
+  }
+}

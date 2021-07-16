@@ -1,0 +1,149 @@
+.wrapperbody{
+    width: 100%;
+}
+.wrapper{
+    width: 100%;
+    white-space: nowrap; 
+    overflow: scroll;
+}
+.contant{
+    padding-bottom: 50px;
+}
+
+.flexcontent{
+    width: 100%;
+    height: 50px;
+    /* margin-left: 20px;
+    margin-right: 20px; */
+}
+.title{
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.title2{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.timeIcon{
+    width: 20px;
+    height: 20px;
+}
+
+.timeText{
+    margin-left: 8px;
+    font-weight: bold;
+}
+
+.vector4{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.vectorbg{
+    /* width: 20%; */
+    padding: 2px 2px;
+    height: 16px;
+    border: 1px solid #c4bebe;
+    background-color: rgb(252, 248, 248);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.vectorIcon{
+    width: 13px;
+    height: 12px;
+    margin-right: 1px;
+}
+.vectorspanspan{
+    margin: 0px 2px;
+    font-size: 8px;
+    line-height: 2px;
+}
+
+.stageTitle{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.stageImage{
+    width: 40%;
+}
+.stageImage img{
+    width: 100%;
+}
+.stageText{
+    position: relative;
+    top: -20px;
+    font-size: 12px;
+    color: rgb(161, 159, 159);
+}
+
+.onevector{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.onevector img{
+    width: 14px;
+    height: 13px;
+    margin: 1px;
+}
+
+
+.bottomconfirm{
+    position:absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bottomleft{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.bottomleftspan1{
+    margin: 5px;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 8px;
+    color: #FF9500;
+}
+.bottomleftspan2{
+    margin: 5px;
+    font-weight: bold;
+}
+.bottomleftspan3{
+    margin: 5px;
+}
+.bottomleftspan4{
+    margin: 5px;
+}
+
+.no4_vector{
+    /* margin-bottom: 100px; */
+    padding-bottom: 150px;
+}

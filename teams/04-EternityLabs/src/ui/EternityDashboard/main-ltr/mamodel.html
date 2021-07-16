@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../images/favicon.ico">
+
+    <title>Eternity Labs - Dashboard</title>
+
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="../assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="../assets/vendor_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet"
+        href="../assets/vendor_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
+    <!-- Data Table-->
+    <link rel="stylesheet" type="text/css" href="../assets/vendor_components/datatable/datatables.min.css" />
+
+    <!-- theme style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- DashboardX Admin skins -->
+    <link rel="stylesheet" href="css/skin_color.css">
+
+
+    <style>
+        .blockquote {
+            font-style: normal;
+        }
+
+        .blockquote p {
+            text-indent: 2em;
+        }
+
+        .box {
+            box-shadow: none;
+        }
+    </style>
+
+</head>
+
+<body class="hold-transition light-skin sidebar-mini theme-blueindigo onlyheader">
+    <div class="wrapper">
+        <div class="art-bg">
+            <img src="../images/art1.svg" alt="" class="art-img light-img">
+            <img src="../images/art2.svg" alt="" class="art-img dark-img">
+            <img src="../images/art-bg.svg" alt="" class="wave-img light-img">
+            <img src="../images/art-bg2.svg" alt="" class="wave-img dark-img">
+        </div>
+
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <!-- mini logo -->
+                <div class="logo-mini">
+                    <span class="light-logo"><img src="../images/logo-light.png" alt="logo"></span>
+                    <span class="dark-logo"><img src="../images/logo-dark.png" alt="logo"></span>
+                </div>
+                <!-- logo-->
+                <div class="logo-lg">
+                    <span class="light-logo"><img src="../images/logo-light-text.png" alt="logo"></span>
+                    <span class="dark-logo"><img src="../images/logo-dark-text.png" alt="logo"></span>
+                </div>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top">
+                <div class="app-menu">
+                    <ul class="header-megamenu nav">
+                        <li class="btn-group nav-item">
+                            <a href="#" class="waves-effect waves-light nav-link rounded" data-toggle="push-menu"
+                                role="button">
+                                <i class="nav-link-icon ti-align-left text-white"></i>
+                            </a>
+                        </li>
+                        <li class="btn-group nav-item">
+                            <a href="#" data-provide="fullscreen" class="waves-effect waves-light nav-link rounded"
+                                title="Full Screen">
+                                <i class="nav-link-icon mdi mdi-crop-free text-white"></i>
+                            </a>
+                        </li>
+                        <li class="btn-group nav-item d-xl-inline-flex d-none">
+                            <a href="#" class="waves-effect waves-light nav-link rounded" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="nav-link-icon mdi mdi-view-dashboard text-white mx-5 mx-lg-0"> </i>
+                                <span class="d-xl-inline-block d-none">MEGA
+                                    <i class="mdi mdi-dots-vertical ml-2"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-grid">
+                                <div class="dropdown-mega-menu">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-12">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item-header nav-item">
+                                                    Overview
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon fa fa-inbox mr-10">
+                                                        </i>
+                                                        <span>
+                                                            Contacts
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon fa fa-book mr-10">
+                                                        </i>
+                                                        <span>
+                                                            Incidents
+                                                        </span>
+                                                        <div class="ml-auto badge badge-pill badge-danger">5
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        <i class="nav-link-icon fa fa-picture-o mr-10">
+                                                        </i>
+                                                        <span>
+                                                            Companies
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link disabled">
+                                                        <i class="nav-link-icon fa fa-dashboard mr-10">
+                                                        </i>
+                                                        <span>
+                                                            Dashboards
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-4 col-12 bx-1">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item-header nav-item">
+                                                    Favourites
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        Reports Conversions
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">
+                                                        Quick Start
+                                                        <div class="ml-auto badge badge-success">New</div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">Users &amp;
+                                                        Groups</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">Proprieties</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-4 col-12">
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item-header nav-item">
+                                                    Sales & Marketing
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">Queues
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">Resource Groups
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">Goal Metrics
+                                                        <div class="ml-auto badge badge-warning">3
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="javascript:void(0);" class="nav-link">Campaigns
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown nav-item d-xl-inline-flex d-none">
+                            <a href="#" aria-haspopup="true" data-toggle="dropdown"
+                                class="waves-effect waves-light nav-link rounded" aria-expanded="false">
+                                <i class="nav-link-icon ti-layout-tab text-white mx-5 mx-lg-0"></i>
+                            </a>
+                            <div class="dropdown-menu overflow-hidden">
+                                <div class="dropdown-menu-header-inner bg-img"
+                                    style="background-image: url('../images/gallery/landscape1.jpg');" data-overlay="5">
+                                    <div class="p-30 text-left w-250">
+                                        <h5 class="text-white">Overview</h5>
+                                        <h6 class="text-white">Unlimited options</h6>
+                                        <div class="menu-header-btn-pane">
+                                            <button class="mr-2 btn btn-success btn-sm">Settings</button>
+                                            <button class="btn-icon btn-icon-only btn btn-info btn-sm">
+                                                <i class="fa fa-cog"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-10">
+                                    <button type="button" class="btn btn-flat btn-light no-shadow w-p100 text-left"><i
+                                            class="mdi mdi-file-multiple mr-10"> </i>Graphic Design</button>
+                                    <button type="button" class="btn btn-flat btn-light no-shadow w-p100 text-left"><i
+                                            class="mdi mdi-file-multiple mr-10"> </i>App Development</button>
+                                    <button type="button" class="btn btn-flat btn-light no-shadow w-p100 text-left"><i
+                                            class="mdi mdi-file-multiple mr-10"> </i>Icon Design</button>
+                                    <div tabindex="-1" class="dropdown-divider"></div>
+                                    <button type="button" class="btn btn-flat btn-light no-shadow w-p100 text-left"><i
+                                            class="mdi mdi-file-multiple mr-10"> </i>Miscellaneous</button>
+                                    <button type="button" class="btn btn-flat btn-light no-shadow w-p100 text-left"><i
+                                            class="mdi mdi-file-multiple mr-10"> </i>Frontend Dev</button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown nav-item d-xl-inline-flex d-none">
+                            <a href="#" aria-haspopup="true" data-toggle="dropdown"
+                                class="waves-effect waves-light nav-link rounded" aria-expanded="false">
+                                <i class="nav-link-icon ti-layout-grid2 text-white mx-5 mx-lg-0"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-grid overflow-hidden">
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-camera"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-image"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-folder"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-play"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-music"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-newspaper-o"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-book"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-download"></span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="icon fa fa-gear"></span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="navbar-custom-menu r-side">
+                    <ul class="nav navbar-nav">
+                        <!-- full Screen -->
+                        <li class="search-bar d-sm-inline-flex d-none">
+                            <div class="lookup lookup-circle lookup-right">
+                                <input type="text" name="s">
+                            </div>
+                        </li>
+                        <!-- Messages -->
+                        <li class="dropdown messages-menu">
+                            <a href="#" class="waves-effect waves-light dropdown-toggle" data-toggle="dropdown"
+                                title="Messages">
+                                <i class="ti-email"></i>
+                            </a>
+                            <ul class="dropdown-menu animated bounceIn">
+
+                                <li class="header">
+                                    <div class="p-20">
+                                        <div class="flexbox">
+                                            <div>
+                                                <h4 class="mb-0 mt-0">Messages</h4>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-danger">Clear All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu sm-scrol">
+                                        <li>
+                                            <!-- start message -->
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src="../images/user2-160x160.jpg" class="rounded-circle"
+                                                        alt="User Image">
+                                                </div>
+                                                <div class="mail-contnet">
+                                                    <h4>
+                                                        Lorem Ipsum
+                                                        <small><i class="fa fa-clock-o"></i> 15 mins</small>
+                                                    </h4>
+                                                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit.</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end message -->
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src="../images/user3-128x128.jpg" class="rounded-circle"
+                                                        alt="User Image">
+                                                </div>
+                                                <div class="mail-contnet">
+                                                    <h4>
+                                                        Nullam tempor
+                                                        <small><i class="fa fa-clock-o"></i> 4 hours</small>
+                                                    </h4>
+                                                    <span>Curabitur facilisis erat quis metus congue viverra.</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src="../images/user4-128x128.jpg" class="rounded-circle"
+                                                        alt="User Image">
+                                                </div>
+                                                <div class="mail-contnet">
+                                                    <h4>
+                                                        Proin venenatis
+                                                        <small><i class="fa fa-clock-o"></i> Today</small>
+                                                    </h4>
+                                                    <span>Vestibulum nec ligula nec quam sodales rutrum sed
+                                                        luctus.</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src="../images/user3-128x128.jpg" class="rounded-circle"
+                                                        alt="User Image">
+                                                </div>
+                                                <div class="mail-contnet">
+                                                    <h4>
+                                                        Praesent suscipit
+                                                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                                    </h4>
+                                                    <span>Curabitur quis risus aliquet, luctus arcu nec, venenatis
+                                                        neque.</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src="../images/user4-128x128.jpg" class="rounded-circle"
+                                                        alt="User Image">
+                                                </div>
+                                                <div class="mail-contnet">
+                                                    <h4>
+                                                        Donec tempor
+                                                        <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                                    </h4>
+                                                    <span>Praesent vitae tellus eget nibh lacinia pretium.</span>
+                                                </div>
+
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">See all e-Mails</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Notifications -->
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="waves-effect waves-light dropdown-toggle" data-toggle="dropdown"
+                                title="Notifications">
+                                <i class="ti-comment-alt"></i>
+                            </a>
+                            <ul class="dropdown-menu animated bounceIn">
+
+                                <li class="header">
+                                    <div class="p-20">
+                                        <div class="flexbox">
+                                            <div>
+                                                <h4 class="mb-0 mt-0">Notifications</h4>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="text-danger">Clear All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu sm-scrol">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-info"></i> Curabitur id eros quis nunc
+                                                suscipit blandit.
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning text-warning"></i> Duis malesuada justo eu
+                                                sapien elementum, in semper diam posuere.
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-danger"></i> Donec at nisi sit amet tortor
+                                                commodo porttitor pretium a erat.
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-shopping-cart text-success"></i> In gravida mauris et
+                                                nisi
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-user text-danger"></i> Praesent eu lacus in libero
+                                                dictum fermentum.
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-user text-primary"></i> Nunc fringilla lorem
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-user text-success"></i> Nullam euismod dolor ut quam
+                                                interdum, at scelerisque ipsum imperdiet.
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">View all</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- User Account-->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="waves-effect waves-light dropdown-toggle" data-toggle="dropdown"
+                                title="User">
+                                <i class="ti-user"></i>
+                            </a>
+                            <ul class="dropdown-menu animated flipInX">
+                                <!-- User image -->
+                                <li class="user-header bg-img" style="background-image: url(../images/user-info.jpg)"
+                                    data-overlay="3">
+                                    <div class="flexbox align-self-center">
+                                        <img src="../images/avatar/7.jpg" class="float-left rounded-circle"
+                                            alt="User Image">
+                                        <h4 class="user-name align-self-center">
+                                            <span>Samuel Brus</span>
+                                            <small>samuel@gmail.com</small>
+                                        </h4>
+                                    </div>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-person"></i> My
+                                        Profile</a>
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-bag"></i> My
+                                        Balance</a>
+                                    <a class="dropdown-item" href="javascript:void(0)"><i
+                                            class="ion ion-email-unread"></i> Inbox</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-settings"></i>
+                                        Account Setting</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="ion-log-out"></i>
+                                        Logout</a>
+                                    <div class="dropdown-divider"></div>
+                                    <div class="p-10"><a href="javascript:void(0)"
+                                            class="btn btn-sm btn-rounded btn-success">View Profile</a></div>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar" title="Setting"
+                                class="waves-effect waves-light"><i class="ti-settings"></i></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <div class="container-full clearfix position-relative">
+                <!-- Left side column. contains the logo and sidebar -->
+                <aside class="main-sidebar">
+                    <!-- sidebar-->
+                    <section class="sidebar">
+                        <!-- sidebar menu-->
+                        <ul class="sidebar-menu" data-widget="tree">
+                            <li>
+                                <a href="index.html">
+                                    <i class="mdi mdi-minus-network"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="mdi mdi-monitor-multiple"></i>
+                                    <span>量化</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="modellist.html">链上模型数据</a></li>
+                                    <li><a href="mining.html">挖矿</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="mdi mdi-monitor-multiple"></i>
+                                    <span>分析</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="erc20distribute.html">Erc链上代币分布情况</a></li>
+                                    <li><a href="kmansErc20.html">Erc20持币聚类</a></li>
+                                    <li><a href="contractpricedifference.html">合约价差</a></li>
+                                    <li><a href="spotpricedifference.html">现货价差</a></li>
+                                    <li><a href="officalpoolportfolio.html">资产配比</a></li>
+                                    <li><a href="worthtoken.html">具备投资价值</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="mdi mdi-monitor-multiple"></i>
+                                    <span>主网</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="listnodeinfo.html">四种节点信息数据</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="mdi mdi-monitor-multiple"></i>
+                                    <span>用户</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="accountinfo.html">链上用户信息</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="burstdata.html">
+                                    <i class="mdi mdi-minus-network"></i>
+                                    <span>爆仓数据</span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="mdi mdi-monitor-multiple"></i>
+                                    <span>交易所</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="exchange_huobi.html">火币</a></li>
+                                    <li><a href="#">币安</a></li>
+                                    <li><a href="#">Okex</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="mdi mdi-monitor-multiple"></i>
+                                    <span>多空比</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="realtimemultispaceratiodata.html">全网实时多空比</a></li>
+                                    <li><a href="huobilargemultispaceratio.html">火币大户多空比</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="escapeindex.html">
+                                    <i class="mdi mdi-minus-network"></i>
+                                    <span>逃顶指标</span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="mdi mdi-monitor-multiple"></i>
+                                    <span>灰度基金</span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="grayposition.html">灰度基金持仓</a></li>
+                                    <li><a href="graydayadd.html">灰度基金每日增持</a></li>
+                                    <li><a href="grayovergrowth.html">灰度基金溢增</a></li>
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                    </section>
+                </aside>
+                <!-- Main content -->
+                <section class="content">
+
+                    <!-- Content Header (Page header) -->
+                    <div class="content-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-block">
+                                <h3 class="page-title br-0">
+                                    MA模型
+                                </h3>
+                                <h6>
+                                    <button id="backBtn" type="button"
+                                        class="waves-effect waves-light btn btn-info mb-5"><i
+                                            class="si si-arrow-left-circle"></i> 返回</button>
+                                </h6>
+                            </div>
+                            <div class="right-title d-md-block d-none">
+                                <div class="d-flex justify-content-end">
+                                    <div class="d-md-flex mr-20 ml-10 d-none">
+                                        <div class="chart-text mr-10">
+                                            <h6 class="mb-0"><small>THIS MONTH</small></h6>
+                                            <h4 class="mt-0 text-primary">$12,125</h4>
+                                        </div>
+                                        <div class="spark-chart">
+                                            <div id="thismonth"><canvas width="60" height="35"
+                                                    style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-md-flex ml-10 d-none">
+                                        <div class="chart-text mr-10">
+                                            <h6 class="mb-0"><small>LAST YEAR</small></h6>
+                                            <h4 class="mt-0 text-danger">$22,754</h4>
+                                        </div>
+                                        <div class="spark-chart">
+                                            <div id="lastyear"><canvas width="60" height="35"
+                                                    style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="content-model">
+                        <div class="col-12">
+                            <div class="box">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label>交易所</label>
+                                                <select class="form-control select2" style="width: 100%;"
+                                                    onchange="exchangeChange(this)">
+                                                    <option selected="selected">DOT</option>
+                                                    <option>抹茶</option>
+                                                    <option>币安</option>
+                                                    <option>okex</option>
+                                                    <option>uniswap</option>
+                                                    <option>heco</option>
+                                                    <option>火币</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label>币种</label>
+                                                <select class="form-control select2" style="width: 100%;"
+                                                    onchange="currencyChange(this)">
+                                                    <option selected="selected">Bitcoin</option>
+                                                    <option>Ethereum</option>
+                                                    <option>Tether</option>
+                                                    <option>Binance Coin</option>
+                                                    <option>Cardan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="form-group">
+                                                <label>时间范围选择:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control pull-right"
+                                                        id="daterangepicker">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">分析结果</h4>
+                                    <div id="MAModelLineEcharts" class="h-400"></div>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">指标解释</h4>
+                                    <!-- <p style="text-indent:2em;">移动平均线，Moving
+                                        Average，简称MA，MA是用统计分析的方法，将一定时期内的证券价格（指数）加以平均，并把不同时间的平均值连接起来，形成一根MA，用以观察价格变动趋势的一种技术指标。
+                                        移动平均线是由著名的美国投资专家Joseph
+                                        E.Granville（葛兰碧，又译为格兰威尔）于20世纪中期提出来的。均线理论是当今应用最普遍的技术指标之一，它帮助交易者确认现有趋势、判断将出现的趋势、发现过度延生即将反转的趋势。
+                                    </p> -->
+                                    <blockquote class="blockquote">
+                                        <p>移动平均线，Moving
+                                            Average，简称MA，MA是用统计分析的方法，将一定时期内的证券价格（指数）加以平均，并把不同时间的平均值连接起来，形成一根MA，用以观察价格变动趋势的一种技术指标。
+                                            移动平均线是由著名的美国投资专家Joseph
+                                            E.Granville（葛兰碧，又译为格兰威尔）于20世纪中期提出来的。均线理论是当今应用最普遍的技术指标之一，它帮助交易者确认现有趋势、判断将出现的趋势、发现过度延生即将反转的趋势。
+                                        </p>
+                                    </blockquote>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">计算公式</h4>
+                                    <p style="text-align: center;">`(∑_(i=1)^n prcieClose_i )/n`</p>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">常见用法</h4>
+                                    <div>
+                                        <blockquote class="blockquote">
+                                            <p>1、移动平均线从下降逐渐走平且略向上方抬头，而价格从移动平均线下方向上方突破，为买进信号。
+                                            <p>2、价格位于移动平均线之上运行，回调时未跌破移动平均线后又再度上升时为买进时机。</p>
+                                            <p>3、价格位于移动平均线之上运行，回调时跌破移动平均线，但参数大的移动平均线继续呈上升趋势，此时为买进时机。</p>
+                                            <p>4、价格位于移动平均线以下运行，突然暴跌，距离移动平均线太远，极有可能向移动平均线靠近（物极必反，下跌反弹），此时为买进时机。</p>
+                                            <p>5、价格位于移动平均线之上运行，连续数日大涨，离移动平均线愈来愈远，极有可能向移动平均线靠近（物极必反，下跌反弹），这个时候是为空单时机。</p>
+                                            <p>6、移动平均线从上升逐渐走平，而股价从移动平均线上方向下跌破移动平均线时说明空方实力强劲，空单为主。</p>
+                                            <p>7、价格位于移动平均线下方运行，反弹时未突破移动平均线，且移动平均线跌势减缓，行情趋于水平后又出现下跌趋势，此时为空单时机。</p>
+                                            <p>8、趋势原为下行，价格先有反弹，反弹后在移动平均线上方徘徊，而移动平均线却继续下跌，空方实力依然强劲，做空为主。</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">参考代码</h4>
+                                    <textarea id="input"
+                                        style="position: absolute;top: 0;left: 0;opacity: 0;z-index: -10;"></textarea>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="button" style="float: right;"
+                                                class="waves-effect waves-light btn mb-5 btn-bitbucket"
+                                                onclick="copyCode()">copy</button>
+                                        </div>
+                                    </div>
+                                    <pre id="codecontents" style="background-color: rgb(235, 235, 235); padding: 10px;">
+# @ credit to
+# github: wyf-ACCEPT
+# email : define_wifi@163.com
+
+# MA 均线策略: 跌破均线时卖出
+
+import numpy as np
+import pandas as pd
+
+def MA_touch_strategy(
+	data: pd.DataFrame,
+	N: int = 12,
+):
+assert {'Open', 'Close', 'High', 'Low', 'Volume'} <= set(data.columns),
+	\ "The OHCLV information ('Open', 'Close', 'High', 'Low', 'Volume') should be in the data!" 
+length=data.shape[0]
+ma=data['Close'].rolling(N).mean() 
+low, high, close=data['Low'], data['High'], data['Close']
+strategy=np.zeros(length) 
+	for i in range(N-1, length): 
+		if ma[i-1]> close[i-1] and ma[i] < close[i]: 
+			strategy[i]=1 
+		if ma[i-1] < close[i-1] and ma[i]> close[i]:
+			strategy[i] = -1
+	return strategy
+
+def MA_cross_strategy(
+	data: pd.DataFrame,
+	N1: int = 5,
+	N2: int = 20,
+):
+assert {'Open', 'Close', 'High', 'Low', 'Volume'} <= set(data.columns),
+	\ "The OHCLV information ('Open', 'Close', 'High', 'Low', 'Volume') should be in the data!" 
+	assert N1 < N2, "The first MA parameter should be smaller than the second one!" 
+	length=data.shape[0] 
+	
+	close=data['Close']
+	ma1=close.rolling(N1).mean() 
+	ma2=close.rolling(N2).mean() 
+	ma_diff=ma1 - ma2 
+	strategy=np.zeros(length) 
+
+	for i in range(N2, length): 
+		if ma_diff[i-1] < 0 and ma_diff[i]>= 0:
+			strategy[i] = 1
+		if ma_diff[i-1] >= 0 and ma_diff[i] < 0: 
+			strategy[i]=-1 
+	return strategy
+									</pre>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">优点</h4>
+                                    <blockquote class="blockquote">
+                                        <p>
+                                            移动平均线能显示买进和卖出信号。若汇价向下穿破移动平均线便是卖出信号；反之，若汇价向上突破移动平均线，便是买入信号。
+                                            移动平均线很直观的显示价格变动大致方向。
+                                        </p>
+                                    </blockquote>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">缺点</h4>
+                                    <blockquote class="blockquote">
+                                        <p>当行情处于盘整时，移动平均线频繁的发出买卖信号。此时容易误导交易者
+                                            移动平均线变动缓慢，不易把握汇价的高峰及低谷，对于长期移动平均线，这点表现尤为突出
+                                            单凭移动平均线的买卖信号，交易者很难作出买卖决策，通常须靠其他的技术指标的辅助
+                                        </p>
+                                    </blockquote>
+                                </div>
+                                <div class="box-body" style="box-shadow: none;">
+                                    <h4 class="box-title font-weight-bold">交易者心得</h4>
+                                    <div class="media-list media-list-divided">
+                                        <div class="media">
+                                            <img class="avatar avatar-lg" src="../images/avatar/1.jpg" alt="...">
+
+                                            <div class="media-body">
+                                                <p><strong>Carter</strong> <span class="float-right">33 min
+                                                        ago</span></p>
+                                                <p>MA对于很多加密市场入门的朋友而言是一个非常好且简单易用的指标,让加密货币的交易者交易更具备逻辑性。
+                                                </p>
+                                                <div class="media-block-actions">
+                                                    <nav class="nav nav-dot-separated no-gutters">
+                                                        <div class="nav-item" onclick="thumbsUp()">
+                                                            <a class="nav-link text-success" href="#"><i
+                                                                    class="fa fa-thumbs-up"></i> (17)</a>
+                                                        </div>
+                                                        <div class="nav-item" onclick="thumbsDown()">
+                                                            <a class="nav-link text-danger" href="#"><i
+                                                                    class="fa fa-thumbs-down"></i> (22)</a>
+                                                        </div>
+                                                    </nav>
+
+                                                    <!-- <nav class="nav no-gutters gap-2 font-size-16 media-hover-show">
+															<a class="nav-link text-success" href="#"
+																data-toggle="tooltip" title="Approve"><i
+																	class="ion-checkmark"></i></a>
+															<a class="nav-link text-danger" href="#"
+																data-toggle="tooltip" title="Delete"><i
+																	class="ion-close"></i></a>
+														</nav> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="media">
+                                            <img class="avatar avatar-lg" src="../images/avatar/2.jpg" alt="...">
+
+                                            <div class="media-body">
+                                                <p><strong>Nicholas</strong> <span class="float-right">11 hour
+                                                        ago</span></p>
+                                                <p>在长牛周期中MA的盈利是可观的。</p>
+                                                <div class="media-block-actions">
+                                                    <nav class="nav nav-dot-separated no-gutters">
+                                                        <div class="nav-item">
+                                                            <a class="nav-link text-success" href="#"><i
+                                                                    class="fa fa-thumbs-up"></i> (17)</a>
+                                                        </div>
+                                                        <div class="nav-item">
+                                                            <a class="nav-link text-danger" href="#"><i
+                                                                    class="fa fa-thumbs-down"></i> (23)</a>
+                                                        </div>
+                                                    </nav>
+
+                                                    <!-- <nav class="nav no-gutters gap-2 font-size-16 media-hover-show">
+															<a class="nav-link text-success" href="#"
+																data-toggle="tooltip" title="Approve"><i
+																	class="ion-checkmark"></i></a>
+															<a class="nav-link text-danger" href="#"
+																data-toggle="tooltip" title="Delete"><i
+																	class="ion-close"></i></a>
+														</nav> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="media">
+                                            <img class="avatar avatar-lg" src="../images/avatar/1.jpg" alt="...">
+
+                                            <div class="media-body">
+                                                <p><strong>Carter</strong> <span class="float-right">33 min
+                                                        ago</span></p>
+                                                <p>合理运用MA指标,MA并不是全部。
+                                                </p>
+                                                <div class="media-block-actions">
+                                                    <nav class="nav nav-dot-separated no-gutters">
+                                                        <div class="nav-item">
+                                                            <a class="nav-link text-success" href="#"><i
+                                                                    class="fa fa-thumbs-up"></i> (17)</a>
+                                                        </div>
+                                                        <div class="nav-item">
+                                                            <a class="nav-link text-danger" href="#"><i
+                                                                    class="fa fa-thumbs-down"></i> (22)</a>
+                                                        </div>
+                                                    </nav>
+
+                                                    <!-- <nav class="nav no-gutters gap-2 font-size-16 media-hover-show">
+															<a class="nav-link text-success" href="#"
+																data-toggle="tooltip" title="Approve"><i
+																	class="ion-checkmark"></i></a>
+															<a class="nav-link text-danger" href="#"
+																data-toggle="tooltip" title="Delete"><i
+																	class="ion-close"></i></a>
+														</nav> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <h4 class="box-title font-weight-bold">商务合作</h4>
+                                    <div class="box">
+
+                                        <div class="box-body ">
+                                            <blockquote class="blockquote">
+                                                <p>
+                                                    永恒实验室也提供定制化的数据分析服务,如果您有任何的在数据分析上面的困惑,我们都能够为您解决一切区块链类的数据分析问题.留下您的联系方式,我们将有专门的团队与您对接,为您提供最优质的服务。
+                                                </p>
+                                            </blockquote>
+                                            <!-- <div class="mb-20 mt-20">
+                                                <img src="../images/avatar/3.jpg" width="150" class="rounded-circle"
+                                                    alt="user" />
+                                                <h4 class="mt-20 mb-0">johen doe</h4>
+                                                <a href="mailto:dummy@gmail.com">dummy@gmail.com</a>
+                                            </div>
+                                            <div class="badge badge-pill badge-light font-size-16">Dashboard</div>
+                                            <div class="badge badge-pill badge-light font-size-16">UI</div>
+                                            <div class="badge badge-pill badge-light font-size-16">UX</div>
+                                            <div class="badge badge-pill badge-info font-size-16" data-toggle="tooltip"
+                                                data-placement="top" title="3 more">
+                                                +10</div> -->
+                                        </div>
+                                        <div>
+                                            <div class="row text-center">
+                                                <div class="col-6 br-1">
+                                                    <a href="#"
+                                                        class="link d-flex align-items-center justify-content-center font-medium"><i
+                                                            class="mdi mdi-phone font-size-20 mr-5"></i>联系方式：0816-5201314</a>
+                                                </div>
+                                                <div class="col-6">
+                                                    <a href="#"
+                                                        class="link d-flex align-items-center justify-content-center font-medium"><i
+                                                            class="mdi mdi-wechat font-size-20 mr-5"></i>运营客服微信：5211314</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <p>
+                                        永恒实验室也提供定制化的数据分析服务,如果您有任何的在数据分析上面的困惑,我们都能够为您解决一切区块链类的数据分析问题.留下您的联系方式,我们将有专门的团队与您对接,为您提供最优质的服务。
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-5 text-right">
+                                            联系方式：0816-5201314
+                                        </div>
+                                        <div class="col-2 text-center"></div>
+                                        <div class="col-5 text-left">
+                                            运营客服微信：5211314
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- /.content -->
+            </div>
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right d-none d-sm-inline-block">
+                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Purchase Now</a>
+                    </li>
+                </ul>
+            </div>
+            &copy; 2019 <a href="http://www.bootstrapmb.com">Multi-Purpose Themes</a>. All Rights Reserved.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar">
+
+            <div class="rpanel-title"><span class="waves-effect waves-light pull-right btn btn-circle btn-danger"><i
+                        class="ion ion-close text-white" data-toggle="control-sidebar"></i></span> </div>
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs control-sidebar-tabs">
+                <li class="nav-item"><a href="#control-sidebar-home-tab" data-toggle="tab" title="Notifications"><i
+                            class="ti-comment-alt"></i></a></li>
+                <li class="nav-item"><a href="#control-sidebar-settings-tab" data-toggle="tab" title="Comments"><i
+                            class="ti-tag"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane" id="control-sidebar-home-tab">
+                    <div class="lookup lookup-sm lookup-right d-none d-lg-block mb-20">
+                        <input type="text" name="s" placeholder="Search" class="w-p100">
+                    </div>
+                    <div class="media-list media-list-hover">
+                        <a class="media media-single" href="#">
+                            <h4 class="w-50 text-gray font-weight-500">10:10</h4>
+                            <div class="media-body pl-15 bl-5 rounded border-primary">
+                                <p>Morbi quis ex eu arcu auctor sagittis.</p>
+                                <span class="text-fade">by Johne</span>
+                            </div>
+                        </a>
+
+                        <a class="media media-single" href="#">
+                            <h4 class="w-50 text-gray font-weight-500">08:40</h4>
+                            <div class="media-body pl-15 bl-5 rounded border-success">
+                                <p>Proin iaculis eros non odio ornare efficitur.</p>
+                                <span class="text-fade">by Amla</span>
+                            </div>
+                        </a>
+
+                        <a class="media media-single" href="#">
+                            <h4 class="w-50 text-gray font-weight-500">07:10</h4>
+                            <div class="media-body pl-15 bl-5 rounded border-info">
+                                <p>In mattis mi ut posuere consectetur.</p>
+                                <span class="text-fade">by Josef</span>
+                            </div>
+                        </a>
+
+                        <a class="media media-single" href="#">
+                            <h4 class="w-50 text-gray font-weight-500">01:15</h4>
+                            <div class="media-body pl-15 bl-5 rounded border-danger">
+                                <p>Morbi quis ex eu arcu auctor sagittis.</p>
+                                <span class="text-fade">by Rima</span>
+                            </div>
+                        </a>
+
+                        <a class="media media-single" href="#">
+                            <h4 class="w-50 text-gray font-weight-500">23:12</h4>
+                            <div class="media-body pl-15 bl-5 rounded border-warning">
+                                <p>Morbi quis ex eu arcu auctor sagittis.</p>
+                                <span class="text-fade">by Alaxa</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+
+    </div>
+    <!-- ./wrapper -->
+
+
+
+    <!-- jQuery 3 -->
+    <script src="../assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+    <!-- fullscreen -->
+    <script src="../assets/vendor_components/screenfull/screenfull.js"></script>
+
+    <!-- popper -->
+    <script src="../assets/vendor_components/popper/dist/popper.min.js"></script>
+
+    <!-- Bootstrap 4.0-->
+    <!-- <script src="../assets/vendor_components/bootstrap/dist/js/bootstrap.js"></script> -->
+    <!-- Bootstrap 4.0-->
+    <script src="http://cdn.bootstrapmb.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+    <!-- Slimscroll -->
+    <!-- <script src="../assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script> -->
+    <!-- SlimScroll -->
+    <script src="../assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- FastClick -->
+    <script src="../assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- date-range-picker -->
+    <script src="../assets/vendor_components/moment/min/moment.min.js"></script>
+    <script src="../assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- bootstrap datepicker -->
+    <script src="../assets/vendor_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Sparkline -->
+    <script src="../assets/vendor_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+
+    <!-- amchart -->
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <!-- apexcharts -->
+    <script src="../assets/vendor_components/apexcharts-bundle/irregular-data-series.js"></script>
+    <script src="../assets/vendor_components/apexcharts-bundle/dist/apexcharts.js"></script>
+
+    <!-- DashboardX Admin App -->
+    <script src="js/template.js"></script>
+
+    <script src="js/demo.js"></script>
+
+    <!-- This is data table -->
+    <script src="../assets/vendor_components/datatable/datatables.min.js"></script>
+
+    <!-- eChart Plugins -->
+    <script src="../assets/vendor_components/echarts/dist/echarts-en.min.js"></script>
+
+    <!-- <script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+
+    <script type="text/x-mathjax-config">
+          MathJax.Hub.Config({
+            showProcessingMessages: false, //关闭js加载过程信息
+            messageStyle: "none", //不显示信息
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+              displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre','code', 'a', 'annotation', 'annotation-xml'],
+              ignoreClass: 'crayon-.*' // 'crayon-' 开头的类，属于Wordpress代码高亮库，这部分不需要处理，否则会导致显示不正确,这部分是正则式，多条之间用'|'分割    
+            },
+            'HTML-CSS': {
+                showMathMenu: false //禁用右键菜单
+            }
+          });
+          MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    </script>
+
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async>
+        </script>
+    <script src="js/pages/mamodel.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+//
+// responsive.scss
+//
+
+@media (min-width: 200px) and (max-width: 1024px) {
+  .navbar-custom {
+    margin-top: 0px;
+    padding: 10px 0px !important;
+    box-shadow: 0 10px 33px rgba(0, 0, 0, 0.1);
+    color: $white !important;
+    background: $white;
+    .navbar-nav {
+      margin-left: 0px;
+      li {
+        &.active {
+          border-color: transparent;
+        }
+        a {
+          transition: all 0.4s;
+          margin: 6px;
+          color: $dark !important;
+          padding: 6px 0;
+        }
+      }
+    }
+    > .container {
+      width: 90%;
+    }
+  }
+
+  // navbar-white
+  .navbar-white {
+    .navbar-toggler {
+      color: $dark !important;
+  }
+  }
+
+  .navbar-button {
+    margin-top: 15px;
+    margin-left: 0px;
+  }
+
+  .navbar-custom .navbar-nav li.active a,
+  .navbar-custom .navbar-nav li a:hover,
+  .navbar-custom .navbar-nav li a:active {
+    color: $primary !important;
+  }
+
+  .navbar-toggler {
+    font-size: 24px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .home-title {
+    font-size: 32px;
+  }
+
+
+
+  .carousel-indicators{
+    right: 0;
+  }
+
+  .logo .logo-light {
+    display: none;
+  }
+  .logo .logo-dark {
+    display: inline-block;
+  }
+
+  .pricing-box.active{
+    transform: none;
+  }
+
+  .features-1{
+    img{
+      max-width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  .features-2{
+    img{
+      max-width: 100%;
+    }
+  }
+
+}
+
+@media (max-width: 768px){
+  .carousel-indicators {
+    button{
+      width: 75px;
+    height: 75px;
+    }
+  }
+}
+
+
+
+
+@media (min-width: 1200px) {
+  .container{
+      max-width: 1140px !important;
+  }
+}
+

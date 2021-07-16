@@ -1,0 +1,40 @@
+//
+// footer.scss
+//
+
+.bg-footer{
+  padding-top: 90px;
+  padding-bottom: 70px;
+}
+
+.footer-link {
+  a {
+    color: $muted;
+    line-height: 38px;
+    font-size: 17px;
+    -webkit-transition: all 0.5s;
+    background-color: transparent;
+    transition: all 0.5s;
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+
+
+ .footer-social{
+   i{
+   width: 36px;
+   height: 36px;
+   display: inline-block;
+   line-height: 36px;
+   border-radius: 50%;
+   text-align: center;
+   background: $primary;
+   font-size: 15px;
+   color: $white;
+   }
+ }
+
+

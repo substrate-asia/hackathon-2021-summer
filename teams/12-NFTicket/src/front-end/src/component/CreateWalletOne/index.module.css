@@ -1,0 +1,140 @@
+.accbody{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.flexaccountmask{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(225, 226, 221);
+    opacity: .1;
+}
+
+.flexaccount{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexaccountform{    
+    width: 92%;
+    height: 360px;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255,0.8);
+}
+
+.flexaccountformtips{
+    position: relative;
+    margin-top: 30px;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexaccountformtips span{
+    margin: 22px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.flexaccountformwarning{
+    position: relative;
+    top: 20px;
+    margin-top: 10px;
+    width: 100%;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexaccountformwarning span{
+    margin: 22px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ED524A;
+}
+
+.flexaccountformtextarea{
+    position: relative;
+    top: 30px;
+    width: 100%;
+    height: 160px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexaccountformtextareacon{
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.seedwords{
+    width: 100%;
+    height: 100%;
+}
+
+.seedwordspanel{
+    height: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.seedwordspanel span{
+    margin-left: 0px;
+    display: flex;
+    justify-content: center;
+    width: 25%;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.flexaccountformbtn{
+    position: relative;
+    top: 30px;
+    margin-top: 30px;
+    width: 100%;
+    height: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexaccountformbtn button{
+    font-size: 12px;
+    line-height: 14px;
+    width: 120px;
+    height: 30px;
+    border: 0px;
+    color: #ffffff;
+    background-color: #007AFF;
+    border-radius: 45px;
+}

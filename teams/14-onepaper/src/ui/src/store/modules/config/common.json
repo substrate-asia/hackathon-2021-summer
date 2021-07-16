@@ -1,0 +1,7 @@
+{
+  "APP_NAME": "PaperOne",
+  "DEVELOPMENT_KEYRING": true,
+  "RPC": {},
+  "ss58Format": 42,
+  "TYPE_KEYRING": "sr25519"
+}

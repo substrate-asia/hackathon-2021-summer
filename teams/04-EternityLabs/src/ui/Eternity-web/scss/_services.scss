@@ -1,0 +1,127 @@
+//
+// Services.scss
+//
+
+
+
+.service-box {
+   padding: 36px 25px;
+   border-radius: 10px;
+   background-color: $white;
+   position: relative;
+   transition: all 0.5s;
+   .service-border{
+     width: 3px;
+     height: 15px;
+     border: 1px solid rgba($muted, 0.4);
+
+   }
+   .service-icon{
+    width: 66px;
+    height: 66px;
+    line-height: 56px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid rgba($primary, 0.3);
+    .uim-svg{
+      fill: $muted;
+    }
+   }
+   .read-more{
+    
+    position: relative;
+    .arrow{
+      position: relative;
+      margin-left: 0px;
+      font-size: 40px;
+      transition: all 0.5s;
+    }
+    &:before{
+      content: '';
+      border-radius: 50%;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: rgba($primary, 0.1);
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      top: 12px;
+    }
+  }
+
+   &:hover{
+     box-shadow: $box-shadow;
+     .service-border{
+      background: $primary;
+      border: 1px solid rgba($primary, 0.4);
+ 
+    }
+     .service-icon{
+       background: rgba($primary, 0.1);
+       border-color: rgba($primary, 0.3);
+       .uim-svg{
+        fill: $primary;
+      }
+     }
+
+     .arrow{
+      position: relative;
+      margin-left: 40px;
+    }
+   }
+  
+  
+}
+
+
+.service-box.active{
+  box-shadow: $box-shadow;
+  .service-border{
+    background-color: $primary;
+    border: 1px solid rgba($primary, 0.4);
+
+  }
+  .service-icon{
+    background: rgba($primary, 0.1);
+    border-color: rgba($primary, 0.3);
+    .uim-svg{
+     fill: $primary;
+   }
+  }
+
+  .arrow{
+    margin-left: 40px;
+  }
+
+}
+
+
+.read-more{
+    
+  position: relative;
+  &:before{
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: rgba($primary, 0.1);
+    left: 0;
+    top: 12px;
+  }
+  .arrow{
+    position: relative;
+    margin-left: 0px;
+    font-size: 40px;
+    transition: all 0.5s;
+  }
+  &:hover{
+    .arrow{
+      position: relative;
+      margin-left: 20px;
+    }
+  }
+}
+
+

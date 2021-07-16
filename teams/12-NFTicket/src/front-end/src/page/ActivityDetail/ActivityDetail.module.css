@@ -1,0 +1,136 @@
+.wrapper{
+    width: 100%;
+    /* padding: 0 10px; */
+    /* display: inline-block; */
+    white-space: nowrap; 
+    overflow: scroll;
+}
+
+.wrapperContent{
+    margin: 2px;
+}
+
+.activityDetail{
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+.activityBg{
+    max-width: 100%;
+    display: inline-block;
+    margin: 33px;
+    padding: 5px;
+}
+.activityBg img{
+    width: 100%;
+}
+.shareName{
+    display: flex;
+    justify-content: space-around; 
+}
+.detailName{
+    font-size: 24px;
+    font-weight: bold;
+}
+.shareIcon{
+    width: 17px;
+    height: 19px;
+    margin-bottom: 19px;
+}
+.addressIcon{
+    width: 14px;
+    height: 20px;
+}
+.addressView{
+    display: flex;
+    justify-content:start ; 
+    margin-left: 40px;
+    margin-bottom: 14px;
+}
+.addressText{
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.timeText{
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 7px;
+}
+.timeIcon{
+    width: 20px;
+    height: 20px;
+}
+.priceText{
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 7px;
+    color:orange;
+}
+.priceUnitText{
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+.priceView{
+    display: flex;
+    justify-content:start ; 
+    margin-left: 40px;
+    margin-bottom: 17px;
+}
+.actionName{
+    display: flex;
+    justify-content:start ; 
+    margin-left: 40px;
+    margin-bottom: 17px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.topText{
+    font-size: 34px;
+    font-weight: bold;
+}
+.fillet{
+    width: 45px;
+    height: 45px;
+   
+    border:1px solid #000;
+    border-radius:30px;
+    text-align: center;
+    margin-bottom: 17px;
+}
+.actionView{
+    margin-left: 40px;
+    display: flex;
+    justify-content:start ; 
+    
+}
+.actionAuth{
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 14px;
+}
+.descContent{
+    margin: 10px;
+    display: flex;
+    justify-content:start ; 
+}
+.descInfo{
+    font-size: 12px;
+    line-height: 14px;
+    margin:0 30px;
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+}
+.contentline{
+    width: 100%;
+    height: 20px;
+}
+
+.buyTicket{
+    margin: 40px;
+    border-radius:30px;
+}

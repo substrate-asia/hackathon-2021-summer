@@ -6,18 +6,27 @@
 
 # UdunNetwork项目简介
 
-UdunPay Network遵循了“CypherPunk”和“Substrate"架构精神，是新一代分布式互联支付网络。它一方面链接各个主链上的数据，一手链接多方用户，为它们进行互联和数据交互。 在未来，从生态治理，业务重构，应用分发到社区投票，都会有相应的场景应用。
+UdunPay Network遵循了“CypherPunk”和“Substrate"架构精神，**Udun Network** 使用**Substrate** 框架搭建而成，是基于波卡Substrate框架开发的公链。它将集成**NFT**和**DeFi**资产的发行、 管理、转移、跨链互操作，同时可将数字资产的流动性提供给钱包、企业及聚合交易服务， 并通过跨链网关共享外链与隐私生态流动性，为**DeFi**生态和 **NFT**生态进行赋能。 在未来，从NFT企业级钱包到DeFi业务重构，都会有相应的场景应用。
 
 # 黑客松期间计划完成的事项
 
-#### 区块链端
+开发网络部署
 
-#### 客户端
+NFT钱包产品设计
+
+
+Defi生态产品设计
+
 
 # 黑客松期间计划完成的事项（7月5日初审之前提交）
 
 7月5日前，最终完成的功能点如下——
 
+部署了两套平行链开发测试网络
+
+完成了企业级NFT钱包产品设计
+
+Defi生态调研、跨链调试
 
 
 # 团队成员
@@ -25,3 +34,5 @@ UdunPay Network遵循了“CypherPunk”和“Substrate"架构精神，是新一
 李丰 GitHub(saintfeng)
 
 钱峰 GitHub(udunpay)
+
+胡学政 GitHub(miller806)

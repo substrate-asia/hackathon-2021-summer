@@ -1,0 +1,38 @@
+@import '~antd/dist/antd.css';
+@import '~normalize-scss/sass/_normalize.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap');
+@import "./font/iconfont.css";
+
+*{
+  font-family: 'Roboto', sans-serif!important;
+  outline: none!important;
+  box-shadow: none!important;
+  &:focus{
+    outline: none!important;
+    box-shadow: none!important;
+  }
+}
+
+.App{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 99;
+}
+.width80{
+  width: 80%;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+}
+
+ul,li{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@import "./header.scss";
+@import "./maincontain.scss";

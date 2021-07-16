@@ -1,0 +1,21 @@
+server:
+  port: 8844
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/paper?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&useAffectedRows=true
+    username: test
+    password: test
+logging.level.org.springframework.boot.autoconfigure: error
+mybatis-plus:
+  mapper-locations: classpath:/mapper/xml/*.xml
+upload:
+  path: /opt/upload/

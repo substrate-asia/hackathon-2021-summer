@@ -1,0 +1,11 @@
+AR = __import__('AR').AR
+AR_strategy = __import__('AR').AR_strategy
+BR = __import__('BR').BR
+KDJ = __import__('KDJ').KDJ
+MACD = __import__('MACD').MACD
+MACD_strategy = __import__('MACD').MACD_strategy
+RSI = __import__('RSI').RSI
+RSI_strategy = __import__('RSI').RSI_strategy
+MA_touch_strategy = __import__('MA').MA_touch_strategy
+MA_cross_strategy = __import__('MA').MA_cross_strategy
+BackTest = __import__('BackTest').BackTest

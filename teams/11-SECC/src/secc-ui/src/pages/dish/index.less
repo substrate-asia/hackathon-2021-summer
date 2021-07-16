@@ -1,0 +1,35 @@
+
+.upload-wrapper {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  background: #ffffff;
+  cursor: pointer;
+  &:focus {
+    background: rgba(200, 200, 200, 0.6);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:focus {
+      background: rgba(200, 200, 200, 0.6);
+    }
+  }
+  i {
+    font-size: 40px;
+    color: #cccccc;
+  }
+}
+img {
+  max-width: 100%;
+}
+h3 {
+  font-size: .4rem /* 15/37.5 */;
+  color: #666666;
+  text-align: left;
+  margin: 10px 0;
+  padding-left: @common-padding;
+  margin-bottom: 0;
+}
+.picker-wrapper {
+  padding-left: 5px;
+}

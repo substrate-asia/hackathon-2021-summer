@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_more_profile_photo_gridview_list_rootLL"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_content_bg_darkjiang"
+    android:orientation="vertical" >
+
+    <com.eva.android.widget.CustomeTitleBar
+        android:id="@+id/main_more_profile_photo_gridview_list_titleBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </com.eva.android.widget.CustomeTitleBar>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:id="@+id/main_more_profile_photo_gridview_list_contentLL"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_more_profile_photo_gridview_list_noAlarmsLL"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/common_no_data_img_50transparent_120dp_3x" />
+
+            <TextView
+                android:padding="0dp"
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/main_more_profile_photo_list_nodata_hint"
+                android:textColor="#55ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+    <Button
+        android:id="@+id/main_more_profile_photo_gridview_list_btnUpload"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        style="@style/ButtonBase"
+        android:background="@drawable/common_btn_lightred_2019"
+        android:text="@string/main_more_profile_photo_previewandupload_uploadopr"
+        android:textColor="@color/white"
+        android:textSize="16sp" /><!-- android:background="@drawable/sns_friend_info_form_add_friend_button"-->
+
+</LinearLayout>

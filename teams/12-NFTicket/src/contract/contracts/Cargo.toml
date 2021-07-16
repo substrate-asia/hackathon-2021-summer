@@ -1,0 +1,67 @@
+[package]
+name = "nfticket"
+version = "3.0.0-rc3"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2018"
+
+[dependencies]
+ink_primitives = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_metadata = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false, features = ["derive"], optional = true }
+ink_env = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false ,features=["ink-debug"]}
+# ink_env = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_storage = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_lang = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+ink_prelude = { version = "3.0.0-rc3", git = "https://github.com/paritytech/ink", default-features = false }
+stub = { version = "0.1.0", path = "stub", default-features = false, features = ["ink-as-dependency"] }
+primitives = { version = "0.1.0", path = "primitives", default-features = false}
+online_template = { version = "0.1.0", path = "online_template", default-features = false}
+offline_template = { version = "0.1.0", path = "offline_template", default-features = false}
+nftmart-contract = { version = "0.1.0", path = "nftmart-contract", default-features = false}
+scale = { package = "parity-scale-codec", version = "2.1", default-features = false, features = ["derive"] }
+scale-info = { version = "0.6", default-features = false, features = ["derive"], optional = true }
+# ink_log = { git = "https://github.com/patractlabs/ink-log", branch = "master", default-features = false, features = ["ink-log-chain-extensions"] }
+
+[lib]
+name = "nfticket"
+path = "lib.rs"
+crate-type = ["cdylib"]
+
+[features]
+default = ["std"]
+std = [
+    "ink_primitives/std",
+    "ink_metadata",
+    "ink_metadata/std",
+    "ink_env/std",
+    "ink_storage/std",
+    "ink_lang/std",
+    "scale/std",
+    "scale-info",
+    "scale-info/std",
+    "stub/std",
+    "primitives/std",
+    "online_template/std",
+    "offline_template/std",
+    "nftmart-contract/std",
+]
+ink-as-dependency = []
+ink-experimental-engine = ["ink_env/ink-experimental-engine"]
+[workspace]
+members = [
+    "stub",
+    "nftmart-contract",
+    "online_template",
+    "offline_template",
+    # "primitives",
+]
+[profile.release]
+opt-level = 3
+debug = false
+split-debuginfo = '...'  # Platform-specific.
+debug-assertions = false
+overflow-checks = false
+lto = false
+panic = 'unwind'
+incremental = false
+codegen-units = 16
+rpath = false
