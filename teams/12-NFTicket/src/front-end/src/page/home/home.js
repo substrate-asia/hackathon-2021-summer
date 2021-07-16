@@ -19,42 +19,7 @@ import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 import NAlert from '../../component/Alert';
 
-
-//polkadot
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import { ContractPromise } from '@polkadot/api-contract';
-import { createType } from '@polkadot/types';
-
-//合约abi
-import tem_abi from './template.json'
-import main_abi from './main.json'
-import meeting_abi from './offlinemeeting.json'
-import { Keyring } from '@polkadot/keyring'
-
-
 import {initPolkadotApi,getAllMeeting} from '../../api/polka'
-
-
-const keyring = new Keyring({ type: 'sr25519', ss58Format: 2 });
-// const message = stringToU8a('this is a message');
-
-//模板合约abi
-//const tem_abi = tem_abi;
-//模板合约address
-const tem_address = "646A7ShZiSuPrb9m3nDtcrEDFcAVQaRZhw6SGpdwq6pivLoD";
-let tem_contract;
-
-//主合约abi
-//const main_abi = main_abi;
-//主合约address
-const main_address = "626nT4jAQU9PfA4Bdt8HcnK5v3q2jJHsJeURKAKV5rg7LRPn"
-let main_contract;
-
-//线下合约abi
-//const meeting_abi = meeting_abi;
-//线下合约address
-const meeting_address = "64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4";
-let meeting_contract;
 
 
 const NUM_ROWS = 20;
@@ -95,7 +60,6 @@ class Home extends Component {
       dataSource,
       isLoading: true,
       showToast: false,
-      genesisHash: ''//polkadot
     };
 
   };
@@ -118,37 +82,20 @@ class Home extends Component {
         console.log("--------getAllMeeting end-----------")
      })
     })
-  
   }
-
-  async getTem_Contract(api) {
-    //合约
-    this.setState({ genesisHash: api.genesisHash.toHex() });
-    // const alice_address = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
-
-    if (localStorage.hasOwnProperty('nft-pair')) {
-
-      const alicePair = keyring.addFromUri('//Alice');
-      console.log("Alice pair-->" + JSON.stringify(alicePair.address))
-      let value = 0;
-      let gasLimit = -1;//不限制gas
-    }  
-
-  }
-
-  //线下会议:64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4
-  async meeting_BuyTicket(api){
-    //getZoneById (zoneId: u8)
-    console.log("线下会议通过ID获取Zone-->")
-      const value = 0;
-      const gasLimit=-1;
-    const alicePair = keyring.addFromUri('//Alice');
-    const zoneId = 0;
-          const { gasConsumed, result, output }  = await meeting_contract.query
-          .getZoneById(alicePair.address,{value,gasLimit}, zoneId)
-      console.log("线下会议通过ID获取Zone-->",result.toHuman());
-      console.log("线下会议通过ID获取Zone-->",output.toHuman());
-  }
+  // //线下会议:64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4
+  // async meeting_BuyTicket(api){
+  //   //getZoneById (zoneId: u8)
+  //   console.log("线下会议通过ID获取Zone-->")
+  //     const value = 0;
+  //     const gasLimit=-1;
+  //   const alicePair = keyring.addFromUri('//Alice');
+  //   const zoneId = 0;
+  //         const { gasConsumed, result, output }  = await meeting_contract.query
+  //         .getZoneById(alicePair.address,{value,gasLimit}, zoneId)
+  //     console.log("线下会议通过ID获取Zone-->",result.toHuman());
+  //     console.log("线下会议通过ID获取Zone-->",output.toHuman());
+  // }
 
   componentWillUnmount() {
     this.props.actions.setShowModal(false);
@@ -187,8 +134,6 @@ class Home extends Component {
     const row = (rowData, sectionID, rowID) => {
 
       const imageHeight = window.innerWidth - 30 - 30;
-      // var data= JSON.stringify(rowData)
-      // var path=`/Home/activityDetail/${data}`
       var path={
          pathname:'/Home/activityDetail',
          state:rowData

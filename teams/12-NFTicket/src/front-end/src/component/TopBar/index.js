@@ -58,7 +58,7 @@ class TopBar extends Component {
         var pre=""
         var end =""
         if(address!=null){
-             pre=address.substr(0,4);
+             pre=address.substr(0,5);
              end = address.substr(address.length-4,4)
             console.log(address)
             return (<div className={styles.rightText}>

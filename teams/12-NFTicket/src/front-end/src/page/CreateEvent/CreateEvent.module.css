@@ -128,3 +128,19 @@
     font-size: 12px;
     line-height: 12px;
 }
+.downArrow{
+    width: 15px;
+    height: 9px;
+}
+.hintLable{
+    font-size: 14px;
+    color: black
+}
+.selectState{
+    height: 40px;
+    align-items: center;
+    margin-left: 10px;
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #d7d7d7;
+}
