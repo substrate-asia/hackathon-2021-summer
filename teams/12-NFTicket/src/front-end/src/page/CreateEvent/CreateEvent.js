@@ -125,7 +125,7 @@ class CreateEvent extends Component {
                         <div className={styles.name2}><span>Session</span></div>
                         <div className={styles.sessioninput}>
                             <img src={time} className={styles.timeIcon}></img>
-                            <input type="text" name="name" placeholder="Select time"></input>
+                            <input type="text" name="name" placeholder="Select time(UTC+8)"></input>
                         </div>
 
                         <div className={styles.name2}><span>Ticket Price</span></div>
@@ -137,7 +137,7 @@ class CreateEvent extends Component {
                                     </CheckboxItem>
                                 </div>
                                 <div className={styles.checkboxright}>
-                                    <input type="text" name="name" placeholder="Select time"></input>
+                                    <input type="text" name="name" placeholder="Input price"></input>
                                 </div>
                             </div>
                             <div className={styles.sitezone}>
@@ -156,7 +156,7 @@ class CreateEvent extends Component {
                             </div>
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
-                                <span style={{ margin: "5px", fontWeight: 'bold' }}>Start Time</span>
+                                <span style={{ margin: "5px", fontWeight: 'bold' }}>End Time</span>
                                 <input type="text" name="name" placeholder="Select time"></input>
                             </div>
                         </div>
@@ -187,6 +187,7 @@ class CreateEvent extends Component {
                                 <Button onClick={() => { console.log(111); }}
                                     style={{
                                         backgroundColor: 'white', border: '2px solid #108ee9', fontSize: '13px',
+                                        color:'#108ee9',
                                         lineHeight: '24px', borderRadius: '30px', width: '128px', height: '31px', margin: '20px'
                                     }}>
                                     Preview
