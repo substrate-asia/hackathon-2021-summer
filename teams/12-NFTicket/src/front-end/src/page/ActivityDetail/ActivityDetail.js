@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TopBar from '../../component/TopBar'
 import styles from './ActivityDetail.module.css'
 import share from '../../images/icon_share.png'
-import address from '../../images/icon_address.png'
+import iconaddress from '../../images/icon_address.png'
 import time from '../../images/icon_time.png'
 import price from '../../images/icon_price.png'
 // import BScroll from 'better-scroll'
@@ -95,7 +95,7 @@ class ActivityDetail extends Component {
                             </div>
                             {/** 地址 */}
                             <div className={styles.addressView}>
-                                <img src={address} className={styles.addressIcon}></img>
+                                <img src={iconaddress} className={styles.addressIcon}></img>
                                 <span className={styles.addressText}>{address}</span>
                             </div>
                             {/** 日期*/}
@@ -106,7 +106,8 @@ class ActivityDetail extends Component {
                             {/** 金额*/}
                             <div className={styles.priceView}>
                                 <img src={price} className={styles.timeIcon}></img>
-                                <span className={styles.priceText}>0-{this.state.maxMoney}</span>
+                                {/* <span className={styles.priceText}>0-{this.state.maxMoney}</span> */}
+                                <span className={styles.priceText}>180-360</span>
                                 <span className={styles.priceUnitText}>NMT</span>
                             </div>
                             {/** 活动的主办单位信息 */}

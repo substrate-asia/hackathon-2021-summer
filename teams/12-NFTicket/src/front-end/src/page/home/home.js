@@ -180,7 +180,7 @@ class Home extends Component {
           </div>
           <div className='bottom-container'>
             <div>
-              <div  className='meeting_bg' >
+              <div  className='meeting_bg' style={{color:'#fff'}}>
                 {rowData.desc}
                 </div>
               <div style={{ marginBottom: '8px', fontSize: '24px', fontWeight: 'bold', textShadow: '#fff 1.2px 0 0,#fff 0 1.2px 0,#fff -1.2px 0 0,#fff 0 -1.2px 0' }}>{rowData.name}</div>
