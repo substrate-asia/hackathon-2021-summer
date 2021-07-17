@@ -89,8 +89,8 @@ class TopBar extends Component {
         var flag = this.props.app.showaccountok
         return (
             <div className={styles.content}>
-                <SearchBar className={styles.searchBar} placeholder="Search" maxLength={8} />
-                <WhiteSpace className={styles.whiteSpace} />
+                {/* <SearchBar className={styles.searchBar} placeholder="Search" maxLength={8} /> */}
+                {/* <WhiteSpace className={styles.whiteSpace} /> */}
                 {/**
                  * 导航栏
                  */}

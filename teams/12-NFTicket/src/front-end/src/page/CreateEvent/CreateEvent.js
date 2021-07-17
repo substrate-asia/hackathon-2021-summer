@@ -10,7 +10,7 @@ import add from '../../images/icon_add.png'
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 //action
-import { setBottomstatusAction } from '../../store/action/App';
+import { setBottomstatusAction,setAccountokmodalAction } from '../../store/action/App';
 
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
@@ -44,7 +44,8 @@ class CreateEvent extends Component {
         initData: '',
         show: false,
         currentState:'Please select the status',
-        date: now
+        date: now,
+        showZone:false //显示座位区域
     };
     constructor(props) {
         super(props);
@@ -84,6 +85,16 @@ class CreateEvent extends Component {
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
     }
+    selectSiteType = (e,key) =>{
+        console.log('xujie====',key)
+        var mShowZone = false
+        if(key==3){
+            mShowZone = true
+        }
+        this.setState({
+            showZone:mShowZone
+        })
+    }
     render() {
         //搜索框高度
         const searchbarHeight = 45;
@@ -92,8 +103,12 @@ class CreateEvent extends Component {
         //账户信息高度
         const accountInfoHeight = 42;
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
-        const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight;
+        const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight + 51;
         const mShow= this.state.show
+
+ 
+         
+
         return (
             <div className={styles.container}>
                 <TopBar></TopBar>
@@ -103,7 +118,7 @@ class CreateEvent extends Component {
                         <div className={styles.title}><span>Create a event</span></div>
                         <div className={styles.name1}><span>Event Name</span></div>
                         <div className={styles.inputout}>
-                            <input type="text" name="name" placeholder="eg.Taylor Swift concert"></input>
+                            <input placeholder="eg.Taylor Swift concert"></input>
                         </div>
                         <div className={styles.name2}><span>Poster</span></div>
                         <div>
@@ -122,52 +137,57 @@ class CreateEvent extends Component {
                         </div>
                         <div className={styles.name2}><span>Discription</span></div>
                         <div className={styles.inputout}>
-                            <input type="text" name="name" placeholder="eg.The instruction about Taylor Swift concert"></input>
+                            <input placeholder="eg.The instruction about Taylor Swift concert"></input>
                         </div>
                         <div className={styles.name2}><span>Session</span></div>
                         <div className={styles.sessioninput}>
                             <img src={time} className={styles.timeIcon}></img>
-                            <input type="text" name="name" placeholder="Select time(UTC+8)"></input>
+                            <input placeholder="Select time(UTC+8)"></input>
                         </div>
 
                         <div className={styles.name2}><span>Ticket Price</span></div>
                         <div className={styles.checkinputcontent}>
                             <div className={styles.checkinputline}>
                                 <div className={styles.checkboxleft}>
-                                    <CheckboxItem key='2'>
+                                    <CheckboxItem key='2' onChange={(e)=>{this.selectSiteType(e,'2')}} checked={!this.state.showZone} >
                                         <span style={{ fontSize: '16px' }}>Unify</span>
                                     </CheckboxItem>
                                 </div>
                                 <div className={styles.checkboxright}>
-                                    <input type="text" name="name" placeholder="Input price"></input>
+                                    <input placeholder="Input price"></input>
                                 </div>
                             </div>
                             <div className={styles.sitezone}>
-                                <CheckboxItem key='3'>
+                                <CheckboxItem key='3' onChange={(e)=>{this.selectSiteType(e,'3')}} checked={this.state.showZone}>
                                     <span style={{ fontSize: '16px' }}>Site Zone</span>
                                 </CheckboxItem>
-                                <div>
-                                    <div>
-                                       <img src={del} alt="" className={styles.iconDel}></img>
-                                       <span className={styles.siteZoneLable}>A Zone</span>
-                                       <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                {
+                                    //显示和隐藏
+                                    this.state.showZone ? (
+                                        <div >
+                                        <div>
+                                           <img src={del} alt="" className={styles.iconDel}></img>
+                                           <span className={styles.siteZoneLable}>A Zone</span>
+                                           <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                        </div>
+                                        <div>
+                                        <input placeholder="Row" className={styles.siteRows} ></input> 
+                                        <span className={styles.rowAndSeats}>X</span>
+                                        <input placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        </div>
+                                        <div>
+                                           <img src={add} alt="" className={styles.iconDel}></img>
+                                           <span className={styles.siteZoneLable}>B Zone</span>
+                                           <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                        </div>
+                                        <div>
+                                        <input placeholder="Row" className={styles.siteRows} ></input> 
+                                        <span className={styles.rowAndSeats}>X</span>
+                                        <input placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        </div>
                                     </div>
-                                    <div>
-                                    <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
-                                    <span className={styles.rowAndSeats}>X</span>
-                                    <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
-                                    </div>
-                                    <div>
-                                       <img src={add} alt="" className={styles.iconDel}></img>
-                                       <span className={styles.siteZoneLable}>B Zone</span>
-                                       <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
-                                    </div>
-                                    <div>
-                                    <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
-                                    <span className={styles.rowAndSeats}>X</span>
-                                    <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
-                                    </div>
-                                </div>
+                                    ):null
+                                }
                             </div>
                         </div>
                         {/* Selling Time */}
@@ -176,19 +196,18 @@ class CreateEvent extends Component {
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>Start Time</span>
-                                <input type="text" name="name" placeholder="Select time"></input>
+                                <input placeholder="Select time"></input>
                             </div>
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>End Time</span>
-                                <input type="text" name="name" placeholder="Select time"></input>
+                                <input placeholder="Select time"></input>
                             </div>
                         </div>
                         {/* Ticket Inspector */}
                         <div className={styles.name2}><span>Ticket Inspector</span></div>
                         <div className={styles.inputout}>
-                            <input type="text" name="name"
-                                placeholder="Please input ticket inspector’s wallet address"></input>
+                            <input placeholder="Please input ticket inspector’s wallet address"></input>
                         </div>
                         <div className={styles.name2}><span>Event Status</span></div>
                         <div className={styles.selectState} onClick={() =>this.handleSelectState()}>
@@ -219,7 +238,12 @@ class CreateEvent extends Component {
                             </div>
                             <div>
                                 <Button type="primary" inline size="small"
-                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }}>
+                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={()=>{
+                                        setTimeout(()=>{
+                                            this.props.history.push('/Home');
+                                            this.props.actions.setAccountOKModal(true);
+                                        },300)
+                                    }}>
                                     Save
                                 </Button>
                             </div>
@@ -242,7 +266,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
-            setBottomstatus: setBottomstatusAction
+            setBottomstatus: setBottomstatusAction,
+            setAccountOKModal: setAccountokmodalAction
         }, dispatch)
     }
 }
