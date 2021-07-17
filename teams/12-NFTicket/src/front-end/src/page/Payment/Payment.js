@@ -36,7 +36,7 @@ class Payment extends Component {
         var {name,address,start_time} = data
         var userAddress=localStorage.getItem('nft-address-hex')
         var moeny = max[1].price;
-        // moeny = money
+        moeny = money
         console.log(max)
         const {value}=parseMoneyText(moeny)
         //搜索框高度
@@ -116,8 +116,7 @@ class Payment extends Component {
                     {/** 付款金额 */}
                     <div className={styles.paymentView}>
                         <span className={styles.totalLable}>Total:</span>
-                        <span className={styles.moneyLable}>{money.toString()}</span>
-                        {/* <span className={styles.moneyLable}>{value.toString()}</span> */}
+                        <span className={styles.moneyLable}>{value.toString()}</span>
                         <span className={styles.unitLable}>NMT</span>
                         {/* TODO---点击Pay Now先不走链，假跳转 */}
                         <Button className={styles.payBtn} onClick={() => {
