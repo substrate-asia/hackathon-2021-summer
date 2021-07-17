@@ -10,7 +10,7 @@ import add from '../../images/icon_add.png'
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 //action
-import { setBottomstatusAction } from '../../store/action/App';
+import { setBottomstatusAction,setAccountokmodalAction } from '../../store/action/App';
 
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
@@ -118,7 +118,7 @@ class CreateEvent extends Component {
                         <div className={styles.title}><span>Create a event</span></div>
                         <div className={styles.name1}><span>Event Name</span></div>
                         <div className={styles.inputout}>
-                            <input type="text"  placeholder="eg.Taylor Swift concert"></input>
+                            <input placeholder="eg.Taylor Swift concert"></input>
                         </div>
                         <div className={styles.name2}><span>Poster</span></div>
                         <div>
@@ -137,12 +137,12 @@ class CreateEvent extends Component {
                         </div>
                         <div className={styles.name2}><span>Discription</span></div>
                         <div className={styles.inputout}>
-                            <input type="text"  placeholder="eg.The instruction about Taylor Swift concert"></input>
+                            <input placeholder="eg.The instruction about Taylor Swift concert"></input>
                         </div>
                         <div className={styles.name2}><span>Session</span></div>
                         <div className={styles.sessioninput}>
                             <img src={time} className={styles.timeIcon}></img>
-                            <input type="text"  placeholder="Select time(UTC+8)"></input>
+                            <input placeholder="Select time(UTC+8)"></input>
                         </div>
 
                         <div className={styles.name2}><span>Ticket Price</span></div>
@@ -154,7 +154,7 @@ class CreateEvent extends Component {
                                     </CheckboxItem>
                                 </div>
                                 <div className={styles.checkboxright}>
-                                    <input type="text"  placeholder="Input price"></input>
+                                    <input placeholder="Input price"></input>
                                 </div>
                             </div>
                             <div className={styles.sitezone}>
@@ -168,22 +168,22 @@ class CreateEvent extends Component {
                                         <div>
                                            <img src={del} alt="" className={styles.iconDel}></img>
                                            <span className={styles.siteZoneLable}>A Zone</span>
-                                           <input type="text"  placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                           <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
                                         </div>
                                         <div>
-                                        <input type="text" placeholder="Row" className={styles.siteRows} ></input> 
+                                        <input placeholder="Row" className={styles.siteRows} ></input> 
                                         <span className={styles.rowAndSeats}>X</span>
-                                        <input type="text"  placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        <input placeholder="Seats" className={styles.siteSeats} ></input> 
                                         </div>
                                         <div>
                                            <img src={add} alt="" className={styles.iconDel}></img>
                                            <span className={styles.siteZoneLable}>B Zone</span>
-                                           <input type="text"  placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                           <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
                                         </div>
                                         <div>
-                                        <input type="text"  placeholder="Row" className={styles.siteRows} ></input> 
+                                        <input placeholder="Row" className={styles.siteRows} ></input> 
                                         <span className={styles.rowAndSeats}>X</span>
-                                        <input type="text"  placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        <input placeholder="Seats" className={styles.siteSeats} ></input> 
                                         </div>
                                     </div>
                                     ):null
@@ -196,19 +196,18 @@ class CreateEvent extends Component {
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>Start Time</span>
-                                <input type="text"  placeholder="Select time"></input>
+                                <input placeholder="Select time"></input>
                             </div>
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>End Time</span>
-                                <input type="text"  placeholder="Select time"></input>
+                                <input placeholder="Select time"></input>
                             </div>
                         </div>
                         {/* Ticket Inspector */}
                         <div className={styles.name2}><span>Ticket Inspector</span></div>
                         <div className={styles.inputout}>
-                            <input type="text" 
-                                placeholder="Please input ticket inspector’s wallet address"></input>
+                            <input placeholder="Please input ticket inspector’s wallet address"></input>
                         </div>
                         <div className={styles.name2}><span>Event Status</span></div>
                         <div className={styles.selectState} onClick={() =>this.handleSelectState()}>
@@ -239,7 +238,12 @@ class CreateEvent extends Component {
                             </div>
                             <div>
                                 <Button type="primary" inline size="small"
-                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={()=>this.props.history.push('/Home')}>
+                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={()=>{
+                                        setTimeout(()=>{
+                                            this.props.history.push('/Home');
+                                            this.props.actions.setAccountOKModal(true);
+                                        },300)
+                                    }}>
                                     Save
                                 </Button>
                             </div>
@@ -262,7 +266,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators({
-            setBottomstatus: setBottomstatusAction
+            setBottomstatus: setBottomstatusAction,
+            setAccountOKModal: setAccountokmodalAction
         }, dispatch)
     }
 }

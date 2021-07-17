@@ -123,7 +123,7 @@ class Payment extends Component {
                                 setTimeout(()=>{
                                     this.props.history.push('/Home');
                                     this.props.actions.setAccountOKModal(true);
-                                },1000)
+                                },300)
                             } }>Pay Now</Button>
                         {/* 真实数据跳转 */}
                         {/* <Button className={styles.payBtn} onClick={() => this.buyTickt(max[0],max[1].rows,max[1].cols,max[1].price)}>Pay Now</Button> */}
