@@ -44,7 +44,8 @@ class CreateEvent extends Component {
         initData: '',
         show: false,
         currentState:'Please select the status',
-        date: now
+        date: now,
+        showZone:false //显示座位区域
     };
     constructor(props) {
         super(props);
@@ -84,6 +85,16 @@ class CreateEvent extends Component {
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
     }
+    selectSiteType = (e,key) =>{
+        console.log('xujie====',key)
+        var mShowZone = false
+        if(key==3){
+            mShowZone = true
+        }
+        this.setState({
+            showZone:mShowZone
+        })
+    }
     render() {
         //搜索框高度
         const searchbarHeight = 45;
@@ -94,6 +105,10 @@ class CreateEvent extends Component {
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
         const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight;
         const mShow= this.state.show
+
+ 
+         
+
         return (
             <div className={styles.container}>
                 <TopBar></TopBar>
@@ -134,7 +149,7 @@ class CreateEvent extends Component {
                         <div className={styles.checkinputcontent}>
                             <div className={styles.checkinputline}>
                                 <div className={styles.checkboxleft}>
-                                    <CheckboxItem key='2'>
+                                    <CheckboxItem key='2' onChange={(e)=>{this.selectSiteType(e,'2')}} checked={!this.state.showZone} >
                                         <span style={{ fontSize: '16px' }}>Unify</span>
                                     </CheckboxItem>
                                 </div>
@@ -143,31 +158,36 @@ class CreateEvent extends Component {
                                 </div>
                             </div>
                             <div className={styles.sitezone}>
-                                <CheckboxItem key='3'>
+                                <CheckboxItem key='3' onChange={(e)=>{this.selectSiteType(e,'3')}} checked={this.state.showZone}>
                                     <span style={{ fontSize: '16px' }}>Site Zone</span>
                                 </CheckboxItem>
-                                <div>
-                                    <div>
-                                       <img src={del} alt="" className={styles.iconDel}></img>
-                                       <span className={styles.siteZoneLable}>A Zone</span>
-                                       <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                {
+                                    //显示和隐藏
+                                    this.state.showZone ? (
+                                        <div >
+                                        <div>
+                                           <img src={del} alt="" className={styles.iconDel}></img>
+                                           <span className={styles.siteZoneLable}>A Zone</span>
+                                           <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                        </div>
+                                        <div>
+                                        <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
+                                        <span className={styles.rowAndSeats}>X</span>
+                                        <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        </div>
+                                        <div>
+                                           <img src={add} alt="" className={styles.iconDel}></img>
+                                           <span className={styles.siteZoneLable}>B Zone</span>
+                                           <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                        </div>
+                                        <div>
+                                        <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
+                                        <span className={styles.rowAndSeats}>X</span>
+                                        <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        </div>
                                     </div>
-                                    <div>
-                                    <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
-                                    <span className={styles.rowAndSeats}>X</span>
-                                    <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
-                                    </div>
-                                    <div>
-                                       <img src={add} alt="" className={styles.iconDel}></img>
-                                       <span className={styles.siteZoneLable}>B Zone</span>
-                                       <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
-                                    </div>
-                                    <div>
-                                    <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
-                                    <span className={styles.rowAndSeats}>X</span>
-                                    <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
-                                    </div>
-                                </div>
+                                    ):null
+                                }
                             </div>
                         </div>
                         {/* Selling Time */}
