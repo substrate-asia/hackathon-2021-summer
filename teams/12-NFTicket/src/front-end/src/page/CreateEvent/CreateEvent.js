@@ -154,7 +154,7 @@ class CreateEvent extends Component {
                                     </CheckboxItem>
                                 </div>
                                 <div className={styles.checkboxright}>
-                                    <input type="text" name="name" placeholder="Input price"></input>
+                                    <input type="text"  placeholder="Input price"></input>
                                 </div>
                             </div>
                             <div className={styles.sitezone}>
@@ -168,22 +168,22 @@ class CreateEvent extends Component {
                                         <div>
                                            <img src={del} alt="" className={styles.iconDel}></img>
                                            <span className={styles.siteZoneLable}>A Zone</span>
-                                           <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                           <input type="text"  placeholder="Price (NMT)" className={styles.ticketInput} ></input>
                                         </div>
                                         <div>
-                                        <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
+                                        <input type="text" placeholder="Row" className={styles.siteRows} ></input> 
                                         <span className={styles.rowAndSeats}>X</span>
-                                        <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        <input type="text"  placeholder="Seats" className={styles.siteSeats} ></input> 
                                         </div>
                                         <div>
                                            <img src={add} alt="" className={styles.iconDel}></img>
                                            <span className={styles.siteZoneLable}>B Zone</span>
-                                           <input type="text" name="name" placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                           <input type="text"  placeholder="Price (NMT)" className={styles.ticketInput} ></input>
                                         </div>
                                         <div>
-                                        <input type="text" name="name" placeholder="Row" className={styles.siteRows} ></input> 
+                                        <input type="text"  placeholder="Row" className={styles.siteRows} ></input> 
                                         <span className={styles.rowAndSeats}>X</span>
-                                        <input type="text" name="name" placeholder="Seats" className={styles.siteSeats} ></input> 
+                                        <input type="text"  placeholder="Seats" className={styles.siteSeats} ></input> 
                                         </div>
                                     </div>
                                     ):null
