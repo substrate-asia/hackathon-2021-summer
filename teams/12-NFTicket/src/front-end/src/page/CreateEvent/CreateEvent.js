@@ -118,7 +118,7 @@ class CreateEvent extends Component {
                         <div className={styles.title}><span>Create a event</span></div>
                         <div className={styles.name1}><span>Event Name</span></div>
                         <div className={styles.inputout}>
-                            <input type="text" name="name" placeholder="eg.Taylor Swift concert"></input>
+                            <input type="text"  placeholder="eg.Taylor Swift concert"></input>
                         </div>
                         <div className={styles.name2}><span>Poster</span></div>
                         <div>
@@ -137,12 +137,12 @@ class CreateEvent extends Component {
                         </div>
                         <div className={styles.name2}><span>Discription</span></div>
                         <div className={styles.inputout}>
-                            <input type="text" name="name" placeholder="eg.The instruction about Taylor Swift concert"></input>
+                            <input type="text"  placeholder="eg.The instruction about Taylor Swift concert"></input>
                         </div>
                         <div className={styles.name2}><span>Session</span></div>
                         <div className={styles.sessioninput}>
                             <img src={time} className={styles.timeIcon}></img>
-                            <input type="text" name="name" placeholder="Select time(UTC+8)"></input>
+                            <input type="text"  placeholder="Select time(UTC+8)"></input>
                         </div>
 
                         <div className={styles.name2}><span>Ticket Price</span></div>
@@ -196,18 +196,18 @@ class CreateEvent extends Component {
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>Start Time</span>
-                                <input type="text" name="name" placeholder="Select time"></input>
+                                <input type="text"  placeholder="Select time"></input>
                             </div>
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>End Time</span>
-                                <input type="text" name="name" placeholder="Select time"></input>
+                                <input type="text"  placeholder="Select time"></input>
                             </div>
                         </div>
                         {/* Ticket Inspector */}
                         <div className={styles.name2}><span>Ticket Inspector</span></div>
                         <div className={styles.inputout}>
-                            <input type="text" name="name"
+                            <input type="text" 
                                 placeholder="Please input ticket inspector’s wallet address"></input>
                         </div>
                         <div className={styles.name2}><span>Event Status</span></div>

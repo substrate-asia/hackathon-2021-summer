@@ -78,7 +78,7 @@ class Payment extends Component {
                                     <img src={site} alt="" className={styles.site}></img>
                                     <span className={styles.siteLable}>Row 1,5</span>
                                     {/* <span className={styles.sitePrice}>{value.toString()} NMT</span> */}
-                                    <span className={styles.sitePrice}>360NMT</span>
+                                    <span className={styles.sitePrice}>360 NMT</span>
                                 </div>
                                <div className={styles.rowline}>
                                     <img src={site} alt="" className={styles.site}></img>
