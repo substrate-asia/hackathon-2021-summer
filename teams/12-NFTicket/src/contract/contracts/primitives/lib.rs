@@ -78,6 +78,7 @@ pub enum TemplateStatus {
     derive(scale_info::TypeInfo, ink_storage::traits::StorageLayout)
 )]
 pub enum MeetingStatus {
+    Init,
     Active,
     Stop,
 }

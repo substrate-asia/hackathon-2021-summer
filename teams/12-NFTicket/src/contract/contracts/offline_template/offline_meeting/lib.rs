@@ -84,7 +84,8 @@ pub mod offline_meeting {
 	pub enum SeatStatus {
 		Disabled, //关闭,该位置保留
 		Empty,  // 空值,未出售
-		Sealed,// 已出售
+		Sealed,// 已出售,
+		NotExist, // 该位置不存在
 	}
 	impl Default for SeatStatus {
 		fn default() -> SeatStatus {
@@ -121,7 +122,7 @@ pub mod offline_meeting {
 		// 这个是关于活动控制部分，不属于活动跟本身的信息
 		// controller: AccountId, // 主合约地址
 		template: AccountId,       // 模板合约地址
-		owner: AccountId,          // 活动管理员
+		owner: AccountId,          // 活动管理员,meeting是模板合约创建的,不能使用envcaller作为合约所有者
 		max_zone_id: u8,           // 最大的zone_id
 		ticket_id: u32,            //门票id
 		nfticket_main_fee: u32,    //支付主合约的手续费率,需要除以1万
@@ -137,7 +138,7 @@ pub mod offline_meeting {
 		end_time: u64,         // 活动结束时间
 		start_sale_time: u64,  // 开始售卖时间
 		end_sale_time: u64,    // 开始售卖时间
-		status: MeetingStatus, // 会议状态
+		status: MeetingStatus, // 会议状态,TODO 可以表达会议未开始,正在举行,已经结束,取消等状态.
 
 		// 活动配置参数
 		local_address: Vec<u8>,                      // 获取举办地址
@@ -148,7 +149,7 @@ pub mod offline_meeting {
 
 
 		check_record_map: StorageMap<(u32, u64), Vec<CheckRecord>>, // 检票记录：
-		user_NFT_ticket_map:StorageMap<AccountId,BTreeMap<(u32,u64),TicketNft>>,	//	用户购买的票产生的NFT存储.StorageMap<用户id,BTreeMap<(classid,ticketid),TicketNft>>
+		user_nft_ticket_map:StorageMap<AccountId,BTreeMap<(u32,u64),TicketNft>>,	//	用户购买的票产生的NFT存储.StorageMap<用户id,BTreeMap<(classid,ticketid),TicketNft>>
 	}
 
 	impl Meeting {
@@ -194,7 +195,7 @@ pub mod offline_meeting {
 				start_sale_time,
 				end_sale_time,
 				status: MeetingStatus::Active,
-				user_NFT_ticket_map:Default::default(),
+				user_nft_ticket_map:Default::default(),
 			};
 			meeting
 		}
@@ -286,12 +287,12 @@ pub mod offline_meeting {
 				.unwrap().unwrap();
 				ink_env::debug_message(&format!("-------------------------income {:?}", ticket_nft));
 			// 存储用户购买的ticketNFT存储到链上,key:用户的AccountId,value:ticketNft
-			if let Some(nft_tree_map)=self.user_NFT_ticket_map.get_mut(&caller){
+			if let Some(nft_tree_map)=self.user_nft_ticket_map.get_mut(&caller){
 				nft_tree_map.insert((ticket_nft._class_id,ticket_nft.token_id), ticket_nft);
 			}else{
 				let mut nft_tree_map = BTreeMap::<(u32,u64),TicketNft>::default();
 				nft_tree_map.insert((ticket_nft._class_id,ticket_nft.token_id), ticket_nft);
-				self.user_NFT_ticket_map.insert(caller, nft_tree_map);
+				self.user_nft_ticket_map.insert(caller, nft_tree_map);
 			}
 			true
 		}
@@ -300,7 +301,7 @@ pub mod offline_meeting {
 		#[ink(message)]
 		pub fn get_user_nft_ticket(&self)->BTreeMap<(u32,u64),TicketNft>{
 			let caller = Self::env().caller();
-			self.user_NFT_ticket_map.get(&caller).unwrap().clone()
+			self.user_nft_ticket_map.get(&caller).unwrap().clone()
 		}
 
 		/**
@@ -362,32 +363,49 @@ pub mod offline_meeting {
 
 		/// 获取某个位置状态是否可用.
 		#[ink(message)]
-		pub fn get_update_seat_status(&mut self, zone_id: u8, rows: u32,cols:u32)->SeatStatus{
+		pub fn get_seat_status(&self, zone_id: u8, rows: u32,cols:u32)->SeatStatus{
 			// 首先需要确保这个位置是存在的.
 			let zone = self.zones.get(&zone_id).unwrap();
-			assert!(rows<=zone.rows&&cols<=zone.cols,"The seat posite is not exist!");
+			if rows>=zone.rows||cols>=zone.cols {
+				return SeatStatus::NotExist;
+			}
 			let zone_seat=(zone_id,rows,cols);
 			let my_status_opt = self.seats_status_map.get(&zone_seat);
 			match my_status_opt{
 				Some(status)=>status.clone(),
 				None=>{
-					let status = SeatStatus::Empty;
-					self.seats_status_map.insert(zone_seat, status.clone());
-					status
+					return SeatStatus::Empty;
 				}
 			}
+		}
+
+		///  设置座位不可用的座位
+		///  1. 所有提交的座位都标记为不可用
+		///  2. 所有未包含的座位都需要设置为可用
+		///  3. 如果已经售出的，不允许修改
+		#[ink(message)]
+		pub fn set_seats_staus(&mut self, seats: Vec<(u8, u32, u32)>,seat_status:SeatStatus) -> bool {
+			for seat in &seats {
+				let zone = self.zones.get(&seat.0);
+				// todo 如果已经售出的，不允许修改 ?
+				if zone==None||seat.1>=zone.unwrap().rows||seat.2>=zone.unwrap().cols {
+					continue;
+				}
+				self.seats_status_map.insert(seat.clone(), seat_status.clone());
+			}
+			true
 		}
 
 		/// 标记这个位置已经卖出.
 		fn make_seat_sealed(&mut self, zone_id: u8, seat_id: (u32, u32)) ->bool {
 			// let seat_id = seat_id.unwrap();
 			let zone_seat=(zone_id,seat_id.0,seat_id.1);
-			self.seats_status_map.get(&zone_seat);
 			self
 				.seats_status_map
 				.insert(zone_seat, SeatStatus::Sealed);
 			return true;
 		}
+
 
 		/**
 		更新活动信息，包括：活动基础信息、活动配置参数
@@ -395,6 +413,7 @@ pub mod offline_meeting {
 		2. 如果涉及到基础信息部分的更新，需要调用主合约更新；
 		3. 修改成功后，触发事件 meeting_modified
 		*/
+		#[ink(message)]
 		pub fn modify_meeting(&mut self, name: Option<Vec<u8>>, desc: Option<Vec<u8>>, 
             poster: Option<Vec<u8>>, uri: Option<Vec<u8>>, start_time: Option<u64>, end_time: Option<u64>, start_sale_time: Option<u64>, end_sale_time: Option<u64>,
             ) {
@@ -432,28 +451,14 @@ pub mod offline_meeting {
 		3. 删除操作不会修改 zone_id 序号
 		*/
 		pub fn remove_zone(&mut self, zone_id: &u8) -> bool {
-			let mut zone = self.zones.get(zone_id).expect("zone does not exists ");
+			// 如果会议已经开始,则不允许删除zone
+			assert!(self.status==MeetingStatus::Init,"会议必须是处于初始化状态,才可以删除zone!"); 
+			// self.zones.get(zone_id).expect("zone does not exists ");
 			self.zones.take(zone_id);
 			true
 		}
 
-		/**
-		 设置座位不可用的座位
-		 1. 所有提交的座位都标记为不可用
-		 2. 所有未包含的座位都需要设置为可用
-		 3. 如果已经售出的，不允许修改
-		*/
-		pub fn set_disabled_seats(&mut self, seats: Vec<(u8, u32, u32)>) -> bool {
-			for seat in &seats {
-				// todo 如果已经售出的，不允许修改 ?
-				let status = self.seats_status_map.get(seat).expect("seat does not exists. ");
-				if status.clone() != SeatStatus::Disabled && status.clone() != SeatStatus::Empty {
-					continue; // 如果已经售出的，不允许修改
-				};
-				self.seats_status_map.insert(seat.clone(), SeatStatus::Disabled);
-			}
-			true
-		}
+		
 
 		/// 添加验票员
 		/// 1. 只能由 owner 调用
@@ -507,7 +512,7 @@ pub mod offline_meeting {
 			// 签名数据 vec[u8]=account_id,class_id,ticket_id,timestap,确保二维码里面的这几个参数一定是该用户签名的,不是伪造的.
 			// let encode_data = scale::Encode::encode(&(class_id,token_id,time_stamp));
 			assert!(self.test_validate(user,encode_data, hash),"用户数据验证失败!");
-			let ticket_nft=self.user_NFT_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).unwrap();
+			let ticket_nft=self.user_nft_ticket_map.get(&user).unwrap().get(&(class_id,token_id)).unwrap();
 			//检查用户是否拥有对应的ticker.确保该用户对ticker的所有权
 			// assert!(ticket_nft.is_some(),"用户ticker不存在");
 			// 验证时间不会超出太久,以免别人拿着泄露的hash的二维码再次进行验票
@@ -606,7 +611,7 @@ pub mod offline_meeting {
 	// 			AccountId::from([0x01; 32]),
 	// 			main_stub,
 	// 			AccountId::from([0x01; 32]),);
-	// 		let m1 =meeting.instantiate();
+	// 		// let m1 =meeting.instantiate();
     //         // Constructor works.
 	// 		// let meeting: Meeting = build_create::<DefaultEnvironment, Meeting>()
 	// 		// 	.code_hash(Hash::from([0x42; 32]))
@@ -622,7 +627,7 @@ pub mod offline_meeting {
 	// 		// 	.params()
 	// 		// 	.instantiate()
 	// 		// 	.unwrap();
-	// 		m1.add_zone(vec![79,80], 10, 20, 100000000000);
+	// 		meeting.add_zone(vec![79,80], 10, 20, 100000000000);
     //     }
     // }
 
