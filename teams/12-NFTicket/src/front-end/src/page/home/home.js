@@ -73,11 +73,11 @@ class Home extends Component {
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
     //获取链上会议列表
-    initPolkadotApi( async () =>{
-      getAllMeeting((result) =>{
-        console.log("--------getAllMeeting-----------")
-        //添加模拟数据
-        result = [
+    // initPolkadotApi( async () =>{
+    //   getAllMeeting((result) =>{
+    //     console.log("--------getAllMeeting-----------")
+    //     //添加模拟数据
+       const result = [
           {"desc":"K-pop, short for Korean popular music, is a genre of music originating in South Korea as part of South Korean culture.[1] It is influenced by styles and genres from around the world, such as pop, experimental, rock, jazz, gospel, hip hop, R&amp;B, reggae, electronic dance, folk, country, and classical on top of its traditional Korean music roots. The more modern form of the genre emerged with the formation of one of the earliest K-pop groups, the boy band Seo Taiji and Boys, in 1992. Their experimentation with different styles and genres of music and integration of foreign musical elements helped reshape and modernize South Korea's contemporary music scene.","name":"Kpop All Night","address":"Modern Sky Lab","start_time":"20:30 (UTC+8)","sponsorFrist":"T","month":"AUG","day":21,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Ty","poster":"3"},
           {"desc":"The Weeknd","name":"Livestream","address":"Online","start_time":"12:00 (UTC+8)","sponsorFrist":"H","month":"SEP","day":25,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Hy","poster":"1"},
           {"desc":"Tanya Schultz","name":"Candy Utopia","address":"Modern SkyLab","start_time":"10:00 (UTC+8)","sponsorFrist":"C","month":"OCT","day":12,"meeting_addr":"64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4","sponsor":"Cy","poster":"2"}
@@ -90,9 +90,9 @@ class Home extends Component {
             isLoading: false,
           });
         }, 200);
-        console.log("--------getAllMeeting end-----------")
-     })
-    })
+    //     console.log("--------getAllMeeting end-----------")
+    //  })
+    // })
   }
   // //线下会议:64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4
   // async meeting_BuyTicket(api){

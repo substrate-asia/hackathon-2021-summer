@@ -239,7 +239,7 @@ class CreateEvent extends Component {
                             </div>
                             <div>
                                 <Button type="primary" inline size="small"
-                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }}>
+                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={()=>this.props.history.push('/Home')}>
                                     Save
                                 </Button>
                             </div>
