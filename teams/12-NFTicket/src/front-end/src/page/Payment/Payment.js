@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import TopBar from '../../component/TopBar'
 import styles from './Payment.module.css'
-import address from '../../images/icon_address.png'
+import iconAddress from '../../images/icon_address.png'
 import time from '../../images/icon_time.png'
 import user from '../../images/icon_user.png'
 import site from '../../images/icon_site.png'
@@ -60,7 +60,7 @@ class Payment extends Component {
                             <h1 className={styles.detailName}>{name}</h1>
                             {/** 地址 */}
                             <div className={styles.addressView}>
-                                <img src={address} className={styles.addressIcon}></img>
+                                <img src={iconAddress} className={styles.timeIcon}></img>
                                 <span className={styles.addressText}>{address}</span>
                             </div>
                             {/** 日期*/}
@@ -76,22 +76,22 @@ class Payment extends Component {
                             <div className={styles.kuang}>
                                 <div className={styles.rowline}>
                                     <img src={site} alt="" className={styles.site}></img>
-                                    <span className={styles.siteLable}>Row 5,17</span>
+                                    <span className={styles.siteLable}>Row 1,5</span>
                                     {/* <span className={styles.sitePrice}>{value.toString()} NMT</span> */}
-                                    <span className={styles.sitePrice}>{money} NMT</span>
+                                    <span className={styles.sitePrice}>360NMT</span>
                                 </div>
-                                {/* <div className={styles.rowline}>
+                               <div className={styles.rowline}>
                                     <img src={site} alt="" className={styles.site}></img>
-                                    <span className={styles.siteLable}>Row 5,17</span>
-                                    <span className={styles.sitePrice}>300 NMT</span>
-                                </div> */}
+                                    <span className={styles.siteLable}>Row 1,7</span>
+                                    <span className={styles.sitePrice}>360 NMT</span>
+                                </div> 
                                 <div className={styles.dottedView}>
                                     <div className={styles.dottedLine}></div>
                                 </div>
                                 <div className={styles.ticketPriceView}>
                                     <span className={styles.priceLable}>Price</span>
                                     <div className={styles.unitLable}>
-                                        <span className={styles.unitLable1}>{money}</span>
+                                        <span className={styles.unitLable1}>720</span>
                                         {/* <span className={styles.unitLable1}>{value.toString()}</span> */}
                                         <span className={styles.unitLable2}>NMT</span>
                                     </div>
