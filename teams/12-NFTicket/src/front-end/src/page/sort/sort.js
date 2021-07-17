@@ -55,7 +55,7 @@ class sort extends Component {
   componentDidMount() {
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
-    initPolkadotApi(async () => {
+    //initPolkadotApi(async () => {
       //getUserNftTicket((result) => {
         console.log("--------getUserNftTicket-----------")
         console.log(result)
@@ -95,7 +95,7 @@ class sort extends Component {
         }, 200);
         console.log("--------getUserNftTicket end-----------")
       //})
-    })
+    //})
   }
   onEndReached = (event) => {
     // load new data
