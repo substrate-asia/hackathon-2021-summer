@@ -59,7 +59,7 @@ class ActivityDetail extends Component {
         //账户信息高度
         const accountInfoHeight = 42;
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
-        const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight;
+        const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight+51;
         var zoomList = this.state.zoom
         var path={
             pathname:'/Home/ConfirmVector',

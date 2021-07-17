@@ -148,7 +148,7 @@ class sort extends Component {
     //底部Tab高度
     const tabbarHeight = 46;
 
-    const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight - titleHeight - tabtextHeight - 2 * tabbarHeight + 26;
+    const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight - titleHeight - tabtextHeight - 2 * tabbarHeight + 26+51;
 
     return (
 

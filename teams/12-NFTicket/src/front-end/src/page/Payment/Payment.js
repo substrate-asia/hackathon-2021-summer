@@ -38,7 +38,7 @@ class Payment extends Component {
         var moeny = max[1].price;
         moeny = money
         console.log(max)
-        const {value}=parseMoneyText(moeny)
+        const {value}=money;//parseMoneyText(moeny)
         //搜索框高度
         const searchbarHeight = 45;
         //空白区域高度
@@ -46,7 +46,7 @@ class Payment extends Component {
         //账户信息高度
         const accountInfoHeight = 42;
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
-        const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight;
+        const height = parseInt(window.innerHeight)-searchbarHeight-whitespaceHeight-accountInfoHeight+51;
 
         return (
             <div className={styles.wrapperbody}>
@@ -116,7 +116,7 @@ class Payment extends Component {
                     {/** 付款金额 */}
                     <div className={styles.paymentView}>
                         <span className={styles.totalLable}>Total:</span>
-                        <span className={styles.moneyLable}>{value.toString()}</span>
+                        <span className={styles.moneyLable}>{money}</span>
                         <span className={styles.unitLable}>NMT</span>
                         {/* TODO---点击Pay Now先不走链，假跳转 */}
                         <Button className={styles.payBtn} onClick={() => {
