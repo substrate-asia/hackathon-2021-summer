@@ -56,11 +56,11 @@ class sort extends Component {
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
     initPolkadotApi(async () => {
-      getUserNftTicket((result) => {
+      //getUserNftTicket((result) => {
         console.log("--------getUserNftTicket-----------")
         console.log(result)
         //将数据放到集合里面
-        result = [
+        var result = [
           {
             "name": "Livestream",
             "type": "Online",
@@ -94,7 +94,7 @@ class sort extends Component {
           });
         }, 200);
         console.log("--------getUserNftTicket end-----------")
-      })
+      //})
     })
   }
   onEndReached = (event) => {
@@ -161,7 +161,7 @@ class sort extends Component {
 
         <div className={styles.tabsgroup}>
           <Tabs tabBarTextStyle={{
-            height: '44px',
+            height: '43px',
             marginBottom: '3px',
             fontSize: '14px',
             fontWeight: 'bold',
