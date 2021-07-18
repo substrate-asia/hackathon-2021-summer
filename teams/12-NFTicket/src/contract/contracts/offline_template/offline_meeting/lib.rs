@@ -11,7 +11,7 @@ pub use nftmart_contract::*;
 #[ink::contract(env = CustomEnvironment)]
 pub mod offline_meeting {
 	use super::*;
-	use ink_env::{call::FromAccountId, emit_event};
+	use ink_env::{ call::FromAccountId, emit_event};
 	use ink_lang::ToAccountId;
 	use ink_prelude::format;
 	use ink_prelude::vec::Vec;
@@ -21,6 +21,7 @@ pub mod offline_meeting {
 	use stub::MainStub;
 	use ink_prelude::collections::BTreeMap;
 	use ink_prelude::string::ToString;
+	use ink_prelude::string::String;
 	use ink_prelude::vec;
 
 	const BASE_PERCENT: u128 = 10000;
@@ -203,6 +204,17 @@ pub mod offline_meeting {
 		#[ink(message)]
 		pub fn get_self(&self) -> AccountId {
 			Self::env().account_id()
+		}
+
+/**
+		转移 owner
+		1. 必须 owner 才可以调用
+		*/
+		#[ink(message)]
+		pub fn test111111111(&mut self)->Result<bool,String> {
+			let a  =1;
+			assert!(a>10,"logic error");
+			return Err("test error!".into());
 		}
 
 		/**
