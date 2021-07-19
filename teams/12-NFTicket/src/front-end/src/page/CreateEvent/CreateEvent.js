@@ -1,4 +1,4 @@
-import { DatePicker, List, ListView, Checkbox, InputItem, Button, Flex, WhiteSpace, Menu } from 'antd-mobile'
+import { DatePicker, List, ListView, Checkbox, InputItem, Button, WhiteSpace, Menu } from 'antd-mobile'
 import React, { Component } from 'react'
 import TopBar from '../../component/TopBar'
 import styles from './CreateEvent.module.css';
@@ -10,11 +10,11 @@ import add from '../../images/icon_add.png'
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 //action
-import { setBottomstatusAction,setAccountokmodalAction } from '../../store/action/App';
+import { setBottomstatusAction, setAccountokmodalAction } from '../../store/action/App';
 
+const CheckboxItem = Checkbox.CheckboxItem;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
-const CheckboxItem = Checkbox.CheckboxItem;
 
 const data = [
     {
@@ -38,21 +38,25 @@ const data = [
     }
 ];
 
+
+
 class CreateEvent extends Component {
 
+
     state = {
+        date: now,
         initData: '',
         show: false,
-        currentState:'Please select the status',
+        currentState: 'Please select the status',
         date: now,
-        showZone:false //显示座位区域
+        showZone: false //显示座位区域
     };
     constructor(props) {
         super(props);
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
-     
+
     }
     onChange = (value) => {
         let label = '';
@@ -70,14 +74,14 @@ class CreateEvent extends Component {
         });
         console.log(label);
         this.setState({
-            show:false,
-            currentState:label
+            show: false,
+            currentState: label
         })
     }
 
-    handleSelectState = () =>{
+    handleSelectState = () => {
         this.setState({
-            show:!this.state.show
+            show: !this.state.show
         })
     }
 
@@ -85,14 +89,14 @@ class CreateEvent extends Component {
         //actions  隐藏底部状态栏
         this.props.actions.setBottomstatus(true);
     }
-    selectSiteType = (e,key) =>{
-        console.log('xujie====',key)
+    selectSiteType = (e, key) => {
+        console.log('xujie====', key)
         var mShowZone = false
-        if(key==3){
+        if (key == 3) {
             mShowZone = true
         }
         this.setState({
-            showZone:mShowZone
+            showZone: mShowZone
         })
     }
     render() {
@@ -104,10 +108,10 @@ class CreateEvent extends Component {
         const accountInfoHeight = 42;
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
         const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight + 51;
-        const mShow= this.state.show
+        const mShow = this.state.show
 
- 
-         
+
+
 
         return (
             <div className={styles.container}>
@@ -118,7 +122,9 @@ class CreateEvent extends Component {
                         <div className={styles.title}><span>Create a event</span></div>
                         <div className={styles.name1}><span>Event Name</span></div>
                         <div className={styles.inputout}>
-                            <input placeholder="eg.Taylor Swift concert"></input>
+                            <InputItem
+                                placeholder="eg.Taylor Swift concert"
+                            />
                         </div>
                         <div className={styles.name2}><span>Poster</span></div>
                         <div>
@@ -131,62 +137,71 @@ class CreateEvent extends Component {
                         </CheckboxItem>
                         </div>
                         <div>
-                            <CheckboxItem key='1'>
-                                Offline
-                        </CheckboxItem>
+                            <CheckboxItem key='1'>Offline</CheckboxItem>
                         </div>
+                        <InputItem placeholder='Site address'></InputItem>
                         <div className={styles.name2}><span>Discription</span></div>
                         <div className={styles.inputout}>
-                            <input placeholder="eg.The instruction about Taylor Swift concert"></input>
+                            <InputItem
+                                placeholder="eg.The instruction about Taylor Swift concert"
+                            />
                         </div>
                         <div className={styles.name2}><span>Session</span></div>
                         <div className={styles.sessioninput}>
                             <img src={time} className={styles.timeIcon}></img>
-                            <input placeholder="Select time(UTC+8)"></input>
+
+                            <DatePicker
+                                value={this.state.date}
+                                onChange={date => this.setState({ date })}
+                            >
+                                <List.Item className={styles.selectTime}></List.Item>
+                            </DatePicker>
+
+                            {/* <input placeholder="Select time(UTC+8)"></input> */}
                         </div>
 
                         <div className={styles.name2}><span>Ticket Price</span></div>
                         <div className={styles.checkinputcontent}>
                             <div className={styles.checkinputline}>
                                 <div className={styles.checkboxleft}>
-                                    <CheckboxItem key='2' onChange={(e)=>{this.selectSiteType(e,'2')}} checked={!this.state.showZone} >
+                                    <CheckboxItem key='2' onChange={(e) => { this.selectSiteType(e, '2') }} checked={!this.state.showZone} >
                                         <span style={{ fontSize: '16px' }}>Unify</span>
                                     </CheckboxItem>
                                 </div>
                                 <div className={styles.checkboxright}>
-                                    <input placeholder="Input price"></input>
+                                    <InputItem placeholder="Input price" />
                                 </div>
                             </div>
                             <div className={styles.sitezone}>
-                                <CheckboxItem key='3' onChange={(e)=>{this.selectSiteType(e,'3')}} checked={this.state.showZone}>
+                                <CheckboxItem key='3' onChange={(e) => { this.selectSiteType(e, '3') }} checked={this.state.showZone}>
                                     <span style={{ fontSize: '16px' }}>Site Zone</span>
                                 </CheckboxItem>
                                 {
                                     //显示和隐藏
                                     this.state.showZone ? (
                                         <div >
-                                        <div>
-                                           <img src={del} alt="" className={styles.iconDel}></img>
-                                           <span className={styles.siteZoneLable}>A Zone</span>
-                                           <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                            <div>
+                                                <img src={del} alt="" className={styles.iconDel}></img>
+                                                <span className={styles.siteZoneLable}>A Zone</span>
+                                                <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                            </div>
+                                            <div>
+                                                <input placeholder="Row" className={styles.siteRows} ></input>
+                                                <span className={styles.rowAndSeats}>X</span>
+                                                <input placeholder="Seats" className={styles.siteSeats} ></input>
+                                            </div>
+                                            <div>
+                                                <img src={add} alt="" className={styles.iconDel}></img>
+                                                <span className={styles.siteZoneLable}>B Zone</span>
+                                                <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
+                                            </div>
+                                            <div>
+                                                <input placeholder="Row" className={styles.siteRows} ></input>
+                                                <span className={styles.rowAndSeats}>X</span>
+                                                <input placeholder="Seats" className={styles.siteSeats} ></input>
+                                            </div>
                                         </div>
-                                        <div>
-                                        <input placeholder="Row" className={styles.siteRows} ></input> 
-                                        <span className={styles.rowAndSeats}>X</span>
-                                        <input placeholder="Seats" className={styles.siteSeats} ></input> 
-                                        </div>
-                                        <div>
-                                           <img src={add} alt="" className={styles.iconDel}></img>
-                                           <span className={styles.siteZoneLable}>B Zone</span>
-                                           <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
-                                        </div>
-                                        <div>
-                                        <input placeholder="Row" className={styles.siteRows} ></input> 
-                                        <span className={styles.rowAndSeats}>X</span>
-                                        <input placeholder="Seats" className={styles.siteSeats} ></input> 
-                                        </div>
-                                    </div>
-                                    ):null
+                                    ) : null
                                 }
                             </div>
                         </div>
@@ -196,32 +211,44 @@ class CreateEvent extends Component {
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>Start Time</span>
-                                <input placeholder="Select time"></input>
+                                <DatePicker
+                                    value={this.state.date}
+                                    onChange={date => this.setState({ date })}
+                                >
+                                    <List.Item className={styles.selectTime}></List.Item>
+                                </DatePicker>
+
                             </div>
                             <div className={styles.selltimeinput}>
                                 <img src={time} className={styles.timeIcon}></img>
                                 <span style={{ margin: "5px", fontWeight: 'bold' }}>End Time</span>
-                                <input placeholder="Select time"></input>
+                                <DatePicker
+                                    value={this.state.date}
+                                    onChange={date => this.setState({ date })}
+                                >
+                                    <List.Item className={styles.selectTime}></List.Item>
+                                </DatePicker>
+
                             </div>
                         </div>
                         {/* Ticket Inspector */}
                         <div className={styles.name2}><span>Ticket Inspector</span></div>
                         <div className={styles.inputout}>
-                            <input placeholder="Please input ticket inspector’s wallet address"></input>
+                            <InputItem placeholder="Please input ticket inspector’s wallet address" />
                         </div>
                         <div className={styles.name2}><span>Event Status</span></div>
-                        <div className={styles.selectState} onClick={() =>this.handleSelectState()}>
-                                <span className={styles.hintLable}>{this.state.currentState}</span>
+                        <div className={styles.selectState} onClick={() => this.handleSelectState()}>
+                            <span className={styles.hintLable}>{this.state.currentState}</span>
                             <img src={downArrow} alt="" className={styles.downArrow}></img>
                         </div>
-                        { mShow? (<Menu
+                        {mShow ? (<Menu
                             data={data}
                             value={['1']}
                             level={1}
                             onChange={this.onChange}
                             height={document.documentElement.clientHeight * 0.25}
-                        />):null }
-                        
+                        />) : null}
+
 
 
                         {/* Save */}
@@ -230,7 +257,7 @@ class CreateEvent extends Component {
                                 <Button onClick={() => { console.log(111); }}
                                     style={{
                                         backgroundColor: 'white', border: '2px solid #108ee9', fontSize: '13px',
-                                        color:'#108ee9',
+                                        color: '#108ee9',
                                         lineHeight: '24px', borderRadius: '30px', width: '128px', height: '31px', margin: '20px'
                                     }}>
                                     Preview
@@ -238,11 +265,11 @@ class CreateEvent extends Component {
                             </div>
                             <div>
                                 <Button type="primary" inline size="small"
-                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={()=>{
-                                        setTimeout(()=>{
+                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={() => {
+                                        setTimeout(() => {
                                             this.props.history.push('/Home');
                                             this.props.actions.setAccountOKModal(true);
-                                        },300)
+                                        }, 300)
                                     }}>
                                     Save
                                 </Button>

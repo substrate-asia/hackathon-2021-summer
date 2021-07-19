@@ -23,11 +23,7 @@
     font-weight: bold;
     margin: 8px;
 }
-/* .inputout{
-    width: 100%;
-    margin-right: 20px;
-    margin-bottom: 20px;
-} */
+
 .name2{
     font-size: 16px;
     font-weight: bold;
@@ -36,11 +32,16 @@
 }
 .inputout{
     height: 50px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-items: center; 
     align-items: center;
     margin-left: 10px;
+    border-top:1px solid white;
+    border-left:1px solid white;
+    border-right:1px solid white;
+    border-bottom:1px solid #d7d7d7;
 }
 .inputout input{
     width: 100%;
@@ -55,6 +56,10 @@
     justify-items: center; 
     align-items: center;
     margin-left: 10px;
+    border-top:1px solid white;
+    border-left:1px solid white;
+    border-right:1px solid white;
+    border-bottom:1px solid #d7d7d7;
 }
 .timeIcon{
     width: 20px;
@@ -97,8 +102,10 @@
 .checkboxright input{
     width: auto;
     font-size: 12px;
-    border: 0;
-    border-bottom: 2px solid rgb(218, 214, 214);
+    border-top:1px solid white;
+    border-left:1px solid white;
+    border-right:1px solid white;
+    border-bottom:1px solid #d7d7d7;
 }
 
 .selltimeinput{
@@ -108,6 +115,11 @@
     justify-items: center; 
     align-items: center;
     margin-left: 10px;
+    border-top:1px solid white;
+    border-left:1px solid white;
+    border-right:1px solid white;
+    border-bottom:1px solid #d7d7d7;
+
 }
 
 .selltimeinput input{
@@ -181,34 +193,19 @@
 .siteSeats{
     width:  85px;
     height: 36px;
-    border-bottom:1px solid #d7d7d7;
+   
     margin-left: 5px;
     font-size: 12px;
     color: black;
     border-top:1px solid white;
     border-left:1px solid white;
     border-right:1px solid white;
+    border-bottom:1px solid #d7d7d7;
 }
 .rowAndSeats{
     margin-left: 10px;
     margin-right: 10px;
 }
-.am-radio{ 
-    width: 20px;
-    height: 20px;
-    border: .01rem solid #A4A7A9;
-    border-radius: 50%;
-    margin-right: .1rem; 
-}
-.am-radio .am-radio-checked{
-    border: .01rem solid #008CEE;
-}
-.am-radio-inner:after{
-    height: .08rem;
-    width: .08rem;
-    border-radius: 50%;
-    border: .01rem solid #008CEE;
-    background-color: #008CEE;
-    top:.05rem;
-    left:0.125rem;
+.selectTime{
+    width: 400px;
 }
