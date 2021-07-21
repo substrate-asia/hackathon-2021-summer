@@ -1,7 +1,7 @@
 {
   "metadataVersion": "0.1.0",
   "source": {
-    "hash": "0x8fdbab062e477d2aeb56142ad1343595c10acec69ad395bad77a22d2ccde4c6d",
+    "hash": "0x812469686af8aad0940ee67e77e0837fbe04800b37577fb0f3bc1e1147022ad3",
     "language": "ink! 3.0.0-rc3",
     "compiler": "rustc 1.55.0-nightly"
   },
@@ -168,7 +168,7 @@
               "displayName": [
                 "Ticket"
               ],
-              "type": 31
+              "type": 25
             }
           }
         ],
@@ -213,7 +213,7 @@
             "name": "fee_rate",
             "type": {
               "displayName": [],
-              "type": 21
+              "type": 29
             }
           }
         ],
@@ -229,7 +229,7 @@
           "displayName": [
             "bool"
           ],
-          "type": 22
+          "type": 30
         },
         "selector": "0x8a268b92"
       },
@@ -243,7 +243,7 @@
         "payable": false,
         "returnType": {
           "displayName": [],
-          "type": 21
+          "type": 29
         },
         "selector": "0xcf886b41"
       },
@@ -272,9 +272,25 @@
           "displayName": [
             "bool"
           ],
-          "type": 22
+          "type": 30
         },
         "selector": "0x70ac259e"
+      },
+      {
+        "args": [],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_owner"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "AccountId"
+          ],
+          "type": 9
+        },
+        "selector": "0x07fcd0b1"
       },
       {
         "args": [
@@ -336,7 +352,7 @@
           "displayName": [
             "bool"
           ],
-          "type": 22
+          "type": 30
         },
         "selector": "0xc39c7d18"
       },
@@ -371,7 +387,7 @@
           "displayName": [
             "bool"
           ],
-          "type": 22
+          "type": 30
         },
         "selector": "0x19b05713"
       },
@@ -435,7 +451,7 @@
           "displayName": [
             "bool"
           ],
-          "type": 22
+          "type": 30
         },
         "selector": "0xc00c9c69"
       },
@@ -453,7 +469,7 @@
           "displayName": [
             "Vec"
           ],
-          "type": 23
+          "type": 31
         },
         "selector": "0xabf4bcd1"
       },
@@ -581,7 +597,7 @@
           "displayName": [
             "Result"
           ],
-          "type": 24
+          "type": 32
         },
         "selector": "0x2dc5caaf"
       },
@@ -643,7 +659,7 @@
           "displayName": [
             "Result"
           ],
-          "type": 26
+          "type": 34
         },
         "selector": "0x34ffd3f0"
       },
@@ -676,7 +692,7 @@
         "payable": false,
         "returnType": {
           "displayName": [],
-          "type": 29
+          "type": 37
         },
         "selector": "0xa8b5b8ba"
       },
@@ -694,9 +710,72 @@
           "displayName": [
             "Vec"
           ],
-          "type": 30
+          "type": 38
         },
         "selector": "0x1803c196"
+      },
+      {
+        "args": [
+          {
+            "name": "user",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          }
+        ],
+        "docs": [
+          " 返回用户的所有已经购买的票."
+        ],
+        "mutates": false,
+        "name": [
+          "get_user_all_ticket"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 39
+        },
+        "selector": "0x5be81500"
+      },
+      {
+        "args": [
+          {
+            "name": "user",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "ticket_status",
+            "type": {
+              "displayName": [
+                "TickedStatus"
+              ],
+              "type": 27
+            }
+          }
+        ],
+        "docs": [],
+        "mutates": false,
+        "name": [
+          "get_user_ticket"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "Vec"
+          ],
+          "type": 39
+        },
+        "selector": "0xfdd54cc3"
       },
       {
         "args": [
@@ -757,7 +836,7 @@
           "displayName": [
             "bool"
           ],
-          "type": 22
+          "type": 30
         },
         "selector": "0x17b7fb1d"
       },
@@ -776,90 +855,90 @@
             "name": "name",
             "type": {
               "displayName": [
-                "Vec"
+                "Option"
               ],
-              "type": 14
+              "type": 40
             }
           },
           {
             "name": "desc",
             "type": {
               "displayName": [
-                "Vec"
+                "Option"
               ],
-              "type": 14
+              "type": 40
             }
           },
           {
             "name": "poster",
             "type": {
               "displayName": [
-                "Vec"
+                "Option"
               ],
-              "type": 14
+              "type": 40
             }
           },
           {
             "name": "uri",
             "type": {
               "displayName": [
-                "Vec"
+                "Option"
               ],
-              "type": 14
+              "type": 40
             }
           },
           {
             "name": "start_time",
             "type": {
               "displayName": [
-                "u64"
+                "Option"
               ],
-              "type": 15
+              "type": 41
             }
           },
           {
             "name": "end_time",
             "type": {
               "displayName": [
-                "u64"
+                "Option"
               ],
-              "type": 15
+              "type": 41
             }
           },
           {
             "name": "start_sale_time",
             "type": {
               "displayName": [
-                "u64"
+                "Option"
               ],
-              "type": 15
+              "type": 41
             }
           },
           {
             "name": "end_sale_time",
             "type": {
               "displayName": [
-                "u64"
+                "Option"
               ],
-              "type": 15
+              "type": 41
             }
           },
           {
             "name": "publisher",
             "type": {
               "displayName": [
-                "Vec"
+                "Option"
               ],
-              "type": 14
+              "type": 40
             }
           },
           {
             "name": "min_price",
             "type": {
               "displayName": [
-                "u128"
+                "Option"
               ],
-              "type": 10
+              "type": 42
             }
           }
         ],
@@ -875,7 +954,7 @@
           "displayName": [
             "bool"
           ],
-          "type": 22
+          "type": 30
         },
         "selector": "0xeef1f1b6"
       },
@@ -896,7 +975,7 @@
               "displayName": [
                 "Ticket"
               ],
-              "type": 31
+              "type": 25
             }
           }
         ],
@@ -917,9 +996,64 @@
           "displayName": [
             "Result"
           ],
-          "type": 33
+          "type": 43
         },
         "selector": "0xb1dc989b"
+      },
+      {
+        "args": [
+          {
+            "name": "user",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "meeting_addr",
+            "type": {
+              "displayName": [
+                "AccountId"
+              ],
+              "type": 9
+            }
+          },
+          {
+            "name": "ticket_id",
+            "type": {
+              "displayName": [
+                "u32"
+              ],
+              "type": 2
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "displayName": [
+                "TickedStatus"
+              ],
+              "type": 27
+            }
+          }
+        ],
+        "docs": [
+          " 验票成功后,修改ticket的状态,只能由对应的会议调用."
+        ],
+        "mutates": true,
+        "name": [
+          "update_ticket_sell_status"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "bool"
+          ],
+          "type": 30
+        },
+        "selector": "0xd1f2d251"
       },
       {
         "args": [],
@@ -1297,6 +1431,86 @@
             }
           },
           "name": "classid_map"
+        },
+        {
+          "layout": {
+            "struct": {
+              "fields": [
+                {
+                  "layout": {
+                    "struct": {
+                      "fields": [
+                        {
+                          "layout": {
+                            "cell": {
+                              "key": "0x0b00000004000000000000000000000000000000000000000000000000000000",
+                              "ty": 1
+                            }
+                          },
+                          "name": "header"
+                        },
+                        {
+                          "layout": {
+                            "struct": {
+                              "fields": [
+                                {
+                                  "layout": {
+                                    "cell": {
+                                      "key": "0x0c00000004000000000000000000000000000000000000000000000000000000",
+                                      "ty": 2
+                                    }
+                                  },
+                                  "name": "len"
+                                },
+                                {
+                                  "layout": {
+                                    "array": {
+                                      "cellsPerElem": 1,
+                                      "layout": {
+                                        "cell": {
+                                          "key": "0x0c00000005000000000000000000000000000000000000000000000000000000",
+                                          "ty": 11
+                                        }
+                                      },
+                                      "len": 4294967295,
+                                      "offset": "0x0d00000004000000000000000000000000000000000000000000000000000000"
+                                    }
+                                  },
+                                  "name": "elems"
+                                }
+                              ]
+                            }
+                          },
+                          "name": "entries"
+                        }
+                      ]
+                    }
+                  },
+                  "name": "keys"
+                },
+                {
+                  "layout": {
+                    "hash": {
+                      "layout": {
+                        "cell": {
+                          "key": "0x0d00000005000000000000000000000000000000000000000000000000000000",
+                          "ty": 21
+                        }
+                      },
+                      "offset": "0x0c00000005000000000000000000000000000000000000000000000000000000",
+                      "strategy": {
+                        "hasher": "Blake2x256",
+                        "postfix": "",
+                        "prefix": "0x696e6b20686173686d6170"
+                      }
+                    }
+                  },
+                  "name": "values"
+                }
+              ]
+            }
+          },
+          "name": "user_tickets"
         }
       ]
     }
@@ -1626,10 +1840,14 @@
           "variants": [
             {
               "discriminant": 0,
-              "name": "Active"
+              "name": "Init"
             },
             {
               "discriminant": 1,
+              "name": "Active"
+            },
+            {
+              "discriminant": 2,
               "name": "Stop"
             }
           ]
@@ -1758,6 +1976,163 @@
     },
     {
       "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "value",
+              "type": 22,
+              "typeName": "V"
+            },
+            {
+              "name": "key_index",
+              "type": 2,
+              "typeName": "KeyIndex"
+            }
+          ]
+        }
+      },
+      "params": [
+        22
+      ],
+      "path": [
+        "ink_storage",
+        "collections",
+        "hashmap",
+        "ValueEntry"
+      ]
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "type": 28,
+              "typeName": "[(K, V)]"
+            }
+          ]
+        }
+      },
+      "params": [
+        23
+      ],
+      "path": [
+        "BTreeMap"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          24,
+          25
+        ]
+      }
+    },
+    {
+      "def": {
+        "tuple": [
+          9,
+          2
+        ]
+      }
+    },
+    {
+      "def": {
+        "composite": {
+          "fields": [
+            {
+              "name": "template_addr",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "meeting",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "hash",
+              "type": 14,
+              "typeName": "Vec<u8>"
+            },
+            {
+              "name": "price",
+              "type": 10,
+              "typeName": "u128"
+            },
+            {
+              "name": "zone_id",
+              "type": 6,
+              "typeName": "u8"
+            },
+            {
+              "name": "seat_id",
+              "type": 26,
+              "typeName": "(u32, u32)"
+            },
+            {
+              "name": "ticket_id",
+              "type": 2,
+              "typeName": "u32"
+            },
+            {
+              "name": "buyer",
+              "type": 9,
+              "typeName": "AccountId"
+            },
+            {
+              "name": "status",
+              "type": 27,
+              "typeName": "TickedStatus"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "Ticket"
+      ]
+    },
+    {
+      "def": {
+        "tuple": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "discriminant": 0,
+              "name": "Checked"
+            },
+            {
+              "discriminant": 1,
+              "name": "Unchecked"
+            },
+            {
+              "discriminant": 2,
+              "name": "Refund"
+            }
+          ]
+        }
+      },
+      "path": [
+        "primitives",
+        "TickedStatus"
+      ]
+    },
+    {
+      "def": {
+        "sequence": {
+          "type": 23
+        }
+      }
+    },
+    {
+      "def": {
         "tuple": [
           10,
           10
@@ -1792,7 +2167,7 @@
             {
               "fields": [
                 {
-                  "type": 25,
+                  "type": 33,
                   "typeName": "E"
                 }
               ],
@@ -1803,7 +2178,7 @@
       },
       "params": [
         2,
-        25
+        33
       ],
       "path": [
         "Result"
@@ -1844,7 +2219,7 @@
             {
               "fields": [
                 {
-                  "type": 27,
+                  "type": 35,
                   "typeName": "T"
                 }
               ],
@@ -1853,7 +2228,7 @@
             {
               "fields": [
                 {
-                  "type": 28,
+                  "type": 36,
                   "typeName": "E"
                 }
               ],
@@ -1863,8 +2238,8 @@
         }
       },
       "params": [
-        27,
-        28
+        35,
+        36
       ],
       "path": [
         "Result"
@@ -1909,63 +2284,88 @@
     },
     {
       "def": {
-        "composite": {
-          "fields": [
+        "sequence": {
+          "type": 25
+        }
+      }
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
             {
-              "name": "template_addr",
-              "type": 9,
-              "typeName": "AccountId"
+              "name": "None"
             },
             {
-              "name": "meeting",
-              "type": 9,
-              "typeName": "AccountId"
-            },
-            {
-              "name": "hash",
-              "type": 14,
-              "typeName": "Vec<u8>"
-            },
-            {
-              "name": "price",
-              "type": 10,
-              "typeName": "u128"
-            },
-            {
-              "name": "zone_id",
-              "type": 6,
-              "typeName": "u8"
-            },
-            {
-              "name": "seat_id",
-              "type": 32,
-              "typeName": "(u32, u32)"
-            },
-            {
-              "name": "ticket_id",
-              "type": 2,
-              "typeName": "u32"
-            },
-            {
-              "name": "buyer",
-              "type": 9,
-              "typeName": "AccountId"
+              "fields": [
+                {
+                  "type": 14,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Some"
             }
           ]
         }
       },
+      "params": [
+        14
+      ],
       "path": [
-        "primitives",
-        "Ticket"
+        "Option"
       ]
     },
     {
       "def": {
-        "tuple": [
-          2,
-          2
-        ]
-      }
+        "variant": {
+          "variants": [
+            {
+              "name": "None"
+            },
+            {
+              "fields": [
+                {
+                  "type": 15,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Some"
+            }
+          ]
+        }
+      },
+      "params": [
+        15
+      ],
+      "path": [
+        "Option"
+      ]
+    },
+    {
+      "def": {
+        "variant": {
+          "variants": [
+            {
+              "name": "None"
+            },
+            {
+              "fields": [
+                {
+                  "type": 10,
+                  "typeName": "T"
+                }
+              ],
+              "name": "Some"
+            }
+          ]
+        }
+      },
+      "params": [
+        10
+      ],
+      "path": [
+        "Option"
+      ]
     },
     {
       "def": {
@@ -1974,7 +2374,7 @@
             {
               "fields": [
                 {
-                  "type": 34,
+                  "type": 44,
                   "typeName": "T"
                 }
               ],
@@ -1983,7 +2383,7 @@
             {
               "fields": [
                 {
-                  "type": 25,
+                  "type": 33,
                   "typeName": "E"
                 }
               ],
@@ -1993,8 +2393,8 @@
         }
       },
       "params": [
-        34,
-        25
+        44,
+        33
       ],
       "path": [
         "Result"
@@ -2028,6 +2428,16 @@
               "name": "quantity",
               "type": 15,
               "typeName": "u64"
+            },
+            {
+              "name": "ticket_id",
+              "type": 2,
+              "typeName": "u32"
+            },
+            {
+              "name": "meeting_addr",
+              "type": 9,
+              "typeName": "AccountId"
             }
           ]
         }
