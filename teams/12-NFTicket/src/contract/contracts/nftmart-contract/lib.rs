@@ -1,9 +1,9 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
+use contract_types::ContractTokenInfo;
 use ink_env::{AccountId, Environment};
 use ink_lang as ink;
 use ink_prelude::vec::Vec;
-pub use contract_types::*;
 
 pub type Quantity = u64;
 pub type ClassId = u32;

@@ -15,7 +15,7 @@ ink_prelude = { version = "3.0.0-rc3",git = "https://github.com/paritytech/ink",
 scale = { package = "parity-scale-codec", version = "2.1", default-features = false, features = ["derive"] }
 scale-info = { version = "0.6.0", default-features = false, features = ["derive"], optional = true }
 
-contract-types = { git = "https://github.com/NFTT-studio/nftmart-node.git", branch = "dev", default-features = false}
+contract-types = { git = "https://github.com/NFTicket-Lab/NFTMart-Node", branch = "dev", default-features = false}
 
 [lib]
 name = "nftmart_contract"
