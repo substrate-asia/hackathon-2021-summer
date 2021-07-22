@@ -19,7 +19,7 @@ import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 import NAlert from '../../component/Alert';
 
-import {initPolkadotApi,getAllMeeting} from '../../api/polka'
+import {initPolkadotApi,getAllMeeting,buyTicket,getInspector} from '../../api/polka'
 import img1 from '../../images/big_1.png'
 import img2 from '../../images/big_2.png'
 import img3 from '../../images/big_3.png'
@@ -92,6 +92,12 @@ class Home extends Component {
         }, 200);
         console.log("--------getAllMeeting end-----------")
      })
+     //测试线下购票--OK
+     //buyTicket(1,0,0,10000000000000,()=>{})
+     //测试查询验票员--OK
+     //getInspector(()=>{})
+     //检票
+     //checkTicket(user, classId, tokenId, timeStamp, msg, hash, owner,mPrice, ()=>{})
     })
   }
   // //线下会议:64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4

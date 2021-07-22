@@ -74,7 +74,7 @@ export const regEvent= async () =>{
     // console.log("xujie-----regEvent")
 }
 //主合约address
-const main_address = "626nT4jAQU9PfA4Bdt8HcnK5v3q2jJHsJeURKAKV5rg7LRPn"
+const main_address = "63K26xBBzVcDE5jAm6yksfVQCDZEjRfcNFf9owPVmn5XBQ4D"
 let main_contract;
 /**
    * 获取所有的会议
@@ -98,7 +98,7 @@ let main_contract;
   }
 
 //线下合约address
-const meeting_address = "64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4";
+const meeting_address = "64PGzV7fVGhgHZLvyjXY5L3VRqj9YhEZWG2u4md7gvSdLcmh";
 let meeting_contract;
 //获取用户的NFT编号
 export const getUserNftTicket = async (cb) =>{
@@ -169,10 +169,10 @@ export const getZone = async (address,cb) =>{
   }
 }
 
-//买票
+//线下会议买票--接口OK
 export const buyTicket = async (mZoneId,mRows,mCols,mPrice,cb) =>{
-  console.log("buyTicket---start")
-  var money=mPrice.replace(/,/g, '')
+  console.log("买票buyTicket---start")
+  var money=mPrice//.replace(/,/g, '')
   console.log(money)
   const value = money;//价钱不够会报(13个0(对应合约里的price)--Contract trapped during execution.)
   const gasLimit=-1;//300000n * 1000000n;//gas不够会报(The executed contract exhausted its gas limit.)
@@ -180,9 +180,8 @@ export const buyTicket = async (mZoneId,mRows,mCols,mPrice,cb) =>{
   const zoneId = mZoneId;
   const rows=mRows;
   const cols=mCols;
-  const seatId = (rows,cols);
   let params = [];
-  params.push(zoneId,seatId)
+  params.push(zoneId,rows,cols)
   meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
   await meeting_contract.tx
   .buyTicket({ gasLimit,value },
@@ -196,10 +195,58 @@ export const buyTicket = async (mZoneId,mRows,mCols,mPrice,cb) =>{
       console.log(result.toHuman())
     }
   });
-
-
-
-
 }
+
+
+//查询验票员--接口OK
+export const getInspector = async (cb)=>{
+  console.log("查询验票员getInspector---start")
+  const value = 0;
+  const gasLimit = -1;//不限制gas
+  const alicePair = keyring.addFromUri('//Alice');
+
+  meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+
+  const { result, output } = await meeting_contract.query.getInspector(alicePair.address, { value, gasLimit });
+  if (result.isOk) {
+    console.log('查询验票员getInspector-->Success-->验票员address-->', output.toHuman()[0]);
+    if(cb) cb(output.toHuman())
+  } else {
+    console.error('查询验票员getInspector-->Error', result.asErr);
+  }
+}
+
+//检票
+//checkTicket (user: AccountId, classId: u32, tokenId: u64, timeStamp: u64, msg: Vec<u8>, hash: Vec<u8>)
+export const checkTicket = async (_user, _classId, _tokenId, _timeStamp, _msg, _hash, owner,mPrice, cb)=>{
+  console.log("检票checkTicket---start")
+  var money=mPrice//.replace(/,/g, '')
+  console.log(money)
+  const value = money;//价钱不够会报(13个0(对应合约里的price)--Contract trapped during execution.)
+  const gasLimit=-1;//300000n * 1000000n;//gas不够会报(The executed contract exhausted its gas limit.)
+  const alicePair = keyring.addFromUri('//Alice');
+  const user = _user;
+  const classId=_classId;
+  const tokenId=_tokenId;
+  const timeStamp = _timeStamp;
+  const msg = _msg;
+  const hash = _hash;
+  let params = [];
+  params.push(user,classId,tokenId,timeStamp,msg,hash)
+  meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+  await meeting_contract.tx
+  .checkTicket({ gasLimit,value },
+    ...params)
+  .signAndSend(owner, (result) => {
+    if (result.status.isInBlock) {
+      console.log('检票checkTicket- ->--正在提交到链上');
+    } else if (result.status.isFinalized) {
+      console.log('检票checkTicket- ->--交易确认');
+      if(cb) cb(result.toHuman())
+      console.log(result.toHuman())
+    }
+  });
+}
+
 
 
