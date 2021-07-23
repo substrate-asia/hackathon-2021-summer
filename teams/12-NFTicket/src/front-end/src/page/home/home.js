@@ -105,9 +105,9 @@ class Home extends Component {
      const tokenId = '0'
     //  const timeStamp= time.substr(0,10);//精确到秒
      const timeStamp= "1626525090012";//精确到秒
-     const msg="7201626525090012";
+     const msg=classId+tokenId+timeStamp;//"7201626525090012";
      //class_Id+tokeid+timestamp
-     console.log(">>>>>>>>>>>>>>>>>>>>>xujie")
+     console.log(">>>>>>>>>>>>>>>>>>>>>xujie--"+msg)
      const hash=blake2AsHex(classId+tokenId+timeStamp)
      const owner = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
      const mPrice = 20000000

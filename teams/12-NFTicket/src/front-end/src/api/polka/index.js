@@ -211,7 +211,7 @@ export const checkTicket = async (_user, _classId, _tokenId, _timeStamp, _msg, _
   // const msg = _msg
   //  console.log('signature222',u8aToHex(alicePair.sign(msg)))
   const hash = _hash;
-  console.log('msg---',_msg)
+  console.log('msg---',msg)
   console.log('hash---',hash)
   let params = [];
   params.push(user,classId,tokenId,timeStamp,msg,hash)
@@ -220,7 +220,7 @@ export const checkTicket = async (_user, _classId, _tokenId, _timeStamp, _msg, _
   await meeting_contract.tx
   .checkTicket({ gasLimit,value },
     ...params)
-  .signAndSend(owner, (result) => {
+  .signAndSend(alicePair, (result) => {
     if (result.status.isInBlock) {
       console.log('检票checkTicket- ->--正在提交到链上');
     } else if (result.status.isFinalized) {
