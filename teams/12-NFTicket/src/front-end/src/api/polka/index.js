@@ -2,6 +2,7 @@ import { globalStore } from 'rekv';
 import { ApiPromise, WsProvider, Keyring } from '@polkadot/api';
 import { setSS58Format } from '@polkadot/util-crypto';
 import { ContractPromise } from '@polkadot/api-contract';
+import { stringToU8a, u8aToHex ,u8aToString} from '@polkadot/util';
 
 
 import {
@@ -54,24 +55,7 @@ export const regBalanceEvent = async (address,cb) => {
 }
 
 export const regEvent= async () =>{
-    // const unsub = await api.query.system.events((event) => {
-    //     console.log(`Event: ${JSON.stringify(event)}`);
-    //     console.log('event==========')
-    // });
-
-    // const lastHdr = await api.rpc.chain.getHeader();
-    // const startHdr = await api.rpc.chain.getBlockHash(lastHdr.number.unwrap().subn(100));
-    // const events = await api.query.system.events.range([startHdr]);
-    // events.forEach((event) => {
-    //     console.log(`Event1: ${JSON.stringify(event)}`);
-    // });
-
-    // const result= await api.query.system.account("5FTxYMDsAvjpVXA2rfjoeZeAuZq9yqYNnbVC4EnACutJ9tHH");
-    // console.log(`result: ${JSON.stringify(result)}`);
-    // console.log("xujie-----regEvent")
-    // const name=await api.query.assets.metadata("5FTxYMDsAvjpVXA2rfjoeZeAuZq9yqYNnbVC4EnACutJ9tHH");
-    // console.log(name);
-    // console.log("xujie-----regEvent")
+   
 }
 //主合约address
 const main_address = "63K26xBBzVcDE5jAm6yksfVQCDZEjRfcNFf9owPVmn5XBQ4D"
@@ -100,17 +84,19 @@ let main_contract;
 //线下合约address
 const meeting_address = "64PGzV7fVGhgHZLvyjXY5L3VRqj9YhEZWG2u4md7gvSdLcmh";
 let meeting_contract;
-//获取用户的NFT编号
-export const getUserNftTicket = async (cb) =>{
-    console.log("getUserNftTicket---start")
+//返回用户的所有已经购买的票.
+export const getUserAllTicket = async (cb) =>{
+    console.log("getUserAllTicket---start")
     const value = 0;
     const gasLimit = -1;//不限制gas
     const alicePair = keyring.addFromUri('//Alice');
     console.log("Alice pair-->" + JSON.stringify(alicePair.address))
 
-    meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
-
-    const { result, output } = await meeting_contract.query.getUserNftTicket(alicePair.address, { value, gasLimit });
+    main_contract = new ContractPromise(api, main_abi, main_address);
+   
+    const user = alicePair.address;
+    
+    const { result, output } = await main_contract.query.getUserAllTicket(alicePair.address, { value, gasLimit },user);
     if (result.isOk) {
       console.log('Success', output.toHuman());
       if(cb) cb(output.toHuman())
@@ -140,14 +126,6 @@ export const addZone = async (cb) =>{
                 console.log(result.toHuman())
               }
     });
-
-    // if (result.isOk) {
-    //   console.log('Success', output.toHuman());
-    // //   if(cb) cb(output.toHuman())
-    // } else {
-    //   console.error('Error', result.asErr);
-    // }
-
 }
 
 //
@@ -229,11 +207,16 @@ export const checkTicket = async (_user, _classId, _tokenId, _timeStamp, _msg, _
   const classId=_classId;
   const tokenId=_tokenId;
   const timeStamp = _timeStamp;
-  const msg = _msg;
+  const msg = alicePair.sign(stringToU8a(_msg));
+  // const msg = _msg
+  //  console.log('signature222',u8aToHex(alicePair.sign(msg)))
   const hash = _hash;
+  console.log('msg---',_msg)
+  console.log('hash---',hash)
   let params = [];
   params.push(user,classId,tokenId,timeStamp,msg,hash)
   meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+
   await meeting_contract.tx
   .checkTicket({ gasLimit,value },
     ...params)
@@ -247,6 +230,28 @@ export const checkTicket = async (_user, _classId, _tokenId, _timeStamp, _msg, _
     }
   });
 }
+
+
+
+export const getTimestampBlock = async (cb)=>{
+  console.log("getTimestampBlock---start")
+  const value = 0;
+  const gasLimit = -1;//不限制gas
+  const alicePair = keyring.addFromUri('//Alice');
+
+  meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+
+  const { result, output } = await meeting_contract.query.getTimestampBlock(alicePair.address, { value, gasLimit });
+  if (result.isOk) {
+    console.log('查询验票员getInspector-->Success-->验票员address-->', output.toHuman()[0]);
+    if(cb) cb(output.toHuman())
+  } else {
+    console.error('查询验票员getInspector-->Error', result.asErr);
+  }
+
+}
+
+
 
 
 

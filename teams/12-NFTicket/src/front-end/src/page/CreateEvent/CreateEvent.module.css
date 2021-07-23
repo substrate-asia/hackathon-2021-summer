@@ -209,3 +209,19 @@
 .selectTime{
     width: 400px;
 }
+.posterBtn{
+    border-radius: 30px;
+    width: 120px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.posterItem{
+    position: relative;
+}
+.okBtn{
+    width: 20px;
+    height: 20px;
+    position:absolute;
+    right: 0;
+}

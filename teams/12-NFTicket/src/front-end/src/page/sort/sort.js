@@ -10,7 +10,7 @@ import { bindActionCreators } from "redux";
 //action
 import { setTokenAction, setUsernameAction, setBottomstatusAction } from '../../store/action/App';
 
-import { initPolkadotApi, getUserNftTicket } from '../../api/polka'
+import { initPolkadotApi, getUserAllTicket } from '../../api/polka'
 
 
 const tabs = [
@@ -55,47 +55,21 @@ class sort extends Component {
   componentDidMount() {
     //actions  显示底部状态栏
     this.props.actions.setBottomstatus(false);
-    //initPolkadotApi(async () => {
-      //getUserNftTicket((result) => {
-        console.log("--------getUserNftTicket-----------")
+    initPolkadotApi(async () => {
+      getUserAllTicket((result) => {
+        console.log("--------getUserAllTicket-----------")
         console.log(result)
-        //将数据放到集合里面
-        var result = [
-          {
-            "name": "Livestream",
-            "type": "Online",
-            "time": "2021-09-25 12:00(UTC+8)",
-            "totalMoney": 600,
-            "ticketNum": 2,
-            "id": 1
-          },
-          {
-            "name": "Candy Utopia",
-            "type": "Modern Sky Lab",
-            "time": "2021-10-21 12:00(UTC+8)",
-            "totalMoney": 360,
-            "ticketNum": 2,
-            "id": 2
-          },
-          {
-            "name": "Kpop All Night",
-            "type": "Modern Sky Lab",
-            "time": "2021-8-21 20:30(UTC+8)",
-            "totalMoney": 720,
-            "ticketNum": 2,
-            "id": 3
-          }
-        ]
-        setTimeout(() => {
-          this.rData = result;
-          this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(this.rData),
-            isLoading: false,
-          });
-        }, 200);
-        console.log("--------getUserNftTicket end-----------")
-      //})
-    //})
+      
+        // setTimeout(() => {
+        //   this.rData = result;
+        //   this.setState({
+        //     dataSource: this.state.dataSource.cloneWithRows(this.rData),
+        //     isLoading: false,
+        //   });
+        // }, 200);
+        console.log("--------getUserAllTicket end-----------")
+      })
+    })
   }
   onEndReached = (event) => {
     // load new data

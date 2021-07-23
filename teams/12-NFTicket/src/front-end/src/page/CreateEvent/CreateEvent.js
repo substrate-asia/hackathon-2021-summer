@@ -1,4 +1,4 @@
-import { DatePicker, List, ListView, Checkbox, InputItem, Button, WhiteSpace, Menu } from 'antd-mobile'
+import { DatePicker, List, ListView, Checkbox, InputItem, Button, WhiteSpace, Menu, Grid } from 'antd-mobile'
 import React, { Component } from 'react'
 import TopBar from '../../component/TopBar'
 import styles from './CreateEvent.module.css';
@@ -12,9 +12,17 @@ import { bindActionCreators } from "redux";
 //action
 import { setBottomstatusAction, setAccountokmodalAction } from '../../store/action/App';
 
+import img1 from '../../images/sample_1.png'
+import img2 from '../../images/sample_2.png'
+import img3 from '../../images/sample_3.png'
+import ok from '../../images/ok.png'
+
 const CheckboxItem = Checkbox.CheckboxItem;
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
+
+
+
 
 const data = [
     {
@@ -39,18 +47,34 @@ const data = [
 ];
 
 
-
+const imageData = [
+    {
+        id: 1,
+        icon: img1,
+        isSelect:false,
+    }, {
+        id: 2,
+        icon: img2,
+        isSelect:false,
+    },
+    {
+        id: 3,
+        icon: img3,
+        isSelect:false,
+    }
+];
 class CreateEvent extends Component {
-
-
     state = {
         date: now,
         initData: '',
+        files: imageData,
         show: false,
         currentState: 'Please select the status',
         date: now,
-        showZone: false //显示座位区域
+        showZone: false,//显示座位区域
+        showAddress:false, 
     };
+
     constructor(props) {
         super(props);
         const dataSource = new ListView.DataSource({
@@ -90,15 +114,55 @@ class CreateEvent extends Component {
         this.props.actions.setBottomstatus(true);
     }
     selectSiteType = (e, key) => {
-        console.log('xujie====', key)
         var mShowZone = false
+        var mShowAddress = false
         if (key == 3) {
             mShowZone = true
         }
+        if (key == 1) {
+            mShowAddress = true
+        }
         this.setState({
-            showZone: mShowZone
+            showZone: mShowZone,
+            showAddress:mShowAddress
         })
     }
+
+    selectPosterItem = (data) => {
+        //选中按钮的确定
+        console.log('data:', data);
+        this.state.files.forEach(element => {
+            if(element.id == data.id){
+                element.isSelect = true
+            }else{
+                element.isSelect = false
+            }
+        });
+        this.setState({
+            files: this.state.files
+        })
+
+    }
+    createEvent = () =>{
+        console.log('点击了保存按钮.........')
+        //获取会议的名称
+        
+        //选择海报的是哪一个
+        //会议的形式
+        //会议的描述
+        //会议的事件
+        //会议的价格
+        //卖票的开始事件
+        //卖票的结束事件
+        //检票人员
+        //活动的状态
+
+            // setTimeout(() => {
+            //     this.props.history.push('/Home');
+            //     this.props.actions.setAccountOKModal(true);
+            // }, 300)
+    }
+
     render() {
         //搜索框高度
         const searchbarHeight = 45;
@@ -109,9 +173,7 @@ class CreateEvent extends Component {
         //最后+26是因为直接按照前面的减去之后会有一部分留白区域,多种机型上都是26,就加上这个26[**暂时不清楚什么原因**]
         const height = parseInt(window.innerHeight) - searchbarHeight - whitespaceHeight - accountInfoHeight + 51;
         const mShow = this.state.show
-
-
-
+        const {showAddress} = this.state
 
         return (
             <div className={styles.container}>
@@ -128,18 +190,28 @@ class CreateEvent extends Component {
                         </div>
                         <div className={styles.name2}><span>Poster</span></div>
                         <div>
-                            <Button type="primary" inline size="small" style={{ borderRadius: '30px', width: '120px', height: '30px', marginLeft: '10px' }}>Select file</Button>
+                            <Grid data={imageData}
+                                columnNum={4}
+                                renderItem={dataItem => (
+                                    <div onClick={() => this.selectPosterItem(dataItem)} className={styles.posterItem}>
+                                        <img src={dataItem.icon} style={{ width: '75px', height: '75px' }} alt="" />
+                                        {dataItem.isSelect ? (<img src={ok} art="" className={styles.okBtn}></img>):null}
+                                    </div>
+                                )}
+                            />
                         </div>
                         <div className={styles.name2}><span>Location</span></div>
                         <div>
-                            <CheckboxItem key='0'>
+                            <CheckboxItem key='0' onChange={(e) => { this.selectSiteType(e, '0')}} checked={!this.state.showAddress}>
                                 Online
                         </CheckboxItem>
                         </div>
                         <div>
-                            <CheckboxItem key='1'>Offline</CheckboxItem>
+                            <CheckboxItem key='1' onChange={(e) => { this.selectSiteType(e, '1') }} checked={this.state.showAddress}>Offline</CheckboxItem>
+                            { showAddress ? (<InputItem placeholder='Site address'></InputItem>):null}
+                            
                         </div>
-                        <InputItem placeholder='Site address'></InputItem>
+                       
                         <div className={styles.name2}><span>Discription</span></div>
                         <div className={styles.inputout}>
                             <InputItem
@@ -182,7 +254,7 @@ class CreateEvent extends Component {
                                         <div >
                                             <div>
                                                 <img src={del} alt="" className={styles.iconDel}></img>
-                                                <span className={styles.siteZoneLable}>A Zone</span>
+                                                <span className={styles.siteZoneLable}>Zone</span>
                                                 <input placeholder="Price (NMT)" className={styles.ticketInput} ></input>
                                             </div>
                                             <div>
@@ -190,6 +262,7 @@ class CreateEvent extends Component {
                                                 <span className={styles.rowAndSeats}>X</span>
                                                 <input placeholder="Seats" className={styles.siteSeats} ></input>
                                             </div>
+
                                             <div>
                                                 <img src={add} alt="" className={styles.iconDel}></img>
                                                 <span className={styles.siteZoneLable}>B Zone</span>
@@ -265,12 +338,7 @@ class CreateEvent extends Component {
                             </div>
                             <div>
                                 <Button type="primary" inline size="small"
-                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={() => {
-                                        setTimeout(() => {
-                                            this.props.history.push('/Home');
-                                            this.props.actions.setAccountOKModal(true);
-                                        }, 300)
-                                    }}>
+                                    style={{ borderRadius: '30px', width: '128px', height: '31px', margin: '20px' }} onClick={() => this.createEvent()}>
                                     Save
                                 </Button>
                             </div>
