@@ -76,18 +76,18 @@ class Home extends Component {
     this.props.actions.setBottomstatus(false);
     //获取链上会议列表
     initPolkadotApi( async () =>{
-    //   getAllMeeting((result) =>{
-    //     console.log("--------getAllMeeting-----------")
-    //     setTimeout(() => {
-    //       console.log(result)
-    //       this.rData = result;
-    //       this.setState({
-    //         dataSource: this.state.dataSource.cloneWithRows(this.rData),
-    //         isLoading: false,
-    //       });
-    //     }, 200);
-    //     console.log("--------getAllMeeting end-----------")
-    //  })
+      getAllMeeting((result) =>{
+        console.log("--------getAllMeeting-----------")
+        setTimeout(() => {
+          console.log(result)
+          this.rData = result;
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(this.rData),
+            isLoading: false,
+          });
+        }, 200);
+        console.log("--------getAllMeeting end-----------")
+     })
      //测试线下购票--OK
      //buyTicket(1,0,0,10000000000000,()=>{})
      //测试查询验票员--OK
@@ -102,20 +102,20 @@ class Home extends Component {
     // })
 
 
-     const user = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
-     const classId='72';
-     const tokenId = '0'
-    //  const timeStamp= time.substr(0,10);//精确到秒
-     const timeStamp= "1626525090012";//精确到秒
-     const msg=classId+tokenId+timeStamp;//"7201626525090012";
-     //class_Id+tokeid+timestamp
-     console.log(">>>>>>>>>>>>>>>>>>>>>xujie--"+msg)
-     const hash=blake2AsHex(classId+tokenId+timeStamp)
-     const owner = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
-     const mPrice = 20000000
-     checkTicket(user, classId, tokenId, timeStamp, msg, hash, owner,mPrice, (result)=>{
-       console.log('result',result);
-     })
+    //  const user = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
+    //  const classId='72';
+    //  const tokenId = '0'
+    // //  const timeStamp= time.substr(0,10);//精确到秒
+    //  const timeStamp= "1626525090012";//精确到秒
+    //  const msg=classId+tokenId+timeStamp;//"7201626525090012";
+    //  //class_Id+tokeid+timestamp
+    //  console.log(">>>>>>>>>>>>>>>>>>>>>xujie--"+msg)
+    //  const hash=blake2AsHex(classId+tokenId+timeStamp)
+    //  const owner = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";
+    //  const mPrice = 20000000
+    //  checkTicket(user, classId, tokenId, timeStamp, msg, hash, owner,mPrice, (result)=>{
+    //    console.log('result',result);
+    //  })
     })
   }
   // //线下会议:64RWinXw26GE2cDPwStsDz96uRdwSwrg6EAex8BovXVEWqq4
