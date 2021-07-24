@@ -19,7 +19,7 @@ import CreateWalletTwo from '../../component/CreateWalletTwo';
 import CreateWalletOK from '../../component/CreateWalletOK';
 import NAlert from '../../component/Alert';
 
-import {initPolkadotApi,getAllMeeting,checkTicket,getTimestampBlock} from '../../api/polka'
+import {initPolkadotApi,getAllMeeting,checkTicket,getTimestampBlock,getInspector,addInspector} from '../../api/polka'
 import img1 from '../../images/big_1.png'
 import img2 from '../../images/big_2.png'
 import img3 from '../../images/big_3.png'
@@ -91,13 +91,15 @@ class Home extends Component {
      //测试线下购票--OK
      //buyTicket(1,0,0,10000000000000,()=>{})
      //测试查询验票员--OK
-     //getInspector(()=>{})
+    //  getInspector(()=>{})
      //检票
     //  var time = Date.parse( new Date() ).toString();//获取到毫秒的时间戳，精确到毫秒
     // getTimestampBlock((result) =>{
     //   console.log('result',result);
     // })
+    // addInspector('5zqVTknbkojBG4giWuQFwbHB3osak3oireobsMjAuUN8LFbm',()=>{
 
+    // })
 
 
      const user = "65ADzWZUAKXQGZVhQ7ebqRdqEzMEftKytB8a7rknW82EASXB";

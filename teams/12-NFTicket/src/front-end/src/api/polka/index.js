@@ -202,23 +202,26 @@ export const checkTicket = async (_user, _classId, _tokenId, _timeStamp, _msg, _
   console.log(money)
   const value = money;//价钱不够会报(13个0(对应合约里的price)--Contract trapped during execution.)
   const gasLimit=-1;//300000n * 1000000n;//gas不够会报(The executed contract exhausted its gas limit.)
-  const alicePair = keyring.addFromUri('//Alice');
+
+  // const PHRASE = 'author crane fresh inner nice orchard order purse segment slight stove swarm';
+  const PHRASE ='design adapt gift protect average denial lend ensure mix okay ten junk'
+
+
+  const alicePair = keyring.addFromUri(PHRASE);
   const user = _user;
   const classId=_classId;
   const tokenId=_tokenId;
   const timeStamp = _timeStamp;
   const msg = alicePair.sign(stringToU8a(_msg));
-  // const msg = _msg
-  //  console.log('signature222',u8aToHex(alicePair.sign(msg)))
   const hash = _hash;
   console.log('msg---',msg)
   console.log('hash---',hash)
   let params = [];
   params.push(user,classId,tokenId,timeStamp,msg,hash)
   meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
-
+  
   await meeting_contract.tx
-  .checkTicket({ gasLimit,value },
+  .checkTicket({ value,gasLimit},
     ...params)
   .signAndSend(alicePair, (result) => {
     if (result.status.isInBlock) {
@@ -230,9 +233,7 @@ export const checkTicket = async (_user, _classId, _tokenId, _timeStamp, _msg, _
     }
   });
 }
-
-
-
+//获取时间戳
 export const getTimestampBlock = async (cb)=>{
   console.log("getTimestampBlock---start")
   const value = 0;
@@ -243,11 +244,33 @@ export const getTimestampBlock = async (cb)=>{
 
   const { result, output } = await meeting_contract.query.getTimestampBlock(alicePair.address, { value, gasLimit });
   if (result.isOk) {
-    console.log('查询验票员getInspector-->Success-->验票员address-->', output.toHuman()[0]);
+    console.log('getTimestampBlock-->Success-->验票员address-->', output.toHuman()[0]);
     if(cb) cb(output.toHuman())
   } else {
-    console.error('查询验票员getInspector-->Error', result.asErr);
+    console.error('getTimestampBlock-->Error', result.asErr);
   }
+
+}
+//添加验票员
+export const addInspector = async (accountId,cb)=>{
+  console.log("addInspector---start")
+  const value = 0;
+  const gasLimit = -1;//不限制gas
+  const alicePair = keyring.addFromUri('//Alice');
+
+  meeting_contract = new ContractPromise(api, meeting_abi, meeting_address);
+  await meeting_contract.tx
+  .addInspector({ gasLimit,value },
+    accountId)
+  .signAndSend(alicePair, (result) => {
+    if (result.status.isInBlock) {
+      console.log('addInspector- ->--正在提交到链上');
+    } else if (result.status.isFinalized) {
+      console.log('addInspector- ->--交易确认');
+      if(cb) cb(result.toHuman())
+      console.log(result.toHuman())
+    }
+  });
 
 }
 
