@@ -17,7 +17,6 @@ const PolkadotProvider = ({ children, projectId, roundId }) => {
   const initQuadraticFunding = async () => {
     const og = new QuadraticFunding();
     await og.init();
-    console.log('initQuadraticFunding!!!!!!!, og: ', og);
     setQuadraticFunding(og);
   };
 

@@ -1,23 +1,24 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { openModal } from '@redq/reuse-modal';
 import Fade from 'react-reveal/Fade';
-import ScrollSpyMenu from 'common/components/ScrollSpyMenu';
 import Scrollspy from 'react-scrollspy';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { Icon } from 'react-icons-kit';
 import { menu } from 'react-icons-kit/feather/menu';
 import { x } from 'react-icons-kit/feather/x';
-import { search } from 'react-icons-kit/feather/search';
 import Logo from 'common/components/UIElements/Logo';
 import Button from 'common/components/Button';
 import Container from 'common/components/UI/Container';
 import useOnClickOutside from 'common/hooks/useOnClickOutside';
-import NavbarWrapper, { MenuArea, MobileMenu, Search } from './navbar.style';
-import LogoImage from 'common/assets/image/appModern/logo-white.png';
-import LogoImageAlt from 'common/assets/image/appModern/logo.png';
-
+import AccountSelectionModal from 'common/components/AccountSelectionModal';
 import { navbar } from 'common/data/AppModern';
+import actions from 'redux/actions';
+import NavbarWrapper, { MenuArea, MobileMenu } from './navbar.style';
 
-const Navbar = ({ isLight }) => {
+const truncateMiddle = require('truncate-middle');
+
+const Navbar = ({ isLight, account, setAccount }) => {
   const { navMenu } = navbar;
   const [state, setState] = useState({
     search: '',
@@ -29,6 +30,12 @@ const Navbar = ({ isLight }) => {
   useOnClickOutside(searchRef, () =>
     setState({ ...state, searchToggle: false })
   );
+
+  useEffect(() => {
+    if (!account) {
+      showAccountSelectionModal();
+    }
+  }, []);
 
   const toggleHandler = (type) => {
     if (type === 'search') {
@@ -48,28 +55,6 @@ const Navbar = ({ isLight }) => {
     }
   };
 
-  const handleOnChange = (event) => {
-    setState({
-      ...state,
-      search: event.target.value,
-    });
-  };
-
-  const handleSearchForm = (event) => {
-    event.preventDefault();
-
-    if (state.search !== '') {
-      console.log('search data: ', state.search);
-
-      setState({
-        ...state,
-        search: '',
-      });
-    } else {
-      console.log('Please fill this field.');
-    }
-  };
-
   const scrollItems = [];
 
   navMenu.forEach((item) => {
@@ -83,12 +68,68 @@ const Navbar = ({ isLight }) => {
     });
   };
 
+  const showAccountSelectionModal = async () => {
+    const { web3Enable, web3Accounts } = await import(
+      '@polkadot/extension-dapp'
+    );
+    await web3Enable('quadratic-funding-webapp');
+    const allAccounts = await web3Accounts();
+
+    const addresses = _.map(allAccounts, (account) => {
+      return account.address;
+    });
+
+    openModal({
+      config: {
+        className: 'customModal',
+        disableDragging: false,
+        enableResizing: {
+          bottom: true,
+          bottomLeft: true,
+          bottomRight: true,
+          left: true,
+          right: true,
+          top: true,
+          topLeft: true,
+          topRight: true,
+        },
+        width: 750,
+        height: 'auto',
+        animationFrom: { transform: 'scale(0.3)' }, // react-spring <Spring from={}> props value
+        animationTo: { transform: 'scale(1)' }, //  react-spring <Spring to={}> props value
+        transition: {
+          mass: 1,
+          tension: 130,
+          friction: 26,
+        }, // react-spring config props
+      },
+      withRnd: false,
+      overlayClassName: 'customeOverlayClass',
+      closeOnClickOutside: false,
+      component: AccountSelectionModal,
+      componentProps: {
+        addresses,
+        onClick: (address) => {
+          setAccount(address);
+        },
+      },
+    });
+  };
+
+  const openOutterLink = (url) => {
+    window.open(url);
+  };
+
   return (
     <NavbarWrapper className="navbar">
       <Container>
         <Logo
           href="/"
-          logoSrc={ isLight ? "https://res.cloudinary.com/forgelab-io/image/upload/v1619317508/OAK/oak-logo.png" : "https://res.cloudinary.com/forgelab-io/image/upload/v1618793068/OAK/logo-horizontal.png" }
+          logoSrc={
+            isLight
+              ? 'https://res.cloudinary.com/forgelab-io/image/upload/v1619317508/OAK/oak-logo.png'
+              : 'https://res.cloudinary.com/forgelab-io/image/upload/v1618793068/OAK/logo-horizontal.png'
+          }
           title="App Modern"
           className="main-logo"
         />
@@ -101,30 +142,40 @@ const Navbar = ({ isLight }) => {
         {/* end of logo */}
 
         <MenuArea className={state.searchToggle ? 'active' : ''}>
-          <ScrollSpyMenu className="menu" menuItems={navMenu} offset={-84} />
-          {/* end of main menu */}
-
-          {/* <Search className="search" ref={searchRef}>
-            <form onSubmit={handleSearchForm}>
-              <input
-                type="text"
-                value={state.search}
-                placeholder="Enter your keyword"
-                onChange={handleOnChange}
-              />
-            </form>
+          {/* <ScrollSpyMenu className="menu" menuItems={navMenu} offset={-84} /> */}
+          <Button
+            style={{ marginLeft: 20 }}
+            title="Tutorial"
+            onClick={() => openOutterLink('https://docs.oak.tech/')}
+          />
+          <Button
+            style={{ marginLeft: 20 }}
+            title="Github"
+            onClick={() =>
+              openOutterLink(
+                'https://github.com/OAK-Foundation/quadratic-funding-webapp'
+              )
+            }
+          />
+          <Button
+            style={{ marginLeft: 20 }}
+            title="Create a Grant"
+            onClick={() =>
+              openOutterLink('https://8mu1f1dexqf.typeform.com/to/FF8ARJhs')
+            }
+          />
+          {
             <Button
-              className="text"
-              variant="textButton"
-              icon={<Icon icon={state.searchToggle ? x : search} />}
-              onClick={() => toggleHandler('search')}
+              style={{ marginLeft: 20 }}
+              title={
+                account
+                  ? truncateMiddle(account, 4, 4, '...')
+                  : 'Connect a Wallet'
+              }
+              onClick={showAccountSelectionModal}
             />
-          </Search> */}
-          {/* end of search */}
-
-          {/* <AnchorLink href="#trail" offset={84}>
-            <Button className="trail" title="Try for Free" />
-          </AnchorLink> */}
+          }
+          {/* end of main menu */}
 
           <Button
             className="menubar"
@@ -173,4 +224,12 @@ const Navbar = ({ isLight }) => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  account: state.account,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setAccount: (account) => dispatch(actions.setAccount(account)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

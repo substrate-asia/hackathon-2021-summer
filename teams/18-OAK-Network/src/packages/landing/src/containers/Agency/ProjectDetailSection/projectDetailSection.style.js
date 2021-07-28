@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 const ProjectDetailWrapper = styled.section`
+  font-size: 1.1rem;
+  color: rgb(110, 115, 121);
+  text-align: left;
+
   .title {
     display: flex;
     align-items: center;
@@ -8,45 +12,26 @@ const ProjectDetailWrapper = styled.section`
   }
 
   .content {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
+    margin-bottom: 24px;
+
+    > * {
+      margin-bottom: 18px;
+    }
   }
 
-  div.buttons {
-    margin-top: 20px;
-    flex-direction: row;
-    justify-content: flex-end;
-  }
+  .social-media {
+    color: rgb(209, 57, 124);
+    margin-bottom: 36px;
 
-  .button {
-    border: 0;
-    margin-left: 10px;
-    background-color: white;
-  }
+    > * {
+      margin-right: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
 
-  .ml-5 {
-    margin-left: 5px;
-  }
-
-  .mt-10 {
-    margin-top: 10px;
-  }
-
-  .mt-15 {
-    margin-top: 15px;
-  }
-
-  .mt-30 {
-    margin-top: 30px;
-  }
-
-  .ml-10 {
-    margin-left: 10px;
-  }
-
-  .text-center {
-    text-align: center;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
   }
 
   .charts {
@@ -64,21 +49,28 @@ const ProjectDetailWrapper = styled.section`
     display: flex;
     flex-direction: row;
     margin-top: 30px;
-  }
+    margin-bottom: 30px;
 
-  .member {
-    display: flex;
-    flex-direction: column;
-    margin-right: 30px;
-    align-items: center;
-    max-width: 100px;
-  }
+    > * {
+      margin-bottom: 18px;
+    }
 
-  .photo {
-    border-radius: 10px;
-    width: 70px;
-    height: 70px;
-    border: 1px solid black;
+    .member-profile {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      background-position: center;
+      background-size: contain;
+    }
+    .member-name {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
+      margin-bottom: 12px;
+    }
+    .member-role {
+      font-weight: 500;
+    }
   }
 
   // @media only screen and (max-width: 1440px) {

@@ -1,12 +1,13 @@
-import React from 'react';
-import CommentStyle from './comment.style';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import CommentStyle from './comment.style';
+import Identicon from '@polkadot/react-identicon';
 
 const truncateMiddle = require('truncate-middle');
 
 const Comment = ({ ...props }) => {
-  const { comment: commentObject } = props;
-  const { comment, timestamp, user  } = commentObject;
+  const { comment: commentObject, voteAmount } = props;
+  const { comment, timestamp, user } = commentObject;
 
   const datetime = moment(timestamp);
   const daysElapsed = moment().diff(datetime, 'days');
@@ -27,8 +28,10 @@ const Comment = ({ ...props }) => {
           marginRight: 20,
         }}
       >
-        <img className="photo"></img>
-        <span style={{ marginTop: 10 }}>{truncateMiddle(user, 4, 4, '...')}</span>
+        <Identicon value={user} size={70} theme="polkadot" />
+        <span style={{ marginTop: 10 }}>
+          {truncateMiddle(user, 4, 4, '...')}
+        </span>
       </div>
 
       <div
@@ -46,9 +49,7 @@ const Comment = ({ ...props }) => {
             width: '100%',
           }}
         >
-          <span>
-            {comment}
-          </span>
+          <span>{comment}</span>
           <span style={{ marginLeft: 10 }}>{datetimeText}</span>
         </div>
 
@@ -61,7 +62,11 @@ const Comment = ({ ...props }) => {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ marginLeft: 50 }}>Also contributed 3.5 DOT</span>
+            {voteAmount > 0 && (
+              <span style={{ marginLeft: 50 }}>
+                Also contributed {voteAmount} OAK
+              </span>
+            )}
           </div>
         </div>
       </div>

@@ -9,9 +9,18 @@ const GlobalStyle = createGlobalStyle`
   .reuseModalOverlay {
     z-index: 99999;
     .reuseModalHolder{
-      border: 0;
+      border: none;
+    }
+
+    .customModal {
+      background-color: transparent;
+
+      .innerRndComponent{
+        background-color: transparent;
+      }
     }
   }
+  
   h1,
   h2,
   h3,

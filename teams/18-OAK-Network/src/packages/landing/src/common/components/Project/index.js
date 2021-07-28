@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
+import { Row, Col } from 'antd';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faStar } from '@fortawesome/free-solid-svg-icons';
-import Button from 'common/components/Button';
+import ButtonLike from 'common/components/ButtonLike';
 
 import ProjectStyle from './project.style';
 import { ellipsisAddress } from 'common/utils';
 import _ from 'lodash';
-import reduxHelper from '../../../redux/helper';
+import reduxHelper from 'redux/helper';
+import backend from 'common/backend';
+import notificationHelper from 'common/utils/notification.helper';
+import { formatNumberThousands } from 'common/utils';
 
-const Project = ({ project, Icon, ...props }) => {
+const Project = ({ project, Icon, projectRecords, account, ...props }) => {
   const {
     name,
     description,
     project_index,
     owner,
-    socialElements,
     username,
     create_block_number,
     roundId,
   } = project;
 
   const projectIndex = parseInt(project_index);
-  const { projectRecords, account } = props;
 
-  const [projectRecord, setProjectRecord] = useState({})
-  
+  const [projectRecord, setProjectRecord] = useState({});
+
   useEffect(async () => {
     const foundRecord = _.find(projectRecords, (projectRecord) => {
       return projectRecord.index === projectIndex;
@@ -35,81 +35,75 @@ const Project = ({ project, Icon, ...props }) => {
     setProjectRecord(foundRecord);
   }, [projectRecords]);
 
-  const likeAccount = _.find(projectRecord.likes, (like) => {
-    return like === account;
-  });
+  const onLikeClicked = async (event) => {
+    event.stopPropagation();
 
-  const onLikeClicked = async () => {
-    console.log('onLikeClicked');
-    const cloudbase = (await import('@cloudbase/js-sdk')).default;
-    const app = cloudbase.init({
-      env: 'quadratic-funding-1edc914e16f235',
-      region: 'ap-guangzhou'
-    });
+    if (_.isEmpty(account)) {
+      notificationHelper.showNoWalletNotification();
+      return;
+    }
 
-    const result = await app.callFunction({
+    await backend.getApp().callFunction({
       name: 'like',
       data: {
         projectIndex,
         address: account,
-        isLike: _.isNil(likeAccount)
-      }
+        isLike: !isLiked,
+      },
     });
 
     reduxHelper.getProjects();
-  }
+  };
 
-  let likeText = "Like";
-  if (projectRecord && !_.isEmpty(projectRecord.likes)) {
-    if (projectRecord.likes.length === 1){
-      likeText = `${projectRecord.likes.length} Like`;
-    } else {
-      likeText = `${projectRecord.likes.length} Likes`;
-    }
-  }
+  const isLiked = !_.isUndefined(
+    _.find(projectRecord && projectRecord.likes, (item) => {
+      return item === account;
+    })
+  );
 
   return (
     <ProjectStyle {...props}>
-      
+      <Link
+        href={{ pathname: `/detail/${project_index}`, query: { rid: roundId } }}
+      >
         <div>
-          <Link href={{ pathname: `/detail/${project_index}`, query: { rid: roundId } }}>
-            <div>
-              <span className="title">{name}</span>
-              <span className="description">{description}</span>
-            </div>
-          </Link>
-          <div className="identity">
-            <div className="infomation">
-              {/* <image className="photo"></image> */}
-              {Icon}
-              <div style={{ textAlign: 'left' }}>
-                <span className="username">{`Username: ${
-                  username || ellipsisAddress(owner)
-                }`}</span>
-                <span className="created">
-                  Created at block #{create_block_number}
-                </span>
-              </div>
-            </div>
-
-            <span className="creator">{socialElements}</span>
-
-            <div className="buttons">
-              <Button
-                type="button"
-                icon={<FontAwesomeIcon color={ likeAccount ? 'red' : 'white' } icon={faThumbsUp}></FontAwesomeIcon>}
-                title={likeText}
-                onClick = {onLikeClicked}
-              />
-              <Button
-                className="button"
-                type="button"
-                icon={<FontAwesomeIcon icon={faStar}></FontAwesomeIcon>}
-                title="Favorite"
-              />
-            </div>
-          </div>
+          <Row className="title" justify="center">
+            <span>{_.truncate(name, { length: 26, omission: ' ' })}</span>
+          </Row>
+          <Row className="description">
+            <span>
+              {_.truncate(description, { length: 190, omission: ' [...]' })}
+            </span>
+          </Row>
+          <Row className="attribute">
+            <Col span={8}>{Icon}</Col>
+            <Col span={16}>
+              <Row>
+                <Col span={24}>
+                  <span>Creator:</span>
+                </Col>
+                <Col span={24}>
+                  <span>{username || ellipsisAddress(owner)}</span>
+                </Col>
+                <Col span={24}>
+                  <span>Created Block No.: #{create_block_number}</span>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <Row className="action" justify="end">
+            <ButtonLike
+              likeCount={
+                projectRecord &&
+                projectRecord.likes &&
+                projectRecord.likes.length
+              }
+              isLiked={isLiked}
+              onClick={onLikeClicked}
+            />
+          </Row>
         </div>
+      </Link>
     </ProjectStyle>
   );
 };

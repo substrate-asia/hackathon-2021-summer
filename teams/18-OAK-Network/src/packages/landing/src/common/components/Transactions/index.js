@@ -1,49 +1,37 @@
-import React, { useState, useEffect }  from 'react';
+import React from 'react';
 import _ from 'lodash';
-import cloudbase from '@cloudbase/js-sdk';
+import moment from 'moment';
 import TransactionsStyle from './transactions.style';
-import { margin, marginTop } from 'styled-system';
 
 const Transactions = ({ ...props }) => {
-
-  const { projectIndex, roundIndex} = props;
-  const [votes, setVotes] = useState([]);
-
-  useEffect(async () => {
-    const app = cloudbase.init({
-      env: 'quadratic-funding-1edc914e16f235',
-      region: 'ap-guangzhou'
-    });
-
-    console.log('projectIndex: ', projectIndex);
-    console.log('roundIndex: ', roundIndex);
-
-    const db = app.database();
-    const result = await db.collection('votes')
-      .get();
-    console.log('result: ', result);
-
-    setVotes(result.data);
-  }, []);
+  const { voteRecords } = props;
 
   const getVoteList = (votes) => {
-    return _.map(votes, (vote) => {
+    return _.map(_.orderBy(votes, ['timestamp'], ['desc']), (vote) => {
       const { address, amount, timestamp } = vote;
+
+      const datetime = moment(timestamp);
+      const daysElapsed = moment().diff(datetime, 'days');
+      let datetimeText = null;
+      if (daysElapsed < 1) {
+        datetimeText = datetime.fromNow();
+      } else {
+        datetimeText = datetime.format('LL');
+      }
+
       return (
-        <div style={{ border: '1px solid #ccc', marginTop: 10, padding: 10 }}>
+        <div key={timestamp} className="vote-row">
           <div>user: {address}</div>
-          <div>amnout: {amount}</div>
-          <div>timestamp: {timestamp}</div>
+          <div>amnout: {amount} OAK</div>
+          <div>datetime: {datetimeText}</div>
         </div>
       );
     });
-  }
+  };
 
   return (
     <TransactionsStyle {...props}>
-      <div>
-        {getVoteList(votes)}
-      </div>
+      <div>{getVoteList(voteRecords)}</div>
     </TransactionsStyle>
   );
 };
